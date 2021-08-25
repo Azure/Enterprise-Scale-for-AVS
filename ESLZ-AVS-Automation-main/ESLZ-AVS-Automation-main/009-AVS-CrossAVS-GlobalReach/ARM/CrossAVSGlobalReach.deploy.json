@@ -1,0 +1,145 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "10048968859136914317"
+    }
+  },
+  "parameters": {
+    "PrimaryPrivateCloudName": {
+      "type": "string"
+    },
+    "PrimaryPrivateCloudResourceGroup": {
+      "type": "string"
+    },
+    "SecondaryPrivateCloudName": {
+      "type": "string"
+    },
+    "SecondaryPrivateCloudResourceGroup": {
+      "type": "string"
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "SecondaryAuthKey",
+      "resourceGroup": "[parameters('SecondaryPrivateCloudResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "ConnectionName": {
+            "value": "[format('GR-{0}', parameters('PrimaryPrivateCloudName'))]"
+          },
+          "PrivateCloudName": {
+            "value": "[parameters('SecondaryPrivateCloudName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.613.9944",
+              "templateHash": "2808681075634867814"
+            }
+          },
+          "parameters": {
+            "PrivateCloudName": {
+              "type": "string"
+            },
+            "ConnectionName": {
+              "type": "string"
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.AVS/privateClouds/authorizations",
+              "apiVersion": "2021-06-01",
+              "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
+            }
+          ],
+          "outputs": {
+            "ExpressRouteAuthorizationKey": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+            },
+            "ExpressRouteId": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName')), '2021-06-01').circuit.expressRouteID]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "GlobalReach",
+      "resourceGroup": "[parameters('PrimaryPrivateCloudResourceGroup')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "PrivateCloudName": {
+            "value": "[parameters('PrimaryPrivateCloudName')]"
+          },
+          "ExpressRouteId": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2019-10-01').outputs.ExpressRouteId.value]"
+          },
+          "ExpressRouteAuthorizationKey": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.613.9944",
+              "templateHash": "10351735380447530768"
+            }
+          },
+          "parameters": {
+            "PrivateCloudName": {
+              "type": "string"
+            },
+            "ExpressRouteAuthorizationKey": {
+              "type": "secureString"
+            },
+            "ExpressRouteId": {
+              "type": "secureString"
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.AVS/privateClouds/globalReachConnections",
+              "apiVersion": "2021-06-01",
+              "name": "[format('{0}/{1}', parameters('PrivateCloudName'), guid(parameters('ExpressRouteId'), parameters('ExpressRouteAuthorizationKey')))]",
+              "properties": {
+                "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
+                "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')]"
+      ]
+    }
+  ]
+}

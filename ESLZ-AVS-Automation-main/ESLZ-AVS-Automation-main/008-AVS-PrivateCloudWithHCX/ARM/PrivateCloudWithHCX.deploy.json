@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "15393387484438660505"
+    }
+  },
+  "parameters": {
+    "PrivateCloudName": {
+      "type": "string"
+    },
+    "NetworkBlock": {
+      "type": "string"
+    },
+    "ManagementClusterSize": {
+      "type": "int",
+      "defaultValue": 3
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "InternetEnabled": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "HCXEnterprise": {
+      "type": "bool",
+      "defaultValue": false
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds",
+      "apiVersion": "2021-06-01",
+      "name": "[parameters('PrivateCloudName')]",
+      "sku": {
+        "name": "AV36"
+      },
+      "location": "[parameters('Location')]",
+      "properties": {
+        "networkBlock": "[parameters('NetworkBlock')]",
+        "internet": "[if(parameters('InternetEnabled'), 'Enabled', 'Disabled')]",
+        "managementCluster": {
+          "clusterSize": "[parameters('ManagementClusterSize')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.AVS/privateClouds/addons",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'hcx')]",
+      "properties": {
+        "addonType": "HCX",
+        "offer": "[if(parameters('HCXEnterprise'), 'VMware MaaS Cloud Provider (Enterprise)', 'VMware MaaS Cloud Provider')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName'))]"
+      ]
+    }
+  ]
+}

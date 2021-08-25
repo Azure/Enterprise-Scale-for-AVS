@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "15634953447765687498"
+    }
+  },
+  "parameters": {
+    "PrivateCloudName": {
+      "type": "string"
+    },
+    "HCXEnterprise": {
+      "type": "bool",
+      "defaultValue": false
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds/addons",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'hcx')]",
+      "properties": {
+        "addonType": "HCX",
+        "offer": "[if(parameters('HCXEnterprise'), 'VMware MaaS Cloud Provider (Enterprise)', 'VMware MaaS Cloud Provider')]"
+      }
+    }
+  ]
+}

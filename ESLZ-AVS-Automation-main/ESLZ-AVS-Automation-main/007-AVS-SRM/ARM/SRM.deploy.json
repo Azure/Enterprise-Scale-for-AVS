@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "5125042142795022878"
+    }
+  },
+  "parameters": {
+    "PrivateCloudName": {
+      "type": "string"
+    },
+    "SRMLicenseKey": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds/addons",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+      "properties": {
+        "licenseKey": "[parameters('SRMLicenseKey')]",
+        "addonType": "SRM"
+      }
+    }
+  ]
+}

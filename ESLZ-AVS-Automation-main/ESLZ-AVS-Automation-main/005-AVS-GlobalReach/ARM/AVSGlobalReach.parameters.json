@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "PrivateCloudName": {
+            "value": "ExamplePrivateCloud"
+        },
+        "ExpressRouteAuthorizationKey": {
+            "value": "00000000-0000-0000-0000-000000000000"
+        },
+        "ExpressRouteId": {
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/tntXX-cust-p01-centralus/providers/Microsoft.Network/expressRouteCircuits/tntXX-cust-p01-centralus-er"
+        }
+    }
+}
