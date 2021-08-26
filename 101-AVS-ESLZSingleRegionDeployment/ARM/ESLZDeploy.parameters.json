@@ -6,7 +6,7 @@
             "value": "SoutheastAsia"
         },
         "Prefix": {
-            "value": "AVS"
+            "value": "ESLZ"
         },
         "PrivateCloudAddressSpace": {
             "value": "10.0.0.0/22"
@@ -19,8 +19,26 @@
         },
         "AlertEmails": {
             "value": [
-                "example@microsoft.com"
+                "scholden@microsoft.com"
             ]
+        },
+        "DeployJumpbox": {
+            "value": true
+        },
+        "JumpboxUsername": {
+            "value": "avsjump"
+        },
+        "JumpboxPassword": {
+            "value": "ChangeM3!"
+        },
+        "JumpboxSubnet": {
+            "value": "10.1.1.0/25"
+        },
+        "BastionSubnet": {
+            "value": "10.1.1.128/25"
+        },
+        "VNetExists": {
+            "value": true
         }
     }
 }

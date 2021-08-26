@@ -26,3 +26,5 @@ module VNetExRConnection 'Module-VNetExRConnection.bicep' = {
     ExpressRouteId: AVSExRAuthorization.outputs.ExpressRouteId
   }
 }
+
+output ExRConnectionResourceId string = VNetExRConnection.outputs.ExRConnectionResourceId
