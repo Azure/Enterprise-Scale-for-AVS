@@ -27,7 +27,7 @@ resource JumpboxResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
 }
 
 module Bastion 'Module-JumpBox-Bastion.bicep' = {
-  name: 'Jumpbox-Bastion'
+  name: 'ESLZDeploy-Jumpbox-Bastion'
   scope: JumpboxResourceGroup
   params:{
     Prefix: Prefix
@@ -37,7 +37,7 @@ module Bastion 'Module-JumpBox-Bastion.bicep' = {
 }
 
 module VM 'Module-JumpBox-VM.bicep' = {
-  name: 'Jumpbox-VM'
+  name: 'ESLZDeploy-Jumpbox-VM'
   scope: JumpboxResourceGroup
   params: {
     Prefix: Prefix

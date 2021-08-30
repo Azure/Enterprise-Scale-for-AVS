@@ -19,7 +19,7 @@
         },
         "AlertEmails": {
             "value": [
-                "scholden@microsoft.com"
+                "example@microsoft.com"
             ]
         },
         "DeployJumpbox": {
@@ -38,7 +38,7 @@
             "value": "10.1.1.128/25"
         },
         "VNetExists": {
-            "value": true
+            "value": false
         }
     }
 }

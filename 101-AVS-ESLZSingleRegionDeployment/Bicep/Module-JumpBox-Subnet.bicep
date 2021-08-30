@@ -17,6 +17,9 @@ resource JumpBox 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
 resource Bastion 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
   name: 'AzureBastionSubnet'
   parent: VNet
+  dependsOn: [
+    JumpBox
+  ]
   properties: {
     addressPrefix: BastionSubnet
   }

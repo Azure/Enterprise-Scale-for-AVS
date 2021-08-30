@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "12305824031386071605"
+      "templateHash": "13783957413304023841"
     }
   },
   "parameters": {
@@ -102,7 +102,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "PrimaryRegion",
+      "name": "ESLZDeploy-AVS",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -139,7 +139,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "16904170565035741693"
+              "templateHash": "8187001275395621765"
             }
           },
           "parameters": {
@@ -182,7 +182,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "PrivateCloud",
+              "name": "ESLZDeploy-AVS-PrivateCloud",
               "resourceGroup": "[format('{0}-PrivateCloud', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -270,7 +270,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "Network",
+              "name": "ESLZDeploy-AVS-Network",
               "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -428,7 +428,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "AVSExRVNetConnection",
+              "name": "ESLZDeploy-AVS-AVSExRVNetConnection",
               "location": "[deployment().location]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -437,7 +437,7 @@
                 "mode": "Incremental",
                 "parameters": {
                   "GatewayName": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Network'), '2019-10-01').outputs.GatewayName.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.GatewayName.value]"
                   },
                   "NetworkResourceGroup": {
                     "value": "[format('{0}-Network', parameters('Prefix'))]"
@@ -446,7 +446,7 @@
                     "value": "[parameters('Prefix')]"
                   },
                   "PrivateCloudName": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
                   },
                   "PrivateCloudResourceGroup": {
                     "value": "[format('{0}-PrivateCloud', parameters('Prefix'))]"
@@ -459,7 +459,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.613.9944",
-                      "templateHash": "2305064814655367748"
+                      "templateHash": "11582912029123846302"
                     }
                   },
                   "parameters": {
@@ -488,7 +488,7 @@
                     {
                       "type": "Microsoft.Resources/deployments",
                       "apiVersion": "2019-10-01",
-                      "name": "AVSExRAuthorization",
+                      "name": "ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization",
                       "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
                       "properties": {
                         "expressionEvaluationOptions": {
@@ -545,7 +545,7 @@
                     {
                       "type": "Microsoft.Resources/deployments",
                       "apiVersion": "2019-10-01",
-                      "name": "VNetExRConnection",
+                      "name": "ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection",
                       "resourceGroup": "[parameters('NetworkResourceGroup')]",
                       "properties": {
                         "expressionEvaluationOptions": {
@@ -560,10 +560,10 @@
                             "value": "[parameters('GatewayName')]"
                           },
                           "ExpressRouteAuthorizationKey": {
-                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
                           },
                           "ExpressRouteId": {
-                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteId.value]"
+                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteId.value]"
                           }
                         },
                         "template": {
@@ -624,22 +624,22 @@
                         }
                       },
                       "dependsOn": [
-                        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSExRAuthorization')]"
+                        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization')]"
                       ]
                     }
                   ],
                   "outputs": {
                     "ExRConnectionResourceId": {
                       "type": "string",
-                      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', 'VNetExRConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
+                      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
                     }
                   }
                 }
               },
               "dependsOn": [
-                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Network')]",
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network')]",
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]",
-                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'PrivateCloud')]",
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud')]",
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-PrivateCloud', parameters('Prefix')))]"
               ]
             }
@@ -647,7 +647,7 @@
           "outputs": {
             "PrivateCloudName": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
             },
             "PrivateCloudResourceGroupName": {
               "type": "string",
@@ -655,15 +655,15 @@
             },
             "PrivateCloudResourceId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'PrivateCloud'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
             },
             "GatewayName": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Network'), '2019-10-01').outputs.GatewayName.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.GatewayName.value]"
             },
             "VNetName": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Network'), '2019-10-01').outputs.VNetName.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.VNetName.value]"
             },
             "NetworkResourceGroup": {
               "type": "string",
@@ -671,11 +671,11 @@
             },
             "ExRConnectionResourceId": {
               "type": "string",
-              "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'AVSExRVNetConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
+              "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
             },
             "VNetResourceId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Network'), '2019-10-01').outputs.VNetResourceId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.VNetResourceId.value]"
             }
           }
         }
@@ -684,7 +684,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "AVS-Addins",
+      "name": "ESLZDeploy-AVSAddins",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -693,10 +693,10 @@
         "mode": "Incremental",
         "parameters": {
           "PrivateCloudName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.PrivateCloudName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudName.value]"
           },
           "PrivateCloudResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.PrivateCloudResourceGroupName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudResourceGroupName.value]"
           }
         },
         "template": {
@@ -768,14 +768,14 @@
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion')]"
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]"
       ]
     },
     {
       "condition": "[parameters('DeployJumpbox')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "Jumpbox",
+      "name": "ESLZDeploy-Jumpbox",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -796,10 +796,10 @@
             "value": "[parameters('JumpboxPassword')]"
           },
           "VNetName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.VNetName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.VNetName.value]"
           },
           "VNetResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.NetworkResourceGroup.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.NetworkResourceGroup.value]"
           },
           "BastionSubnet": {
             "value": "[parameters('BastionSubnet')]"
@@ -815,7 +815,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "18000159757403053939"
+              "templateHash": "12873638568632295084"
             }
           },
           "parameters": {
@@ -880,7 +880,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.613.9944",
-                      "templateHash": "8638747497759646126"
+                      "templateHash": "644231693095307473"
                     }
                   },
                   "parameters": {
@@ -910,7 +910,10 @@
                       "name": "[format('{0}/{1}', parameters('VNetName'), 'AzureBastionSubnet')]",
                       "properties": {
                         "addressPrefix": "[parameters('BastionSubnet')]"
-                      }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'JumpBox')]"
+                      ]
                     }
                   ],
                   "outputs": {
@@ -929,7 +932,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "Jumpbox-Bastion",
+              "name": "ESLZDeploy-Jumpbox-Bastion",
               "resourceGroup": "[format('{0}-Jumpbox', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1018,7 +1021,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "Jumpbox-VM",
+              "name": "ESLZDeploy-Jumpbox-VM",
               "resourceGroup": "[format('{0}-Jumpbox', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1161,19 +1164,19 @@
           "outputs": {
             "JumpboxResourceId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Jumpbox', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'Jumpbox-VM'), '2019-10-01').outputs.JumpboxResourceId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Jumpbox', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-Jumpbox-VM'), '2019-10-01').outputs.JumpboxResourceId.value]"
             }
           }
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion')]"
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "OperationalMonitoring",
+      "name": "ESLZDeploy-Monitoring",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -1191,19 +1194,19 @@
             "value": "[parameters('PrimaryLocation')]"
           },
           "PrimaryPrivateCloudName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.PrivateCloudName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudName.value]"
           },
           "PrimaryPrivateCloudResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
           },
           "JumpboxResourceId": {
-            "value": "[if(parameters('DeployJumpbox'), reference(subscriptionResourceId('Microsoft.Resources/deployments', 'Jumpbox'), '2019-10-01').outputs.JumpboxResourceId.value, '')]"
+            "value": "[if(parameters('DeployJumpbox'), reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Jumpbox'), '2019-10-01').outputs.JumpboxResourceId.value, '')]"
           },
           "VNetResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.VNetResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.VNetResourceId.value]"
           },
           "ExRConnectionResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
           }
         },
         "template": {
@@ -1213,7 +1216,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "4245200424402021235"
+              "templateHash": "12836337459561040175"
             }
           },
           "parameters": {
@@ -1253,7 +1256,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "ActionGroup",
+              "name": "ESLZDeploy-Monitoring-ActionGroup",
               "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1326,7 +1329,7 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "PrimaryMetricAlerts",
+              "name": "ESLZDeploy-Monitoring-MetricAlerts",
               "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1335,7 +1338,7 @@
                 "mode": "Incremental",
                 "parameters": {
                   "ActionGroupResourceId": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ActionGroup'), '2019-10-01').outputs.ActionGroupResourceId.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-Monitoring-ActionGroup'), '2019-10-01').outputs.ActionGroupResourceId.value]"
                   },
                   "AlertPrefix": {
                     "value": "[parameters('PrimaryPrivateCloudName')]"
@@ -1455,14 +1458,14 @@
                 }
               },
               "dependsOn": [
-                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ActionGroup')]",
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-Monitoring-ActionGroup')]",
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
               ]
             },
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
-              "name": "Dashboard",
+              "name": "ESLZDeploy-Monitoring-Dashboard",
               "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -1908,8 +1911,8 @@
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'Jumpbox')]",
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'PrimaryRegion')]"
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Jumpbox')]",
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]"
       ]
     }
   ]

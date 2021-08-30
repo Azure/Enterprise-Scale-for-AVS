@@ -29,7 +29,7 @@ param JumpboxSubnet string = ''
 param BastionSubnet string = ''
 
 module PrimaryRegion 'Module-RegionDeploy.bicep' = {
-  name: 'PrimaryRegion'
+  name: 'ESLZDeploy-AVS'
   params: {
     Prefix: Prefix
     Location: PrimaryLocation
@@ -42,7 +42,7 @@ module PrimaryRegion 'Module-RegionDeploy.bicep' = {
 }
 
 module Addins 'Module-AVSAddins.bicep' = {
-  name: 'AVS-Addins'
+  name: 'ESLZDeploy-AVSAddins'
   params: {
     PrivateCloudName: PrimaryRegion.outputs.PrivateCloudName
     PrivateCloudResourceGroup: PrimaryRegion.outputs.PrivateCloudResourceGroupName
@@ -50,7 +50,7 @@ module Addins 'Module-AVSAddins.bicep' = {
 }
 
 module Jumpbox 'Module-JumpBox.bicep' = if (DeployJumpbox) {
-  name: 'Jumpbox'
+  name: 'ESLZDeploy-Jumpbox'
   params: {
     Prefix: Prefix
     Location: PrimaryLocation
@@ -64,7 +64,7 @@ module Jumpbox 'Module-JumpBox.bicep' = if (DeployJumpbox) {
 }
 
 module OperationalMonitoring 'Module-Operational-Monitoring.bicep' = {
-  name: 'OperationalMonitoring'
+  name: 'ESLZDeploy-Monitoring'
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix

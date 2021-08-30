@@ -15,7 +15,7 @@ resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-0
 
 module PrivateCloud 'Module-PrivateCloud.bicep' = {
   scope: PrivateCloudResourceGroup
-  name: 'PrivateCloud'
+  name: 'ESLZDeploy-AVS-PrivateCloud'
   params: {
     Prefix: Prefix
     Location: Location
@@ -31,7 +31,7 @@ resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = 
 
 module Network 'Module-VNetWithGW.bicep' = {
   scope: NetworkResourceGroup
-  name: 'Network'
+  name: 'ESLZDeploy-AVS-Network'
   params: {
     Prefix: Prefix
     Location: Location
@@ -42,7 +42,7 @@ module Network 'Module-VNetWithGW.bicep' = {
 }
 
 module AVSExRVNetConnection 'Module-AVSExRVNetConnection.bicep' = {
-  name: 'AVSExRVNetConnection'
+  name: 'ESLZDeploy-AVS-AVSExRVNetConnection'
   params: {
     GatewayName: Network.outputs.GatewayName
     NetworkResourceGroup: NetworkResourceGroup.name
