@@ -13,7 +13,7 @@ This guide is designed to help you get started with deploying AVS via the templa
 # Prerequisites
 Prior to deploying to need to ensure you have met the following prerequisites:
 - Access to an exiiting Azure Subscription with [contributor access](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
-- [Request AVS host quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) for all regions you wish to deploy to
+- [Request  AVS host quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) for all regions you wish to deploy to
 
 # Planning
 This section covers the high level steps for planning an AVS deployment and the decisions that need to be made.
