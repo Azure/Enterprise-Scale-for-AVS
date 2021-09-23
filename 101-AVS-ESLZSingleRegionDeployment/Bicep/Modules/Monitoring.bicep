@@ -14,7 +14,7 @@ resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01
   location: PrimaryLocation
 }
 
-module ActionGroup 'Module-Operational-ActionGroup.bicep' = {
+module ActionGroup 'Monitoring/ActionGroup.bicep' = {
   scope: OperationalResourceGroup
   name: 'ESLZDeploy-Monitoring-ActionGroup'
   params: {
@@ -23,7 +23,7 @@ module ActionGroup 'Module-Operational-ActionGroup.bicep' = {
   }
 }
 
-module PrimaryMetricAlerts 'Module-Operational-MetricAlerts.bicep' = {
+module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = {
   scope: OperationalResourceGroup
   name: 'ESLZDeploy-Monitoring-MetricAlerts'
   params: {
@@ -33,7 +33,7 @@ module PrimaryMetricAlerts 'Module-Operational-MetricAlerts.bicep' = {
   }
 }
 
-module Dashboard 'Module-Operational-Dashboard.bicep' = {
+module Dashboard 'Monitoring/Dashboard.bicep' = {
   scope: OperationalResourceGroup
   name: 'ESLZDeploy-Monitoring-Dashboard'
   params:{

@@ -1,8 +1,16 @@
+@description('Name of the action group to be created')
 param ActionGroupName string = 'AVSAlerts'
+
+@description('Prefix to use for alert creation')
 param AlertPrefix string = 'AVSAlert'
-param ActionGroupEmails array
+
+@description('Email adresses that should be added to the action group')
+param ActionGroupEmails array = []
+
+@description('The existing Private Cloud full resource id')
 param PrivateCloudResourceId string
 
+// Create an action group to be used by the alerts
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   name: ActionGroupName
   location: 'Global'
@@ -17,6 +25,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   }
 }
 
+// Define the alerts that will be created as resources
 var Alerts = [
   {
     Name: 'CPU'
@@ -52,6 +61,7 @@ var Alerts = [
   }
 ]
 
+// Loop through the alerts above and create them
 resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert in Alerts: {
   name: '${AlertPrefix}-${Alert.Name}'
   location: 'Global'

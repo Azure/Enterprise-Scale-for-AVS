@@ -5,23 +5,36 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "13982936940625482091"
+      "templateHash": "10168629598855494372"
     }
   },
   "parameters": {
     "ActionGroupName": {
       "type": "string",
-      "defaultValue": "AVSAlerts"
+      "defaultValue": "AVSAlerts",
+      "metadata": {
+        "description": "Name of the action group to be created"
+      }
     },
     "AlertPrefix": {
       "type": "string",
-      "defaultValue": "AVSAlert"
+      "defaultValue": "AVSAlert",
+      "metadata": {
+        "description": "Prefix to use for alert creation"
+      }
     },
     "ActionGroupEmails": {
-      "type": "array"
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Email adresses that should be added to the action group"
+      }
     },
     "PrivateCloudResourceId": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The existing Private Cloud full resource id"
+      }
     }
   },
   "functions": [],

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "955938498976721575"
+    }
+  },
+  "parameters": {
+    "PrimaryPrivateCloudName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing primary private cloud that will contain the inter-private cloud link resource, must exist within this resource group"
+      }
+    },
+    "SecondaryPrivateCloudId": {
+      "type": "string",
+      "metadata": {
+        "description": "Full resource id of the secondary private cloud, must be in the same region as the primary"
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds/cloudLinks",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrimaryPrivateCloudName'), guid(parameters('SecondaryPrivateCloudId')))]",
+      "properties": {
+        "linkedCloud": "[parameters('SecondaryPrivateCloudId')]"
+      }
+    }
+  ]
+}

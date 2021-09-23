@@ -5,16 +5,15 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "15634953447765687498"
+      "templateHash": "4823242698450356719"
     }
   },
   "parameters": {
     "PrivateCloudName": {
-      "type": "string"
-    },
-    "HCXEnterprise": {
-      "type": "bool",
-      "defaultValue": false
+      "type": "string",
+      "metadata": {
+        "description": "The name of the existing Private Cloud to setup HCX on"
+      }
     }
   },
   "functions": [],
@@ -25,7 +24,7 @@
       "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'hcx')]",
       "properties": {
         "addonType": "HCX",
-        "offer": "[if(parameters('HCXEnterprise'), 'VMware MaaS Cloud Provider (Enterprise)', 'VMware MaaS Cloud Provider')]"
+        "offer": "VMware MaaS Cloud Provider"
       }
     }
   ]

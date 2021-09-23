@@ -5,21 +5,33 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "10048968859136914317"
+      "templateHash": "611093157338638995"
     }
   },
   "parameters": {
     "PrimaryPrivateCloudName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing primary private cloud that will contain the global reach resource"
+      }
     },
     "PrimaryPrivateCloudResourceGroup": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Resource gorup name of the existing primary private cloud"
+      }
     },
     "SecondaryPrivateCloudName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing secondary private cloud that global reach will connect to"
+      }
     },
     "SecondaryPrivateCloudResourceGroup": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Resource gorup name of the existing secondary private cloud"
+      }
     }
   },
   "functions": [],
@@ -35,7 +47,7 @@
         },
         "mode": "Incremental",
         "parameters": {
-          "ConnectionName": {
+          "AuthKeyName": {
             "value": "[format('GR-{0}', parameters('PrimaryPrivateCloudName'))]"
           },
           "PrivateCloudName": {
@@ -49,15 +61,21 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "2808681075634867814"
+              "templateHash": "3518823590788269666"
             }
           },
           "parameters": {
             "PrivateCloudName": {
-              "type": "string"
+              "type": "string",
+              "metadata": {
+                "description": "The existing Private Cloud name"
+              }
             },
-            "ConnectionName": {
-              "type": "string"
+            "AuthKeyName": {
+              "type": "string",
+              "metadata": {
+                "description": "The authorization key name to be created"
+              }
             }
           },
           "functions": [],
@@ -65,13 +83,13 @@
             {
               "type": "Microsoft.AVS/privateClouds/authorizations",
               "apiVersion": "2021-06-01",
-              "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
+              "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('AuthKeyName'))]"
             }
           ],
           "outputs": {
             "ExpressRouteAuthorizationKey": {
               "type": "string",
-              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('AuthKeyName'))).expressRouteAuthorizationKey]"
             },
             "ExpressRouteId": {
               "type": "string",
@@ -109,18 +127,27 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "10351735380447530768"
+              "templateHash": "4892092272112468516"
             }
           },
           "parameters": {
             "PrivateCloudName": {
-              "type": "string"
+              "type": "string",
+              "metadata": {
+                "description": "The existing Private Cloud name"
+              }
             },
             "ExpressRouteAuthorizationKey": {
-              "type": "secureString"
+              "type": "secureString",
+              "metadata": {
+                "description": "The Express Route Authorization Key to be redeemed by the connection"
+              }
             },
             "ExpressRouteId": {
-              "type": "secureString"
+              "type": "secureString",
+              "metadata": {
+                "description": "The id of the Express Route to create the connection to"
+              }
             }
           },
           "functions": [],

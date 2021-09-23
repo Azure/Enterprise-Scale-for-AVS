@@ -2,7 +2,6 @@ param Prefix string
 param NetworkBlock string
 param ManagementClusterSize int = 3
 param Location string = resourceGroup().location
-param InternetEnabled bool
 
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: '${Prefix}-SDDC'
@@ -12,7 +11,6 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   location: Location
   properties: {
     networkBlock: NetworkBlock
-    internet: InternetEnabled ? 'Enabled' : 'Disabled'
     managementCluster: {
       clusterSize: ManagementClusterSize
     }

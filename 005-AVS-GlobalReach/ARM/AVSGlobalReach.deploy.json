@@ -5,22 +5,27 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "8527762547370949405"
+      "templateHash": "4892092272112468516"
     }
   },
   "parameters": {
     "PrivateCloudName": {
-      "type": "string"
-    },
-    "GlobalReachName": {
       "type": "string",
-      "defaultValue": "[newGuid()]"
+      "metadata": {
+        "description": "The existing Private Cloud name"
+      }
     },
     "ExpressRouteAuthorizationKey": {
-      "type": "secureString"
+      "type": "secureString",
+      "metadata": {
+        "description": "The Express Route Authorization Key to be redeemed by the connection"
+      }
     },
     "ExpressRouteId": {
-      "type": "secureString"
+      "type": "secureString",
+      "metadata": {
+        "description": "The id of the Express Route to create the connection to"
+      }
     }
   },
   "functions": [],
@@ -28,7 +33,7 @@
     {
       "type": "Microsoft.AVS/privateClouds/globalReachConnections",
       "apiVersion": "2021-06-01",
-      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('GlobalReachName'))]",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), guid(parameters('ExpressRouteId'), parameters('ExpressRouteAuthorizationKey')))]",
       "properties": {
         "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
         "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"

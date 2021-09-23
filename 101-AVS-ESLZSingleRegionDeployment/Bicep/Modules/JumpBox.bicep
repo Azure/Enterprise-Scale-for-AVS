@@ -11,7 +11,7 @@ param VNetName string
 param JumpboxSubnet string
 param BastionSubnet string
 
-module Subnet 'Module-JumpBox-Subnet.bicep' = {
+module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'
   scope: resourceGroup(VNetResourceGroup)
   params:{
@@ -26,7 +26,7 @@ resource JumpboxResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   location: Location
 }
 
-module Bastion 'Module-JumpBox-Bastion.bicep' = {
+module Bastion 'JumpBox/Bastion.bicep' = {
   name: 'ESLZDeploy-Jumpbox-Bastion'
   scope: JumpboxResourceGroup
   params:{
@@ -36,7 +36,7 @@ module Bastion 'Module-JumpBox-Bastion.bicep' = {
   }
 }
 
-module VM 'Module-JumpBox-VM.bicep' = {
+module VM 'JumpBox/JumpBoxVM.bicep' = {
   name: 'ESLZDeploy-Jumpbox-VM'
   scope: JumpboxResourceGroup
   params: {

@@ -5,11 +5,11 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "13783957413304023841"
+      "templateHash": "17848577162790689282"
     }
   },
   "parameters": {
-    "PrimaryLocation": {
+    "Location": {
       "type": "string",
       "metadata": {
         "description": "The region the AVS Private Cloud & associated resources will be deployed to"
@@ -47,53 +47,46 @@
         "description": "The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace"
       }
     },
-    "InternetViaVWan": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "***TODO: Add***"
-      }
-    },
     "AlertEmails": {
       "type": "array",
       "defaultValue": [],
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "Email addresses to be added to the alerting action group"
       }
     },
     "DeployJumpbox": {
       "type": "bool",
       "defaultValue": false,
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "Should a Jumpbox & Bastion be deployed to access the Private Cloud"
       }
     },
     "JumpboxUsername": {
       "type": "string",
       "defaultValue": "avsjump",
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "Username for the Jumpbox VM"
       }
     },
     "JumpboxPassword": {
       "type": "secureString",
       "defaultValue": "",
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "Password for the Jumpbox VM, can be changed later"
       }
     },
     "JumpboxSubnet": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "The subnet CIDR used for the Jumpbox VM Subnet. Must be a /26 or greater within the VNetAddressSpace"
       }
     },
     "BastionSubnet": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "***TODO: Add***"
+        "description": "The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace"
       }
     }
   },
@@ -114,22 +107,10 @@
             "value": "[parameters('Prefix')]"
           },
           "Location": {
-            "value": "[parameters('PrimaryLocation')]"
+            "value": "[parameters('Location')]"
           },
           "PrivateCloudAddressSpace": {
             "value": "[parameters('PrivateCloudAddressSpace')]"
-          },
-          "VNetExists": {
-            "value": "[parameters('VNetExists')]"
-          },
-          "VNetAddressSpace": {
-            "value": "[parameters('VNetAddressSpace')]"
-          },
-          "VNetGatewaySubnet": {
-            "value": "[parameters('VNetGatewaySubnet')]"
-          },
-          "PrivateCloudInternetEnabled": {
-            "value": "[not(parameters('InternetViaVWan'))]"
           }
         },
         "template": {
@@ -139,7 +120,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "8187001275395621765"
+              "templateHash": "639072077769369403"
             }
           },
           "parameters": {
@@ -151,18 +132,6 @@
             },
             "PrivateCloudAddressSpace": {
               "type": "string"
-            },
-            "VNetExists": {
-              "type": "bool"
-            },
-            "VNetAddressSpace": {
-              "type": "string"
-            },
-            "VNetGatewaySubnet": {
-              "type": "string"
-            },
-            "PrivateCloudInternetEnabled": {
-              "type": "bool"
             }
           },
           "functions": [],
@@ -171,12 +140,6 @@
               "type": "Microsoft.Resources/resourceGroups",
               "apiVersion": "2021-04-01",
               "name": "[format('{0}-PrivateCloud', parameters('Prefix'))]",
-              "location": "[parameters('Location')]"
-            },
-            {
-              "type": "Microsoft.Resources/resourceGroups",
-              "apiVersion": "2021-04-01",
-              "name": "[format('{0}-Network', parameters('Prefix'))]",
               "location": "[parameters('Location')]"
             },
             {
@@ -198,9 +161,6 @@
                   },
                   "NetworkBlock": {
                     "value": "[parameters('PrivateCloudAddressSpace')]"
-                  },
-                  "InternetEnabled": {
-                    "value": "[parameters('PrivateCloudInternetEnabled')]"
                   }
                 },
                 "template": {
@@ -210,7 +170,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.613.9944",
-                      "templateHash": "6781360614541479788"
+                      "templateHash": "2471184022729140642"
                     }
                   },
                   "parameters": {
@@ -227,9 +187,6 @@
                     "Location": {
                       "type": "string",
                       "defaultValue": "[resourceGroup().location]"
-                    },
-                    "InternetEnabled": {
-                      "type": "bool"
                     }
                   },
                   "functions": [],
@@ -244,7 +201,6 @@
                       "location": "[parameters('Location')]",
                       "properties": {
                         "networkBlock": "[parameters('NetworkBlock')]",
-                        "internet": "[if(parameters('InternetEnabled'), 'Enabled', 'Disabled')]",
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
                         }
@@ -266,6 +222,86 @@
               "dependsOn": [
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-PrivateCloud', parameters('Prefix')))]"
               ]
+            }
+          ],
+          "outputs": {
+            "PrivateCloudName": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
+            },
+            "PrivateCloudResourceGroupName": {
+              "type": "string",
+              "value": "[format('{0}-PrivateCloud', parameters('Prefix'))]"
+            },
+            "PrivateCloudResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "ESLZDeploy-Networking",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "VNetExists": {
+            "value": "[parameters('VNetExists')]"
+          },
+          "VNetAddressSpace": {
+            "value": "[parameters('VNetAddressSpace')]"
+          },
+          "VNetGatewaySubnet": {
+            "value": "[parameters('VNetGatewaySubnet')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.613.9944",
+              "templateHash": "7355000181918065822"
+            }
+          },
+          "parameters": {
+            "Location": {
+              "type": "string"
+            },
+            "Prefix": {
+              "type": "string"
+            },
+            "VNetExists": {
+              "type": "bool"
+            },
+            "VNetAddressSpace": {
+              "type": "string"
+            },
+            "VNetGatewaySubnet": {
+              "type": "string"
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Network', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
             },
             {
               "type": "Microsoft.Resources/deployments",
@@ -424,239 +460,9 @@
               "dependsOn": [
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]"
               ]
-            },
-            {
-              "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2019-10-01",
-              "name": "ESLZDeploy-AVS-AVSExRVNetConnection",
-              "location": "[deployment().location]",
-              "properties": {
-                "expressionEvaluationOptions": {
-                  "scope": "inner"
-                },
-                "mode": "Incremental",
-                "parameters": {
-                  "GatewayName": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.GatewayName.value]"
-                  },
-                  "NetworkResourceGroup": {
-                    "value": "[format('{0}-Network', parameters('Prefix'))]"
-                  },
-                  "VNetPrefix": {
-                    "value": "[parameters('Prefix')]"
-                  },
-                  "PrivateCloudName": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
-                  },
-                  "PrivateCloudResourceGroup": {
-                    "value": "[format('{0}-PrivateCloud', parameters('Prefix'))]"
-                  }
-                },
-                "template": {
-                  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-                  "contentVersion": "1.0.0.0",
-                  "metadata": {
-                    "_generator": {
-                      "name": "bicep",
-                      "version": "0.4.613.9944",
-                      "templateHash": "11582912029123846302"
-                    }
-                  },
-                  "parameters": {
-                    "VNetPrefix": {
-                      "type": "string"
-                    },
-                    "AVSPrefix": {
-                      "type": "string",
-                      "defaultValue": "[parameters('VNetPrefix')]"
-                    },
-                    "PrivateCloudResourceGroup": {
-                      "type": "string"
-                    },
-                    "PrivateCloudName": {
-                      "type": "string"
-                    },
-                    "NetworkResourceGroup": {
-                      "type": "string"
-                    },
-                    "GatewayName": {
-                      "type": "string"
-                    }
-                  },
-                  "functions": [],
-                  "resources": [
-                    {
-                      "type": "Microsoft.Resources/deployments",
-                      "apiVersion": "2019-10-01",
-                      "name": "ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization",
-                      "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
-                      "properties": {
-                        "expressionEvaluationOptions": {
-                          "scope": "inner"
-                        },
-                        "mode": "Incremental",
-                        "parameters": {
-                          "ConnectionName": {
-                            "value": "[format('{0}-VNet', parameters('VNetPrefix'))]"
-                          },
-                          "PrivateCloudName": {
-                            "value": "[parameters('PrivateCloudName')]"
-                          }
-                        },
-                        "template": {
-                          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                          "contentVersion": "1.0.0.0",
-                          "metadata": {
-                            "_generator": {
-                              "name": "bicep",
-                              "version": "0.4.613.9944",
-                              "templateHash": "2808681075634867814"
-                            }
-                          },
-                          "parameters": {
-                            "PrivateCloudName": {
-                              "type": "string"
-                            },
-                            "ConnectionName": {
-                              "type": "string"
-                            }
-                          },
-                          "functions": [],
-                          "resources": [
-                            {
-                              "type": "Microsoft.AVS/privateClouds/authorizations",
-                              "apiVersion": "2021-06-01",
-                              "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
-                            }
-                          ],
-                          "outputs": {
-                            "ExpressRouteAuthorizationKey": {
-                              "type": "string",
-                              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
-                            },
-                            "ExpressRouteId": {
-                              "type": "string",
-                              "value": "[reference(resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName')), '2021-06-01').circuit.expressRouteID]"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "Microsoft.Resources/deployments",
-                      "apiVersion": "2019-10-01",
-                      "name": "ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection",
-                      "resourceGroup": "[parameters('NetworkResourceGroup')]",
-                      "properties": {
-                        "expressionEvaluationOptions": {
-                          "scope": "inner"
-                        },
-                        "mode": "Incremental",
-                        "parameters": {
-                          "ConnectionName": {
-                            "value": "[format('{0}-AVS', parameters('AVSPrefix'))]"
-                          },
-                          "GatewayName": {
-                            "value": "[parameters('GatewayName')]"
-                          },
-                          "ExpressRouteAuthorizationKey": {
-                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
-                          },
-                          "ExpressRouteId": {
-                            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteId.value]"
-                          }
-                        },
-                        "template": {
-                          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                          "contentVersion": "1.0.0.0",
-                          "metadata": {
-                            "_generator": {
-                              "name": "bicep",
-                              "version": "0.4.613.9944",
-                              "templateHash": "52180401647810848"
-                            }
-                          },
-                          "parameters": {
-                            "GatewayName": {
-                              "type": "string"
-                            },
-                            "ConnectionName": {
-                              "type": "string"
-                            },
-                            "Location": {
-                              "type": "string",
-                              "defaultValue": "[resourceGroup().location]"
-                            },
-                            "ExpressRouteAuthorizationKey": {
-                              "type": "secureString"
-                            },
-                            "ExpressRouteId": {
-                              "type": "secureString"
-                            }
-                          },
-                          "functions": [],
-                          "resources": [
-                            {
-                              "type": "Microsoft.Network/connections",
-                              "apiVersion": "2021-02-01",
-                              "name": "[parameters('ConnectionName')]",
-                              "location": "[parameters('Location')]",
-                              "properties": {
-                                "connectionType": "ExpressRoute",
-                                "routingWeight": 0,
-                                "virtualNetworkGateway1": {
-                                  "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]",
-                                  "properties": {}
-                                },
-                                "peer": {
-                                  "id": "[parameters('ExpressRouteId')]"
-                                },
-                                "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
-                              }
-                            }
-                          ],
-                          "outputs": {
-                            "ExRConnectionResourceId": {
-                              "type": "string",
-                              "value": "[resourceId('Microsoft.Network/connections', parameters('ConnectionName'))]"
-                            }
-                          }
-                        }
-                      },
-                      "dependsOn": [
-                        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization')]"
-                      ]
-                    }
-                  ],
-                  "outputs": {
-                    "ExRConnectionResourceId": {
-                      "type": "string",
-                      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
-                    }
-                  }
-                }
-              },
-              "dependsOn": [
-                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network')]",
-                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]",
-                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud')]",
-                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-PrivateCloud', parameters('Prefix')))]"
-              ]
             }
           ],
           "outputs": {
-            "PrivateCloudName": {
-              "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudName.value]"
-            },
-            "PrivateCloudResourceGroupName": {
-              "type": "string",
-              "value": "[format('{0}-PrivateCloud', parameters('Prefix'))]"
-            },
-            "PrivateCloudResourceId": {
-              "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-PrivateCloud'), '2019-10-01').outputs.PrivateCloudResourceId.value]"
-            },
             "GatewayName": {
               "type": "string",
               "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.GatewayName.value]"
@@ -665,21 +471,233 @@
               "type": "string",
               "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.VNetName.value]"
             },
-            "NetworkResourceGroup": {
-              "type": "string",
-              "value": "[format('{0}-Network', parameters('Prefix'))]"
-            },
-            "ExRConnectionResourceId": {
-              "type": "string",
-              "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
-            },
             "VNetResourceId": {
               "type": "string",
               "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-Network'), '2019-10-01').outputs.VNetResourceId.value]"
+            },
+            "NetworkResourceGroup": {
+              "type": "string",
+              "value": "[format('{0}-Network', parameters('Prefix'))]"
             }
           }
         }
       }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "ESLZDeploy-VNetConnection",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "GatewayName": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking'), '2019-10-01').outputs.GatewayName.value]"
+          },
+          "NetworkResourceGroup": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking'), '2019-10-01').outputs.NetworkResourceGroup.value]"
+          },
+          "VNetPrefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "PrivateCloudName": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudName.value]"
+          },
+          "PrivateCloudResourceGroup": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudResourceGroupName.value]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.613.9944",
+              "templateHash": "11582912029123846302"
+            }
+          },
+          "parameters": {
+            "VNetPrefix": {
+              "type": "string"
+            },
+            "AVSPrefix": {
+              "type": "string",
+              "defaultValue": "[parameters('VNetPrefix')]"
+            },
+            "PrivateCloudResourceGroup": {
+              "type": "string"
+            },
+            "PrivateCloudName": {
+              "type": "string"
+            },
+            "NetworkResourceGroup": {
+              "type": "string"
+            },
+            "GatewayName": {
+              "type": "string"
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2019-10-01",
+              "name": "ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ConnectionName": {
+                    "value": "[format('{0}-VNet', parameters('VNetPrefix'))]"
+                  },
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.613.9944",
+                      "templateHash": "2808681075634867814"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    },
+                    "ConnectionName": {
+                      "type": "string"
+                    }
+                  },
+                  "functions": [],
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/authorizations",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
+                    }
+                  ],
+                  "outputs": {
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+                    },
+                    "ExpressRouteId": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName')), '2021-06-01').circuit.expressRouteID]"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2019-10-01",
+              "name": "ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection",
+              "resourceGroup": "[parameters('NetworkResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ConnectionName": {
+                    "value": "[format('{0}-AVS', parameters('AVSPrefix'))]"
+                  },
+                  "GatewayName": {
+                    "value": "[parameters('GatewayName')]"
+                  },
+                  "ExpressRouteAuthorizationKey": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+                  },
+                  "ExpressRouteId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization'), '2019-10-01').outputs.ExpressRouteId.value]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.613.9944",
+                      "templateHash": "52180401647810848"
+                    }
+                  },
+                  "parameters": {
+                    "GatewayName": {
+                      "type": "string"
+                    },
+                    "ConnectionName": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string",
+                      "defaultValue": "[resourceGroup().location]"
+                    },
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "secureString"
+                    },
+                    "ExpressRouteId": {
+                      "type": "secureString"
+                    }
+                  },
+                  "functions": [],
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/connections",
+                      "apiVersion": "2021-02-01",
+                      "name": "[parameters('ConnectionName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "connectionType": "ExpressRoute",
+                        "routingWeight": 0,
+                        "virtualNetworkGateway1": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]",
+                          "properties": {}
+                        },
+                        "peer": {
+                          "id": "[parameters('ExpressRouteId')]"
+                        },
+                        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "ExRConnectionResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/connections', parameters('ConnectionName'))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-AVSExRAuthorization')]"
+              ]
+            }
+          ],
+          "outputs": {
+            "ExRConnectionResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', 'ESLZDeploy-AVS-AVSExRVNetConnection-VNetExRConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]",
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking')]"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -787,7 +805,7 @@
             "value": "[parameters('Prefix')]"
           },
           "Location": {
-            "value": "[parameters('PrimaryLocation')]"
+            "value": "[parameters('Location')]"
           },
           "Username": {
             "value": "[parameters('JumpboxUsername')]"
@@ -796,10 +814,10 @@
             "value": "[parameters('JumpboxPassword')]"
           },
           "VNetName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.VNetName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking'), '2019-10-01').outputs.VNetName.value]"
           },
           "VNetResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.NetworkResourceGroup.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking'), '2019-10-01').outputs.NetworkResourceGroup.value]"
           },
           "BastionSubnet": {
             "value": "[parameters('BastionSubnet')]"
@@ -1170,7 +1188,7 @@
         }
       },
       "dependsOn": [
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]"
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking')]"
       ]
     },
     {
@@ -1191,7 +1209,7 @@
             "value": "[parameters('Prefix')]"
           },
           "PrimaryLocation": {
-            "value": "[parameters('PrimaryLocation')]"
+            "value": "[parameters('Location')]"
           },
           "PrimaryPrivateCloudName": {
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudName.value]"
@@ -1203,10 +1221,10 @@
             "value": "[if(parameters('DeployJumpbox'), reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Jumpbox'), '2019-10-01').outputs.JumpboxResourceId.value, '')]"
           },
           "VNetResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.VNetResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking'), '2019-10-01').outputs.VNetResourceId.value]"
           },
           "ExRConnectionResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-VNetConnection'), '2019-10-01').outputs.ExRConnectionResourceId.value]"
           }
         },
         "template": {
@@ -1911,8 +1929,10 @@
         }
       },
       "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]",
         "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Jumpbox')]",
-        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS')]"
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-Networking')]",
+        "[subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-VNetConnection')]"
       ]
     }
   ]
