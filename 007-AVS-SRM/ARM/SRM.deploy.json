@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "7052606693918640070"
+      "templateHash": "2942911527380037416"
     }
   },
   "parameters": {
@@ -36,22 +36,22 @@
     {
       "type": "Microsoft.AVS/privateClouds/addons",
       "apiVersion": "2021-06-01",
-      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
       "properties": {
-        "vrsCount": "[parameters('ReplicationServerCount')]",
-        "addonType": "VR"
+        "licenseKey": "[parameters('SRMLicenseKey')]",
+        "addonType": "SRM"
       }
     },
     {
       "type": "Microsoft.AVS/privateClouds/addons",
       "apiVersion": "2021-06-01",
-      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
       "properties": {
-        "licenseKey": "[parameters('SRMLicenseKey')]",
-        "addonType": "SRM"
+        "vrsCount": "[parameters('ReplicationServerCount')]",
+        "addonType": "VR"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'vr')]"
+        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
       ]
     }
   ]

@@ -13,16 +13,6 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
   name: PrivateCloudName
 }
 
-// Set up the vSphere Replication servers
-resource VR 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
-  name: 'vr'
-  parent: PrivateCloud
-  properties: {
-    vrsCount: ReplicationServerCount
-    addonType: 'VR'
-  }
-}
-
 // Set up SRM
 resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
   name: 'srm'
@@ -31,7 +21,19 @@ resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
     licenseKey: SRMLicenseKey
     addonType: 'SRM'
   }
-  dependsOn:[
-    VR
+}
+
+
+// Set up the vSphere Replication servers
+resource VR 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+  name: 'vr'
+  parent: PrivateCloud
+  properties: {
+    vrsCount: ReplicationServerCount
+    addonType: 'VR'
+  }
+  dependsOn: [
+    SRM
   ]
 }
+
