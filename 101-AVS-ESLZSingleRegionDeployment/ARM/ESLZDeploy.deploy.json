@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.613.9944",
-      "templateHash": "17848577162790689282"
+      "templateHash": "12590773868959761750"
     }
   },
   "parameters": {
@@ -88,6 +88,36 @@
       "metadata": {
         "description": "The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace"
       }
+    },
+    "DeployHCX": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Should HCX be deployed as part of the deployment"
+      }
+    },
+    "DeploySRM": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should SRM be deployed as part of the deployment"
+      }
+    },
+    "SRMLicenseKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "License key to be used if SRM is deployed"
+      }
+    },
+    "VRServerCount": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Number of vSphere Replication Servers to be created if SRM is deployed"
+      },
+      "maxValue": 10,
+      "minValue": 1
     }
   },
   "functions": [],
@@ -715,6 +745,18 @@
           },
           "PrivateCloudResourceGroup": {
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', 'ESLZDeploy-AVS'), '2019-10-01').outputs.PrivateCloudResourceGroupName.value]"
+          },
+          "DeployHCX": {
+            "value": "[parameters('DeployHCX')]"
+          },
+          "DeploySRM": {
+            "value": "[parameters('DeploySRM')]"
+          },
+          "SRMLicenseKey": {
+            "value": "[parameters('SRMLicenseKey')]"
+          },
+          "VRServerCount": {
+            "value": "[parameters('VRServerCount')]"
           }
         },
         "template": {
@@ -724,7 +766,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.613.9944",
-              "templateHash": "9501031373610512719"
+              "templateHash": "4799989773850704805"
             }
           },
           "parameters": {
@@ -733,11 +775,26 @@
             },
             "PrivateCloudResourceGroup": {
               "type": "string"
+            },
+            "DeployHCX": {
+              "type": "bool"
+            },
+            "DeploySRM": {
+              "type": "bool"
+            },
+            "SRMLicenseKey": {
+              "type": "string"
+            },
+            "VRServerCount": {
+              "type": "int",
+              "maxValue": 10,
+              "minValue": 1
             }
           },
           "functions": [],
           "resources": [
             {
+              "condition": "[parameters('DeployHCX')]",
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2019-10-01",
               "name": "AVS-Addins-HCX",
@@ -777,6 +834,78 @@
                         "addonType": "HCX",
                         "offer": "VMware MaaS Cloud Provider"
                       }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "condition": "[parameters('DeploySRM')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2019-10-01",
+              "name": "AVS-Addins-SRM",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  },
+                  "SRMLicenseKey": {
+                    "value": "[parameters('SRMLicenseKey')]"
+                  },
+                  "VRServerCount": {
+                    "value": "[parameters('VRServerCount')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.613.9944",
+                      "templateHash": "5209307262395597287"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    },
+                    "SRMLicenseKey": {
+                      "type": "string"
+                    },
+                    "VRServerCount": {
+                      "type": "int",
+                      "maxValue": 10,
+                      "minValue": 1
+                    }
+                  },
+                  "functions": [],
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/addons",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+                      "properties": {
+                        "licenseKey": "[parameters('SRMLicenseKey')]",
+                        "addonType": "SRM"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.AVS/privateClouds/addons",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
+                      "properties": {
+                        "vrsCount": "[parameters('VRServerCount')]",
+                        "addonType": "VR"
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
+                      ]
                     }
                   ]
                 }
