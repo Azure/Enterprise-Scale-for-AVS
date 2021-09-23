@@ -19,7 +19,7 @@ Get-ChildItem '.\' -Recurse -Include '*.bicep' |% {
         }
     }
 }
-$ItemStatusChecks = @('Bicep', 'ARM', 'AzureCLI', 'PowerShell')
+$ItemStatusChecks = @('Bicep', 'ARM', 'AzureCLI', 'PowerShell', 'Scenario Readme')
 $ItemStatsMd = "| $($ItemStatusChecks |% { "| $_" }) |`n"
 $ItemStatsMd += "| --- $($ItemStatusChecks |% { "| :---:" }) |`n"
 Get-ChildItem -Directory '.\' |? { $_.Name -match '^[0-8]\d\d-'} |% {
