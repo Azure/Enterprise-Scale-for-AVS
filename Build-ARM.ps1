@@ -25,7 +25,7 @@ $ItemStatsMd += "| --- $($ItemStatusChecks |% { "| :---:" }) |`n"
 Get-ChildItem -Directory '.\' |? { $_.Name -match '^[0-8]\d\d-'} |% {
     $ItemPath = $_.FullName
     $ItemStatsMd += "| $($_.BaseName) "
-    $ItemStatsMd += $ItemStatusChecks |% { "| $((Test-Path (Join-Path $ItemPath $_)) ? "Created" : "**Missing**") " }
+    $ItemStatsMd += $ItemStatusChecks |% { "| $((Test-Path (Join-Path $ItemPath $_)) ? "OK" : "**Missing**") " }
     $ItemStatsMd += "|`n"
 }
 Set-Content -Path "ESLZStatusReport.md" -Value $ItemStatsMd
