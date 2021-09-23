@@ -33,11 +33,15 @@ Status: Awaiting PG Signoff
 ## 010-AVS-CrossAVS-WithinRegion
 Status: Awaiting PG Signoff
 
+## 101-AVS-ESLZSingleRegionDeployment
+Status: In Development (Awaiting CSET area architecture confirmation)
+
+
+
+# Work in progress:
+
 ## 011-AVS-VirtualWan
 Status: In Development
 
-## 100-AVS-ESLZDeployment
-Status: In Development (Awaiting CSET area architecture confirmation)
-
-## 101-AVS-ESLZSingleRegionDeployment
+## 100-AVS-ESLZDualRegionDeployment
 Status: In Development (Awaiting CSET area architecture confirmation)
