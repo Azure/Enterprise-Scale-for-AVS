@@ -1,11 +1,11 @@
 # Getting Started
 
-This guide is designed to help you get started with deploying AVS via the templates and scripts within this repository. Before you deploy it is recomended to review the template to understand the reosurces that will be deployed and the associated costings.
+This guide is designed to help you get started with deploying AVS via the templates and scripts within this repository. Before you deploy it is recommended to review the template to understand the reosurces that will be deployed and the associated costs.
 
 ## Table Of Contents
 - Planning
   - Deployment Scenarios
-  - DevOps Planning
+  - Deployment Templates & Scripts
   - Regional Planning
 - Deployment Flow
 - Individual Modules
@@ -85,4 +85,4 @@ az deployment sub create -n AVSDeploy -l AustraliaEast -c --no-wait -f "ESLZDepl
 ```
 
 # Confirming Deployment
-Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
+Private cloud deployment will take around 3-4 hours. Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
