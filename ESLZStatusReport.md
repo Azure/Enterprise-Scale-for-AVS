@@ -1,7 +1,7 @@
 | | Bicep | ARM | AzureCLI | PowerShell | Scenario Readme |
 | --- | :---: | :---: | :---: | :---: | :---: |
 | 001-AVS-PrivateCloud | OK  | OK  | OK  | OK  | **Started** |
-| 002-AVS-ExRConnection-GenerateAuthKey | OK  | OK  | **Missing**  | **Missing**  | **Missing** |
+| 002-AVS-ExRConnection-GenerateAuthKey | OK  | OK  | **Missing**  | **Missing**  | **Started** |
 | 003-AVS-ExRConnection-SeperateAuthKey | OK  | OK  | **Missing**  | **Missing**  | **Missing** |
 | 004-AVS-ExRConnection-NewVNet | OK  | OK  | **Missing**  | **Missing**  | **Missing** |
 | 005-AVS-GlobalReach | OK  | OK  | OK  | **Missing**  | **Missing** |

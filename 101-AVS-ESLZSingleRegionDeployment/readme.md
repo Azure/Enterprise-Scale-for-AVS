@@ -25,4 +25,4 @@ Ensure that status of deployment is "Succeeded" by navigating to "Deployment" ta
 
 ## Next Steps
 
-[002-AVS-ExRConnection-GenerateAuthKey](./002-avs-exrconnection-generateauthkey)
+[Generate Auth Key](../002-AVS-ExRConnection-GenerateAuthKey/readme.md)
