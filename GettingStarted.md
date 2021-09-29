@@ -12,8 +12,9 @@ This guide is designed to help you get started with deploying AVS via the templa
 
 # Prerequisites
 Prior to deploying to need to ensure you have met the following prerequisites:
-- Access to an exiiting Azure Subscription with [contributor access](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
+- Access to an existing Azure Subscription with [contributor access](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
 - [Request  AVS host quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) for all regions you wish to deploy to
+- Register the Microsoft.AVS resource provider with your subscription
 
 # Planning
 This section covers the high level steps for planning an AVS deployment and the decisions that need to be made.
@@ -85,4 +86,4 @@ az deployment sub create -n AVSDeploy -l AustraliaEast -c --no-wait -f "ESLZDepl
 ```
 
 # Confirming Deployment
-Private cloud deployment will take around 3-4 hours. Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
+Private cloud deployment takes around 3-4 hours. Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
