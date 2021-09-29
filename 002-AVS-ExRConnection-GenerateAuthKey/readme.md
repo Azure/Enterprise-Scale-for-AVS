@@ -5,10 +5,19 @@ Status: Awaiting PG Signoff
 
 * Steps as outlined in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md) section are completed.
 
+* Be aware of the [limit on number of authorization keys](https://docs.microsoft.com/azure/expressroute/expressroute-faqs#can-i-link-to-more-than-one-virtual-network-to-an-expressroute-circuit) that can be generated per ExpressRoute circuit. 
+
+## During the deployment
+
+Run following command.
+
+```
+az deployment group create -g AVS-RG -l SoutheastAsia -c -f "ExRConnection.deploy.deploy.json" -p "@ExRConnection.deploy.parameters.json"
+```
+
 ## Post-deployment Steps
 
 * Validate that Authorization Key is generated. This can be validated by either navigating to "Connectivity" menu under Private Cloud Azure Portal or by running equivalent CLI/Powershell command.
-* Validate that the ExpressRoute Connection is successfully established from the VNet Gateway.  
 
 ## Next Steps
 
