@@ -11,7 +11,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 3. Do not allow standing access to user or service principal to be used for initiating deployment. Use [Azure Active Directory Privileged Identity Management (PIM)](https://docs.microsoft.com/azure/active-directory/privileged-identity-management/pim-configure) to request Just-In-Time access for starting the deployment process.
 
-## During the deployment
+## Deployment Steps
 
 Run following command.
 

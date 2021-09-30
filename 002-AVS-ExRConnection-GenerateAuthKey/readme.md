@@ -5,9 +5,9 @@ Status: Awaiting PG Signoff
 
 * Steps as outlined in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md) section are completed.
 
-* Be aware of the [limit on number of authorization keys](https://docs.microsoft.com/azure/expressroute/expressroute-faqs#can-i-link-to-more-than-one-virtual-network-to-an-expressroute-circuit) that can be generated per ExpressRoute circuit. 
+* Be aware of the [limit on number of authorization keys](https://docs.microsoft.com/azure/expressroute/expressroute-faqs#can-i-link-to-more-than-one-virtual-network-to-an-expressroute-circuit) that can be generated per ExpressRoute circuit.
 
-## During the deployment
+## Deployment Steps
 
 Run following command.
 
