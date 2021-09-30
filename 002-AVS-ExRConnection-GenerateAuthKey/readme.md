@@ -12,7 +12,9 @@ Status: Awaiting PG Signoff
 Run following command.
 
 ```
-az deployment group create -g AVS-RG -l SoutheastAsia -c -f "ExRConnection.deploy.deploy.json" -p "@ExRConnection.deploy.parameters.json"
+cd 002-AVS-ExRConnection-GenerateAuthKey/ARM
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Deployment -c -f "ExRConnection.deploy.deploy.json" -p "@ExRConnection.deploy.parameters.json"
 ```
 
 ## Post-deployment Steps

@@ -16,9 +16,11 @@ Ensure to check following prerequisites before starting the deployment process.
 Run following command.
 
 ```
-az group create -n AVS-RG -l SoutheastAsia
+az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
-az deployment group create -g AVS-RG -l SoutheastAsia -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
+cd 001-AVS-PrivateCloud/ARM
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
 ```
 
 Depending upon the region and size of the cluster, deployment process may take upto 2 hours.
