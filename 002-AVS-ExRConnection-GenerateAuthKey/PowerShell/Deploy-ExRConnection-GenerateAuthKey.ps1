@@ -21,17 +21,17 @@ New-AzVirtualNetworkGatewayConnection -Name $ConnectionName -ResourceGroupName $
 # Check ExpressRoute connection status
 while ($currentprovisioningstate -ne "Succeeded")
 {
-  $timeStamp = Get-Date -Format "hh:mm"
-  "$timestamp - Current Status: $currentprovisioningstate "
-  Start-Sleep -Seconds 20
-  $provisioningstate = Get-AzVirtualNetworkGatewayConnection -Name $ConnectionName -ResourceGroupName $GatewayResourceGroup
-  $currentprovisioningstate = $provisioningstate.ProvisioningState
+    $timeStamp = Get-Date -Format "hh:mm"
+    "$timestamp - Current Status: $currentprovisioningstate "
+    Start-Sleep -Seconds 20
+    $provisioningstate = Get-AzVirtualNetworkGatewayConnection -Name $ConnectionName -ResourceGroupName $GatewayResourceGroup
+    $currentprovisioningstate = $provisioningstate.ProvisioningState
 } 
 
 if ($currentprovisioningstate -eq "Succeeded")
 {
-Write-host -ForegroundColor Green "Connection was created successfully"
+    Write-host -ForegroundColor Green "Connection was created successfully"
 }
 else {
-Write-host -ForegroundColor Red "Connection was not created succesfully"
+    Write-host -ForegroundColor Red "Connection was not created succesfully"
 }
