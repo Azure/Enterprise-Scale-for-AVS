@@ -6,7 +6,7 @@
 | 004-AVS-ExRConnection-NewVNet | OK  | OK  | **Missing**  | **Missing**  | **Started** |
 | 005-AVS-GlobalReach | OK  | OK  | OK  | **Missing**  | **Started** |
 | 006-AVS-Monitor-Utilization | OK  | OK  | **Missing**  | **Missing**  | **Started** |
-| 007-AVS-SRM | OK  | OK  | OK  | **Missing**  | **Missing** |
+| 007-AVS-SRM | OK  | OK  | OK  | **Missing**  | **Started** |
 | 008-AVS-HCX | OK  | OK  | OK  | **Missing**  | **Missing** |
 | 008-AVS-PrivateCloudWithHCX | OK  | OK  | **Missing**  | **Missing**  | **Missing** |
 | 009-AVS-CrossAVS-GlobalReach | OK  | OK  | **Missing**  | **Missing**  | **Missing** |
