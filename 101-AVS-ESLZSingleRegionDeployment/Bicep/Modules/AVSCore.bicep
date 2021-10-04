@@ -12,7 +12,7 @@ resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-0
 
 module PrivateCloud 'AVSCore/PrivateCloud.bicep' = {
   scope: PrivateCloudResourceGroup
-  name: 'ESLZDeploy-AVS-PrivateCloud'
+  name: '${deployment().name}-PrivateCloud'
   params: {
     Prefix: Prefix
     Location: Location
