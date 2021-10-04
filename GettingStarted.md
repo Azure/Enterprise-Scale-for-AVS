@@ -76,11 +76,11 @@ az account show
  - The location the deployment metadata will be stored: `-l Location`
 You can use the `-c` option to validate what resources will be deployed prior to be deploying:
 ```Azure CLI
-az deployment sub create -n AVSDeploy -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
 ```
 You can also use `--no-wait` option to kick of the deployment without waiting for it to complete:
 ```Azure CLI
-az deployment sub create -n AVSDeploy -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
 ```
 
 # Confirming Deployment
