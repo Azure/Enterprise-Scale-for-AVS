@@ -7,7 +7,15 @@ Status: Awaiting PG Signoff
 
 * A list of email address(es) who will receive Alerts from Azure VMware Solution Private Cloud.
 
-## deployment Steps
+## Deployment Steps
+
+Run following command.
+
+```powershell
+cd 006-AVS-Monitor-Utilization/ARM
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -c -f "AVSMonitor.deploy.json" -p "@AVSMonitor.parameters.json"
+```
 
 ## Post-deployment Steps
 

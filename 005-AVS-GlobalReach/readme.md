@@ -16,7 +16,7 @@ Run following command.
 ```powershell
 cd 005-AVS-GlobalReach/ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "AVSGlobalReach.deploy.json" -p "@AVSGlobalReach.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-GlobalReach-Deployment -c -f "AVSGlobalReach.deploy.json" -p "@AVSGlobalReach.parameters.json"
 ```
 
 ## Post-deployment Steps
