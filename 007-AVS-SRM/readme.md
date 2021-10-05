@@ -27,4 +27,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-SRM-Deployment -c -f "S
 
 ## Next Steps
 
-[Enable HCX](../008-AVS-HCX/readme.md)
+[Configure HCX on an existing Azure VMware Solution Private Cloud](../008-AVS-HCX/readme.md)
