@@ -5,11 +5,11 @@ Status: Awaiting PG Signoff
 
 Ensure to check following prerequisites before starting the deployment process.
 
-1. Azure VMware Solution host quota is approved for the Azure subscription.
+* Azure VMware Solution host quota is approved for the Azure subscription.
 
-2. Azure Account associated with the user or service principal has contributor permissions on Azure subscription.
+* Azure Account associated with the user or service principal has contributor permissions on Azure subscription.
 
-3. Do not allow standing access to user or service principal to be used for initiating deployment. Use [Azure Active Directory Privileged Identity Management (PIM)](https://docs.microsoft.com/azure/active-directory/privileged-identity-management/pim-configure) to request Just-In-Time access for starting the deployment process.
+* Do not allow standing access to user or service principal to be used for initiating deployment. Use [Azure Active Directory Privileged Identity Management (PIM)](https://docs.microsoft.com/azure/active-directory/privileged-identity-management/pim-configure) to request Just-In-Time access for starting the deployment process.
 
 ## Deployment Steps
 
