@@ -13,9 +13,13 @@ Ensure to check following prerequisites before starting the deployment process.
 
 ## Deployment Steps
 
+* Update the parameter values in appropriate location.
+
+### ARM
+
 Run following command.
 
-```
+```powershell
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
 cd 001-AVS-PrivateCloud/ARM

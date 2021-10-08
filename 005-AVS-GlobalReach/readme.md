@@ -11,6 +11,10 @@ Currently not avalible in PowerShell
 
 ## Deployment Steps
 
+* Update the parameter values in appropriate location.
+
+### ARM
+
 Run following command.
 
 ```powershell

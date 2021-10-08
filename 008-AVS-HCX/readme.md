@@ -9,7 +9,11 @@ Status: Testing
 
 ## Deployment Steps
 
-Run following command. It may take upto 30 mins to complete the installation.
+* Update the parameter values in appropriate location. It may take upto 30 mins to complete this installation.
+
+### ARM
+
+Run following command.
 
 ```powershell
 cd 008-AVS-HCX/ARM

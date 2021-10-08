@@ -11,7 +11,11 @@ Status: Awaiting PG Signoff
 
 ## Deployment Steps
 
-Run following command. It may take upto 2 hours to create Azure VMware Solution Private Cloud. Additionally, upto 30 mins are needed to complete HCX installation.
+* Update the parameter values in appropriate location. It may take upto 2 hours to create Azure VMware Solution Private Cloud. Additionally, upto 30 mins are needed to complete HCX installation.
+
+### ARM
+
+Run following command.
 
 ```powershell
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
@@ -29,4 +33,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "P
 
 ## Next Steps
 
-[Configure GlobalReach between two Azure VMware SOlution Private Clouds](../009-AVS-CrossAVS-GlobalReach/readme.md)
+[Connect two Azure VMware Solution Private Clouds across different Azure regions](../009-AVS-CrossAVS-GlobalReach/readme.md)

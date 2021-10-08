@@ -9,6 +9,10 @@ Status: Awaiting PG Signoff
 
 ## Deployment Steps
 
+* Update the parameter values in appropriate location.
+
+### ARM
+
 Run following command.
 
 ```powershell
