@@ -18,8 +18,6 @@ Status: Awaiting PG Signoff
 Run following command.
 
 ```powershell
-az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
-
 cd 008-AVS-PrivateCloudWithHCX/ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "PrivateCloudWithHCX.deploy.json" -p "@PrivateCloudWithHCX.parameters.json"
