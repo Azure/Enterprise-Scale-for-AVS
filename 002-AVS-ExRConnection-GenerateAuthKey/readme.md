@@ -9,12 +9,16 @@ Status: Awaiting PG Signoff
 
 ## Deployment Steps
 
+* Update the parameter values in appropriate location.
+
+### ARM
+
 Run following command.
 
-```
+```powershell
 cd 002-AVS-ExRConnection-GenerateAuthKey/ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Deployment -c -f "ExRConnection.deploy.deploy.json" -p "@ExRConnection.deploy.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Deployment -c -f "ExRConnection.deploy.json" -p "@ExRConnection.parameters.json"
 ```
 
 ## Post-deployment Steps

@@ -7,9 +7,13 @@ Status: Awaiting PG Signoff
 
 ## Deployment Steps
 
+* Update the parameter values in appropriate location.
+
+### ARM
+
 Run following command.
 
-```
+```powershell
 cd 004-AVS-ExRConnection-NewVNet/ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "VNetWithExR.deploy.json" -p "@VNetWithExR.deploy.parameters.json"
