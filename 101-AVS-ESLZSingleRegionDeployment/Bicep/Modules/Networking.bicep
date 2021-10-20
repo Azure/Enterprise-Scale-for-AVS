@@ -13,7 +13,7 @@ resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = 
 
 module Network 'Networking/VNetWithGW.bicep' = {
   scope: NetworkResourceGroup
-  name: 'ESLZDeploy-AVS-Network'
+  name: '${deployment().name}-Network'
   params: {
     Prefix: Prefix
     Location: Location

@@ -43,7 +43,7 @@ param VRServerCount int = 1
 
 
 module AVSCore 'Modules/AVSCore.bicep' = {
-  name: 'ESLZDeploy-AVS'
+  name: '${deployment().name}-AVS'
   params: {
     Prefix: Prefix
     Location: Location
@@ -52,7 +52,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
 }
 
 module Networking 'Modules/Networking.bicep' = {
-  name: 'ESLZDeploy-Networking'
+  name: '${deployment().name}-Networking'
   params: {
     Prefix: Prefix
     Location: Location
@@ -63,7 +63,7 @@ module Networking 'Modules/Networking.bicep' = {
 }
 
 module VNetConnection 'Modules/VNetConnection.bicep' = {
-  name: 'ESLZDeploy-VNetConnection'
+  name: '${deployment().name}-VNetConnection'
   params: {
     GatewayName: Networking.outputs.GatewayName
     NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
@@ -74,7 +74,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = {
 }
 
 module Addins 'Modules/AVSAddins.bicep' = {
-  name: 'ESLZDeploy-AVSAddins'
+  name: '${deployment().name}-AVSAddins'
   params: {
     PrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
@@ -86,7 +86,7 @@ module Addins 'Modules/AVSAddins.bicep' = {
 }
 
 module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
-  name: 'ESLZDeploy-Jumpbox'
+  name: '${deployment().name}-Jumpbox'
   params: {
     Prefix: Prefix
     Location: Location
@@ -100,7 +100,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
 }
 
 module OperationalMonitoring 'Modules/Monitoring.bicep' = {
-  name: 'ESLZDeploy-Monitoring'
+  name: '${deployment().name}-Monitoring'
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix

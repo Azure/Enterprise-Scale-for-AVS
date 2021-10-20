@@ -16,7 +16,7 @@ resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01
 
 module ActionGroup 'Monitoring/ActionGroup.bicep' = {
   scope: OperationalResourceGroup
-  name: 'ESLZDeploy-Monitoring-ActionGroup'
+  name: '${deployment().name}-ActionGroup'
   params: {
     Prefix: Prefix
     ActionGroupEmails: AlertEmails
@@ -25,7 +25,7 @@ module ActionGroup 'Monitoring/ActionGroup.bicep' = {
 
 module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = {
   scope: OperationalResourceGroup
-  name: 'ESLZDeploy-Monitoring-MetricAlerts'
+  name: '${deployment().name}-MetricAlerts'
   params: {
     ActionGroupResourceId: ActionGroup.outputs.ActionGroupResourceId
     AlertPrefix: PrimaryPrivateCloudName
@@ -35,7 +35,7 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = {
 
 module Dashboard 'Monitoring/Dashboard.bicep' = {
   scope: OperationalResourceGroup
-  name: 'ESLZDeploy-Monitoring-Dashboard'
+  name: '${deployment().name}-Dashboard'
   params:{
     Prefix: Prefix
     Location: PrimaryLocation
