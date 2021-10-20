@@ -15,9 +15,20 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-### ARM
+Run one of the following command.
 
-Run following command.
+### Bicep
+
+```azurecli-interactive
+az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
+
+cd 001-AVS-PrivateCloud/AzureCLI
+
+az deployment group create -g AVS-Step-By-Step-RG -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
+
+```
+
+### ARM
 
 ```powershell
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
@@ -25,6 +36,16 @@ az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 cd 001-AVS-PrivateCloud/ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
+```
+
+### Azure CLI
+
+```azurecli-interactive
+az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
+
+cd 001-AVS-PrivateCloud/AzureCLI
+
+./deploy.sh
 ```
 
 Depending upon the region and size of the cluster, deployment process may take upto 2 hours.
