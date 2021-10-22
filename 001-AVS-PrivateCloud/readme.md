@@ -1,6 +1,8 @@
 # 001-AVS-PrivateCloud
 Status: Awaiting PG Signoff
 
+Azure VMware Solution provides you with private clouds that contain vSphere clusters built from dedicated bare-metal Azure infrastructure. This is the first step where you will provision the AVS private cloud resource to get started. 
+
 ## Prerequisites
 
 Ensure to check following prerequisites before starting the deployment process.
@@ -15,7 +17,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-Run one of the following command.
+Deploy the AVS private cloud using one of the following ways
 
 ### Bicep
 
@@ -48,11 +50,11 @@ cd 001-AVS-PrivateCloud/AzureCLI
 ./deploy.sh
 ```
 
-Depending upon the region and size of the cluster, deployment process may take upto 2 hours.
+Depending upon the region and size of the cluster, deployment process may take upto 4 hours.
 
 ## Post-deployment Steps
 
-Ensure that status of deployment is "Succeeded" by navigating to "Deployment" tab of the Azure Resource Group used for starting the deployment.
+Ensure that status of deployment is "Succeeded" by navigating to the "Deployment" tab of the Azure Resource Group used for initiating the deployment.
 
 ## Next Steps
 

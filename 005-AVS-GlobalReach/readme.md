@@ -1,13 +1,13 @@
 # 005-AVS-GlobalReach
 Status: Awaiting PG Signoff
 
-Currently not avalible in PowerShell
+In this step we will create the Express Route Global reach connection link. ExpressRoute Global Reach is required to connect AVS to AVS in a different region, and On-premises environments to AVS.
 
 ## Prerequisites
 
 * Completed steps as described in [Create Virtual Network Gateway](../004-AVS-ExRConnection-NewVNet/readme.md) section.
 
-* An nn-premise ExpressRoute Circuit ID with which GlobalReach connection is to be established with.
+* An on-premise ExpressRoute Circuit ID with which GlobalReach connection is to be established with.
 
 ## Deployment Steps
 
