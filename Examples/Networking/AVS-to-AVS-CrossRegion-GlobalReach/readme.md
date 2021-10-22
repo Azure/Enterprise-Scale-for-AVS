@@ -1,13 +1,14 @@
 # AVS to AVS: Cross Region via Global Reach
 Status: Awaiting PG Signoff
 
-This step is required when you want to connect two AVS private clouds in different Azure regions via Express Route Global Reach.
+This tutorial covers connecting two Azure VMware Solution Private Clouds in different Azure regions via ExpressRoute GlobalReach.
 
 ## Prerequisites
 
-* Created two Azure VMware Solution private clouds using steps as described in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md).
+* Created two Azure VMware Solution private clouds using steps as described in either [Create Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md) or
+[Create Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md).
 
-* Two private clouds must be in separate Azure regions. To connect, two private clouds in same region use, [AVS Interconnect](https://docs.microsoft.com/azure/azure-vmware/connect-multiple-private-clouds-same-region?WT.mc_id=Portal-VMCP).
+* Two Azure VMware Solution private clouds must be in separate Azure regions. To connect, two Azure VMware Solution private clouds in same region use,  [Connect two Azure VMware Solution Private Clouds in the same Azure region](../AVS-to-AVS-SameRegion/readme.md) tutorial.
 
 * No IP overlap between two private clouds.
 
@@ -15,14 +16,22 @@ This step is required when you want to connect two AVS private clouds in differe
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following script.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-XR-GR-Deployment -c -f "CrossAVSGlobalReach.bicep" -p "@CrossAVSGlobalReach.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 009-AVS-CrossAVS-GlobalReach/ARM
+cd ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Deployment -c -f "CrossAVSGlobalReach.deploy.json" -p "@CrossAVSGlobalReach.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-XR-GR-Deployment -c -f "CrossAVSGlobalReach.deploy.json" -p "@CrossAVSGlobalReach.parameters.json"
 ```
 
 ## Post-deployment Steps
@@ -31,4 +40,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Deployment -c -f "C
 
 ## Next Steps
 
-[Connect two Azure VMware Solution Private Clouds in the same Azure region](../010-AVS-CrossAVS-WithinRegion/readme.md)
+[Connect two Azure VMware Solution Private Clouds in the same Azure region](../AVS-to-AVS-SameRegion/readme.md)
