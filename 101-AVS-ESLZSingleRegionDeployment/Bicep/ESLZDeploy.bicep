@@ -112,3 +112,16 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
     ExRConnectionResourceId: VNetConnection.outputs.ExRConnectionResourceId
   }
 }
+
+resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = {
+    name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8'
+    location: deployment().location
+    properties: {
+      mode: 'Incremental'
+      template: {
+        '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+        contentVersion: '1.0.0.0'
+        resources: []
+      }
+    }
+}
