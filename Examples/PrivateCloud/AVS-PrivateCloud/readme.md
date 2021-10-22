@@ -68,5 +68,7 @@ Ensure that status of deployment is "Succeeded" by navigating to the "Deployment
 ## Next Steps
 
 [Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
 [Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
+
 [Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md)
