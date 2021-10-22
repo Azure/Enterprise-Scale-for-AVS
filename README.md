@@ -6,7 +6,11 @@ Enterprise-scale is an architectural approach and a reference implementation tha
 
 Enterprise-scale for AVS represents the strategic design path and target technical state for an Azure VMWare Solution (AVS) deployment. This solution provides an architectural approach and reference implementation to prepare landing zone subscriptions for a scalable Azure VMWare Solution (AVS) cluster. For the architectural guidance, check out Enterprise-scale for AVS in Microsoft Docs
 
+<br/>
+
 ![Golden state platform foundation with AVS Landing Zone highlighted in red](./docs/images/azure-vmware-eslz-architecture.png)
+
+<br/>
 
 The enterprise-scale for AVS only talks about with what gets deployed in the specific AVS landing zone subscription highlighted by the red box in the picture above. It is assumed that an appropriate platform foundation is already setup which may or may not be the official ESLZ platform foundation. This means that policies and governance should already be in place or should be setup after this implementation and are not a part of the scope this program. The policies applied to management groups in the hierarchy above the subscription will trickle down to the Enterprise-scale for AKS landing zone subscription.
 
@@ -30,37 +34,48 @@ A deployment of AVS Private Clouds would typically experience a separation of du
 
 Here are the scenarios available today. For more information, browse to the respective scenario
 
-| Deploy                                             | Description                                                  | Deploy                                                       | More Info |
-| -------------------------------------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ | --------- |
-| Enterprise Scale AVS Deployment to a Single Region | This deployment is all encompassing and will deploy an AVS Private Cloud in a selected region with a jumpbox in a new VNet for connectivity as well as monitoring, as per enterprise scale architecture | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
+| Deploy                              | Description                                                  | Deploy                                                       | More Info                               |
+| ----------------------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ | --------------------------------------- |
+| AVS Landing Zone in a Single Region | This deployment is an end to end AVS landing zone deployment in a selected subscription and region, with a jumpbox in a new VNet for connectivity as well as monitoring, as per enterprise scale architecture | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./AVS-Landing-Zone/SingleRegion) |
 
-*Note: Navigate to the scenario link to view detailed information and other IaC languages such as Bicep*
+*Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
 
 
 <br/>
 
-#### Single AVS Component deployment examples
+#### AVS Component Deployment Examples
 
 In the event you would like to deploy single features or components of the AVS Enterprise Scale deployment, please see the various options below:
 
-| Deploy                                                       | Description                                                  | Deploy                                                       | More Info |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | --------- |
-| Single AVS Private Cloud                                     | This example will help deploy a single private cloud within your selected resource group | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Enable SRM for your AVS Private Cloud                        | This example will enable the VMWare Site Recovery Manger add-on to an existing AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Enable HCX for your AVS Private Cloud                        | This example will enable the VMWare HCX add-on to an existing AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| New Virtual Network, Gateway, and Connectivity to existing AVS | This example will create a new virtual network, new gateway in your resource group and will connect this new network to your existing AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Generate new ExpressRoute authorization key and connect AVS to existing Gateway | This example will generate a new ExpressRoute Authorization key on your AVS dedicated gateway and add a connection to an existing Virtual Network Gateway | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Use a pre-created ExpressRoute authorization key and connect AVS to existing Gateway | This example will allow an input of your AVS ExpressRoute authorization key to then add a connection to an existing Virtual Network Gateway | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Connect AVS to ExpressRoute Circuit via Global Reach         | This example will connect your AVS Private Cloud to your on-premises ExpressRoute Gateway | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Connect AVS to AVS in a different region via Global Reach    | This example will connect 2 AVS Private Clouds in 2 different regions using ExpressRoute Global Reach | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
-| Connect AVS to AVS in the same region via AVS Interconnect   | This example will connect 2 AVS Private Clouds in same region using the AVS Interconnect feature | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | Link      |
+##### AVS Private Cloud + Add-ins
 
-*Note: Navigate to the scenario link to view detailed information and other IaC languages such as Bicep*
+| Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------------------------------- |
+| Single AVS Private Cloud                  | This example will help deploy a single private cloud within your selected resource group | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/PrivateCloud/AVS-PrivateCloud)         |
+| Single AVS Private Cloud with HCX enabled | This example will help deploy a single private cloud within your selected resource group with HCX enabled | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/PrivateCloud/AVS-PrivateCloud-WithHCX) |
+| Enable SRM for your AVS Private Cloud     | This example will enable the VMWare Site Recovery Manger add-on to an existing AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Addins/SRM)                            |
+| Enable HCX for your AVS Private Cloud     | This example will enable the VMWare HCX add-on to an existing AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Addins/HCX)                            |
+| Enable AVS Monitoring                     | This example will create an action group and example metric alerts for monitoring your AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Monitoring/AVS-Utilization-Alerts)     |
+
+*Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
 <br/>
 
+##### AVS Networking
 
+| Deploy                                                       | Description                                                  | Deploy                                                       | More Info                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Connect AVS to a new virtual network                         | This example will create a new virtual network, new gateway in your resource group and will connect this new network to your AVS Private Cloud | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/AVS-to-VNet-NewVNet)            |
+| Connect AVS to an existing virtual network (Generate Authorization Key) | This example will connect an existing virtual network and gateway your AVS Private Cloud. An authorization key will be generated from the AVS Private Cloud circuit automatically | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/AVS-to-VNet-ExistingVNet)       |
+| Connect AVS to an existing virtual network (Specify Authorization Key) | This example will connect an existing virtual network and gateway your AVS Private Cloud. An authorization key needs to be specificed as part of the deployment | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/ExpressRoute-to-VNet)           |
+| Connect AVS to On-premises ExpressRoute Circuit via Global Reach | This example will connect your AVS Private Cloud to your on-premises ExpressRoute Gateway | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach) |
+| Connect AVS to AVS in a different region via Global Reach    | This example will connect 2 AVS Private Clouds in 2 different regions using ExpressRoute Global Reach | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/AVS-to-AVS-CrossRegion-GlobalReach) |
+| Connect AVS to AVS in the same region via AVS Interconnect   | This example will connect 2 AVS Private Clouds in same region using the AVS Interconnect feature | ![](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg) | [Link](./Examples/Networking/AVS-to-AVS-SameRegion)          |
+
+*Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+
+<br/>
 
 ## Getting Started
 
