@@ -17,7 +17,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-Deploy the AVS private cloud using one of the following ways
+* Deploy the AVS private cloud using one of the following ways
 
 ### Bicep
 
@@ -26,7 +26,7 @@ az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
 cd Bicep
 
-az deployment group create -g AVS-Step-By-Step-RG -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
 
 ```
 
@@ -52,7 +52,7 @@ cd AzureCLI
 
 ### PowerShell
 
-```powershell-interactive
+```azurepowershell-interactive
 cd PowerShell
 
 ./Deploy-PrivateCloud.ps1
