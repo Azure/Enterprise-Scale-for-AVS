@@ -1,4 +1,4 @@
-# 010-AVS-CrossAVS-WithinRegion
+# # AVS to AVS: Same Region
 Status: Awaiting PG Signoff
 
 This step is required when you have two AVS private clouds in the same Azure region and you want to setup the connectivity between them. Here we will establish the connectivity by using AVS Interconnect.

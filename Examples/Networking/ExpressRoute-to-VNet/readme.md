@@ -1,4 +1,4 @@
-# 003-AVS-ExRConnection-SeperateAuthKey
+# Express Route Auth to an Existing Virtual Network Gateway
 Status: Awaiting PG Signoff
 
 This step is required for network admins who do not have access to AVS to generate the Auth Key themselves but need to setup the connectivity with Onpremise location or Azure. You just need to provide the available Authorizaton key and ExR circuit ID in the template parameters to be redeemed by the virtual network connection.

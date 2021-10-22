@@ -1,4 +1,4 @@
-# 101-AVS-ESLZSingleRegionDeployment
+# AVS Landing Zone: Single Region Deployment
 Status: Awaiting PG Signoff, possible 2nd revision (Awaiting CSET area architecture confirmation)
 
 ```

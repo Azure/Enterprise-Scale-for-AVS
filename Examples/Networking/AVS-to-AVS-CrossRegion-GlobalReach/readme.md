@@ -1,4 +1,4 @@
-# 009-AVS-CrossAVS-GlobalReach
+# AVS to AVS: Cross Region via Global Reach
 Status: Awaiting PG Signoff
 
 This step is required when you want to connect two AVS private clouds in different Azure regions via Express Route Global Reach.

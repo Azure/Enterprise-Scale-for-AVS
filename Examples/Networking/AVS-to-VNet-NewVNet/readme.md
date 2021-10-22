@@ -1,4 +1,4 @@
-# 004-AVS-ExRConnection-NewVNet
+# AVS to a New VNet
 Status: Awaiting PG Signoff
 
 This step is needed when you do not have existing virtual network and virtual network gateway in Azure to establish connectivity with AVS private cloud. If you already have these resources and have completed the previous two steps, you can skip this.

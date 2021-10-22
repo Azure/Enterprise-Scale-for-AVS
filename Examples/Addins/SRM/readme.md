@@ -1,4 +1,4 @@
-# 007-AVS-SRM
+# SRM AddIn Deployment for AVS
 Status: Testing
 
 Site Recovery Manager (SRM) is the disaster recovery solution by VMware. In this step, you need to provide the SRM license key to enable the SRM addon for AVS private cloud which will install the SRM plugin and vSphere Replication appliances in the vCenter.

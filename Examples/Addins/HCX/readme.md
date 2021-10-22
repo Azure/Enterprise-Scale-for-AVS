@@ -1,4 +1,4 @@
-# 008-AVS-HCX
+# HCX AddIn Deployment for AVS
 Status: Testing
 
 Hybrid Cloud Extension (HCX) is the application mobility platform designed for migration across data centers and clouds. In this step we will enable the HCX add-on for AVS Private cloud which will deploy the HCX Advanced version. 

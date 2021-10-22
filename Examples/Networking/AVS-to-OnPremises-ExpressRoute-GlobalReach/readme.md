@@ -1,4 +1,4 @@
-# 005-AVS-GlobalReach
+# AVS to On-Premises Express Route via Global Reach
 Status: Awaiting PG Signoff
 
 In this step we will create the Express Route Global reach connection link. ExpressRoute Global Reach is required to connect AVS to AVS in a different region, and On-premises environments to AVS.
