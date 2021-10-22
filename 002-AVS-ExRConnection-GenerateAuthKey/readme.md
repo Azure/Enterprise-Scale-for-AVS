@@ -1,6 +1,8 @@
 # 002-AVS-ExRConnection-GenerateAuthKey
 Status: Awaiting PG Signoff
 
+AVS private cloud comes with a preconfigured dedicated Express Route circuit which is used to establish connectivity with native Azure virtual networks and Onpremise. In this step we will generate the Authorization key in the AVS ExR circuit and use it to create connection with the existing virtual network gateway in Azure.
+
 ## Prerequisites
 
 * Steps as outlined in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md) section are completed.

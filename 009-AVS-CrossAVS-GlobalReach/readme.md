@@ -1,6 +1,8 @@
 # 009-AVS-CrossAVS-GlobalReach
 Status: Awaiting PG Signoff
 
+This step is required when you want to connect two AVS private clouds in different Azure regions via Express Route Global Reach.
+
 ## Prerequisites
 
 * Created two Azure VMware Solution private clouds using steps as described in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md).

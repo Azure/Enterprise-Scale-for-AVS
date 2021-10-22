@@ -1,6 +1,8 @@
 # 006-AVS-Monitor-Utilization
 Status: Awaiting PG Signoff
 
+It is crucial to monitor the resource utilization in order to take timely action. In this step we are enabling and setting up Azure Monitor alerts for AVS private cloud. Email notifications will be triggered to action owners if utilization hit beyond set threshold.
+
 ## Prerequisites
 
 * Completed steps as described in [Configure GlobalReach](../005-AVS-GlobalReach/readme.md).
