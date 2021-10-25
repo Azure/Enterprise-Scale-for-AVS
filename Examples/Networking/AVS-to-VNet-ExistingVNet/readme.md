@@ -1,4 +1,5 @@
-# AVS to an Existing VNet
+# Connect Azure VMware Solution with an existing Azure Virtual Network by creating and redeeming Authorization Key
+
 Status: Awaiting PG Signoff
 
 Azure VMware Solution Private cloud comes with a preconfigured dedicated ExpressRoute circuit. This circuit can be used to establish connectivity with Azure Virtual Network. Same circuit can also be used for establishing connectivity with on-premise site using GlobalReach. This tutorial will cover generating an ExpressRoute Authorization Key. This key will be redeemed to create connection with an existing Virtual Network ExpressRoute Gateway in Azure.
@@ -45,4 +46,6 @@ cd PowerShell
 
 ## Next Steps
 
-[Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md)
+[Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
+[Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md)

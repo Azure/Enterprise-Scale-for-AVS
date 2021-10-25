@@ -1,4 +1,5 @@
-# AVS to a New VNet
+# Connect Azure VMware Solution with a new Azure Virtual Network by creating and redeeming Authorization Key
+
 Status: Awaiting PG Signoff
 
 This tutorial walks through the scenario of connecting Azure VMware Solution Private Cloud to a ***new*** Azure Virtual Network. To connect Azure VMware Solution Private Cloud to an ***existing*** Azure Virtual Network, refer to tutorial on [Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md).

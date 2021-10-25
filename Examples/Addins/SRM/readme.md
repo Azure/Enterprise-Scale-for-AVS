@@ -1,7 +1,8 @@
-# SRM Add-On Deployment for AVS
+# Configure SRM
+
 Status: Testing
 
-Site Recovery Manager (SRM) is the disaster recovery solution by VMware. To configure SRM for AVS private cloud, you need to provide the SRM license key to install the SRM appliances and vSphere Replication appliances.
+Site Recovery Manager (SRM) is a disaster recovery solution by VMware. This tutorial covers enabling SRM addon for AVS private cloud with a SRM license key.
 
 ## Prerequisites
 
