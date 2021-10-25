@@ -32,7 +32,7 @@ The following components will be deployed:
 | **Jumpbox VM**                   | ${Prefix}-Jumpbox      | ${Prefix}-Jumpbox     |
 | **Monitoring**                   | ${Prefix}-Operational  | ${Prefix}-ActionGroup |
 
-###### Note:  The deployment will ask for a "Prefix" which will be used to name all of5 the deployed resources. The naming of resources is hard coded in the templates, however this can be modified as required prior to deployment
+###### Note:  The deployment will ask for a "Prefix" which will be used to name all of the deployed resources. The naming of resources is hard coded in the templates, however this can be modified as required prior to deployment
 
 <br/>
 
