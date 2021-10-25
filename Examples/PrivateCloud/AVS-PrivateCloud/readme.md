@@ -1,4 +1,5 @@
-# 001-AVS-PrivateCloud
+# Create Azure VMware Solution Private Cloud
+
 Status: Awaiting PG Signoff
 
 Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This is the first tutorial to walk through the process of provisioning the private cloud resource.
@@ -67,8 +68,10 @@ Ensure that status of deployment is "Succeeded" by navigating to the "Deployment
 
 ## Next Steps
 
-[Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+[Connect Azure VMware Solution with Azure Virtual Network by redeeming Authorization Key](../../Networking/ExpressRoute-to-VNet/readme.md) OR
 
-[Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
+[Connect Azure VMware Solution with a new Azure Virtual Network by creating and redeeming Authorization Key](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
+[Connect Azure VMware Solution with an existing Azure Virtual Network by creating and redeeming Authorization Key](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
 
 [Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md)

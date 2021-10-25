@@ -1,4 +1,5 @@
-# AVS Utilization Alerts
+# Configure Monitoring
+
 Status: Awaiting PG Signoff
 
 It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.

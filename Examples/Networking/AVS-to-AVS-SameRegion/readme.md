@@ -1,13 +1,14 @@
-# # AVS to AVS: Same Region
+# Connect two Azure VMware Solution Private Clouds in the same Azure region
+
 Status: Awaiting PG Signoff
 
-This step is required when you have two AVS private clouds in the same Azure region and you want to setup the connectivity between them. Here we will establish the connectivity by using AVS Interconnect.
+This tutorial covers [AVS Interconnect](https://docs.microsoft.com/azure/azure-vmware/connect-multiple-private-clouds-same-region?WT.mc_id=Portal-VMCP) . Two Azure VMware Solution private clouds in the ***same*** Azure region can be connected with AVS InterConnect.
 
 ## Prerequisites
 
-* Created two Azure VMware Solution private clouds **in the same Azure regions** using steps as described in [Create Private Cloud](../001-AVS-PrivateCloud/readme.md).
+* Created two Azure VMware Solution private clouds **in the same Azure regions** using steps as described in either [Create Azure VMware Solution Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md) or [Create Azure VMware Solution Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md).
 
-* Two private clouds must be in the same Azure regions. To connect, two private clouds in different Azure regions use guidance available on [Connect two Azure VMware Solution Private Clouds across different Azure regions](../009-AVS-CrossAVS-GlobalReach/readme.md).
+* Two private clouds must be in the same Azure regions. To connect, two private clouds in different Azure regions use guidance available on [Connect two Azure VMware Solution Private Clouds across different Azure regions](../../Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md).
 
 * No IP overlap between two private clouds.
 
@@ -15,14 +16,22 @@ This step is required when you have two AVS private clouds in the same Azure reg
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following scripts.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-InterConnect-Deployment -c -f "CrossAVSWithinRegion.deploy.json" -p "@CrossAVSWithinRegion.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 010-AVS-CrossAVS-WithinRegion/ARM
+cd ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "CrossAVSWithinRegion.deploy.json" -p "@CrossAVSWithinRegion.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-InterConnect-Deployment -c -f "CrossAVSWithinRegion.deploy.json" -p "@CrossAVSWithinRegion.parameters.json"
 ```
 
 ## Post-deployment Steps
@@ -31,4 +40,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "C
 
 ## Next Steps
 
-[Complete deployment of Azure VMware Solution](../101-AVS-ESLZSingleRegionDeployment/readme.md)
+[Complete deployment of Azure VMware Solution](../../../AVS-Landing-Zone/SingleRegion/readme.md)
