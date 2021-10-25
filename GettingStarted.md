@@ -46,7 +46,7 @@ The [AVS Single Region](AVS-Landing-Zone/SingleRegion) template provides a compl
 
 ### Brownfield deployment
 
-In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. For these deployments, a series of smaller [examples](./examples) are provided with tightly scoped deployments.
+In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. For these deployments, a series of smaller [examples](Examples) are provided with tightly scoped deployments.
 
 See the scenarios section for more information
 
