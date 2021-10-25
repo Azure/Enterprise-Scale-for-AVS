@@ -14,7 +14,7 @@ To deploy this landing zone, ensure you have followed all the required steps fro
 
 This reference implementation is designed in a way to deploy a full AVS Private Cloud and necessary components to allow for feature add-ins, connectivity and monitoring as per operational best practices. The intention is to deploy this into a new subscription to be considered as the AVS landing zone, adhering to the Azure Landing Zone guidance. However, this can also be deployed to an existing subscription if required
 
-![ALZ Single Region](../docs/images/alz-single-region.png)
+![ALZ Single Region](../../docs/images/alz-single-region.png)
 
 The following components will be deployed:
 
