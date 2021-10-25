@@ -31,4 +31,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "C
 
 ## Next Steps
 
-[Complete deployment of Azure VMware Solution](../101-AVS-ESLZSingleRegionDeployment/readme.md)
+[Complete deployment of Azure VMware Solution](../../../AVS-Landing-Zone/SingleRegion/readme.md)
