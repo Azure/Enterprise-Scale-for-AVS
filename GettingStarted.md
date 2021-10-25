@@ -110,4 +110,4 @@ Alongside command-line deployment you can also choose to automate the deployment
 
 # Next Steps
 
-Once all the pre-requisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component AVS deployments6
+Once all the pre-requisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component deployment examples
