@@ -1,11 +1,11 @@
-# AVS Utilization Alerts
+# AVS Dashboard and Monitoring Alerts
 Status: Awaiting PG Signoff
 
 It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.
 
 ## Prerequisites
 
-* Completed steps as described in [Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md).
+* AVS Private Cloud up and running
 
 * A list of email address(es) who will receive Alerts from Azure VMware Solution Private Cloud.
 
