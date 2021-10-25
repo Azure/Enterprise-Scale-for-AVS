@@ -6,7 +6,7 @@
   * [AVS Single Component Deployments](Examples)
 * [Roadmap](ESLZStatusReport.md)
 
-<br/>
+---
 
 # Enterprise-Scale for AVS
 
