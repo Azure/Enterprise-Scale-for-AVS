@@ -34,6 +34,6 @@ In this repo, you get access to various customer scenarios that can help acceler
 
 <br/>
 
-## Next Steps
+# Next Steps
 
 Next steps, head to [Getting Started](GettingStarted.md) to review prerequisites and deployment options
