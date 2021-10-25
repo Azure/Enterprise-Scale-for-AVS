@@ -17,7 +17,7 @@ Enterprise-scale for AVS represents the strategic design path and target technic
 
 <br/>
 
-![Golden state platform foundation with AVS Landing Zone highlighted in red](C:\Program Files\Typora\docs\images\azure-vmware-eslz-architecture.png)
+![Golden state platform foundation with AVS Landing Zone highlighted in red](./docs/images/azure-vmware-eslz-architecture.png)
 
 <br/>
 
@@ -33,7 +33,6 @@ In this repo, you get access to various customer scenarios that can help acceler
 
 <br/>
 
-## Getting Started
+## Next Steps
 
-For more information on how to get started, please see [GettingStarted.md](GettingStarted.md)
-
+Next steps, head to [GettingStarted.md](GettingStarted.md) to review prerequisites and deployment options
