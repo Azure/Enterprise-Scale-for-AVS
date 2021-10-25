@@ -2,7 +2,7 @@
 
 * [Getting Started](GettingStarted.md)
 * [Deployment Scenarios](Scenarios.md)
-  * [AVS Landing Zone in a Single Region](AVS-Landing-Zone/SingleRegion/readme.md)
+  * [AVS Landing Zone in a Single Region](AVS-Landing-Zone/SingleRegion)
   * [AVS Single Component Deployments](Examples)
 * [Roadmap](ESLZStatusReport.md)
 
