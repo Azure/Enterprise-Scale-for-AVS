@@ -5,7 +5,7 @@ Site Recovery Manager (SRM) is the disaster recovery solution by VMware. In this
 
 ## Prerequisites
 
-* Completed steps as described in [Configure Monitoring](../006-AVS-Monitor-Utilization/readme.md) section.
+* Completed steps as described in [Configure Monitoring](../../Monitoring/AVS-Utilization-Alerts/readme.md) section.
 
 * [SRM license key](https://docs.microsoft.com/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#srm-licenses) obtained from VMware.
 
@@ -15,14 +15,30 @@ Site Recovery Manager (SRM) is the disaster recovery solution by VMware. In this
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following script.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-SRM-Deployment -c -f "SRM.bicep" -p "@SRM.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 007-AVS-SRM/ARM
+cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-SRM-Deployment -c -f "SRM.deploy.json" -p "@SRM.parameters.json"
+```
+
+### Azure CLI
+
+```azurecli-interactive
+cd AzureCLI
+
+./deploy.sh
 ```
 
 ## Post-deployment Steps
@@ -33,4 +49,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-SRM-Deployment -c -f "S
 
 ## Next Steps
 
-[Configure HCX on an existing Azure VMware Solution Private Cloud](../008-AVS-HCX/readme.md)
+[Configure HCX on an existing Azure VMware Solution Private Cloud](../../Addins/HCX/readme.md)

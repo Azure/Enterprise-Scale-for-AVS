@@ -1,7 +1,7 @@
 # 001-AVS-PrivateCloud
 Status: Awaiting PG Signoff
 
-Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This is the first tutorial to provision the private cloud resource.
+Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This is the first tutorial to walk through the process of provisioning the private cloud resource.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-* Deploy the AVS private cloud using one of the following ways
+* Deploy the AVS private cloud using one of the following ways. It may take upto 2 hours to create Azure VMware Solution Private Cloud.
 
 ### Bicep
 
@@ -68,5 +68,7 @@ Ensure that status of deployment is "Succeeded" by navigating to the "Deployment
 ## Next Steps
 
 [Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
 [Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
+
 [Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md)
