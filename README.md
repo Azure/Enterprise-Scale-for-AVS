@@ -1,10 +1,10 @@
 # Navigation Menu
 
-* Getting Started
+* [GettingStarted](GettingStarted.md)
 * Deployment Scenarios
-  * AVS Landing Zone in a Single Region
-  * AVS Single Component Deployments
-* Roadmap
+  * [AVS Landing Zone in a Single Region](.AVS-Landing-Zone/SingleRegion/readme.md)
+  * [AVS Single Component Deployments]
+* [Roadmap](ESLZStatusReport.md)
 
 
 # Enterprise-Scale for AVS
@@ -35,4 +35,4 @@ In this repo, you get access to various customer scenarios that can help acceler
 
 ## Next Steps
 
-Next steps, head to [GettingStarted.md](GettingStarted.md) to review prerequisites and deployment options
+Next steps, head to [GettingStarted](GettingStarted.md) to review prerequisites and deployment options
