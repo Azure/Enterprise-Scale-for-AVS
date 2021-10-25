@@ -6,6 +6,7 @@
   * [AVS Single Component Deployments](Examples)
 * [Roadmap](ESLZStatusReport.md)
 
+<br/>
 
 # Enterprise-Scale for AVS
 
@@ -35,4 +36,4 @@ In this repo, you get access to various customer scenarios that can help acceler
 
 ## Next Steps
 
-Next steps, head to [GettingStarted](GettingStarted.md) to review prerequisites and deployment options
+Next steps, head to [Getting Started](GettingStarted.md) to review prerequisites and deployment options
