@@ -36,8 +36,8 @@ The following components will be deployed:
 We have a few options available to deploy this AVS Landing zone:
 
 - ARM (Portal): Click on the Deploy to Azure button at the top of this page, this will take you to the portal experience of deploying the ARM template here
-- [ARM (Template)](AVS-Landing-Zone/SingleRegion/ARM)
-- [Bicep (Template)](AVS-Landing-Zone/SingleRegion/B)
+- [ARM (Template)](ARM)
+- [Bicep (Template)](Bicep)
 
 <br/>
 
