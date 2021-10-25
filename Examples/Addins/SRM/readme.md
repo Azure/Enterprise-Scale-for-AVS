@@ -5,7 +5,7 @@ Site Recovery Manager (SRM) is the disaster recovery solution by VMware. In this
 
 ## Prerequisites
 
-* Completed steps as described in [Configure Monitoring](../../Monitoring/AVS-Utilization-Alerts/readme.md) section.
+* AVS Private Cloud up and running
 
 * [SRM license key](https://docs.microsoft.com/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#srm-licenses) obtained from VMware.
 
