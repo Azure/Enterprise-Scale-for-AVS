@@ -1,7 +1,7 @@
-# 008-AVS-PrivateCloudWithHCX
+# AVS-PrivateCloudWithHCX
 Status: Awaiting PG Signoff
 
-Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This tutorial that walks through the process of provisioning the private cloud resource with HCX enabled.
+Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This tutorial walks through the process of provisioning the private cloud resource with HCX enabled.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location. 
 
-* Deploy the AVS private cloud using one of the following ways. It may take upto 2 hours to create Azure VMware Solution Private Cloud. Additionally, upto 30 mins are needed to complete HCX installation.
+* Deploy the AVS private cloud using one of the following ways. It may take upto 3-4 hours to create Azure VMware Solution Private Cloud. Additionally, upto 30 mins are needed to complete HCX installation.
 
 ### Bicep
 
