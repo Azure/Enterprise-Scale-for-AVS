@@ -82,7 +82,7 @@ During this step, you will deploy the template that provisions the base infrastr
 
 ### 3. Configuring connectivity
 
-If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity. This can either be achieved via the [ExpressRoute Connection](002-AVS-ExRConnection-GenerateAuthKey/) template or script.
+If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Examples/readme.md#avs-networking).
 
 <br/>
 
