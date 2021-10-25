@@ -14,7 +14,7 @@ This guide is designed to help you get started with deploying AVS via the templa
 
 <br/>
 
-# Prerequisites
+## Prerequisites
 
 Prior to deploying, you need to ensure you have met the following prerequisites:
 
@@ -24,7 +24,7 @@ Prior to deploying, you need to ensure you have met the following prerequisites:
 
 <br/>
 
-# Planning
+## Planning
 
 This section covers the high level steps for planning an AVS deployment and the decisions that need to be made.
 The deployment will use the Microsoft provided Bicep/PowerShell/Azure CLI templates from this repository and the customer provided configuration files that contain the system specific information. During the deployment, information from both will be merged.
@@ -67,77 +67,47 @@ bicep --help
 
 <br/>
 
-# Deployment Flow
+## Deployment Flow
 
 The deployment flow has three key steps: Requesting quota, deploying the Private Cloud, and configuring connectivity.
 
-## Requesting quota
+### 1. Requesting quota
 
 It is important to [request quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) ahead of deploying any template that contains a Private Cloud resource, or modifies the scale of an existing cluster. When deploying manually via the Azure Portal, you will be prompted to request quota if you have skipped this step. However when deploying via template or script, the lack of quota will result in a failed deployment.
 Quota for AVS is subscription and region specific, if you want to deploy AVS to multiple regions then you will need to request quota in each region.
 
-## Deploying the private cloud
+### 2. Deploying the private cloud
 
 During this step, you will deploy the template that provisions the base infrastructure. It is important to ensure that the parameters that are provided to the template (provided in a parameters file or inline) are configured to match your networking configuration, and do not overlap with any existing networks. Changing the network ranges used once the private cloud is deployed will require the deletion of the Private Cloud.
 
-## Configuring connectivity
+### 3. Configuring connectivity
 
 If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity. This can either be achieved via the [ExpressRoute Connection](002-AVS-ExRConnection-GenerateAuthKey/) template or script.
 
 <br/>
 
-# Choosing the orchestration environment
+## Choosing the orchestration environment
 
 The templates and scripts need to be executed from an execution environment, currently the supported environments are:
 
-## PowerShell or AzureCLI via Azure Cloud Shell
+### PowerShell or AzureCLI via Azure Cloud Shell
 
 https://docs.microsoft.com/en-us/azure/cloud-shell/overview
 
-## Local Azure PowerShell
+### Local Azure PowerShell
 
 https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#powershell
 
-## Local Azure CLI
+### Local Azure CLI
 
 https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli
 
-## Azure DevOps or Automation Pipeline
+### Azure DevOps or Automation Pipeline
 
-Alongside command-line deployment you can also choose to automate the deployment of an environment. For more details see _x_
-
-<br/>
-
-# Example Deployment Steps (Azure CLI)
-
-1. Clone this repository onto either the Azure Cloud Shell or your local machine
-2. Select the template you want to use, for the steps below we will be using the ARM template within [AVS Single Region](AVS-Landing-Zone/SingleRegion/ARM)
-3. Modify the `ESLZDeploy.parameters.json` parameters file to define your location, networking, and alert emails
-4. Before deploying, confirm the correct subscription is selected using the following command:
-
-```Azure CLI
-az account show
-```
-
-5. Kick off the AVS deployment using the template & parameters file. You will need to fill in the following arguments:
-
- - The location the deployment metadata will be stored: `-l Location`
-   You can use the `-c` option to validate what resources will be deployed prior to be deploying:
-
-```Azure CLI
-az deployment sub create -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
-```
-
-You can also use `--no-wait` option to kick of the deployment without waiting for it to complete:
-
-```Azure CLI
-az deployment sub create -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
-```
+Alongside command-line deployment you can also choose to automate the deployment of an environment.
 
 <br/>
 
-# Confirming Deployment
+# Next Steps
 
-Private cloud deployment takes around 3-4 hours. Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
-
-<br/>
+Once all the pre-requisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component AVS deployments6
