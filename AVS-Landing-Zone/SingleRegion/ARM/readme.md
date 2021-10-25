@@ -1,4 +1,4 @@
-# Deployment Steps (ARM)
+# Deployment Steps (AZ CLI)
 
 1. Clone this repository onto either the Azure Cloud Shell or your local machine
 2. Modify the `ESLZDeploy.parameters.json` parameters file to define your location, networking, and alert emails
