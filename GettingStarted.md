@@ -2,7 +2,6 @@
 
 This guide is designed to help you get started with deploying AVS via the templates and scripts within this repository. Before you deploy, it is recommended to review the templates to understand the resources that will be deployed and the associated costs.
 
-<br/>
 
 ## Table Of Contents
 
@@ -53,7 +52,7 @@ See the scenarios section for more information
 
 <br/>
 
-## Deployment Templates & Scripts
+## Deployment Options
 
 For each module a set of options are provided for deployment. All modules within this repository contain Bicep & ARM templates, with a subset also providing PowerShell and Azure CLI scripting options.
 It is important to note that you can deploy the Bicep or ARM templates via the [Azure CLI](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli), [PowerShell](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#powershell), or the Azure Portal. Depending on the version of Azure CLI and PowerShell you have installed, you may need to update prior to deploying Bicep templates. You can check if you have support for bicep via the following commands:
