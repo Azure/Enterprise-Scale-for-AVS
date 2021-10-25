@@ -6,7 +6,7 @@ It is crucial to monitor the resource utilization in order to take timely action
 
 ## Prerequisites
 
-* Completed steps as described in [Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md).
+* AVS Private Cloud up and running
 
 * A list of email address(es) who will receive Alerts from Azure VMware Solution Private Cloud.
 

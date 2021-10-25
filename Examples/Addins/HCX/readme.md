@@ -6,13 +6,13 @@ Hybrid Cloud Extension (HCX) is the application mobility platform designed for m
 
 ## Prerequisites
 
-* Completed steps as described in [Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md) section.
+* AVS Private Cloud up and running
 
 * Understanding of the [prerequisites](https://docs.microsoft.com/azure/azure-vmware/install-vmware-hcx#prerequisites) for using HCX with Azure VMware Solution.
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in the parameters file.
 
 * Run one of the following scripts. It may take upto 30 mins to complete this installation.
 
