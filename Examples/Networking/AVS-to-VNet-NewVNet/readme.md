@@ -1,22 +1,33 @@
-# AVS to a New VNet
+# Connect Azure VMware Solution with a new Azure Virtual Network by creating and redeeming Authorization Key
+
 Status: Awaiting PG Signoff
 
-This step is needed when you do not have existing virtual network and virtual network gateway in Azure to establish connectivity with AVS private cloud. If you already have these resources and have completed the previous two steps, you can skip this.
+This tutorial walks through the scenario of connecting Azure VMware Solution Private Cloud to a ***new*** Azure Virtual Network. To connect Azure VMware Solution Private Cloud to an ***existing*** Azure Virtual Network, refer to tutorial on [Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md).
 
 ## Prerequisites
 
-* Completed steps as described in [Redeem Auth Key](../003-AVS-ExRConnection-SeperateAuthKey/readme.md) section.
+* Steps as outlined in [Create Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md) or [Create Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md) section are completed.
+
+* Be aware of the [limit on number of authorization keys](https://docs.microsoft.com/azure/expressroute/expressroute-faqs#can-i-link-to-more-than-one-virtual-network-to-an-expressroute-circuit) that can be generated per ExpressRoute circuit.
 
 ## Deployment Steps
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following scripts.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "VNetWithExR.deploy.json" -p "@VNetWithExR.deploy.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 004-AVS-ExRConnection-NewVNet/ARM
+cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "VNetWithExR.deploy.json" -p "@VNetWithExR.deploy.parameters.json"
 ```
@@ -27,4 +38,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c 
 
 ## Next Steps
 
-[Configure GlobalReach](../005-AVS-GlobalReach/readme.md)
+[Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md)

@@ -1,11 +1,12 @@
-# AVS Utilization Alerts
+# Configure Monitoring
+
 Status: Awaiting PG Signoff
 
-It is crucial to monitor the resource utilization in order to take timely action. In this step we are enabling and setting up Azure Monitor alerts for AVS private cloud. Email notifications will be triggered to action owners if utilization hit beyond set threshold.
+It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.
 
 ## Prerequisites
 
-* Completed steps as described in [Configure GlobalReach](../005-AVS-GlobalReach/readme.md).
+* AVS Private Cloud up and running
 
 * A list of email address(es) who will receive Alerts from Azure VMware Solution Private Cloud.
 
@@ -13,12 +14,20 @@ It is crucial to monitor the resource utilization in order to take timely action
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following scripts.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -c -f "AVSMonitor.bicep" -p "@AVSMonitor.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 006-AVS-Monitor-Utilization/ARM
+cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -c -f "AVSMonitor.deploy.json" -p "@AVSMonitor.parameters.json"
 ```
@@ -29,4 +38,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -
 
 ## Next Steps
 
-[Configure SRM](../007-AVS-SRM/readme.md)
+[Configure SRM](../../Addins/SRM/readme.md)

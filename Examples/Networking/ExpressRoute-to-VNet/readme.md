@@ -1,11 +1,12 @@
-# Express Route Auth to an Existing Virtual Network Gateway
+# Connect Azure VMware Solution with Azure Virtual Network by redeeming Authorization Key
+
 Status: Awaiting PG Signoff
 
-This step is required for network admins who do not have access to AVS to generate the Auth Key themselves but need to setup the connectivity with Onpremise location or Azure. You just need to provide the available Authorizaton key and ExR circuit ID in the template parameters to be redeemed by the virtual network connection.
+This tutorial walks through scenario of using the Authorization Key from Azure VMware Solution ExpressRoute circuit and redeeming it on Azure Virtual Network ExpressRoute Gateway. There are two additional tutorials which ***create as well as redeem*** an Authorization Key on either an [existing](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) or [new](../../Networking/AVS-to-VNet-NewVNet/readme.md) Azure Virtual Network.
 
 ## Prerequisites
 
-* Steps as outlined in [Generate Auth Key](../002-AVS-ExRConnection-GenerateAuthKey/readme.md) section are completed.
+* Steps as outlined in [Create Azure VMware Solution Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md)  OR [Create Azure VMware Solution Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md)
 
 * An existing Azure Virtual Network Gateway of Type ExpressRoute.
 
@@ -15,14 +16,30 @@ This step is required for network admins who do not have access to AVS to genera
 
 * Update the parameter values in appropriate location.
 
+* Run one of the following script.
+
+### Bicep
+
+```azurecli-interactive
+cd Bicep
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Connection-Deployment -c -f "ExRConnection.bicep" -p "@ExRConnection.parameters.json"
+```
+
 ### ARM
 
-Run following command.
-
 ```powershell
-cd 003-AVS-ExRConnection-SeperateAuthKey/ARM
+cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-Connection-Deployment -c -f "ExRConnection.deploy.json" -p "@ExRConnection.parameters.json"
+```
+
+### PowerShell
+
+```azurepowershell-interactive
+cd PowerShell
+
+./Deploy-ExRConnection-SeparateAuthKey.ps1
 ```
 
 ## Post-deployment steps
@@ -31,4 +48,6 @@ In the Azure Portal navigate to the "Connections" menu for the Virtual Network G
 
 ## Next Steps
 
-[Create Virtual Network Gateway](../004-AVS-ExRConnection-NewVNet/readme.md)
+[Connect Private Cloud to a new VNet](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
+[Connect Private Cloud to an existing VNet](../../Networking/AVS-to-VNet-ExistingVNet/readme.md)

@@ -1,7 +1,8 @@
-# 001-AVS-PrivateCloud
+# Create Azure VMware Solution Private Cloud
+
 Status: Awaiting PG Signoff
 
-Azure VMware Solution provides you with private clouds that contain vSphere clusters built from dedicated bare-metal Azure infrastructure. This is the first step where you will provision the AVS private cloud resource to get started. 
+Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This is the first tutorial to walk through the process of provisioning the private cloud resource.
 
 ## Prerequisites
 
@@ -17,16 +18,16 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-Deploy the AVS private cloud using one of the following ways
+* Deploy the AVS private cloud using one of the following ways. It may take upto 3-4 hours to create Azure VMware Solution Private Cloud.
 
 ### Bicep
 
 ```azurecli-interactive
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
-cd 001-AVS-PrivateCloud/AzureCLI
+cd Bicep
 
-az deployment group create -g AVS-Step-By-Step-RG -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
 
 ```
 
@@ -35,7 +36,7 @@ az deployment group create -g AVS-Step-By-Step-RG -f ./PrivateCloud.bicep -p "@P
 ```powershell
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
-cd 001-AVS-PrivateCloud/ARM
+cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
 ```
@@ -45,9 +46,18 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -c -f "P
 ```azurecli-interactive
 az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
-cd 001-AVS-PrivateCloud/AzureCLI
+cd AzureCLI
 
 ./deploy.sh
+```
+
+### PowerShell
+
+```azurepowershell-interactive
+cd PowerShell
+
+./Deploy-PrivateCloud.ps1
+
 ```
 
 Depending upon the region and size of the cluster, deployment process may take upto 4 hours.
@@ -58,4 +68,10 @@ Ensure that status of deployment is "Succeeded" by navigating to the "Deployment
 
 ## Next Steps
 
-[Generate Auth Key](../002-AVS-ExRConnection-GenerateAuthKey/readme.md)
+[Connect Azure VMware Solution with Azure Virtual Network by redeeming Authorization Key](../../Networking/ExpressRoute-to-VNet/readme.md) OR
+
+[Connect Azure VMware Solution with a new Azure Virtual Network by creating and redeeming Authorization Key](../../Networking/AVS-to-VNet-NewVNet/readme.md) OR
+
+[Connect Azure VMware Solution with an existing Azure Virtual Network by creating and redeeming Authorization Key](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
+
+[Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md)
