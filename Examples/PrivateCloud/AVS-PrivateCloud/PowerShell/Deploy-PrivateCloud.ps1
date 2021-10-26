@@ -1,7 +1,7 @@
-$privateCloudName = "ExamplePrivateCloud"
 $resourceGroup = "ExampleResourceGroup"
 $location = "Central US"
 
+$privateCloudName = "ExamplePrivateCloud"
 $addressBlock = "10.0.0.0/22"
 $clusterSize = 3
 $sku = "AV36"
