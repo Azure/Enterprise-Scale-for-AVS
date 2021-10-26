@@ -3,7 +3,7 @@
 * [Getting Started](GettingStarted.md)
 * [Deployment Scenarios](Scenarios.md)
   * [AVS Landing Zone in a Single Region](AVS-Landing-Zone/SingleRegion)
-  * [AVS Single Component Deployments](Examples)
+  * [AVS Single Component Deployments](Scenarios)
 * [Roadmap](ESLZStatusReport.md)
 
 ---
@@ -24,7 +24,7 @@ Enterprise-scale for AVS represents the strategic design path and target technic
 
 The enterprise-scale for AVS only talks about with what gets deployed in the specific AVS landing zone subscription highlighted by the red box in the picture above. It is assumed that an appropriate platform foundation is already setup which may or may not be the official ESLZ platform foundation. This means that policies and governance should already be in place or should be setup after this implementation and are not a part of the scope this program. The policies applied to management groups in the hierarchy above the subscription will trickle down to the Enterprise-scale for AVS landing zone subscription.
 
-This repository contains reference implantation examples based on a number of different scenarios. For each scenario, we have included both ARM and Bicep as the deployment languages
+This repository contains reference implantation scenarios based on a number of different scenarios. For each scenario, we have included both ARM and Bicep as the deployment languages
 
 <br/>
 

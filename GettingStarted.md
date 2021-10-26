@@ -46,7 +46,7 @@ The [AVS Single Region](AVS-Landing-Zone/SingleRegion) template provides a compl
 
 ### Brownfield deployment
 
-In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. For these deployments, a series of smaller [examples](Examples) are provided with tightly scoped deployments.
+In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. For these deployments, a series of smaller [scenarios](Scenarios) are provided with tightly scoped deployments.
 
 See the scenarios section for more information
 
@@ -82,7 +82,7 @@ During this step, you will deploy the template that provisions the base infrastr
 
 ### 3. Configuring connectivity
 
-If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Examples/readme.md#avs-networking).
+If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/readme.md#avs-networking).
 <br/>
 
 ## Choosing the orchestration environment
@@ -109,4 +109,4 @@ Alongside command-line deployment you can also choose to automate the deployment
 
 # Next Steps
 
-Once all the prerequisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component deployment examples
+Once all the prerequisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Scenarios](Scenarios) for single component deployment scenarios
