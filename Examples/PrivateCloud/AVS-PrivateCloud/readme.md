@@ -16,7 +16,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location.
 
-* Deploy the AVS private cloud using one of the following ways. It may take upto 3-4 hours to create Azure VMware Solution Private Cloud.
+* Deploy the AVS private cloud using one of the following ways. It may take up to 3-4 hours to create Azure VMware Solution Private Cloud.
 
 ### Bicep
 
@@ -25,7 +25,7 @@ az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
 cd Bicep
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-SDDC-Deployment -f ./PrivateCloud.bicep -p "@PrivateCloud.parameters.json" -c
 
 ```
 
@@ -36,7 +36,7 @@ az group create -n AVS-Step-By-Step-RG -l SoutheastAsia
 
 cd ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-VPC-Deployment -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-SDDC-Deployment -c -f "PrivateCloud.deploy.json" -p "@PrivateCloud.parameters.json"
 ```
 
 ### Azure CLI
@@ -58,7 +58,7 @@ cd PowerShell
 
 ```
 
-Depending upon the region and size of the cluster, deployment process may take upto 4 hours.
+Depending upon the region and size of the cluster, deployment process may take up to 4 hours.
 
 ## Post-deployment Steps
 
