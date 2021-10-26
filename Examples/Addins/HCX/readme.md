@@ -40,7 +40,7 @@ cd AzureCLI
 
 ## Post-deployment Steps
 
-* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Add-ons". Navigate to "Migration using HCX" menu. Ensure that "HCX Cloud Manager IP" and "HCX key name" values are shown. Presence of these values indicate successful deployment of HCX add-on.
+* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Addons". Navigate to "Migration using HCX" menu. Ensure that "HCX Cloud Manager IP" and "HCX key name" values are shown. Presence of these values indicate successful deployment of HCX add-on.
 
 * [Download and deploy the VMware HCX Connector OVA](https://docs.microsoft.com/azure/azure-vmware/install-vmware-hcx#download-and-deploy-the-vmware-hcx-connector-ova) at the on-premise site.
 

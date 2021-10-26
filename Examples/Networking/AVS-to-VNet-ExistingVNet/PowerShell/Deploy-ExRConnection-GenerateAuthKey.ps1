@@ -7,11 +7,11 @@ $location = "ExampleLocation"
 $ConnectionName = "$privateCloudNameer-ExR-Connection"
 
 # Get Private Cloud and create ExR authorisation key, must be a circuit owner
-$privatecloud = Get-AzVMWarePrivateCloud -Name $privateCloudName -ResourceGroupName $PrivateCloudResourceGroup
+$privatecloud = Get-AzVMwarePrivateCloud -Name $privateCloudName -ResourceGroupName $PrivateCloudResourceGroup
 $peerid = $privatecloud.CircuitExpressRouteId
 
 Write-Host -ForegroundColor Yellow "Generating Authorization Key"
-$exrauthkey = New-AzVMWareAuthorization -Name "$privateCloudName-authkey" -PrivateCloudName $privatecloud.name -ResourceGroupName $PrivateCloudResourceGroup 
+$exrauthkey = New-AzVMwareAuthorization -Name "$privateCloudName-authkey" -PrivateCloudName $privatecloud.name -ResourceGroupName $PrivateCloudResourceGroup 
 $exrgwtouse = Get-AzVirtualNetworkGateway -Name $GatewayName -ResourceGroupName $GatewayResourceGroup
 
 # Create AVS Private Cloud connection to ExpressRoute

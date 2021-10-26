@@ -40,7 +40,7 @@ The AVS Automation Framework supports deployment into greenfield scenarios (no A
 
 In the Greenfield scenario, no Azure infrastructure components for AVS on Azure deployment exist prior to deploying. The automation framework will create an AVS Private Cloud in one or more regions, create a virtual network & virtual network gateway local to each Private Cloud, and configure basic private cloud connectivity.
 
-It is important to consider the lifecycle of each of these components, if you want to deploy these items individually or via separate executions, then please see the Brownfield Deployment section.
+It is important to consider the life cycle of each of these components, if you want to deploy these items individually or via separate executions, then please see the Brownfield Deployment section.
 
 The [AVS Single Region](AVS-Landing-Zone/SingleRegion) template provides a complete AVS landing zone reference implementation within a single template.
 
@@ -109,4 +109,4 @@ Alongside command-line deployment you can also choose to automate the deployment
 
 # Next Steps
 
-Once all the pre-requisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component deployment examples
+Once all the prerequisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Examples](Examples) for single component deployment examples
