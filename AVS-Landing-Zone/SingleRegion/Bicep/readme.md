@@ -1,7 +1,7 @@
 # Deployment Steps (AZ CLI)
 
-1. Clone this repository onto either the Azure Cloud Shell or your local machine
-2. Modify the `ESLZDeploy.parameters.json` parameters file to define your location, networking, and alert emails
+1. Clone this repository onto either the Azure Cloud Shell or local machine
+2. Modify the `ESLZDeploy.parameters.json` parameters file to define desired location, networking, and alert emails
 3. Before deploying, confirm the correct subscription is selected using the following command:
 
 ```

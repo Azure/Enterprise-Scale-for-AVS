@@ -1,4 +1,4 @@
-# Use this script when to connect your AVS Virtual Network Gateway to ExpressRoute using an existing ExpressRoute Id and Authorization Key
+# Use this script when to connect AVS Virtual Network Gateway to ExpressRoute using an existing ExpressRoute Id and Authorization Key
 
 # Parameters for deployment
 $GatewayName = "ExampleGatewayName"
