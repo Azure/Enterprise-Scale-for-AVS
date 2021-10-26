@@ -1,7 +1,5 @@
 # Connect two Azure VMware Solution Private Clouds in the same Azure region
 
-Status: Awaiting PG Signoff
-
 This tutorial covers [AVS Interconnect](https://docs.microsoft.com/azure/azure-vmware/connect-multiple-private-clouds-same-region?WT.mc_id=Portal-VMCP) . Two Azure VMware Solution private clouds in the ***same*** Azure region can be connected with AVS InterConnect.
 
 ## Prerequisites

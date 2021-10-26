@@ -1,7 +1,5 @@
 # Connect two Azure VMware Solution Private Clouds across different Azure regions
 
-Status: Awaiting PG Signoff
-
 This tutorial covers connecting two Azure VMware Solution Private Clouds in different Azure regions via ExpressRoute GlobalReach.
 
 ## Prerequisites

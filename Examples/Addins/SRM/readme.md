@@ -1,7 +1,5 @@
 # Configure SRM
 
-Status: Testing
-
 Site Recovery Manager (SRM) is a disaster recovery solution by VMware. This tutorial covers enabling SRM addon for AVS private cloud with a SRM license key.
 
 ## Prerequisites

@@ -1,7 +1,5 @@
 # Configure GlobalReach
 
-Status: Awaiting PG Signoff
-
 This tutorial walk through scenario of creating ExpressRoute GlobalReach connection. This connection is needed to connect Azure VMware Solution Private Cloud to either on-premise location or another Azure VMware Solution Private Cloud running in a different Azure region.
 
 ## Prerequisites

@@ -1,7 +1,5 @@
 # Create Azure VMware Solution Private Cloud with HCX
 
-Status: Awaiting PG Signoff
-
 Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This tutorial walks through the process of provisioning the private cloud resource with HCX enabled.
 
 ## Prerequisites

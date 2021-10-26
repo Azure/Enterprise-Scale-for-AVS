@@ -1,7 +1,5 @@
 # Connect Azure VMware Solution with Azure Virtual Network by redeeming Authorization Key
 
-Status: Awaiting PG Signoff
-
 This tutorial walks through scenario of using the Authorization Key from Azure VMware Solution ExpressRoute circuit and redeeming it on Azure Virtual Network ExpressRoute Gateway. There are two additional tutorials which ***create as well as redeem*** an Authorization Key on either an [existing](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) or [new](../../Networking/AVS-to-VNet-NewVNet/readme.md) Azure Virtual Network.
 
 ## Prerequisites

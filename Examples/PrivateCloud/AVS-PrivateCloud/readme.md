@@ -1,7 +1,5 @@
 # Create Azure VMware Solution Private Cloud
 
-Status: Awaiting PG Signoff
-
 Azure VMware Solution provides private cloud environment with vSphere cluster built from dedicated bare-metal Azure infrastructure. This is the first tutorial to walk through the process of provisioning the private cloud resource.
 
 ## Prerequisites
