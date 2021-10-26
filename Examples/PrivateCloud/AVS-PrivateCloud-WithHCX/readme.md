@@ -16,7 +16,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 * Update the parameter values in appropriate location. 
 
-* Deploy the AVS private cloud using one of the following ways. It may take upto 3-4 hours to create Azure VMware Solution Private Cloud. Additionally, upto 30 mins are needed to complete HCX installation.
+* Deploy the AVS private cloud using one of the following ways. It may take up to 3-4 hours to create Azure VMware Solution Private Cloud. Additionally, up to 30 minutes are needed to complete HCX installation.
 
 ### Bicep
 

@@ -12,7 +12,7 @@ Hybrid Cloud Extension (HCX) is the application mobility platform designed for m
 
 * Update the parameter values in the parameters file.
 
-* Run one of the following scripts. It may take upto 30 mins to complete this installation.
+* Run one of the following scripts. It may take up to 30 minutes to complete this installation.
 
 ### Bicep
 

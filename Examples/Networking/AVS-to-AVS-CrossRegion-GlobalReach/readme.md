@@ -35,7 +35,7 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-XR-GR-Deployment -c -f 
 
 ## Post-deployment Steps
 
-* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Connectivity". Navigate to "ExpressRoute Global Reach" menu. Ensure that under "On-prem cloud connections", you see state of connection as "Connected". Validate that correct subscription, resource group, expressroute circuit and authorization key are listed alongside the state.
+* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Connectivity". Navigate to "ExpressRoute Global Reach" menu. Ensure that under "On-premises cloud connections", you see state of connection as "Connected". Validate that correct subscription, resource group, ExpressRoute circuit and authorization key are listed alongside the state.
 
 ## Next Steps
 

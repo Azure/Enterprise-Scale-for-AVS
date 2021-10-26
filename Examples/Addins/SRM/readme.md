@@ -42,7 +42,7 @@ cd AzureCLI
 
 ## Post-deployment Steps
 
-* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Add-ons". Navigate to "Disaster recovery" menu. Ensure that "Uninstall VMware Site Recovery Manager (SRM)" and "Uninstall vSphere Replication" buttons are enabled. Enabled buttons indicate successful deployment of SRM add-on.
+* Navigate to Azure VMware Solution Private Cloud in Azure Portal. Under "Manage" tab, click "Addons". Navigate to "Disaster recovery" menu. Ensure that "Uninstall VMware Site Recovery Manager (SRM)" and "Uninstall vSphere Replication" buttons are enabled. Enabled buttons indicate successful deployment of SRM add-on.
 
 * Complete site pairing as per [Configure site pairing in vCenter](https://docs.microsoft.com/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#configure-site-pairing-in-vcenter) guidance.
 
