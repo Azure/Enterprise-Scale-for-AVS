@@ -20,7 +20,7 @@ Prior to deploying, you need to ensure you have met the following prerequisites:
 
 - Access to an existing Azure Subscription with [contributor access](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
 - [Request AVS host quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) for all regions you wish to deploy to
-- Registered the Microsoft.AVS resource provider with your subscription
+- Registered the Microsoft.AVS resource provider with subscription to be used for deployment.
 
 <br/>
 
@@ -78,7 +78,7 @@ Quota for AVS is subscription and region specific, if you want to deploy AVS to 
 
 ### 2. Deploying the private cloud
 
-During this step, you will deploy the template that provisions the base infrastructure. It is important to ensure that the parameters that are provided to the template (provided in a parameters file or inline) are configured to match your networking configuration, and do not overlap with any existing networks. Changing the network ranges used once the private cloud is deployed will require the deletion of the Private Cloud.
+During this step, you will deploy the template that provisions the base infrastructure. It is important to ensure that the parameters that are provided to the template (provided in a parameters file or inline) are configured to match desired networking configuration, and do not overlap with any existing networks. Changing the network ranges used once the private cloud is deployed will require the deletion of the Private Cloud.
 
 ### 3. Configuring connectivity
 
