@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.613.9944",
-      "templateHash": "15010831025198553582"
+      "version": "0.4.1008.15138",
+      "templateHash": "16419264028643160034"
     }
   },
   "parameters": {
@@ -58,9 +58,9 @@
           "properties": {}
         },
         "peer": {
-          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2019-10-01').outputs.ExpressRouteId.value]"
+          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-06-01').outputs.ExpressRouteId.value]"
         },
-        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-06-01').outputs.ExpressRouteAuthorizationKey.value]"
       },
       "dependsOn": [
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')]"
@@ -68,7 +68,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-10-01",
+      "apiVersion": "2020-06-01",
       "name": "AVSAuthorization",
       "subscriptionId": "[parameters('PrivateCloudSubscriptionId')]",
       "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
@@ -91,8 +91,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.613.9944",
-              "templateHash": "3518823590788269666"
+              "version": "0.4.1008.15138",
+              "templateHash": "15016709975599244085"
             }
           },
           "parameters": {

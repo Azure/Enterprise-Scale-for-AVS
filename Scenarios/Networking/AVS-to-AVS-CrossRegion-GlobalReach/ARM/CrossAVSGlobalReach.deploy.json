@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.613.9944",
-      "templateHash": "611093157338638995"
+      "version": "0.4.1008.15138",
+      "templateHash": "10432314343122892696"
     }
   },
   "parameters": {
@@ -38,7 +38,7 @@
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-10-01",
+      "apiVersion": "2020-06-01",
       "name": "SecondaryAuthKey",
       "resourceGroup": "[parameters('SecondaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -60,8 +60,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.613.9944",
-              "templateHash": "3518823590788269666"
+              "version": "0.4.1008.15138",
+              "templateHash": "15016709975599244085"
             }
           },
           "parameters": {
@@ -101,7 +101,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-10-01",
+      "apiVersion": "2020-06-01",
       "name": "GlobalReach",
       "resourceGroup": "[parameters('PrimaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -114,10 +114,10 @@
             "value": "[parameters('PrimaryPrivateCloudName')]"
           },
           "ExpressRouteId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2019-10-01').outputs.ExpressRouteId.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-06-01').outputs.ExpressRouteId.value]"
           },
           "ExpressRouteAuthorizationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2019-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-06-01').outputs.ExpressRouteAuthorizationKey.value]"
           }
         },
         "template": {
@@ -126,8 +126,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.613.9944",
-              "templateHash": "4892092272112468516"
+              "version": "0.4.1008.15138",
+              "templateHash": "18004369253922035476"
             }
           },
           "parameters": {
