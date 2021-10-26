@@ -4,7 +4,6 @@
 * [Deployment Scenarios](Scenarios.md)
   * [AVS Landing Zone in a Single Region](AVS-Landing-Zone/SingleRegion)
   * [AVS Single Component Deployments](Scenarios)
-* [Roadmap](ESLZStatusReport.md)
 
 ---
 
