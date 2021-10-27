@@ -6,13 +6,13 @@ This tutorial covers [AVS Interconnect](https://docs.microsoft.com/azure/azure-v
 
 * Created two Azure VMware Solution private clouds **in the same Azure regions** using steps as described in either [Create Azure VMware Solution Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md) or [Create Azure VMware Solution Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md).
 
-* Two private clouds must be in the same Azure regions. To connect, two private clouds in different Azure regions use guidance available on [Connect two Azure VMware Solution Private Clouds across different Azure regions](../../Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md).
+* Two private clouds must be in the same Azure regions. To connect two private clouds in different Azure regions, use guidance available on [Connect two Azure VMware Solution Private Clouds across different Azure regions](../../Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md).
 
 * No IP overlap between two private clouds.
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following scripts.
 

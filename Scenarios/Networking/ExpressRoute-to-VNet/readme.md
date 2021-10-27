@@ -4,7 +4,7 @@ This tutorial walks through scenario of using the Authorization Key from Azure V
 
 ## Prerequisites
 
-* Steps as outlined in [Create Azure VMware Solution Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md)  OR [Create Azure VMware Solution Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md)
+* Steps as outlined in [Create Azure VMware Solution Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md)  OR [Create Azure VMware Solution Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md).
 
 * An existing Azure Virtual Network Gateway of Type ExpressRoute.
 
@@ -12,7 +12,7 @@ This tutorial walks through scenario of using the Authorization Key from Azure V
 
 ## During the deployment
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following script.
 
@@ -42,7 +42,7 @@ cd PowerShell
 
 ## Post-deployment steps
 
-In the Azure Portal navigate to the "Connections" menu for the Virtual Network Gateway and verify the "Status" of the connection is showing as "Succeeded".
+In the Azure Portal, navigate to the "Connections" menu for the Virtual Network Gateway and verify the "Status" of the connection is showing as "Succeeded".
 
 ## Next Steps
 

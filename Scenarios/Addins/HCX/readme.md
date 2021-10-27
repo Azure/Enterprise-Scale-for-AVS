@@ -4,7 +4,7 @@ Hybrid Cloud Extension (HCX) is the application mobility platform designed for m
 
 ## Prerequisites
 
-* AVS Private Cloud up and running
+* AVS Private Cloud up and running.
 
 * Understanding of the [prerequisites](https://docs.microsoft.com/azure/azure-vmware/install-vmware-hcx#prerequisites) for using HCX with Azure VMware Solution.
 
