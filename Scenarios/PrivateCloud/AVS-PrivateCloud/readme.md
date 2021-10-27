@@ -14,7 +14,7 @@ Ensure to check following prerequisites before starting the deployment process.
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Deploy the AVS private cloud using one of the following ways. It may take up to 3-4 hours to create Azure VMware Solution Private Cloud.
 

@@ -10,7 +10,7 @@ This tutorial walk through scenario of creating ExpressRoute GlobalReach connect
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following script.
 

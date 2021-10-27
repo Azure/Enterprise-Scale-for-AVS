@@ -10,7 +10,7 @@ This tutorial walks through the scenario of connecting Azure VMware Solution Pri
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following scripts.
 

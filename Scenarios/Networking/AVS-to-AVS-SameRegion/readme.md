@@ -12,7 +12,7 @@ This tutorial covers [AVS Interconnect](https://docs.microsoft.com/azure/azure-v
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following scripts.
 

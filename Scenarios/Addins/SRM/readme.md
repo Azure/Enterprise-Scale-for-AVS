@@ -4,7 +4,7 @@ Site Recovery Manager (SRM) is a disaster recovery solution by VMware. This tuto
 
 ## Prerequisites
 
-* AVS Private Cloud up and running
+* AVS Private Cloud up and running.
 
 * [SRM license key](https://docs.microsoft.com/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#srm-licenses) obtained from VMware.
 
@@ -12,7 +12,7 @@ Site Recovery Manager (SRM) is a disaster recovery solution by VMware. This tuto
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following script.
 

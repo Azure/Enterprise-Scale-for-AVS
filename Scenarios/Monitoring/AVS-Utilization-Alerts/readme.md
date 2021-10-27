@@ -4,13 +4,13 @@ It is crucial to monitor the resource utilization in order to take timely action
 
 ## Prerequisites
 
-* AVS Private Cloud up and running
+* AVS Private Cloud up and running.
 
 * A list of email address(es) who will receive Alerts from Azure VMware Solution Private Cloud.
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following scripts.
 
