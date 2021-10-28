@@ -48,4 +48,4 @@ cd AzureCLI
 
 ## Next Steps
 
-[Configure HCX on an existing Azure VMware Solution Private Cloud](../../Addins/HCX/readme.md)
+[Configure HCX on an existing Azure VMware Solution Private Cloud](../../Addons/HCX/readme.md)
