@@ -41,6 +41,8 @@ param SRMLicenseKey string = ''
 @description('Number of vSphere Replication Servers to be created if SRM is deployed')
 param VRServerCount int = 1
 
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deployment().name}-AVS'
@@ -48,6 +50,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     Prefix: Prefix
     Location: Location
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
+    TelemetryOptOut: TelemetryOptOut
   }
 }
 
@@ -111,17 +114,4 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
     VNetResourceId: Networking.outputs.VNetResourceId
     ExRConnectionResourceId: VNetConnection.outputs.ExRConnectionResourceId
   }
-}
-
-resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = {
-    name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8'
-    location: deployment().location
-    properties: {
-      mode: 'Incremental'
-      template: {
-        '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
-        contentVersion: '1.0.0.0'
-        resources: []
-      }
-    }
 }
