@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "13005553269426735948"
+      "templateHash": "18391463369185918954"
     }
   },
   "parameters": {
@@ -1416,7 +1416,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "350163268992402135"
+              "templateHash": "33904223543847351"
             }
           },
           "parameters": {
@@ -1478,7 +1478,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.1008.15138",
-                      "templateHash": "10607024401660792797"
+                      "templateHash": "17088565413052085341"
                     }
                   },
                   "parameters": {
@@ -1510,7 +1510,7 @@
                           }
                         ],
                         "enabled": true,
-                        "groupShortName": "avsalerts"
+                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]"
                       }
                     }
                   ],
@@ -1690,7 +1690,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.1008.15138",
-                      "templateHash": "6609053906496618336"
+                      "templateHash": "15119936280232801349"
                     }
                   },
                   "parameters": {
@@ -1728,7 +1728,7 @@
                             {
                               "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
                               "containsAny": [
-                                "[reference(parameters('PrivateCloudResourceId')).location]",
+                                "[reference(parameters('PrivateCloudResourceId'), '2021-06-01', 'Full').location]",
                                 "Global"
                               ]
                             }

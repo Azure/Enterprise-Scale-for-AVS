@@ -1,6 +1,6 @@
-# Configure Monitoring
+# Configure Service Health Alerts
 
-Any updates or impacting events for AVS are published via Service Health, it is critical to monitor this for any notifcations. This scenario will setup service health notifications for a given set of email addresses. Action owners will receive email notifications if a service health event is published.
+Any updates or impacting events for AVS are published via Service Health, it is critical to monitor this for any notifications. This scenario will setup service health notifications for a given set of email addresses. Action owners will receive email notifications if a service health event is published.
 
 This scenario is also included in the [AVS-Utilization-Alerts](../AVS-Utilization-Alerts) scenario.
 
@@ -34,7 +34,7 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -
 
 ## Post-deployment Steps
 
-* Navigate to Azure Monitor service in Azure Portal. Click "Alerts" tab and navigate to "Manage alert rules". Newly created alert - *AVS-Service-Health-xyz* - should be listed with status as "Enabled".
+* Navigate to Azure Monitor service in Azure Portal. Click "Alerts" tab and navigate to "Manage alert rules". Newly created alert - *AVS-ServiceHealth-* - should be listed with status as "Enabled".
 
 ## Next Steps
 

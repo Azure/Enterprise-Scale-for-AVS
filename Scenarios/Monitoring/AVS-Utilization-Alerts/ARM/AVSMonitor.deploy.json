@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "8392359403593984516"
+      "templateHash": "6715689681613993731"
     }
   },
   "parameters": {
@@ -93,7 +93,7 @@
           }
         ],
         "enabled": true,
-        "groupShortName": "[parameters('ActionGroupName')]"
+        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('ActionGroupName'))), 0, 12)]"
       }
     },
     {
@@ -118,7 +118,7 @@
             {
               "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
               "containsAny": [
-                "[reference(parameters('PrivateCloudResourceId')).location]",
+                "[reference(parameters('PrivateCloudResourceId'), '2021-06-01', 'Full').location]",
                 "Global"
               ]
             }

@@ -23,7 +23,7 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
         {
           field: 'properties.impactedServices[*].ImpactedRegions[*].RegionName'
           containsAny: [
-            reference(PrivateCloudResourceId).location
+            reference(PrivateCloudResourceId, '2021-06-01', 'Full').location
             'Global'
           ]
         }

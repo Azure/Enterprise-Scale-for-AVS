@@ -16,7 +16,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   location: 'Global'
   properties:{
     enabled: true
-    groupShortName: ActionGroupName
+    groupShortName: substring('avs${uniqueString(ActionGroupName)}', 0, 12)
     emailReceivers: [for email in ActionGroupEmails: {
       emailAddress: email
       name: split(email, '@')[0]
@@ -82,7 +82,7 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
         {
           field: 'properties.impactedServices[*].ImpactedRegions[*].RegionName'
           containsAny: [
-            reference(PrivateCloudResourceId).location
+            reference(PrivateCloudResourceId, '2021-06-01', 'Full').location
             'Global'
           ]
         }
