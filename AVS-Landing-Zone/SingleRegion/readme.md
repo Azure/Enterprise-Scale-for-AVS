@@ -1,7 +1,7 @@
 
 | ARM (Portal Experience)                                      |
 | ------------------------------------------------------------ |
-| [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2FAVS-Landing-Zone%2FSingleRegion%2FARM%2FESLZDeploy.deploy.json) |
+| [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FSingleRegion%2FARM%2FESLZDeploy.deploy.json) |
 
 <br/>
 
