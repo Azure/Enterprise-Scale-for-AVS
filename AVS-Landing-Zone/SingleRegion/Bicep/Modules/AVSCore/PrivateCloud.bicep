@@ -20,7 +20,6 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
 
 resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
   name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8'
-  location: Location
   properties: {
     mode: 'Incremental'
     template: {

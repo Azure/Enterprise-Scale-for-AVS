@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "10517773308180322998"
+      "templateHash": "11713931019193275545"
     }
   },
   "parameters": {
@@ -172,7 +172,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "4699595177467566394"
+              "templateHash": "17865937273441607725"
             }
           },
           "parameters": {
@@ -228,7 +228,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.1008.15138",
-                      "templateHash": "17196371209759776653"
+                      "templateHash": "9670348202978955961"
                     }
                   },
                   "parameters": {
@@ -272,7 +272,6 @@
                       "type": "Microsoft.Resources/deployments",
                       "apiVersion": "2021-04-01",
                       "name": "pid-754599a0-0a6f-424a-b4c5-1b12be198ae8",
-                      "location": "[parameters('Location')]",
                       "properties": {
                         "mode": "Incremental",
                         "template": {
