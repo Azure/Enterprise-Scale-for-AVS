@@ -2,7 +2,7 @@
 
 This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required
 
-## AVS Private Cloud + Add-ins
+## AVS Private Cloud + Add-ons
 
 | Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
 | ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
