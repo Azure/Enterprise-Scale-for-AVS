@@ -13,7 +13,7 @@ This tutorial covers connecting two Azure VMware Solution Private Clouds in diff
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following script.
 

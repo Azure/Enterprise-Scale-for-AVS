@@ -10,7 +10,7 @@ Azure VMware Solution Private cloud comes with a preconfigured dedicated Express
 
 ## Deployment Steps
 
-* Update the parameter values in appropriate location.
+* Update the parameter values in appropriate parameter file.
 
 * Run one of the following scripts.
 
