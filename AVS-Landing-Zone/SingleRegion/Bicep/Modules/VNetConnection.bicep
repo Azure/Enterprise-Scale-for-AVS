@@ -9,7 +9,7 @@ param GatewayName string
 
 module AVSExRAuthorization 'VNetConnection/AVSAuthorization.bicep' = {
   scope: resourceGroup(PrivateCloudResourceGroup)
-  name: '${deployment().name}-AVSExRAuthorization'
+  name: '${deployment().name}-ExRAuth'
   params: {
     ConnectionName: '${VNetPrefix}-VNet'
     PrivateCloudName: PrivateCloudName
@@ -18,7 +18,7 @@ module AVSExRAuthorization 'VNetConnection/AVSAuthorization.bicep' = {
 
 module VNetExRConnection 'VNetConnection/VNetExRConnection.bicep' = {
   scope: resourceGroup(NetworkResourceGroup)
-  name: '${deployment().name}-VNetExRConnection'
+  name: '${deployment().name}-ExR'
   params: {
     ConnectionName: '${AVSPrefix}-AVS'
     GatewayName: GatewayName

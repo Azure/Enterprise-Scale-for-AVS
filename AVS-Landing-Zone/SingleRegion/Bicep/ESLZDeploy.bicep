@@ -46,8 +46,10 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+var deploymentPrefix = 'AVS-${uniqueString(deployment().name, deployment().location)}'
+
 module AVSCore 'Modules/AVSCore.bicep' = {
-  name: '${deployment().name}-AVS'
+  name: '${deploymentPrefix}-AVS'
   params: {
     Prefix: Prefix
     Location: Location
@@ -57,7 +59,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
 }
 
 module Networking 'Modules/Networking.bicep' = {
-  name: '${deployment().name}-Networking'
+  name: '${deploymentPrefix}-Network'
   params: {
     Prefix: Prefix
     Location: Location
@@ -68,7 +70,7 @@ module Networking 'Modules/Networking.bicep' = {
 }
 
 module VNetConnection 'Modules/VNetConnection.bicep' = {
-  name: '${deployment().name}-VNetConnection'
+  name: '${deploymentPrefix}-VNet'
   params: {
     GatewayName: Networking.outputs.GatewayName
     NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
@@ -79,7 +81,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = {
 }
 
 module Addins 'Modules/AVSAddins.bicep' = {
-  name: '${deployment().name}-AVSAddins'
+  name: '${deploymentPrefix}-AVSAddins'
   params: {
     PrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
@@ -91,7 +93,7 @@ module Addins 'Modules/AVSAddins.bicep' = {
 }
 
 module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
-  name: '${deployment().name}-Jumpbox'
+  name: '${deploymentPrefix}-Jumpbox'
   params: {
     Prefix: Prefix
     Location: Location
@@ -105,7 +107,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
 }
 
 module OperationalMonitoring 'Modules/Monitoring.bicep' = {
-  name: '${deployment().name}-Monitoring'
+  name: '${deploymentPrefix}-Monitoring'
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix
