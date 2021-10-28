@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "11497785284905613669"
+      "templateHash": "2356537619297533493"
     }
   },
   "parameters": {
@@ -82,6 +82,13 @@
       "defaultValue": "",
       "metadata": {
         "description": "The subnet CIDR used for the Jumpbox VM Subnet. Must be a /26 or greater within the VNetAddressSpace"
+      }
+    },
+    "JumpboxSku": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3",
+      "metadata": {
+        "description": "The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace"
       }
     },
     "BastionSubnet": {
@@ -992,6 +999,9 @@
           },
           "JumpboxSubnet": {
             "value": "[parameters('JumpboxSubnet')]"
+          },
+          "JumpboxSku": {
+            "value": "[parameters('JumpboxSku')]"
           }
         },
         "template": {
@@ -1001,7 +1011,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "8958530218207715618"
+              "templateHash": "529246643722109202"
             }
           },
           "parameters": {
@@ -1024,6 +1034,9 @@
               "type": "string"
             },
             "JumpboxSubnet": {
+              "type": "string"
+            },
+            "JumpboxSku": {
               "type": "string"
             },
             "BastionSubnet": {
@@ -1229,6 +1242,9 @@
                   },
                   "Password": {
                     "value": "[parameters('Password')]"
+                  },
+                  "VMSize": {
+                    "value": "[parameters('JumpboxSku')]"
                   }
                 },
                 "template": {
