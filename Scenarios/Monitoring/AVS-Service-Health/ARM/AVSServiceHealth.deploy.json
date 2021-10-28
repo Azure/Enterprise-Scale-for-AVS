@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1008.15138",
+      "templateHash": "8460923511106805363"
+    }
+  },
+  "parameters": {
+    "ActionGroupEmails": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Email adresses that should be added to the action group"
+      }
+    },
+    "PrivateCloudResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "The existing Private Cloud full resource id"
+      }
+    }
+  },
+  "functions": [],
+  "variables": {
+    "suffix": "[uniqueString(parameters('PrivateCloudResourceId'))]"
+  },
+  "resources": [
+    {
+      "type": "microsoft.insights/actionGroups",
+      "apiVersion": "2019-06-01",
+      "name": "[format('AVS-ServiceHealth-{0}', variables('suffix'))]",
+      "location": "Global",
+      "properties": {
+        "copy": [
+          {
+            "name": "emailReceivers",
+            "count": "[length(parameters('ActionGroupEmails'))]",
+            "input": {
+              "emailAddress": "[parameters('ActionGroupEmails')[copyIndex('emailReceivers')]]",
+              "name": "[split(parameters('ActionGroupEmails')[copyIndex('emailReceivers')], '@')[0]]",
+              "useCommonAlertSchema": false
+            }
+          }
+        ],
+        "enabled": true,
+        "groupShortName": "AVS-ServiceHealth"
+      }
+    },
+    {
+      "type": "Microsoft.Insights/activityLogAlerts",
+      "apiVersion": "2020-10-01",
+      "name": "[format('AVS-ServiceHealth-{0}', variables('suffix'))]",
+      "location": "Global",
+      "properties": {
+        "description": "Service Health Alerts",
+        "condition": {
+          "allOf": [
+            {
+              "field": "category",
+              "equals": "ServiceHealth"
+            },
+            {
+              "field": "properties.impactedServices[*].ServiceName",
+              "containsAny": [
+                "Azure VMware Solution"
+              ]
+            },
+            {
+              "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+              "containsAny": [
+                "[reference(parameters('PrivateCloudResourceId')).location]",
+                "Global"
+              ]
+            }
+          ]
+        },
+        "scopes": [
+          "[subscription().id]"
+        ],
+        "enabled": true,
+        "actions": {
+          "actionGroups": [
+            {
+              "actionGroupId": "[resourceId('microsoft.insights/actionGroups', format('AVS-ServiceHealth-{0}', variables('suffix')))]"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('microsoft.insights/actionGroups', format('AVS-ServiceHealth-{0}', variables('suffix')))]"
+      ]
+    }
+  ]
+}
