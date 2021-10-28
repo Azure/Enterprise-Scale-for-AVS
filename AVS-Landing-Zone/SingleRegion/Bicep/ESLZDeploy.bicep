@@ -29,6 +29,8 @@ param JumpboxUsername string = 'avsjump'
 param JumpboxPassword string = ''
 @description('The subnet CIDR used for the Jumpbox VM Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param JumpboxSubnet string = ''
+@description('The sku to use for the Jumpbox VM, must have quota for this within the target region')
+param JumpboxSku string = 'Standard_D2s_v3'
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
 
@@ -103,6 +105,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     VNetResourceGroup: Networking.outputs.NetworkResourceGroup
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
+    JumpboxSku: JumpboxSku
   }
 }
 

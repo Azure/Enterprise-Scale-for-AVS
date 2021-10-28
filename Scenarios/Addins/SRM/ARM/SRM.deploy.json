@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1008.15138",
+      "templateHash": "3998596222068424558"
+    }
+  },
+  "parameters": {
+    "PrivateCloudName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the existing Private Cloud to setup SRM on"
+      }
+    },
+    "SRMLicenseKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The SRM license key to be used, can be left blank for a trial license"
+      }
+    },
+    "ReplicationServerCount": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Number of vSphere Replication servers to be deployed"
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds/addons",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+      "properties": {
+        "licenseKey": "[parameters('SRMLicenseKey')]",
+        "addonType": "SRM"
+      }
+    },
+    {
+      "type": "Microsoft.AVS/privateClouds/addons",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
+      "properties": {
+        "vrsCount": "[parameters('ReplicationServerCount')]",
+        "addonType": "VR"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
+      ]
+    }
+  ]
+}

@@ -9,7 +9,9 @@ param Password string
 param VNetResourceGroup string
 param VNetName string
 param JumpboxSubnet string
+param JumpboxSku string
 param BastionSubnet string
+
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'
@@ -45,6 +47,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     Location: Location
     Username: Username
     Password: Password
+    VMSize: JumpboxSku
   }
 }
 

@@ -4,7 +4,7 @@ param Location string = resourceGroup().location
 param Username string
 @secure()
 param Password string
-param VMSize string = 'Standard_D2s_v3'
+param VMSize string
 param OSVersion string = '2019-Datacenter-smalldisk'
 
 var Name = '${Prefix}-jumpbox'
