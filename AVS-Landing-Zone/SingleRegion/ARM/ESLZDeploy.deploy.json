@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "2716750703214390535"
+      "templateHash": "17364759236521321976"
     }
   },
   "parameters": {
@@ -18,6 +18,8 @@
     "Prefix": {
       "type": "string",
       "defaultValue": "AVS",
+      "maxLength": 20,
+      "minLength": 1,
       "metadata": {
         "description": "The prefix to use on resources inside this template"
       }
