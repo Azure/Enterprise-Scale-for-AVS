@@ -39,6 +39,7 @@ msrc
 MSRC
 NewVNet
 onboardsupport
+ons
 opencode
 operationalization
 pgandham
@@ -59,6 +60,7 @@ scalable
 SDDC
 SeparateAuthKey
 SeperateAuthKey
+ServiceHealth
 SoutheastAsia
 SRM
 TODO
