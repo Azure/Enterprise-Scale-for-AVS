@@ -1,6 +1,6 @@
 # AVS Component Deployment Scenarios
 
-This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required
+This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required.
 
 ## AVS Private Cloud + Add-ons
 
