@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "2356537619297533493"
+      "templateHash": "10517773308180322998"
     }
   },
   "parameters": {
@@ -88,7 +88,7 @@
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
       "metadata": {
-        "description": "The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace"
+        "description": "The sku to use for the Jumpbox VM, must have quota for this within the target region"
       }
     },
     "BastionSubnet": {
@@ -1011,7 +1011,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "529246643722109202"
+              "templateHash": "6469292834709410651"
             }
           },
           "parameters": {
@@ -1254,7 +1254,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.1008.15138",
-                      "templateHash": "616689305426211390"
+                      "templateHash": "6989318018846022298"
                     }
                   },
                   "parameters": {
@@ -1275,8 +1275,7 @@
                       "type": "secureString"
                     },
                     "VMSize": {
-                      "type": "string",
-                      "defaultValue": "Standard_D2s_v3"
+                      "type": "string"
                     },
                     "OSVersion": {
                       "type": "string",
