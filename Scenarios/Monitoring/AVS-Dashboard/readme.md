@@ -1,6 +1,6 @@
 # Configure Dashboard
 
-It is crucial to monitor the resource utilization in order to understand what is happeneing within your Private Cloud. This scenario gives you a basic dashboard template to monitor CPU, Memory, and Disk utilization within a specified Private Cloud.
+It is crucial to monitor the resource utilization in order to understand what is happening within your Private Cloud. This scenario gives you a basic dashboard template to monitor CPU, Memory, and Disk utilization within a specified Private Cloud.
 
 ## Prerequisites
 
