@@ -4,6 +4,7 @@ Addons
 AspNet
 AVS
 AVSAlert
+AVSDashboard
 AVSGlobalReach
 AVSMonitor
 az
