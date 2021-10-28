@@ -11,7 +11,7 @@ param SRMLicenseKey string
 @maxValue(10)
 param VRServerCount int
 
-module HCX 'AVSAddins/HCX.bicep' = if (DeployHCX) {
+module HCX 'AVSAddons/HCX.bicep' = if (DeployHCX) {
   name: '${deployment().name}-HCX'
   scope: resourceGroup(PrivateCloudResourceGroup)
   params: {
@@ -19,7 +19,7 @@ module HCX 'AVSAddins/HCX.bicep' = if (DeployHCX) {
   }
 }
 
-module SRM 'AVSAddins/SRM.bicep' = if (DeploySRM) {
+module SRM 'AVSAddons/SRM.bicep' = if (DeploySRM) {
   name: '${deployment().name}-SRM'
   scope: resourceGroup(PrivateCloudResourceGroup)
   params: {

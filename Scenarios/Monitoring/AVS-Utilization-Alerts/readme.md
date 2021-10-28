@@ -36,4 +36,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -
 
 ## Next Steps
 
-[Configure SRM](../../Addins/SRM/readme.md)
+[Configure SRM](../../Addons/SRM/readme.md)

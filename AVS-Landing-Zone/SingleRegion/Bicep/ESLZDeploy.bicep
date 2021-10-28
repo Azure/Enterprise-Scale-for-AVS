@@ -82,8 +82,8 @@ module VNetConnection 'Modules/VNetConnection.bicep' = {
   }
 }
 
-module Addins 'Modules/AVSAddins.bicep' = {
-  name: '${deploymentPrefix}-AVSAddins'
+module Addons 'Modules/AVSAddons.bicep' = {
+  name: '${deploymentPrefix}-AVSAddons'
   params: {
     PrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
