@@ -93,8 +93,8 @@ resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert i
       PrivateCloudResourceId
     ]
     severity: Alert.Severity
-    evaluationFrequency: 'PT1M'
-    windowSize: 'PT5M'
+    evaluationFrequency: 'PT5M'
+    windowSize: 'PT30M'
     autoMitigate: true
     enabled: true
     actions: [
