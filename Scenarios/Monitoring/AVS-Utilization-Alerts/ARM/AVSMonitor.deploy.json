@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "6715689681613993731"
+      "templateHash": "2619700847924524055"
     }
   },
   "parameters": {
@@ -177,8 +177,8 @@
           "[parameters('PrivateCloudResourceId')]"
         ],
         "severity": "[variables('Alerts')[copyIndex()].Severity]",
-        "evaluationFrequency": "PT1M",
-        "windowSize": "PT5M",
+        "evaluationFrequency": "PT5M",
+        "windowSize": "PT30M",
         "autoMitigate": true,
         "enabled": true,
         "actions": [
