@@ -61,6 +61,7 @@ scalable
 SDDC
 SeparateAuthKey
 SeperateAuthKey
+ServiceHealth
 SoutheastAsia
 SRM
 TODO

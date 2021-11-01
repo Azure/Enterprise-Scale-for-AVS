@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "8486915577076567590"
+      "templateHash": "18391463369185918954"
     }
   },
   "parameters": {
@@ -1416,7 +1416,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "5336780677503646425"
+              "templateHash": "33904223543847351"
             }
           },
           "parameters": {
@@ -1478,7 +1478,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.4.1008.15138",
-                      "templateHash": "10607024401660792797"
+                      "templateHash": "17088565413052085341"
                     }
                   },
                   "parameters": {
@@ -1510,7 +1510,7 @@
                           }
                         ],
                         "enabled": true,
-                        "groupShortName": "avsalerts"
+                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]"
                       }
                     }
                   ],
@@ -1652,6 +1652,99 @@
                             "actionGroupId": "[parameters('ActionGroupResourceId')]"
                           }
                         ]
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name))]",
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-06-01",
+              "name": "[format('{0}-ServiceHealth', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ActionGroupResourceId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-06-01').outputs.ActionGroupResourceId.value]"
+                  },
+                  "AlertPrefix": {
+                    "value": "[parameters('PrimaryPrivateCloudName')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrimaryPrivateCloudResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1008.15138",
+                      "templateHash": "15119936280232801349"
+                    }
+                  },
+                  "parameters": {
+                    "AlertPrefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupResourceId": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "functions": [],
+                  "resources": [
+                    {
+                      "type": "Microsoft.Insights/activityLogAlerts",
+                      "apiVersion": "2020-10-01",
+                      "name": "[format('{0}-ServiceHealth', parameters('AlertPrefix'))]",
+                      "location": "Global",
+                      "properties": {
+                        "description": "Service Health Alerts",
+                        "condition": {
+                          "allOf": [
+                            {
+                              "field": "category",
+                              "equals": "ServiceHealth"
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ServiceName",
+                              "containsAny": [
+                                "Azure VMware Solution"
+                              ]
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+                              "containsAny": [
+                                "[reference(parameters('PrivateCloudResourceId'), '2021-06-01', 'Full').location]",
+                                "Global"
+                              ]
+                            }
+                          ]
+                        },
+                        "scopes": [
+                          "[subscription().id]"
+                        ],
+                        "enabled": true,
+                        "actions": {
+                          "actionGroups": [
+                            {
+                              "actionGroupId": "[parameters('ActionGroupResourceId')]"
+                            }
+                          ]
+                        }
                       }
                     }
                   ]

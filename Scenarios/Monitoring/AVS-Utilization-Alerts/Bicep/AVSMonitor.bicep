@@ -16,7 +16,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   location: 'Global'
   properties:{
     enabled: true
-    groupShortName: ActionGroupName
+    groupShortName: substring('avs${uniqueString(ActionGroupName)}', 0, 12)
     emailReceivers: [for email in ActionGroupEmails: {
       emailAddress: email
       name: split(email, '@')[0]
@@ -60,6 +60,47 @@ var Alerts = [
     Severity: 0
   }
 ]
+
+// Deploy service health alerts
+resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
+  name: '${AlertPrefix}-ServiceHealth'
+  location: 'Global'
+  properties: {
+    description: 'Service Health Alerts'
+    condition:{
+      allOf: [
+        {
+          field: 'category'
+          equals: 'ServiceHealth'
+        }
+        {
+          field: 'properties.impactedServices[*].ServiceName'
+          containsAny: [
+            'Azure VMware Solution'
+          ]
+        }
+        {
+          field: 'properties.impactedServices[*].ImpactedRegions[*].RegionName'
+          containsAny: [
+            reference(PrivateCloudResourceId, '2021-06-01', 'Full').location
+            'Global'
+          ]
+        }
+      ]
+    }
+    scopes: [
+      subscription().id
+    ]
+    enabled: true
+    actions: {
+      actionGroups: [
+        {
+          actionGroupId: ActionGroup.id
+        }
+      ]
+    }
+  }
+}
 
 // Loop through the alerts above and create them
 resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert in Alerts: {
