@@ -42,7 +42,7 @@ In the Greenfield scenario, no Azure infrastructure components for AVS on Azure 
 
 It is important to consider the life cycle of each of these components, if you want to deploy these items individually or via separate executions, then please see the Brownfield Deployment section.
 
-The [AVS Single Region](AVS-Landing-Zone/SingleRegion) template provides a complete AVS landing zone reference implementation within a single template.
+The [AVS Green Field](AVS-Landing-Zone/GreenField) template provides a complete AVS landing zone reference implementation within a single template.
 
 ### Brownfield deployment
 
@@ -89,24 +89,16 @@ If you choose not to deploy connectivity as part of the private cloud deployment
 
 The templates and scripts need to be executed from an execution environment, currently the supported environments are:
 
-### PowerShell or AzureCLI via Azure Cloud Shell
+### [PowerShell or AzureCLI via Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview)
 
-https://docs.microsoft.com/en-us/azure/cloud-shell/overview
+### [Local Azure PowerShell](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#powershell)
 
-### Local Azure PowerShell
-
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#powershell
-
-### Local Azure CLI
-
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli
+### [Local Azure CLI](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#azure-cli)
 
 ### Azure DevOps or Automation Pipeline
 
 Alongside command-line deployment you can also choose to automate the deployment of an environment.
 
-<br/>
+## Next Steps
 
-# Next Steps
-
-Once all the prerequisites are complete, head [here](AVS-Landing-Zone/SingleRegion) to deploy the AVS Landing Zone reference implementation or to [Scenarios](Scenarios) for single component deployment scenarios
+Once all the prerequisites are complete, head [here](AVS-Landing-Zone/GreenField) to deploy the AVS Landing Zone reference implementation or to [Scenarios](Scenarios) for single component deployment scenarios
