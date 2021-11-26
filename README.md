@@ -2,8 +2,8 @@
 
 * [Getting Started](GettingStarted.md)
 * Deployment Scenarios
-  * [Greenfield Deployment](AVS-Landing-Zone/GreenField)
-  * [Brownfield Deployment](BrownField)
+  * [Greenfield Deployment](AVS-Landing-Zone/GreenField/readme.md)
+  * [Brownfield Deployment](BrownField/readme.md)
 
 ---
 
