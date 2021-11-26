@@ -77,13 +77,13 @@ If you choose not to deploy connectivity as part of the private cloud deployment
 
 The templates and scripts need to be executed from an execution environment, currently the supported environments are:
 
-### [PowerShell or AzureCLI via Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview)
+- [PowerShell or AzureCLI via Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview)
 
-### [Local Azure PowerShell](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#powershell)
+- [Local Azure PowerShell](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#powershell)
 
-### [Local Azure CLI](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#azure-cli)
+- [Local Azure CLI](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#azure-cli)
 
-### Azure DevOps or Automation Pipeline
+- Azure DevOps or Automation Pipeline
 
 Alongside command-line deployment you can also choose to automate the deployment of an environment.
 
