@@ -89,4 +89,4 @@ Alongside command-line deployment you can also choose to automate the deployment
 
 ## Next Steps
 
-Once all the prerequisites are complete, head [here](AVS-Landing-Zone/GreenField) to deploy the AVS Landing Zone reference implementation or to [Scenarios](Scenarios) for single component deployment scenarios
+Once all the prerequisites are complete, choose either head [greenfield deployment](AVS-Landing-Zone/GreenField) for a new AVS private cloud deployment or to [brownfield deployment](BrownField) for configuring additional components on an existing AVS private cloud.

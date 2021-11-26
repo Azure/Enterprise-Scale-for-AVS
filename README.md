@@ -3,7 +3,7 @@
 * [Getting Started](GettingStarted.md)
 * [Deployment Scenarios](Scenarios)
   * [Greenfield Deployment](AVS-Landing-Zone/GreenField)
-  * [Brownfield Deployment](Scenarios)
+  * [Brownfield Deployment](BrownField)
 
 ---
 
