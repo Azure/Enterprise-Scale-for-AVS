@@ -39,14 +39,12 @@ The [AVS Green Field](AVS-Landing-Zone/GreenField) template provides a complete 
 
 ### Brownfield deployment
 
-In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. For these deployments, a series of smaller [scenarios](Scenarios) are provided with tightly scoped deployments.
-
-See the scenarios section for more information
+In the Brownfield scenario, the Automation framework will deploy the solution using existing Azure resources. This gives you greater control over the resources, allowing you to either split up the deployment into smaller pieces or utilize existing resources. 
 
 ## Deployment Options
 
 For each module a set of options are provided for deployment. All modules within this repository contain Bicep & ARM templates, with a subset also providing PowerShell and Azure CLI scripting options.
-It is important to note that you can deploy the Bicep or ARM templates via the [Azure CLI](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli), [PowerShell](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#powershell), or the Azure Portal. Depending on the version of Azure CLI and PowerShell you have installed, you may need to update prior to deploying Bicep templates. You can check if you have support for bicep via the following commands:
+It is important to note that you can deploy the Bicep or ARM templates via the [Azure CLI](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#azure-cli), [PowerShell](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#powershell), or the Azure Portal. Depending on the version of Azure CLI and PowerShell you have installed, you may need to update prior to deploying Bicep templates. You can check if you have support for bicep via the following commands:
 
 ```Azure CLI
 az bicep version
@@ -62,7 +60,7 @@ The deployment flow has three key steps: Requesting quota, deploying the Private
 
 ### 1. Requesting quota
 
-It is important to [request quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) ahead of deploying any template that contains a Private Cloud resource, or modifies the scale of an existing cluster. When deploying manually via the Azure Portal, you will be prompted to request quota if you have skipped this step. However when deploying via template or script, the lack of quota will result in a failed deployment.
+It is important to [request quota](https://docs.microsoft.com/azure/azure-vmware/request-host-quota-azure-vmware-solution) ahead of deploying any template that contains a Private Cloud resource, or modifies the scale of an existing cluster. When deploying manually via the Azure Portal, you will be prompted to request quota if you have skipped this step. However when deploying via template or script, the lack of quota will result in a failed deployment.
 Quota for AVS is subscription and region specific, if you want to deploy AVS to multiple regions then you will need to request quota in each region.
 
 ### 2. Deploying the private cloud
@@ -71,7 +69,7 @@ During this step, you will deploy the template that provisions the base infrastr
 
 ### 3. Configuring connectivity
 
-If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/readme.md#avs-networking).
+If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/readme.md#avs-networking).
 
 ## Choosing the orchestration environment
 

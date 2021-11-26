@@ -1,7 +1,7 @@
 # Navigation Menu
 
 * [Getting Started](GettingStarted.md)
-* [Deployment Scenarios](Scenarios)
+* Deployment Scenarios
   * [Greenfield Deployment](AVS-Landing-Zone/GreenField)
   * [Brownfield Deployment](BrownField)
 
