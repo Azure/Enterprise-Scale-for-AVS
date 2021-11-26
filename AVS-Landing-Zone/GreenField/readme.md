@@ -3,8 +3,6 @@
 | ------------------------------------------------------------ |
 | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2Fgrenfield%2FARM%2FESLZDeploy.deploy.json) |
 
-<br/>
-
 # AVS Landing Zone: Greenfield Deployment
 
 Greenfield deployment of Azure VMware Solution Landing Zone is suitable for those customers who are looking at brand new installation. By using this reference implementation, these customers can deploy Azure VMware Solution private cloud using suggested configuration from Microsoft. Customers can add new configuration or modify deployed configuration to meet their very specific requirement.

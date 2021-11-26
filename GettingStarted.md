@@ -2,7 +2,6 @@
 
 This guide is designed to help you get started with deploying AVS via the templates and scripts within this repository. Before you deploy, it is recommended to review the templates to understand the resources that will be deployed and the associated costs.
 
-
 ## Table Of Contents
 
 - Prerequisites
@@ -12,8 +11,6 @@ This guide is designed to help you get started with deploying AVS via the templa
 - Deployment Flow
 - Example Deployment Steps
 
-<br/>
-
 ## Prerequisites
 
 Prior to deploying, you need to ensure you have met the following prerequisites:
@@ -22,15 +19,11 @@ Prior to deploying, you need to ensure you have met the following prerequisites:
 - [Request AVS host quota](https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution) for all regions you wish to deploy to
 - Registered the Microsoft.AVS resource provider with subscription to be used for deployment.
 
-<br/>
-
 ## Planning
 
 This section covers the high level steps for planning an AVS deployment and the decisions that need to be made.
 The deployment will use the Microsoft provided Bicep/PowerShell/Azure CLI templates from this repository and the customer provided configuration files that contain the system specific information. During the deployment, information from both will be merged.
 It is important to note that these templates can be modified if required, and a series of smaller modules are provided to assist in developing templates for existing environments (see Brownfield deployment below)
-
-<br/>
 
 ## Deployment Scenarios
 
@@ -50,8 +43,6 @@ In the Brownfield scenario, the Automation framework will deploy the solution us
 
 See the scenarios section for more information
 
-<br/>
-
 ## Deployment Options
 
 For each module a set of options are provided for deployment. All modules within this repository contain Bicep & ARM templates, with a subset also providing PowerShell and Azure CLI scripting options.
@@ -64,8 +55,6 @@ az bicep version
 ```Powershell
 bicep --help
 ```
-
-<br/>
 
 ## Deployment Flow
 
@@ -83,7 +72,6 @@ During this step, you will deploy the template that provisions the base infrastr
 ### 3. Configuring connectivity
 
 If you choose not to deploy connectivity as part of the private cloud deployment, the final step is to configure connectivity by following [AVS Networking](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/readme.md#avs-networking).
-<br/>
 
 ## Choosing the orchestration environment
 
