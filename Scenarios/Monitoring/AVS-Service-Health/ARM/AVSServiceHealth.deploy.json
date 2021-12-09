@@ -5,15 +5,15 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "13544985439519465058"
+      "templateHash": "16405760947000907784"
     }
   },
   "parameters": {
     "ActionGroupEmails": {
-      "type": "array",
-      "defaultValue": [],
+      "type": "string",
+      "defaultValue": "",
       "metadata": {
-        "description": "Email adresses that should be added to the action group"
+        "description": "Email adresses that should be added to the action group. This should either be a single email, or a comma separated list: abc@example.com,def@example.com"
       }
     },
     "PrivateCloudResourceId": {
@@ -25,7 +25,8 @@
   },
   "functions": [],
   "variables": {
-    "suffix": "[uniqueString(parameters('PrivateCloudResourceId'))]"
+    "suffix": "[uniqueString(parameters('PrivateCloudResourceId'))]",
+    "formattedEmails": "[if(empty(trim(parameters('ActionGroupEmails'))), createArray(), split(parameters('ActionGroupEmails'), ','))]"
   },
   "resources": [
     {
@@ -37,10 +38,10 @@
         "copy": [
           {
             "name": "emailReceivers",
-            "count": "[length(parameters('ActionGroupEmails'))]",
+            "count": "[length(variables('formattedEmails'))]",
             "input": {
-              "emailAddress": "[parameters('ActionGroupEmails')[copyIndex('emailReceivers')]]",
-              "name": "[split(parameters('ActionGroupEmails')[copyIndex('emailReceivers')], '@')[0]]",
+              "emailAddress": "[trim(variables('formattedEmails')[copyIndex('emailReceivers')])]",
+              "name": "[trim(split(variables('formattedEmails')[copyIndex('emailReceivers')], '@')[0])]",
               "useCommonAlertSchema": false
             }
           }
