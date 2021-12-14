@@ -1,10 +1,12 @@
-@description('Email adresses that should be added to the action group')
-param ActionGroupEmails array = []
+@description('Email adresses that should be added to the action group. This should either be a single email, or a comma separated list: abc@example.com,def@example.com')
+param ActionGroupEmails string = ''
 
 @description('The existing Private Cloud full resource id')
 param PrivateCloudResourceId string
 
 var suffix = uniqueString(PrivateCloudResourceId)
+
+var formattedEmails = empty(trim(ActionGroupEmails)) ? [] : split(ActionGroupEmails, ',')
 
 // Create an action group to be used by the service health alert
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
@@ -13,9 +15,9 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   properties:{
     enabled: true
     groupShortName: substring('avs${suffix}', 0, 12)
-    emailReceivers: [for email in ActionGroupEmails: {
-      emailAddress: email
-      name: split(email, '@')[0]
+    emailReceivers: [for email in formattedEmails: {
+      emailAddress: trim(email)
+      name: trim(split(email, '@')[0])
       useCommonAlertSchema: false
     }]
   }
