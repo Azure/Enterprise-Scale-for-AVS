@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "2619700847924524055"
+      "templateHash": "10999914036843392971"
     }
   },
   "parameters": {
@@ -34,6 +34,13 @@
       "type": "string",
       "metadata": {
         "description": "The existing Private Cloud full resource id"
+      }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
       }
     }
   },
@@ -190,6 +197,20 @@
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', parameters('ActionGroupName'))]"
       ]
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[format('pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-{0}', uniqueString(resourceGroup().id, parameters('PrivateCloudResourceId')))]",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
+      }
     }
   ]
 }

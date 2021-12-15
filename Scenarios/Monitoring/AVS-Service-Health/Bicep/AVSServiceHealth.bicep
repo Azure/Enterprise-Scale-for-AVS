@@ -4,6 +4,10 @@ param ActionGroupEmails string = ''
 @description('The existing Private Cloud full resource id')
 param PrivateCloudResourceId string
 
+
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
+
 var suffix = uniqueString(PrivateCloudResourceId)
 
 var formattedEmails = empty(trim(ActionGroupEmails)) ? [] : split(ActionGroupEmails, ',')
@@ -60,6 +64,18 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
           actionGroupId: ActionGroup.id
         }
       ]
+    }
+  }
+}
+
+resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
+  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, PrivateCloudResourceId)}'
+  properties: {
+    mode: 'Incremental'
+    template: {
+      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+      contentVersion: '1.0.0.0'
+      resources: []
     }
   }
 }
