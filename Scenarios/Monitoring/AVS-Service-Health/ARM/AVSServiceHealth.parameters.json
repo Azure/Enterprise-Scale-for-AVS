@@ -3,9 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "ActionGroupEmails": {
-            "value": [
-                "example@microsoft.com"
-            ]
+            "value": "example@microsoft.com"
         },
         "PrivateCloudResourceId": {
             "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ExampleRG/providers/Microsoft.AVS/privateClouds/ExamplePrivateCloud"
