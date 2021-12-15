@@ -38,4 +38,4 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-InterConnect-Deployment
 
 ## Next Steps
 
-[Complete deployment of Azure VMware Solution](../../../AVS-Landing-Zone/SingleRegion/readme.md)
+[Complete deployment of Azure VMware Solution](../../../AVS-Landing-Zone/GreenField/readme.md)
