@@ -10,6 +10,9 @@ param ActionGroupEmails array = []
 @description('The existing Private Cloud full resource id')
 param PrivateCloudResourceId string
 
+@description('Optional, the tags that should be applied to all resources. This should be in a json object format, eg: {"tag1":"value1","tag2":"value2"}')
+param Tags object = {}
+
 // Create an action group to be used by the alerts
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   name: ActionGroupName
@@ -23,6 +26,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
       useCommonAlertSchema: false
     }]
   }
+  tags: Tags
 }
 
 // Define the alerts that will be created as resources
@@ -100,6 +104,7 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
       ]
     }
   }
+  tags: Tags
 }
 
 // Loop through the alerts above and create them
@@ -144,4 +149,5 @@ resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert i
       }
     ]
   }
+  tags: Tags
 }]

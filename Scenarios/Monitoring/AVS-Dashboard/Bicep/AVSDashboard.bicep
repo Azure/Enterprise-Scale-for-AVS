@@ -12,6 +12,8 @@ param PrivateCloudResourceId string
 @description('Optional, The full resource ID of the Express Route Connection used by AVS that you want displayed on this dashboard. Can be left empty to remove this metric')
 param ExRConnectionResourceId string = ''
 
+@description('Optional, the tags that should be applied to all resources. This should be in a json object format, eg: {"tag1":"value1","tag2":"value2"}')
+param Tags object = {}
 
 var DashboardHeading = {
   position: {
@@ -332,7 +334,7 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
       }
     }
   }
-  tags:{
+  tags: union(Tags, {
     'hidden-title': DashboardName
-  }
+  })
 }

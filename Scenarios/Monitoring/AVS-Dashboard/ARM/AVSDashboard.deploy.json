@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "12646876103659838621"
+      "templateHash": "12392619164720916405"
     }
   },
   "parameters": {
@@ -36,6 +36,13 @@
       "defaultValue": "",
       "metadata": {
         "description": "Optional, The full resource ID of the Express Route Connection used by AVS that you want displayed on this dashboard. Can be left empty to remove this metric"
+      }
+    },
+    "Tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Optional, the tags that should be applied to all resources. This should be in a json object format, eg: {\"tag1\":\"value1\",\"tag2\":\"value2\"}"
       }
     }
   },
@@ -356,9 +363,7 @@
           }
         }
       },
-      "tags": {
-        "hidden-title": "[parameters('DashboardName')]"
-      }
+      "tags": "[union(parameters('Tags'), createObject('hidden-title', parameters('DashboardName')))]"
     }
   ]
 }

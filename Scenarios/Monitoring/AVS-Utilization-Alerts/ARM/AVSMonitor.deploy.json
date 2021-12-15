@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "2619700847924524055"
+      "templateHash": "12858990391623245287"
     }
   },
   "parameters": {
@@ -34,6 +34,13 @@
       "type": "string",
       "metadata": {
         "description": "The existing Private Cloud full resource id"
+      }
+    },
+    "Tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Optional, the tags that should be applied to all resources. This should be in a json object format, eg: {\"tag1\":\"value1\",\"tag2\":\"value2\"}"
       }
     }
   },
@@ -94,7 +101,8 @@
         ],
         "enabled": true,
         "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('ActionGroupName'))), 0, 12)]"
-      }
+      },
+      "tags": "[parameters('Tags')]"
     },
     {
       "type": "Microsoft.Insights/activityLogAlerts",
@@ -136,6 +144,7 @@
           ]
         }
       },
+      "tags": "[parameters('Tags')]",
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', parameters('ActionGroupName'))]"
       ]
@@ -187,6 +196,7 @@
           }
         ]
       },
+      "tags": "[parameters('Tags')]",
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', parameters('ActionGroupName'))]"
       ]

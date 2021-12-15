@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "13544985439519465058"
+      "templateHash": "1283848908189983848"
     }
   },
   "parameters": {
@@ -20,6 +20,13 @@
       "type": "string",
       "metadata": {
         "description": "The existing Private Cloud full resource id"
+      }
+    },
+    "Tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Optional, the tags that should be applied to all resources. This should be in a json object format, eg: {\"tag1\":\"value1\",\"tag2\":\"value2\"}"
       }
     }
   },
@@ -47,7 +54,8 @@
         ],
         "enabled": true,
         "groupShortName": "[substring(format('avs{0}', variables('suffix')), 0, 12)]"
-      }
+      },
+      "tags": "[parameters('Tags')]"
     },
     {
       "type": "Microsoft.Insights/activityLogAlerts",
@@ -89,6 +97,7 @@
           ]
         }
       },
+      "tags": "[parameters('Tags')]",
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', format('AVS-ServiceHealth-{0}', variables('suffix')))]"
       ]
