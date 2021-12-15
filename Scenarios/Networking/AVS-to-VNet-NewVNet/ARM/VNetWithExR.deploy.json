@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "11549086163157110989"
+      "templateHash": "13026649256046028776"
     }
   },
   "parameters": {
@@ -192,7 +192,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "15016709975599244085"
+              "templateHash": "16508355836306124485"
             }
           },
           "parameters": {
@@ -207,6 +207,13 @@
               "metadata": {
                 "description": "The authorization key name to be created"
               }
+            },
+            "TelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Opt-out of deployment telemetry"
+              }
             }
           },
           "functions": [],
@@ -215,6 +222,20 @@
               "type": "Microsoft.AVS/privateClouds/authorizations",
               "apiVersion": "2021-06-01",
               "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('AuthKeyName'))]"
+            },
+            {
+              "condition": "[not(parameters('TelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2021-04-01",
+              "name": "[format('pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-{0}', uniqueString(resourceGroup().id, parameters('PrivateCloudName')))]",
+              "properties": {
+                "mode": "Incremental",
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "resources": []
+                }
+              }
             }
           ],
           "outputs": {

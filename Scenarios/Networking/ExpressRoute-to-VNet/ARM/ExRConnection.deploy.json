@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "17244151520220933710"
+      "templateHash": "11293704104653113299"
     }
   },
   "parameters": {
@@ -39,6 +39,13 @@
       "metadata": {
         "description": "The id of the Express Route to create the connection to"
       }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
+      }
     }
   },
   "functions": [],
@@ -59,6 +66,20 @@
           "id": "[parameters('ExpressRouteId')]"
         },
         "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+      }
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[format('pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-{0}', uniqueString(resourceGroup().id, parameters('GatewayName'), parameters('Location')))]",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
       }
     }
   ]

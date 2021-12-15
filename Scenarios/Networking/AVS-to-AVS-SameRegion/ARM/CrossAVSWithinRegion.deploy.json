@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "5561332899779544669"
+      "templateHash": "17368099083132351931"
     }
   },
   "parameters": {
@@ -20,6 +20,13 @@
       "metadata": {
         "description": "Full resource id of the secondary private cloud, must be in the same region as the primary"
       }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
+      }
     }
   },
   "functions": [],
@@ -30,6 +37,20 @@
       "name": "[format('{0}/{1}', parameters('PrimaryPrivateCloudName'), guid(parameters('SecondaryPrivateCloudId')))]",
       "properties": {
         "linkedCloud": "[parameters('SecondaryPrivateCloudId')]"
+      }
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[format('pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-{0}', uniqueString(resourceGroup().id, parameters('PrimaryPrivateCloudName')))]",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
       }
     }
   ]
