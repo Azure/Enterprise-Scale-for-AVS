@@ -12,6 +12,8 @@ param PrivateCloudResourceId string
 @description('Optional, The full resource ID of the Express Route Connection used by AVS that you want displayed on this dashboard. Can be left empty to remove this metric')
 param ExRConnectionResourceId string = ''
 
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
 
 var DashboardHeading = {
   position: {
@@ -334,5 +336,17 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
   }
   tags:{
     'hidden-title': DashboardName
+  }
+}
+
+resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
+  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, Location)}'
+  properties: {
+    mode: 'Incremental'
+    template: {
+      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+      contentVersion: '1.0.0.0'
+      resources: []
+    }
   }
 }

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "12646876103659838621"
+      "templateHash": "9046032566547457537"
     }
   },
   "parameters": {
@@ -36,6 +36,13 @@
       "defaultValue": "",
       "metadata": {
         "description": "Optional, The full resource ID of the Express Route Connection used by AVS that you want displayed on this dashboard. Can be left empty to remove this metric"
+      }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
       }
     }
   },
@@ -358,6 +365,20 @@
       },
       "tags": {
         "hidden-title": "[parameters('DashboardName')]"
+      }
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "[format('pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-{0}', uniqueString(resourceGroup().id, parameters('Location')))]",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": []
+        }
       }
     }
   ]
