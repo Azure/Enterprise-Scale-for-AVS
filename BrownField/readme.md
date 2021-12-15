@@ -1,4 +1,4 @@
-# AVS Component Deployment Scenarios
+# AVS Landing Zone: Brownfield Deployment
 
 This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required.
 
