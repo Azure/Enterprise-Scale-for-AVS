@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "13026649256046028776"
+      "templateHash": "18004464222880689262"
     }
   },
   "parameters": {
@@ -74,6 +74,13 @@
       ],
       "metadata": {
         "description": "Virtual network gateway SKU to be created"
+      }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
       }
     }
   },
@@ -183,6 +190,9 @@
           },
           "PrivateCloudName": {
             "value": "[parameters('PrivateCloudName')]"
+          },
+          "TelemetryOptOut": {
+            "value": "[parameters('TelemetryOptOut')]"
           }
         },
         "template": {
@@ -192,7 +202,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "16508355836306124485"
+              "templateHash": "16762470334620364434"
             }
           },
           "parameters": {
@@ -210,7 +220,6 @@
             },
             "TelemetryOptOut": {
               "type": "bool",
-              "defaultValue": false,
               "metadata": {
                 "description": "Opt-out of deployment telemetry"
               }

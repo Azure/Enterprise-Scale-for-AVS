@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "10243417795770593430"
+      "templateHash": "8083650861384248687"
     }
   },
   "parameters": {
@@ -40,6 +40,13 @@
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "The location of the virtual network gateway"
+      }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
       }
     }
   },
@@ -83,6 +90,9 @@
           },
           "PrivateCloudName": {
             "value": "[parameters('PrivateCloudName')]"
+          },
+          "TelemetryOptOut": {
+            "value": "[parameters('TelemetryOptOut')]"
           }
         },
         "template": {
@@ -92,7 +102,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "16508355836306124485"
+              "templateHash": "16762470334620364434"
             }
           },
           "parameters": {
@@ -110,7 +120,6 @@
             },
             "TelemetryOptOut": {
               "type": "bool",
-              "defaultValue": false,
               "metadata": {
                 "description": "Opt-out of deployment telemetry"
               }

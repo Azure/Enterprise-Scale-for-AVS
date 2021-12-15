@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "13762026463041145437"
+      "templateHash": "16854132764006266320"
     }
   },
   "parameters": {
@@ -32,6 +32,13 @@
       "metadata": {
         "description": "Resource gorup name of the existing secondary private cloud"
       }
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
+      }
     }
   },
   "functions": [],
@@ -52,6 +59,9 @@
           },
           "PrivateCloudName": {
             "value": "[parameters('SecondaryPrivateCloudName')]"
+          },
+          "TelemetryOptOut": {
+            "value": "[parameters('TelemetryOptOut')]"
           }
         },
         "template": {
@@ -61,7 +71,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "16508355836306124485"
+              "templateHash": "16762470334620364434"
             }
           },
           "parameters": {
@@ -79,7 +89,6 @@
             },
             "TelemetryOptOut": {
               "type": "bool",
-              "defaultValue": false,
               "metadata": {
                 "description": "Opt-out of deployment telemetry"
               }
@@ -139,6 +148,9 @@
           },
           "ExpressRouteAuthorizationKey": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-06-01').outputs.ExpressRouteAuthorizationKey.value]"
+          },
+          "TelemetryOptOut": {
+            "value": "[parameters('TelemetryOptOut')]"
           }
         },
         "template": {
@@ -148,7 +160,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.1008.15138",
-              "templateHash": "2484465908445059655"
+              "templateHash": "7504845209289026901"
             }
           },
           "parameters": {
@@ -172,7 +184,6 @@
             },
             "TelemetryOptOut": {
               "type": "bool",
-              "defaultValue": false,
               "metadata": {
                 "description": "Opt-out of deployment telemetry"
               }

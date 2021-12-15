@@ -12,6 +12,9 @@ param SecondaryPrivateCloudName string
 @description('Resource gorup name of the existing secondary private cloud')
 param SecondaryPrivateCloudResourceGroup string
 
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
+
 // Generate an auth key via a module for the secondary private cloud
 module SecondaryAuthKey 'Modules/AVSAuthorization.bicep' = {
   name: 'SecondaryAuthKey'
@@ -19,6 +22,7 @@ module SecondaryAuthKey 'Modules/AVSAuthorization.bicep' = {
   params: {
     AuthKeyName: 'GR-${PrimaryPrivateCloudName}'
     PrivateCloudName: SecondaryPrivateCloudName
+    TelemetryOptOut: TelemetryOptOut
   }
 }
 
@@ -30,5 +34,6 @@ module GlobalReach 'Modules/GlobalReach.bicep' = {
     PrivateCloudName: PrimaryPrivateCloudName
     ExpressRouteId: SecondaryAuthKey.outputs.ExpressRouteId
     ExpressRouteAuthorizationKey: SecondaryAuthKey.outputs.ExpressRouteAuthorizationKey
+    TelemetryOptOut: TelemetryOptOut
   }
 }

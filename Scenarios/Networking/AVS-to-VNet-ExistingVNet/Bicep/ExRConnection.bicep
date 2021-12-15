@@ -7,12 +7,14 @@ param PrivateCloudResourceGroup string = resourceGroup().name
 @description('The subscription id that the existing Private Cloud resides in')
 param PrivateCloudSubscriptionId string = subscription().id
 
-
 @description('The existing virtual network gateway name, should be in the resource group this template is deployed to')
 param GatewayName string
 
 @description('The location of the virtual network gateway')
 param Location string = resourceGroup().location
+
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
 
 // Create an AVS ExR Autorization Key via a module
 module AVSAuthorization 'Modules/AVSAuthorization.bicep' = {
@@ -20,6 +22,7 @@ module AVSAuthorization 'Modules/AVSAuthorization.bicep' = {
   params: {
     AuthKeyName: GatewayName
     PrivateCloudName: PrivateCloudName
+    TelemetryOptOut: TelemetryOptOut
   }
   scope: resourceGroup(PrivateCloudSubscriptionId, PrivateCloudResourceGroup)
 }

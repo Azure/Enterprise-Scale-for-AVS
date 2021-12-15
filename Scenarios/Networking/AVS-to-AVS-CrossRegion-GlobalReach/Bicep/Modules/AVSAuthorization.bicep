@@ -5,7 +5,7 @@ param PrivateCloudName string
 param AuthKeyName string
 
 @description('Opt-out of deployment telemetry')
-param TelemetryOptOut bool = false
+param TelemetryOptOut bool
 
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {

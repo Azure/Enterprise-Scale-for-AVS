@@ -34,6 +34,9 @@ param GatewayName string = VNetName
 ])
 param GatewaySku string = 'UltraPerformance'
 
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
+
 // Create the Virtual Network with the gateway subnet
 resource VNet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: VNetName
@@ -101,6 +104,7 @@ module AVSAuthorization 'Modules/AVSAuthorization.bicep' = {
   params: {
     AuthKeyName: GatewayName
     PrivateCloudName: PrivateCloudName
+    TelemetryOptOut: TelemetryOptOut
   }
   scope: resourceGroup(PrivateCloudSubscriptionId, PrivateCloudResourceGroup)
 }
