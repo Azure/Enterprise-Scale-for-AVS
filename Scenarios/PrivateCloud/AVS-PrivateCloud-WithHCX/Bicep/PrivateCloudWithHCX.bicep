@@ -10,6 +10,9 @@ param ManagementClusterSize int = 3
 @description('The location the Private Cloud should be deployed to. Must have quota in this region prior to deployment')
 param Location string = resourceGroup().location
 
+@description('Opt-out of deployment telemetry')
+param TelemetryOptOut bool = false
+
 // Create the Private Cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: PrivateCloudName
@@ -32,5 +35,17 @@ resource HCX 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
   properties: {
     addonType: 'HCX'
     offer: 'VMware MaaS Cloud Provider'
+  }
+}
+
+resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
+  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, PrivateCloudName, Location)}'
+  properties: {
+    mode: 'Incremental'
+    template: {
+      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+      contentVersion: '1.0.0.0'
+      resources: []
+    }
   }
 }

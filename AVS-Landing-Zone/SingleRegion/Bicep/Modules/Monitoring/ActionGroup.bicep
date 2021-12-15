@@ -6,7 +6,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   location: 'Global'
   properties:{
     enabled: true
-    groupShortName: 'avsalerts'
+    groupShortName: substring('avs${uniqueString(Prefix)}', 0, 12)
     emailReceivers: [for email in ActionGroupEmails: {
       emailAddress: email
       name: split(email, '@')[0]

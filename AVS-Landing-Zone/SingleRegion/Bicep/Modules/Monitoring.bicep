@@ -33,6 +33,16 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = {
   }
 }
 
+module ServiceHealth 'Monitoring/ServiceHealth.bicep' = {
+  scope: OperationalResourceGroup
+  name: '${deployment().name}-ServiceHealth'
+  params: {
+    ActionGroupResourceId: ActionGroup.outputs.ActionGroupResourceId
+    AlertPrefix: PrimaryPrivateCloudName
+    PrivateCloudResourceId: PrimaryPrivateCloudResourceId
+  }
+}
+
 module Dashboard 'Monitoring/Dashboard.bicep' = {
   scope: OperationalResourceGroup
   name: '${deployment().name}-Dashboard'

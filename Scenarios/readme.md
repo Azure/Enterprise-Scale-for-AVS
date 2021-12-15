@@ -1,6 +1,6 @@
 # AVS Component Deployment Scenarios
 
-This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required
+This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required.
 
 ## AVS Private Cloud + Add-ons
 
@@ -8,9 +8,20 @@ This section contains templates to deploy specific components and add-ins for AV
 | ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Single AVS Private Cloud                  | This example will deploy a single private cloud within selected resource group | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FPrivateCloud%2FAVS-PrivateCloud%2FARM%2FPrivateCloud.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/PrivateCloud/AVS-PrivateCloud) |
 | Single AVS Private Cloud with HCX enabled | This example will deploy a single private cloud within selected resource group with HCX enabled | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FPrivateCloud%2FAVS-PrivateCloud-WithHCX%2FARM%2FPrivateCloudWithHCX.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/PrivateCloud/AVS-PrivateCloud-WithHCX)
-| Enable SRM for AVS Private Cloud     | This example will enable the VMware Site Recovery Manger add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FAddins%2FSRM%2FARM%2FSRM.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Addins/SRM) |
-| Enable HCX for AVS Private Cloud     | This example will enable the VMware HCX add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FAddins%2FHCX%2FARM%2FHCX.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Addins/HCX) |
+| Enable SRM for AVS Private Cloud     | This example will enable the VMware Site Recovery Manger add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FAddons%2FSRM%2FARM%2FSRM.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Addons/SRM) |
+| Enable HCX for AVS Private Cloud     | This example will enable the VMware HCX add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FAddons%2FHCX%2FARM%2FHCX.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Addons/HCX) |
+
+###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+
+<br/>
+
+## AVS Monitoring
+
+| Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Enable AVS Monitoring                     | This example will create an action group and example metric alerts for monitoring AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Monitoring/AVS-Utilization-Alerts) |
+| Service Health Alerts              | This example will create an action group & set up Service Health alerting for AVS in a specified region | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Monitoring/AVS-Service-Health) |
+| AVS Dashboard                     | This example will create an Azure Dashboard showing the Private Cloud metrics, and optionally ExpressRoute connection metrics | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FScenarios%2FMonitoring%2FAVS-Dashboard%2FARM%2FAVSDashboard.deploy.json) | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/Scenarios/Monitoring/AVS-Dashboard) |
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
