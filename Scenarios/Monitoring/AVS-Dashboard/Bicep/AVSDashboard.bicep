@@ -340,7 +340,7 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
 }
 
 resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
-  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, Location)}'
+  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, Location, PrivateCloudResourceId)}'
   properties: {
     mode: 'Incremental'
     template: {
