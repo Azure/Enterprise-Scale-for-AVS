@@ -23,3 +23,5 @@ resource GlobalReach 'Microsoft.AVS/privateClouds/globalReachConnections@2021-06
     peerExpressRouteCircuit: ExpressRouteId
   }
 }
+
+
