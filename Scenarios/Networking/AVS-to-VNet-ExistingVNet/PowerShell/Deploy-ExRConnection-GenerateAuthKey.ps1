@@ -1,10 +1,32 @@
 # Parameters for deployment
-$privateCloudName = "ExamplePrivateCloud"
-$PrivateCloudResourceGroup = "ExampleResourceGroup"
-$GatewayName = "ExampleGatewayName"
-$GatewayResourceGroup = "ExampleGatewayResourceGroup"
-$location = "ExampleLocation"
-$ConnectionName = "$privateCloudNameer-ExR-Connection"
+param(
+    [Parameter(Mandatory=$true)]
+    [String]
+    # The name of your (existing) private cloud
+    $privateCloudName,
+
+    [Parameter(Mandatory=$true)]
+    [String]
+    # The name of your (existing) private cloud's resource group
+    $PrivateCloudResourceGroup,
+    
+    [Parameter(Mandatory=$true)]
+    [String]
+    # The name of the (existing) ER Gateway
+    $GatewayName,
+    
+    [Parameter(Mandatory=$true)]
+    [String]
+    # The name of the (existing) ER Gateway's resource group
+    $GatewayResourceGroup,
+    
+    [Parameter(Mandatory=$true)]
+    [String]
+    # The Azure region for the connection resource
+    $location
+)
+
+$ConnectionName = "$privateCloudName-ExR-Connection"
 
 # Get Private Cloud and create ExR authorisation key, must be a circuit owner
 $privatecloud = Get-AzVMwarePrivateCloud -Name $privateCloudName -ResourceGroupName $PrivateCloudResourceGroup
