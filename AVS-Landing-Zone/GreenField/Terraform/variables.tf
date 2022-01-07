@@ -1,5 +1,6 @@
 #-----------------------------------------------------------------
-# Variables
+# DO NOT CHANGE
+# Update any variables from the terraform.tfvars file as required
 #-----------------------------------------------------------------
 
 variable "prefix" {
