@@ -1,3 +1,4 @@
+# This module creates the virtual network and required subnets
 
 resource "azurerm_virtual_network" "network" {
   name                = "${var.prefix}-VNet"
