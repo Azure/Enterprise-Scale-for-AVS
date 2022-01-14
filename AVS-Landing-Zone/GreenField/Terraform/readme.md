@@ -12,7 +12,7 @@ Note: The HCX and SRM addons are not supported via Terraform at this time, once 
 
 ## Terraform Module Structure
 
-The AVS Terraform modules are all written as individual modules each having a specific function. This is to improve readability and ease of customisation if required. Variables have been created in all modules for consistency, all changes to defaults are to be changed from the terraform.tfvars file. The structure is as follows:
+The AVS Terraform modules are all written as individual modules each having a specific function. This is to improve readability and ease of customization if required. Variables have been created in all modules for consistency, all changes to defaults are to be changed from the terraform.tfvars file. The structure is as follows:
 
 | Module Name         | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
@@ -45,7 +45,7 @@ az account show
 cd .\Enterprise-Scale-for-AVS-Fork\AVS-Landing-Zone\GreenField\Terraform\
 ```
 
-1. Run `terraform.init` to initialise this directory
+1. Run `terraform init` to initialize this directory
 2. Run `terraform plan` to view the planned deployment
 3. Run `terraform apply` to confirm the deployment
 

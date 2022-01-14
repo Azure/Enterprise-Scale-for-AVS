@@ -1,4 +1,5 @@
 #Prefix to define the name of resource groups, resources etc
+#Max chaacter limit of the prefix is 7
 prefix = "AVS"
 
 #Region to deploy the AVS Private Cloud and associated components
