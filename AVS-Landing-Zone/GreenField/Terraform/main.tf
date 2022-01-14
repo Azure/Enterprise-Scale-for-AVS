@@ -13,6 +13,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  partner_id = "754599a0-0a6f-424a-b4c5-1b12be198ae8"
 }
 
 ## Optional settings to setup a terraform backend in Azure storage
