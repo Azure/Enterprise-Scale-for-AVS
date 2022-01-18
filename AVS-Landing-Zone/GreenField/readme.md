@@ -34,12 +34,12 @@ Each component is discussed in detail below.
 
 ### AVS Private Cloud
 
-This is the core component of deployment. AVS Private Cloud consists of one or more clusters. Each cluster contains at least three eSXI hosts/nodes. This deployment create a single private cloud with a single cluster with three nodes. A network address space with non-overlapping IP addresses between on-premise environment, Azure Virtual Network and private cloud needs to be provided at deployment time. Following add-ons are also possible to be deployed at the same time.
+This is the core component of deployment. AVS Private Cloud consists of one or more clusters. Each cluster contains at least three ESXi hosts/nodes. This deployment create a single private cloud with a single cluster with three nodes. A network address space with non-overlapping IP addresses between on-premise environment, Azure Virtual Network and private cloud needs to be provided at deployment time. Following add-ons are also possible to be deployed at the same time.
 
 - HCX
 - SRM
 
-SRM license key and vSPhere Replication server count needs to be provided if SRM add-on is selected to deployment. 
+SRM license key and vSphere Replication server count needs to be provided if SRM add-on is selected to deployment. 
 
 ### Virtual Network
 
