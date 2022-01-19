@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1008.15138",
-      "templateHash": "2619700847924524055"
+      "version": "0.3.255.40792",
+      "templateHash": "7137040804160362879"
     }
   },
   "parameters": {
@@ -27,7 +27,7 @@
       "type": "array",
       "defaultValue": [],
       "metadata": {
-        "description": "Email adresses that should be added to the action group"
+        "description": "Email addresses to be added to the action group. Use the format [\"name1@domain.com\",\"name2@domain.com\"]."
       }
     },
     "PrivateCloudResourceId": {

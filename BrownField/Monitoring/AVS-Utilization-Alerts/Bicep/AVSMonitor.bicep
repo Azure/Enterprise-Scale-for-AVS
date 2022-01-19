@@ -4,7 +4,7 @@ param ActionGroupName string = 'AVSAlerts'
 @description('Prefix to use for alert creation')
 param AlertPrefix string = 'AVSAlert'
 
-@description('Email adresses that should be added to the action group')
+@description('Email addresses to be added to the action group. Use the format ["name1@domain.com","name2@domain.com"].')
 param ActionGroupEmails array = []
 
 @description('The existing Private Cloud full resource id')

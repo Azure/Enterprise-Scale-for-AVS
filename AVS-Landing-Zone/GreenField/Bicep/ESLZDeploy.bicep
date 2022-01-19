@@ -17,7 +17,7 @@ param VNetAddressSpace string
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetGatewaySubnet string
 
-@description('Email addresses to be added to the alerting action group')
+@description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
 param AlertEmails array = []
 @description('Should a Jumpbox & Bastion be deployed to access the Private Cloud')
 
