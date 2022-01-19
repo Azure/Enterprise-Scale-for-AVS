@@ -1,0 +1,21 @@
+name: ARM Build Action
+on: push
+
+jobs:
+  build:
+    name: ARM
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run Build-ARM.ps1
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          ./Build-ARM.ps1
+          $changes = git status --porcelain
+          if ($changes) {
+            Write-Host $changes
+            Write-Error "ARM templates are out of date!" -ErrorAction stop
+          }
+          Write-Host "ARM templates are up to date."
+        azPSVersion: "latest"
