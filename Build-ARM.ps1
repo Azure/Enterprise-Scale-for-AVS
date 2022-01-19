@@ -1,3 +1,9 @@
+Write-Host "Checking for Bicep updates..."
+& az bicep upgrade
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Error whilst upgrading Bicep, is the Azure CLI & Bicep installed?" -ErrorAction Stop
+}
+
 Get-ChildItem '.\' -Recurse -Include '*.bicep' |% {
     $source = $_.FullName
     if (!($source -like "*\Bicep\Modules\*") -and !($source -like "*/Bicep/Modules/*") -and !($source -like "*999-WorkInProgress*")) { 
@@ -8,6 +14,9 @@ Get-ChildItem '.\' -Recurse -Include '*.bicep' |% {
         $bicepParams = Join-Path $folder "Bicep\$($name).parameters.json"
         Write-Host "Building $name in $($folder.Name)"
         & az bicep build -f "$source" --outfile "$target"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Unable to build $($name)!" -ErrorAction Stop
+        }
         if (!(Test-Path $targetParams)) {
             Set-Content -Path $targetParams -Value ""
         }
