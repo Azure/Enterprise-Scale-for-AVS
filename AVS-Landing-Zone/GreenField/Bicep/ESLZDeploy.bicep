@@ -94,7 +94,7 @@ module Addons 'Modules/AVSAddons.bicep' = {
   }
 }
 
-module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
+module Jumpbox 'Modules/Jumpbox.bicep' = if (DeployJumpbox) {
   name: '${deploymentPrefix}-Jumpbox'
   params: {
     Prefix: Prefix
