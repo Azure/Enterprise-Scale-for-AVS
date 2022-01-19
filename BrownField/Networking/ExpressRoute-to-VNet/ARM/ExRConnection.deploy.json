@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.3.255.40792",
-      "templateHash": "14174270924698800515"
+      "version": "0.4.1124.51302",
+      "templateHash": "3323104891404111010"
     }
   },
   "parameters": {
@@ -41,7 +41,6 @@
       }
     }
   },
-  "functions": [],
   "resources": [
     {
       "type": "Microsoft.Network/connections",

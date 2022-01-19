@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.3.255.40792",
-      "templateHash": "7790344894791472955"
+      "version": "0.4.1124.51302",
+      "templateHash": "11715639621467102323"
     }
   },
   "parameters": {
@@ -43,7 +43,6 @@
       }
     }
   },
-  "functions": [],
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds",
