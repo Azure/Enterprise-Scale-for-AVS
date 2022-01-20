@@ -22,9 +22,11 @@ DevOps
 DotNet
 ESLZ
 ESLZSingleRegionDeployment
+ESXi
 ExpressRoute
 ExR
 ExRConnection
+GatewaySubnet
 GenerateAuthKey
 GlobalReach
 GW
@@ -39,6 +41,7 @@ microsoft
 msrc
 MSRC
 NewVNet
+NSX
 onboardsupport
 ons
 opencode
@@ -63,8 +66,11 @@ SeparateAuthKey
 SeperateAuthKey
 ServiceHealth
 SoutheastAsia
+subnet
 SRM
+SKU
 TODO
+UI
 vCenter
 VM
 VMware
