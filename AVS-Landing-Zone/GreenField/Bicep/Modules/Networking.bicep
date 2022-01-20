@@ -1,10 +1,11 @@
 targetScope = 'subscription'
 
-param Location string
 param Prefix string
 param VNetExists bool
 param VNetAddressSpace string
 param VNetGatewaySubnet string
+
+var Location = deployment().location
 
 resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-Network'

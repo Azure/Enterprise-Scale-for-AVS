@@ -1,7 +1,6 @@
 targetScope = 'subscription'
 
 param Prefix string
-param Location string
 @secure()
 param Username string
 @secure()
@@ -12,6 +11,7 @@ param JumpboxSubnet string
 param JumpboxSku string
 param BastionSubnet string
 
+var Location = deployment().location
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'

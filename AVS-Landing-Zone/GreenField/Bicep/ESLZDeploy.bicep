@@ -1,7 +1,5 @@
 targetScope = 'subscription'
 
-@description('The region the AVS Private Cloud & associated resources will be deployed to')
-param Location string
 @description('The prefix to use on resources inside this template')
 @minLength(1)
 @maxLength(20)
@@ -54,7 +52,6 @@ module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
   params: {
     Prefix: Prefix
-    Location: Location
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
     TelemetryOptOut: TelemetryOptOut
   }
@@ -64,7 +61,6 @@ module Networking 'Modules/Networking.bicep' = {
   name: '${deploymentPrefix}-Network'
   params: {
     Prefix: Prefix
-    Location: Location
     VNetExists: VNetExists
     VNetAddressSpace: VNetAddressSpace
     VNetGatewaySubnet: VNetGatewaySubnet
@@ -98,7 +94,6 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
   name: '${deploymentPrefix}-Jumpbox'
   params: {
     Prefix: Prefix
-    Location: Location
     Username: JumpboxUsername
     Password: JumpboxPassword
     VNetName: Networking.outputs.VNetName
@@ -114,7 +109,6 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix
-    PrimaryLocation: Location
     PrimaryPrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrimaryPrivateCloudResourceId: AVSCore.outputs.PrivateCloudResourceId
     JumpboxResourceId: DeployJumpbox ? Jumpbox.outputs.JumpboxResourceId : ''

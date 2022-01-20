@@ -1,9 +1,10 @@
 targetScope = 'subscription'
 
-param Location string
 param Prefix string
 param PrivateCloudAddressSpace string
 param TelemetryOptOut bool
+
+var Location = deployment().location
 
 resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-PrivateCloud'

@@ -1,13 +1,14 @@
 targetScope = 'subscription'
 
 param Prefix string
-param PrimaryLocation string
 param AlertEmails array
 param PrimaryPrivateCloudName string
 param PrimaryPrivateCloudResourceId string
 param JumpboxResourceId string
 param VNetResourceId string
 param ExRConnectionResourceId string
+
+var PrimaryLocation = deployment().location
 
 resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   name: '${Prefix}-Operational'

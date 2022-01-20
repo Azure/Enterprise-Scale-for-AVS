@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1008.15138",
-      "templateHash": "11549086163157110989"
+      "version": "0.4.1124.51302",
+      "templateHash": "8541914669306761488"
     }
   },
   "parameters": {
@@ -77,7 +77,6 @@
       }
     }
   },
-  "functions": [],
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
@@ -157,9 +156,9 @@
           "properties": {}
         },
         "peer": {
-          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-06-01').outputs.ExpressRouteId.value]"
+          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteId.value]"
         },
-        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-06-01').outputs.ExpressRouteAuthorizationKey.value]"
+        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
       },
       "dependsOn": [
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')]",
@@ -168,7 +167,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2020-10-01",
       "name": "AVSAuthorization",
       "subscriptionId": "[parameters('PrivateCloudSubscriptionId')]",
       "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
@@ -191,8 +190,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1008.15138",
-              "templateHash": "15016709975599244085"
+              "version": "0.4.1124.51302",
+              "templateHash": "812177194752214735"
             }
           },
           "parameters": {
@@ -209,7 +208,6 @@
               }
             }
           },
-          "functions": [],
           "resources": [
             {
               "type": "Microsoft.AVS/privateClouds/authorizations",
