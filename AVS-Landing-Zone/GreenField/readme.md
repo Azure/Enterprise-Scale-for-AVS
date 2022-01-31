@@ -72,5 +72,5 @@ We have a few options available to deploy this AVS Landing zone:
 
 - [ARM (Portal)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2FARM%2FESLZDeploy.deploy.json)
 - [ARM (Template)](ARM)
-- [Bicep (Template)](Bicep)
+- [Bicep](Bicep)
 - [Terraform](Terraform)
