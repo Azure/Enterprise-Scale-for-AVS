@@ -15,9 +15,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
   name                = "${var.prefix}-jumpbox"
   resource_group_name = azurerm_resource_group.jumpbox.name
   location            = azurerm_resource_group.jumpbox.location
-  size                = "${var.jumpboxsku}"
-  admin_username      = "${var.adminusername}"
-  admin_password      = "${var.adminpassword}"
+  size                = var.jumpboxsku
+  admin_username      = var.adminusername
+  admin_password      = var.adminpassword
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
