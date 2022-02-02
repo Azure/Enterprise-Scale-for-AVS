@@ -42,7 +42,7 @@ resource "azurerm_virtual_network_gateway" "ERGateway" {
   }
 }
 
-#assumes the same subscription (doesn't appear to be an easy way to do a reference to a different sub)
+#assumes the same subscription (need to reference different provider blocks if a separate sub is required.
 data "azurerm_vmware_private_cloud" "existing" {
   name                = var.PrivateCloudName
   resource_group_name = var.PrivateCloudResourceGroup
