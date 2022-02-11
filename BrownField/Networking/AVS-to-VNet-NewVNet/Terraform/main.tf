@@ -61,8 +61,7 @@ resource "azurerm_virtual_network_gateway_connection" "expressRoute" {
 
   type                       = "ExpressRoute"
   virtual_network_gateway_id = data.azurerm_virtual_network_gateway.ERGateway.id
-  #check to confirm the proper way to index the ExR block
-  express_route_circuit_id = data.azurerm_vmware_private_cloud.existing.circuit[0].id
+  express_route_circuit_id   = data.azurerm_vmware_private_cloud.existing.circuit[0].express_route_id
 
   authorization_key = azurerm_vmware_express_route_authorization.thisVnet.express_route_authorization_key
   routing_weight    = 0
