@@ -3,6 +3,11 @@ data "azurerm_vmware_private_cloud" "existing" {
   resource_group_name = var.PrivateCloudResourceGroup
 }
 
+data "azurerm_virtual_network_gateway" "existingGateway" {
+  name                = var.GatewayName
+  resource_group_name = var.DeploymentResourceGroupName
+}
+
 #check this is the proper way to name the authorization
 resource "azurerm_vmware_express_route_authorization" "thisVnet" {
   name             = var.GatewayName
@@ -14,7 +19,7 @@ resource "azurerm_virtual_network_gateway_connection" "expressRoute" {
   location                   = var.Location
   resource_group_name        = var.DeploymentResourceGroupName
   type                       = "ExpressRoute"
-  virtual_network_gateway_id = data.azurerm_virtual_network_gateway.ERGateway.id
+  virtual_network_gateway_id = data.azurerm_virtual_network_gateway.existingGateway.id
   express_route_circuit_id   = data.azurerm_vmware_private_cloud.existing.circuit[0].express_route_id
   authorization_key          = azurerm_vmware_express_route_authorization.thisVnet.express_route_authorization_key
   routing_weight             = 0
