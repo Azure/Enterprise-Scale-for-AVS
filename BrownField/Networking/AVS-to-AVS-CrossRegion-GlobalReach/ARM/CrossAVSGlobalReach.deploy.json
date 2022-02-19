@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1008.15138",
-      "templateHash": "10432314343122892696"
+      "version": "0.4.1272.37030",
+      "templateHash": "11719826854076161704"
     }
   },
   "parameters": {
@@ -34,11 +34,10 @@
       }
     }
   },
-  "functions": [],
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2020-10-01",
       "name": "SecondaryAuthKey",
       "resourceGroup": "[parameters('SecondaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -60,8 +59,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1008.15138",
-              "templateHash": "15016709975599244085"
+              "version": "0.4.1272.37030",
+              "templateHash": "5347194164936306691"
             }
           },
           "parameters": {
@@ -76,14 +75,48 @@
               "metadata": {
                 "description": "The authorization key name to be created"
               }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
             }
           },
-          "functions": [],
+          "variables": {
+            "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+          },
           "resources": [
             {
               "type": "Microsoft.AVS/privateClouds/authorizations",
               "apiVersion": "2021-06-01",
               "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('AuthKeyName'))]"
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
+              }
             }
           ],
           "outputs": {
@@ -101,7 +134,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
+      "apiVersion": "2020-10-01",
       "name": "GlobalReach",
       "resourceGroup": "[parameters('PrimaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -114,10 +147,10 @@
             "value": "[parameters('PrimaryPrivateCloudName')]"
           },
           "ExpressRouteId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-06-01').outputs.ExpressRouteId.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteId.value]"
           },
           "ExpressRouteAuthorizationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-06-01').outputs.ExpressRouteAuthorizationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteAuthorizationKey.value]"
           }
         },
         "template": {
@@ -126,8 +159,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1008.15138",
-              "templateHash": "18004369253922035476"
+              "version": "0.4.1272.37030",
+              "templateHash": "3410008014759057807"
             }
           },
           "parameters": {
@@ -148,9 +181,18 @@
               "metadata": {
                 "description": "The id of the Express Route to create the connection to"
               }
+            },
+            "parTelemetryOptOut": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Set Parameter to true to Opt-out of deployment telemetry"
+              }
             }
           },
-          "functions": [],
+          "variables": {
+            "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+          },
           "resources": [
             {
               "type": "Microsoft.AVS/privateClouds/globalReachConnections",
@@ -159,6 +201,31 @@
               "properties": {
                 "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
                 "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
+              }
+            },
+            {
+              "condition": "[not(parameters('parTelemetryOptOut'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1272.37030",
+                      "templateHash": "4174488789265615178"
+                    }
+                  },
+                  "resources": []
+                }
               }
             }
           ]

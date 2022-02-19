@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1008.15138",
-      "templateHash": "2619700847924524055"
+      "version": "0.4.1272.37030",
+      "templateHash": "4786862648759042810"
     }
   },
   "parameters": {
@@ -35,10 +35,17 @@
       "metadata": {
         "description": "The existing Private Cloud full resource id"
       }
+    },
+    "parTelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set Parameter to true to Opt-out of deployment telemetry"
+      }
     }
   },
-  "functions": [],
   "variables": {
+    "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8",
     "Alerts": [
       {
         "Name": "CPU",
@@ -190,6 +197,31 @@
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', parameters('ActionGroupName'))]"
       ]
+    },
+    {
+      "condition": "[not(parameters('parTelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
+      }
     }
   ]
 }

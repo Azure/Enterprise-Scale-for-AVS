@@ -4,6 +4,12 @@ param PrimaryPrivateCloudName string
 @description('Full resource id of the secondary private cloud, must be in the same region as the primary')
 param SecondaryPrivateCloudId string
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
   name: PrimaryPrivateCloudName
@@ -16,4 +22,11 @@ resource PrivateCloudLink 'Microsoft.AVS/privateClouds/cloudLinks@2021-06-01' = 
   properties: {
     linkedCloud: SecondaryPrivateCloudId
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

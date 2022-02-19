@@ -34,6 +34,12 @@ param GatewayName string = VNetName
 ])
 param GatewaySku string = 'UltraPerformance'
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 // Create the Virtual Network with the gateway subnet
 resource VNet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: VNetName
@@ -121,4 +127,11 @@ resource Connection 'Microsoft.Network/connections@2021-02-01' = {
     }
     authorizationKey: AVSAuthorization.outputs.ExpressRouteAuthorizationKey
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

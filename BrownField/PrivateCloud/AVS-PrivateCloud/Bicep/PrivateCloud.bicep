@@ -13,6 +13,12 @@ param Location string = resourceGroup().location
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+@description('Set Parameter to true to Opt-out of deployment telemetry')
+param parTelemetryOptOut bool = false
+
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 // AVS Private Cloud Resource
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: PrivateCloudName
@@ -38,4 +44,11 @@ resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!Telemetry
       resources: []
     }
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../CRML/customerUsageAttribution/cuaIdResourceGroup.bicep' = if (!parTelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }
