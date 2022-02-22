@@ -4,6 +4,9 @@ param ActionGroupEmails string = ''
 @description('The existing Private Cloud full resource id')
 param PrivateCloudResourceId string
 
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 var suffix = uniqueString(PrivateCloudResourceId)
 
 var formattedEmails = empty(trim(ActionGroupEmails)) ? [] : split(ActionGroupEmails, ',')
@@ -62,4 +65,11 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
       ]
     }
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

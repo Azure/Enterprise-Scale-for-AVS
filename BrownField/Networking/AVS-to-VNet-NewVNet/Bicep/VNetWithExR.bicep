@@ -23,6 +23,9 @@ param VNetGatewaySubnet string
 @description('Name of the virtual network gateway to be created')
 param GatewayName string = VNetName
 
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 @description('Virtual network gateway SKU to be created')
 @allowed([
   'Standard'
@@ -121,4 +124,11 @@ resource Connection 'Microsoft.Network/connections@2021-02-01' = {
     }
     authorizationKey: AVSAuthorization.outputs.ExpressRouteAuthorizationKey
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

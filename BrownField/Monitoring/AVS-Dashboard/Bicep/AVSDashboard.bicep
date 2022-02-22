@@ -12,6 +12,8 @@ param PrivateCloudResourceId string
 @description('Optional, The full resource ID of the Express Route Connection used by AVS that you want displayed on this dashboard. Can be left empty to remove this metric')
 param ExRConnectionResourceId string = ''
 
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
 
 var DashboardHeading = {
   position: {
@@ -335,4 +337,11 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
   tags:{
     'hidden-title': DashboardName
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

@@ -4,6 +4,9 @@ param PrivateCloudName string
 @description('The authorization key name to be created')
 param AuthKeyName string
 
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
   name: PrivateCloudName
@@ -18,3 +21,10 @@ resource ExpressRouteAuthKey 'Microsoft.AVS/privateClouds/authorizations@2021-06
 // Return the Express Route ID and the new Authorization Key
 output ExpressRouteAuthorizationKey string = ExpressRouteAuthKey.properties.expressRouteAuthorizationKey
 output ExpressRouteId string = PrivateCloud.properties.circuit.expressRouteID
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}

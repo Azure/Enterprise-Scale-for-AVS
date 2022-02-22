@@ -16,6 +16,9 @@ param ExpressRouteAuthorizationKey string
 @secure()
 param ExpressRouteId string
 
+// Customer Usage Attribution Id
+var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+
 // Get a reference to the existing virtual network gateway
 resource Gateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' existing = {
   name: GatewayName
@@ -37,4 +40,11 @@ resource Connection 'Microsoft.Network/connections@2021-02-01' = {
     }
     authorizationKey: ExpressRouteAuthorizationKey
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }
