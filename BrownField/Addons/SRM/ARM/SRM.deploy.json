@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "6044808303230134209"
+      "version": "0.4.1272.37030",
+      "templateHash": "8461200527182985271"
     }
   },
   "parameters": {
@@ -31,6 +31,9 @@
       }
     }
   },
+  "variables": {
+    "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+  },
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds/addons",
@@ -52,6 +55,30 @@
       "dependsOn": [
         "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
       ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
+      }
     }
   ]
 }
