@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1272.37030",
-      "templateHash": "722154809642278983"
+      "templateHash": "5598468798837012617"
     }
   },
   "parameters": {
@@ -38,7 +38,7 @@
     }
   },
   "variables": {
-    "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8",
+    "varCuaid": "6f7b68e9-1179-4853-9dfe-1a4f793b9893",
     "Alerts": [
       {
         "Name": "CPU",

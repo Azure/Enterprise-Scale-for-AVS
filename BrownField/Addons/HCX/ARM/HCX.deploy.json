@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1272.37030",
-      "templateHash": "16925160143016701712"
+      "templateHash": "4939662003978325105"
     }
   },
   "parameters": {
@@ -17,7 +17,7 @@
     }
   },
   "variables": {
-    "varCuaid": "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+    "varCuaid": "ccdff80c-722d-42b7-8bd2-66aba33cba02"
   },
   "resources": [
     {
