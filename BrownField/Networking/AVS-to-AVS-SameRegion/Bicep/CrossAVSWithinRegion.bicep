@@ -5,7 +5,7 @@ param PrimaryPrivateCloudName string
 param SecondaryPrivateCloudId string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '08d3edb1-3d70-4c0f-ab9f-f491b4a8d737'
 
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {

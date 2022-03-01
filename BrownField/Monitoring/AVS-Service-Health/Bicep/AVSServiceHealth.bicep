@@ -5,7 +5,7 @@ param ActionGroupEmails string = ''
 param PrivateCloudResourceId string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = 'a182f0f1-a209-42fd-aa05-e12bda423653'
 
 var suffix = uniqueString(PrivateCloudResourceId)
 

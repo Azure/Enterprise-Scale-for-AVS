@@ -9,7 +9,7 @@ param SRMLicenseKey string = ''
 param ReplicationServerCount int = 1
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = 'c542e61c-1907-483f-9e18-76f5b85eee0a'
 
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {

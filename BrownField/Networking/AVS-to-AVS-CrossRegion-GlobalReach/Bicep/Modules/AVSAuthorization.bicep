@@ -5,7 +5,7 @@ param PrivateCloudName string
 param AuthKeyName string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '1593acc2-6932-462b-af58-28f7fa9df52d'
 
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {

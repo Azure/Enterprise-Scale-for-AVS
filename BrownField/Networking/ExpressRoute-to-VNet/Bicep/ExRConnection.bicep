@@ -17,7 +17,7 @@ param ExpressRouteAuthorizationKey string
 param ExpressRouteId string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '174ca090-c796-4183-bc1f-ac6578e81d39'
 
 // Get a reference to the existing virtual network gateway
 resource Gateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' existing = {

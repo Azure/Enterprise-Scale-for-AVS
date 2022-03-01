@@ -10,7 +10,7 @@ param ExpressRouteAuthorizationKey string
 param ExpressRouteId string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '8fb78b9c-973d-45d1-bd35-fcad3c00e09e'
 
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {

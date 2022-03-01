@@ -15,7 +15,7 @@ param GatewayName string
 param Location string = resourceGroup().location
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '9dd111b1-82f0-4104-bcf9-18b777f0c78f'
 
 // Create an AVS ExR Autorization Key via a module
 module AVSAuthorization 'Modules/AVSAuthorization.bicep' = {

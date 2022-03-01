@@ -14,7 +14,7 @@ param Location string = resourceGroup().location
 param TelemetryOptOut bool = false
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '99f18c8b-1767-4302-9cee-ecc0d135dd52'
 
 // Create the Private Cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {

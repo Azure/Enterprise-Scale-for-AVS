@@ -24,7 +24,7 @@ param VNetGatewaySubnet string
 param GatewayName string = VNetName
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '938cd838-e22a-47da-8a6f-bdda923e3edb'
 
 @description('Virtual network gateway SKU to be created')
 @allowed([

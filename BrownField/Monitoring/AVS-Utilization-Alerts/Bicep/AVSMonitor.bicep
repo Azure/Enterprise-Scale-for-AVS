@@ -11,7 +11,7 @@ param ActionGroupEmails array = []
 param PrivateCloudResourceId string
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '6f7b68e9-1179-4853-9dfe-1a4f793b9893'
 
 // Create an action group to be used by the alerts
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {

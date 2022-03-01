@@ -13,7 +13,7 @@ param PrivateCloudResourceId string
 param ExRConnectionResourceId string = ''
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = '6a449623-a5df-43f6-8df0-9b32dc2df958'
 
 var DashboardHeading = {
   position: {

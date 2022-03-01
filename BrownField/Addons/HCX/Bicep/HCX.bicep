@@ -7,7 +7,7 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
 }
 
 // Customer Usage Attribution Id
-var varCuaid = '754599a0-0a6f-424a-b4c5-1b12be198ae8'
+var varCuaid = 'ccdff80c-722d-42b7-8bd2-66aba33cba02'
 
 // Set up HCX
 resource HCX 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
