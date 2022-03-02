@@ -50,7 +50,7 @@ module "AVS-to-AVS-SameRegion" {
 }
 ```
 #### Key Notes - Terraform
-* This terraform module deploys Azure resources that don't yet have an official AzureRM provider implementation. To work around this limitation, this terraform module calls an ARM template deployment using a previously created ARM template and injects the variable values as parameters. When implementing this, the module assumes the ARM template resides in the module folder for the file reference to work. This approach is effective for deployment, but has known issues when performing destroy operations. This module will be updated as new functionality is released, but pending release destroy operations should be performed manually.  
+* This terraform module deploys Azure resources that don't yet have an official AzureRM provider implementation. To work around this limitation, this terraform module calls an ARM template deployment using a previously created ARM template and injects the variable values as parameters. When implementing this, the module assumes the ARM template resides in the module folder for the file reference to work. This approach is effective for deployment, but has known issues when performing destroy operations. This module will be updated as new functionality is released, but destroy operations should be performed manually until the new functionality is available.  
 
 ## Post-deployment Steps
 
