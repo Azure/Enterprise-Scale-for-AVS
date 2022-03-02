@@ -8,7 +8,8 @@
 az account show
 ```
 
-4. Kick off the AVS deployment using the template & parameters file. You will need to fill in the following arguments:
+4. Change your working folder to this Bicep directory
+5. Kick off the AVS deployment using the template & parameters file. You will need to fill in the following arguments:
 
 The location the deployment metadata will be stored: `-l Location` You can use the `-c` option to validate what resources will be deployed prior to be deploying:
 
