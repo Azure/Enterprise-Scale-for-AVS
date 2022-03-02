@@ -40,6 +40,27 @@ cd PowerShell
 ./Deploy-ExRConnection-SeparateAuthKey.ps1
 ```
 
+### Terraform
+* If deploying stand-alone, update the sample .tfvars.sample file in the Terraform directory with the deployment values, remove the .sample extension, and run the terraform workflow that fits your environment.
+```terraform
+terraform init
+terraform plan
+terraform apply
+```
+* If deploying as a module within a larger implementation, use a module block similar to the following sample and follow your organization's Terraform workflow:
+```terraform
+module "ExpressRoute-To-Vnet" {
+    source = "../ExpressRoute-To-Vnet/Terraform/"
+    
+    resourceGroupNameVnetGateway  = "<enter Vnet Gateway RG name here>"
+    resourceGroupNameExpressRoute = "<enter expressRoute circuit RG name here>"
+    gatewayName                   = "<enter name of existing vnet gateway here>"
+    expressRouteName              = "<enter name of existing ExpressRoute circuit here>"
+    connectionName                = "<enter name for the new connection being created>"
+    expressRouteAuthorizationKey  = "<enter existing ExpressRoute Authorization Key>"
+}
+```
+
 ## Post-deployment steps
 
 In the Azure Portal, navigate to the "Connections" menu for the Virtual Network Gateway and verify the "Status" of the connection is showing as "Succeeded".

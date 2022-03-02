@@ -9,7 +9,7 @@ variable "SecondaryPrivateCloudId" {
   description = "Full resource id of the secondary private cloud, must be in the same region as the primary"
 }
 
-variable "DeploymentResourceGroupName" {
+variable "PrimaryPrivateCloudResourceGroupName" {
   type        = string
   description = "Resource Group where the new globalReach resource will be created."
 }

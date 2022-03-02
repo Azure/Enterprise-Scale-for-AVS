@@ -29,12 +29,12 @@ variable "VNetName" {
 }
 
 variable "VNetAddressSpaceCIDR" {
-  type        = string
+  type        = list(string)
   description = "Address space for the virtual network to be created, should be a valid non-overlapping CIDR block in the format: 10.0.0.0/16"
 }
 
 variable "VNetGatewaySubnetCIDR" {
-  type        = string
+  type        = list(string)
   description = "Subnet to be used for the virtual network gateway, should be a valid CIDR block within the address space provided above, in the format: 10.0.0.0/24"
 }
 

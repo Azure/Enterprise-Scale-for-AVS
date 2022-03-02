@@ -1,0 +1,12 @@
+#populate this file and remove the .sample extension when running this module standalone
+#if calling this module from another module leave this file commented out
+DeploymentResourceGroupName = "<resource group name where new vnet and gateway will be deployed>"
+PrivateCloudName = "<existing private cloud name>"
+PrivateCloudResourceGroup = "<resource group where existing private cloud is deployed"
+PrivateCloudSubscriptionId = "<private cloud subscription id value (not full resource id)>"
+Location = "<vnet deployment region>"
+VNetName = "<new vnet name>"
+VNetAddressSpaceCIDR = ["<CIDR for new vnet>",]
+VNetGatewaySubnetCIDR = ["<CIDR for gateway subnet>",]
+GatewayName = "<name for new vnet gateway>"
+GatewaySku = "Standard"

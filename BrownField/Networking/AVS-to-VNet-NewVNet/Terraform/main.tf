@@ -1,9 +1,17 @@
+provider "azurerm" {
+  alias      = "AVS-to-VNet-NewVnet"
+  partner_id = "938cd838-e22a-47da-8a6f-bdda923e3edb"
+  features {}
+}
+
 resource "azurerm_resource_group" "deploymentRG" {
+  provider = azurerm.AVS-to-VNet-NewVnet
   name     = var.DeploymentResourceGroupName
   location = var.Location
 }
 
 resource "azurerm_virtual_network" "vnetGatewayVnet" {
+  provider            = azurerm.AVS-to-VNet-NewVnet
   name                = var.VNetName
   location            = azurerm_resource_group.deploymentRG.location
   resource_group_name = azurerm_resource_group.deploymentRG.name
@@ -11,6 +19,7 @@ resource "azurerm_virtual_network" "vnetGatewayVnet" {
 }
 
 resource "azurerm_subnet" "gatewaySubnet" {
+  provider             = azurerm.AVS-to-VNet-NewVnet
   name                 = "GatewaySubnet"
   resource_group_name  = azurerm_resource_group.deploymentRG.name
   virtual_network_name = azurerm_virtual_network.vnetGatewayVnet.name
@@ -18,6 +27,7 @@ resource "azurerm_subnet" "gatewaySubnet" {
 }
 
 resource "azurerm_public_ip" "gatewayIP" {
+  provider            = azurerm.AVS-to-VNet-NewVnet
   name                = "${var.GatewayName}-PIP"
   resource_group_name = azurerm_resource_group.deploymentRG.name
   location            = azurerm_resource_group.deploymentRG.location
@@ -27,6 +37,7 @@ resource "azurerm_public_ip" "gatewayIP" {
 }
 
 resource "azurerm_virtual_network_gateway" "ERGateway" {
+  provider            = azurerm.AVS-to-VNet-NewVnet
   name                = var.GatewayName
   location            = azurerm_resource_group.deploymentRG.location
   resource_group_name = azurerm_resource_group.deploymentRG.name
@@ -44,17 +55,20 @@ resource "azurerm_virtual_network_gateway" "ERGateway" {
 
 #assumes the same subscription (need to reference different provider blocks if a separate sub is required.
 data "azurerm_vmware_private_cloud" "existing" {
+  provider            = azurerm.AVS-to-VNet-NewVnet
   name                = var.PrivateCloudName
   resource_group_name = var.PrivateCloudResourceGroup
 }
 
 #check this is the proper way to name the authorization
 resource "azurerm_vmware_express_route_authorization" "thisVnet" {
+  provider         = azurerm.AVS-to-VNet-NewVnet
   name             = azurerm_virtual_network.vnetGatewayVnet.name
   private_cloud_id = data.azurerm_vmware_private_cloud.existing.id
 }
 
 resource "azurerm_virtual_network_gateway_connection" "expressRoute" {
+  provider            = azurerm.AVS-to-VNet-NewVnet
   name                = var.PrivateCloudName
   location            = azurerm_resource_group.deploymentRG.location
   resource_group_name = azurerm_resource_group.deploymentRG.name
