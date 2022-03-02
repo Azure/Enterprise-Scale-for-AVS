@@ -6,7 +6,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Get-ChildItem '.\' -Recurse -Include '*.bicep' |% {
     $source = $_.FullName
-    if (!($source -like "*\Bicep\Modules\*") -and !($source -like "*/Bicep/Modules/*") -and !($source -like "*999-WorkInProgress*")) { 
+    if (!($source -like "*\Bicep\Modules\*") -and !($source -like "*/Bicep/Modules/*") -and !($source -like "*CUAID*") -and !($source -like "*999-WorkInProgress*")) { 
         $folder = $_.Directory.Parent
         $name = $_.BaseName
         $target = Join-Path $folder "ARM\$($name).deploy.json"

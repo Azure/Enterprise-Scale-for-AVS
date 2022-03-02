@@ -9,6 +9,9 @@ param ExpressRouteAuthorizationKey string
 @secure()
 param ExpressRouteId string
 
+// Customer Usage Attribution Id
+var varCuaid = '8fb78b9c-973d-45d1-bd35-fcad3c00e09e'
+
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
   name: PrivateCloudName
@@ -22,4 +25,11 @@ resource GlobalReach 'Microsoft.AVS/privateClouds/globalReachConnections@2021-06
     authorizationKey: ExpressRouteAuthorizationKey
     peerExpressRouteCircuit: ExpressRouteId
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }
