@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "3918543573573887351"
+      "version": "0.4.1272.37030",
+      "templateHash": "3078573540625338306"
     }
   },
   "parameters": {
@@ -40,6 +40,7 @@
     }
   },
   "variables": {
+    "varCuaid": "6a449623-a5df-43f6-8df0-9b32dc2df958",
     "DashboardHeading": {
       "position": {
         "colSpan": 6,
@@ -357,6 +358,30 @@
       },
       "tags": {
         "hidden-title": "[parameters('DashboardName')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
       }
     }
   ]

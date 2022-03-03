@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "11263655147757911901"
+      "version": "0.4.1272.37030",
+      "templateHash": "17389485434702717954"
     }
   },
   "parameters": {
@@ -22,6 +22,9 @@
       }
     }
   },
+  "variables": {
+    "varCuaid": "08d3edb1-3d70-4c0f-ab9f-f491b4a8d737"
+  },
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds/cloudLinks",
@@ -29,6 +32,30 @@
       "name": "[format('{0}/{1}', parameters('PrimaryPrivateCloudName'), guid(parameters('SecondaryPrivateCloudId')))]",
       "properties": {
         "linkedCloud": "[parameters('SecondaryPrivateCloudId')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
       }
     }
   ]

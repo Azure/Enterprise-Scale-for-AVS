@@ -8,19 +8,26 @@
 az account show
 ```
 
-4. Kick off the AVS deployment using the template & parameters file. You will need to fill in the following arguments:
+4. Change your working folder to this Bicep directory
+5. Kick off the AVS deployment using the template & parameters file. You will need to fill in the following arguments:
 
 The location the deployment metadata will be stored: `-l Location` You can use the `-c` option to validate what resources will be deployed prior to be deploying:
 
 ```
-az deployment sub create -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n DeploymentName -l AustraliaEast -c -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+
+Note: Ensure "DeploymentName" is unique if running multiple deployments
 ```
 
 You can also use `--no-wait` option to kick of the deployment without waiting for it to complete:
 
 ```
-az deployment sub create -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.bicep" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n DeploymentName -l AustraliaEast -c --no-wait -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+
+Note: Ensure "DeploymentName" is unique if running multiple deployments
+
 ```
+
 
 # Confirming Deployment
 

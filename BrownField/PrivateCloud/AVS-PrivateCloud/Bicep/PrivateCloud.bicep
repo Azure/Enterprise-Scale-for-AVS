@@ -13,6 +13,9 @@ param Location string = resourceGroup().location
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+// Customer Usage Attribution Id
+var varCuaid = 'fe003615-ca8e-412f-8091-43e1e42ebfd8'
+
 // AVS Private Cloud Resource
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: PrivateCloudName
@@ -38,4 +41,11 @@ resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!Telemetry
       resources: []
     }
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
 }

@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "16188408207026649776"
+      "version": "0.4.1272.37030",
+      "templateHash": "16882334144361166307"
     }
   },
   "parameters": {
@@ -28,6 +28,9 @@
       }
     }
   },
+  "variables": {
+    "varCuaid": "8fb78b9c-973d-45d1-bd35-fcad3c00e09e"
+  },
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds/globalReachConnections",
@@ -36,6 +39,30 @@
       "properties": {
         "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
         "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "4174488789265615178"
+            }
+          },
+          "resources": []
+        }
       }
     }
   ]
