@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 param Prefix string
-param Location string
+param Location string = deployment().location
 @secure()
 param Username string
 @secure()
