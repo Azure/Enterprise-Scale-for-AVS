@@ -1,4 +1,4 @@
-param Location string = resourceGroup().location
+param Location string
 param Prefix string
 param VNetExists bool
 param VNetAddressSpace string

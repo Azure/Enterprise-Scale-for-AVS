@@ -5,6 +5,8 @@ targetScope = 'subscription'
 @maxLength(20)
 param Prefix string = 'AVS'
 
+param Location string = deployment().location
+
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string
 
@@ -52,7 +54,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
   params: {
     Prefix: Prefix
-    Location: deployment().location
+    Location: Location
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
     TelemetryOptOut: TelemetryOptOut
   }
@@ -62,7 +64,7 @@ module Networking 'Modules/Networking.bicep' = {
   name: '${deploymentPrefix}-Network'
   params: {
     Prefix: Prefix
-    Location: deployment().location
+    Location: Location
     VNetExists: VNetExists
     VNetAddressSpace: VNetAddressSpace
     VNetGatewaySubnet: VNetGatewaySubnet
@@ -96,7 +98,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
   name: '${deploymentPrefix}-Jumpbox'
   params: {
     Prefix: Prefix
-    Location: deployment().location
+    Location: Location
     Username: JumpboxUsername
     Password: JumpboxPassword
     VNetName: Networking.outputs.VNetName
@@ -112,7 +114,7 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix
-    PrimaryLocation: deployment().location
+    PrimaryLocation: Location
     PrimaryPrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrimaryPrivateCloudResourceId: AVSCore.outputs.PrivateCloudResourceId
     JumpboxResourceId: DeployJumpbox ? Jumpbox.outputs.JumpboxResourceId : ''

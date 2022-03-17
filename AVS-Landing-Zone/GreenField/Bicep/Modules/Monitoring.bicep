@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 param Prefix string
-param PrimaryLocation string = deployment().location
+param PrimaryLocation string
 param AlertEmails array
 param PrimaryPrivateCloudName string
 param PrimaryPrivateCloudResourceId string

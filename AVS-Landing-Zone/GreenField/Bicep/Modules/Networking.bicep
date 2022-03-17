@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-param Location string = deployment().location
+param Location string
 param Prefix string
 param VNetExists bool
 param VNetAddressSpace string
