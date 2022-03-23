@@ -35,3 +35,9 @@ This section contains templates to deploy specific components and add-ins for AV
 | Connect AVS to AVS in the same region via AVS Interconnect   | This example will connect 2 AVS Private Clouds in same region using the AVS Interconnect feature | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-AVS-SameRegion%2FARM%2FCrossAVSWithinRegion.deploy.json) | [Link](Networking/AVS-to-AVS-SameRegion/readme.md) |
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+
+## Run Commands
+
+| Deploy                                                       | Description                                                  | More Info                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/PowerShell/readme.md) |
