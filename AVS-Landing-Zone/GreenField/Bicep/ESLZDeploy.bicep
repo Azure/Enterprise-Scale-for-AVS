@@ -1,11 +1,11 @@
 targetScope = 'subscription'
 
-@description('The region the AVS Private Cloud & associated resources will be deployed to')
-param Location string
 @description('The prefix to use on resources inside this template')
 @minLength(1)
 @maxLength(20)
 param Prefix string = 'AVS'
+
+param Location string = deployment().location
 
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string
