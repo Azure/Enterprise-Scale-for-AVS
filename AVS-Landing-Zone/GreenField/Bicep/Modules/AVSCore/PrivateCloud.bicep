@@ -1,7 +1,7 @@
 param Prefix string
 param NetworkBlock string
 param ManagementClusterSize int = 3
-param Location string = resourceGroup().location
+param Location string
 param TelemetryOptOut bool
 
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
