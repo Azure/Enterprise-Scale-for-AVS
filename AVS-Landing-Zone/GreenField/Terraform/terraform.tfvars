@@ -7,6 +7,8 @@ region = "northeurope"
 
 #AVS requires a /22 CIDR range, this must not overlap with other networks to be used with AVS
 avs-networkblock = "10.1.0.0/22"
+avs-sku = "AV36"
+avs-hostcount = 3
 
 #Input the Jumpbox local username, password and SKU of your choice
 adminusername = "replace me"
