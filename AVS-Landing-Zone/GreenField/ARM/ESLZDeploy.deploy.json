@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1272.37030",
-      "templateHash": "17821328717037878412"
+      "version": "0.4.1318.3566",
+      "templateHash": "3375308984596137263"
     }
   },
   "parameters": {
@@ -17,6 +17,10 @@
       "metadata": {
         "description": "The prefix to use on resources inside this template"
       }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[deployment().location]"
     },
     "PrivateCloudAddressSpace": {
       "type": "string",
@@ -131,7 +135,7 @@
     }
   },
   "variables": {
-    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, deployment().location))]"
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
   },
   "resources": [
     {
@@ -149,7 +153,7 @@
             "value": "[parameters('Prefix')]"
           },
           "Location": {
-            "value": "[deployment().location]"
+            "value": "[parameters('Location')]"
           },
           "PrivateCloudAddressSpace": {
             "value": "[parameters('PrivateCloudAddressSpace')]"
@@ -164,8 +168,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "15172318823083807896"
+              "version": "0.4.1318.3566",
+              "templateHash": "4047891442799428556"
             }
           },
           "parameters": {
@@ -219,8 +223,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "7093807809607086474"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "13179341101716382666"
                     }
                   },
                   "parameters": {
@@ -235,8 +239,7 @@
                       "defaultValue": 3
                     },
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     },
                     "TelemetryOptOut": {
                       "type": "bool"
@@ -322,7 +325,7 @@
             "value": "[parameters('Prefix')]"
           },
           "Location": {
-            "value": "[deployment().location]"
+            "value": "[parameters('Location')]"
           },
           "VNetExists": {
             "value": "[parameters('VNetExists')]"
@@ -340,14 +343,13 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "15531014849047405507"
+              "version": "0.4.1318.3566",
+              "templateHash": "1094213486527809172"
             }
           },
           "parameters": {
             "Location": {
-              "type": "string",
-              "defaultValue": "[deployment().location]"
+              "type": "string"
             },
             "Prefix": {
               "type": "string"
@@ -402,14 +404,13 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "16315569410178072104"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "8610100606330691280"
                     }
                   },
                   "parameters": {
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     },
                     "Prefix": {
                       "type": "string"
@@ -573,6 +574,9 @@
           },
           "PrivateCloudResourceGroup": {
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
           }
         },
         "template": {
@@ -581,8 +585,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "8542497997471237573"
+              "version": "0.4.1318.3566",
+              "templateHash": "11000740738661196011"
             }
           },
           "parameters": {
@@ -603,6 +607,9 @@
               "type": "string"
             },
             "GatewayName": {
+              "type": "string"
+            },
+            "Location": {
               "type": "string"
             }
           },
@@ -631,8 +638,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "5131100314591469562"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "16234004285404936496"
                     }
                   },
                   "parameters": {
@@ -685,6 +692,9 @@
                   },
                   "ExpressRouteId": {
                     "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteId.value]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
                   }
                 },
                 "template": {
@@ -693,8 +703,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "2673651195166983330"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "6639610076640860020"
                     }
                   },
                   "parameters": {
@@ -705,8 +715,7 @@
                       "type": "string"
                     },
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     },
                     "ExpressRouteAuthorizationKey": {
                       "type": "secureString"
@@ -797,8 +806,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "11346226735746445858"
+              "version": "0.4.1318.3566",
+              "templateHash": "16568357071366757213"
             }
           },
           "parameters": {
@@ -846,8 +855,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "9414882336870263525"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "4771841424122067663"
                     }
                   },
                   "parameters": {
@@ -897,8 +906,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "15030845292505242552"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "16295736718721215308"
                     }
                   },
                   "parameters": {
@@ -963,7 +972,7 @@
             "value": "[parameters('Prefix')]"
           },
           "Location": {
-            "value": "[deployment().location]"
+            "value": "[parameters('Location')]"
           },
           "Username": {
             "value": "[parameters('JumpboxUsername')]"
@@ -993,8 +1002,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "5855107101429268969"
+              "version": "0.4.1318.3566",
+              "templateHash": "17432533289864646399"
             }
           },
           "parameters": {
@@ -1002,8 +1011,7 @@
               "type": "string"
             },
             "Location": {
-              "type": "string",
-              "defaultValue": "[deployment().location]"
+              "type": "string"
             },
             "Username": {
               "type": "secureString"
@@ -1061,8 +1069,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "17467368030579511932"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "14086737250813897355"
                     }
                   },
                   "parameters": {
@@ -1137,8 +1145,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "10220434693285855200"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "13881567849074295723"
                     }
                   },
                   "parameters": {
@@ -1149,8 +1157,7 @@
                       "type": "string"
                     },
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     }
                   },
                   "resources": [
@@ -1234,8 +1241,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "7628283438743169095"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "8626482146887758991"
                     }
                   },
                   "parameters": {
@@ -1246,8 +1253,7 @@
                       "type": "string"
                     },
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     },
                     "Username": {
                       "type": "string"
@@ -1372,7 +1378,7 @@
             "value": "[parameters('Prefix')]"
           },
           "PrimaryLocation": {
-            "value": "[deployment().location]"
+            "value": "[parameters('Location')]"
           },
           "PrimaryPrivateCloudName": {
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value]"
@@ -1381,7 +1387,7 @@
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceId.value]"
           },
           "JumpboxResourceId": {
-            "value": "[if(parameters('DeployJumpbox'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Jumpbox', variables('deploymentPrefix')))).outputs.JumpboxResourceId.value, '')]"
+            "value": "[if(parameters('DeployJumpbox'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Jumpbox', variables('deploymentPrefix'))), '2020-10-01').outputs.JumpboxResourceId.value, '')]"
           },
           "VNetResourceId": {
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.VNetResourceId.value]"
@@ -1396,8 +1402,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1272.37030",
-              "templateHash": "1103231430716896772"
+              "version": "0.4.1318.3566",
+              "templateHash": "4464676706020005978"
             }
           },
           "parameters": {
@@ -1405,8 +1411,7 @@
               "type": "string"
             },
             "PrimaryLocation": {
-              "type": "string",
-              "defaultValue": "[deployment().location]"
+              "type": "string"
             },
             "AlertEmails": {
               "type": "array"
@@ -1458,8 +1463,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "10234831864174728285"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "7861391882425385216"
                     }
                   },
                   "parameters": {
@@ -1533,8 +1538,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "1157840457735554270"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "689596946467406052"
                     }
                   },
                   "parameters": {
@@ -1668,8 +1673,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "13524405542818990110"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "8490971061976952680"
                     }
                   },
                   "parameters": {
@@ -1769,8 +1774,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1272.37030",
-                      "templateHash": "16075589945352224887"
+                      "version": "0.4.1318.3566",
+                      "templateHash": "2275131416114524428"
                     }
                   },
                   "parameters": {
@@ -1778,8 +1783,7 @@
                       "type": "string"
                     },
                     "Location": {
-                      "type": "string",
-                      "defaultValue": "[resourceGroup().location]"
+                      "type": "string"
                     },
                     "JumpboxResourceId": {
                       "type": "string"
