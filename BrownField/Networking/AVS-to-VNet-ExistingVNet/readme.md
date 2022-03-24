@@ -38,6 +38,26 @@ cd PowerShell
 ./Deploy-ExRConnection-GenerateAuthKey.ps1
 ```
 
+### Terraform
+* If deploying stand-alone, update the sample .tfvars.sample file in the Terraform directory with the deployment values, remove the .sample extension, and run the terraform workflow that fits your environment.
+```terraform
+terraform init
+terraform plan
+terraform apply
+```
+* If deploying as a module within a larger implementation, use a module block similar to the following sample and follow your organization's Terraform workflow:
+```terraform
+module "AVS-to-New-Vnet" {
+    source = "../AVS-to-VNet-ExistingVNet/Terraform/"
+    
+    DeploymentResourceGroupName = "<resource group name where new expressroute connection will be deployed>"
+    PrivateCloudName            = "<existing private cloud name>"
+    PrivateCloudResourceGroup   = "<resource group where existing private cloud is deployed"
+    Location                    = "<vnet deployment region>"
+    GatewayName                 = "<name for the existing vnet gateway>"
+}
+```
+
 ## Post-deployment Steps
 
 * Validate that Authorization Key is generated. This can be validated by either navigating to "Connectivity" menu under Private Cloud Azure Portal or by running equivalent CLI/Powershell command.

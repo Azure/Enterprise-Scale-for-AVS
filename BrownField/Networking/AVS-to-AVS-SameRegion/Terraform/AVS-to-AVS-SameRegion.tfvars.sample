@@ -1,0 +1,6 @@
+#populate this file and remove the .sample extension when running this module standalone
+#if calling this module from another module leave this file commented out
+
+PrimaryPrivateCloudName = "<Name of the existing primary private cloud that will contain the inter-private cloud link resource, must exist within this resource group>"
+SecondaryPrivateCloudId = "Full resource id of the secondary private cloud, must be in the same region as the primary"
+DeploymentResourceGroupName = "<Resource Group where the new globalReach resource will be created>"

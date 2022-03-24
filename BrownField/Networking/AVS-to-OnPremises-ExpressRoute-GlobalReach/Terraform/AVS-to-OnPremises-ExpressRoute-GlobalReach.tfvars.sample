@@ -1,0 +1,6 @@
+#populate this file and remove the .sample extension when running this module standalone
+#if calling this module from another module leave this file commented out
+ExpressRouteAuthorizationKey = "<The Express Route Authorization Key to be redeemed by the connection>"
+ExpressRouteId = "<The Express Route ID to create the connection to>"
+PrivateCloudName = "<The name of the existing Private Cloud that should be used for the connection>"
+DeploymentResourceGroupName = "<Resource Group where the new globalReach resource will be created>"
