@@ -16,7 +16,7 @@ The AVS Terraform modules are all written as individual modules each having a sp
 
 | Module Name         | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
-| main.tf             | This module contains the terraform provider settings and version. It also contains some optional settings to setup a terraform backend in an Azure Storage account |
+| main.tf             | This module contains the Terraform provider settings and version. It also contains some optional settings to setup a Terraform backend in an Azure Storage account |
 | resourcegroups.tf   | This module deploys the 3 resource groups to be used         |
 | privatecloud.tf     | This module creates the AVS Private Cloud, the passwords are set at creation time by the random_password function |
 | network.tf          | This module creates the Virtual Network and subnets to be used |
