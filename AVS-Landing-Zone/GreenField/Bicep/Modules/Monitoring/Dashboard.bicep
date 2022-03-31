@@ -1,5 +1,5 @@
 param Prefix string
-param Location string = resourceGroup().location
+param Location string
 param JumpboxResourceId string
 param PrivateCloudResourceId string
 param VNetResourceId string
