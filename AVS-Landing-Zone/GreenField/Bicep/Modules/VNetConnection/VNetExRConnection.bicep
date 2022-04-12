@@ -1,6 +1,6 @@
 param GatewayName string
 param ConnectionName string
-param Location string = resourceGroup().location
+param Location string
 
 @secure()
 param ExpressRouteAuthorizationKey string

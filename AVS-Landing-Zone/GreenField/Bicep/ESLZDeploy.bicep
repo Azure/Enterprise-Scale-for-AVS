@@ -57,7 +57,7 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
-var deploymentPrefix = 'AVS-${uniqueString(deployment().name, deployment().location)}'
+var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -90,6 +90,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = {
     VNetPrefix: Prefix
     PrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
+    Location: Location
   }
 }
 
