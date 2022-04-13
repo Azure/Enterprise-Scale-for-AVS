@@ -3,9 +3,9 @@ resource "random_password" "nsxt" {
   special          = true
   number           = true
   override_special = "%@#"
-  min_special = 1
-  min_numeric = 1
-  min_upper = 1
+  min_special      = 1
+  min_numeric      = 1
+  min_upper        = 1
 }
 
 resource "random_password" "vcenter" {
@@ -13,9 +13,9 @@ resource "random_password" "vcenter" {
   special          = true
   number           = true
   override_special = "%@#"
-  min_special = 1
-  min_numeric = 1
-  min_upper = 1
+  min_special      = 1
+  min_numeric      = 1
+  min_upper        = 1
 }
 
 
@@ -29,10 +29,21 @@ resource "azurerm_vmware_private_cloud" "privatecloud" {
     size = 3
   }
 
-  network_subnet_cidr         = "${var.avs-networkblock}"
+  network_subnet_cidr         = var.avs-networkblock
   internet_connection_enabled = false
   nsxt_password               = random_password.nsxt.result
   vcenter_password            = random_password.vcenter.result
+
+  timeouts {
+    create = "10h"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      nsxt_password,
+      vcenter_password
+    ]
+  }
 }
 
 resource "azurerm_vmware_express_route_authorization" "expressrouteauthkey" {

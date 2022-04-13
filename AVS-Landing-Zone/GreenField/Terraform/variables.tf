@@ -4,23 +4,23 @@
 #-----------------------------------------------------------------
 
 variable "prefix" {
-  type    = string
+  type = string
 }
 
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "avs-networkblock" {
-  type    = string
+  type = string
 }
 
 variable "adminusername" {
-  type    = string
+  type = string
 }
 
 variable "adminpassword" {
-  type    = string
+  type = string
 }
 
 variable "jumpboxsku" {
@@ -29,19 +29,19 @@ variable "jumpboxsku" {
 }
 
 variable "vnetaddressspace" {
-  type    = string
+  type = string
 }
 
 variable "gatewaysubnet" {
-  type    = string
+  type = string
 }
 
 variable "azurebastionsubnet" {
-  type    = string
+  type = string
 }
 
 variable "jumpboxsubnet" {
-  type    = string
+  type = string
 }
 
 
