@@ -1,11 +1,11 @@
 targetScope = 'subscription'
 
-@description('The region the AVS Private Cloud & associated resources will be deployed to')
-param Location string
 @description('The prefix to use on resources inside this template')
 @minLength(1)
 @maxLength(20)
 param Prefix string = 'AVS'
+
+param Location string = deployment().location
 
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string
@@ -48,7 +48,7 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
-var deploymentPrefix = 'AVS-${uniqueString(deployment().name, deployment().location)}'
+var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -79,6 +79,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = {
     VNetPrefix: Prefix
     PrivateCloudName: AVSCore.outputs.PrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
+    Location: Location
   }
 }
 

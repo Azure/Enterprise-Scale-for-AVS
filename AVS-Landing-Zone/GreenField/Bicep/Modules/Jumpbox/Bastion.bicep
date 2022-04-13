@@ -1,6 +1,6 @@
 param Prefix string
 param SubnetId string
-param Location string = resourceGroup().location
+param Location string
 
 resource BastionPIP 'Microsoft.Network/publicIpAddresses@2020-05-01' = {
   name: '${Prefix}-bastion-pip'

@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "11715639621467102323"
+      "version": "0.4.1318.3566",
+      "templateHash": "13019876098330224681"
     }
   },
   "parameters": {
@@ -42,6 +42,9 @@
         "description": "Opt-out of deployment telemetry"
       }
     }
+  },
+  "variables": {
+    "varCuaid": "99f18c8b-1767-4302-9cee-ecc0d135dd52"
   },
   "resources": [
     {
@@ -81,6 +84,30 @@
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
+          "resources": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "10779157790839886898"
+            }
+          },
           "resources": []
         }
       }

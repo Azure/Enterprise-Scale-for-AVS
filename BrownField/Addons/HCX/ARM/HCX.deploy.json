@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "12205194956177575224"
+      "version": "0.4.1318.3566",
+      "templateHash": "2607521391039134232"
     }
   },
   "parameters": {
@@ -16,6 +16,9 @@
       }
     }
   },
+  "variables": {
+    "varCuaid": "ccdff80c-722d-42b7-8bd2-66aba33cba02"
+  },
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds/addons",
@@ -24,6 +27,30 @@
       "properties": {
         "addonType": "HCX",
         "offer": "VMware MaaS Cloud Provider"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "10779157790839886898"
+            }
+          },
+          "resources": []
+        }
       }
     }
   ]

@@ -13,15 +13,19 @@ az account show
 The location the deployment metadata will be stored: `-l Location` You can use the `-c` option to validate what resources will be deployed prior to be deploying:
 
 ```
-az deployment sub create -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n DeploymentName -l AustraliaEast -c -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+
+Note: Ensure "DeploymentName" is unique if running multiple deployments
 ```
 
 You can also use `--no-wait` option to kick of the deployment without waiting for it to complete:
 
 ```
-az deployment sub create -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n DeploymentName -l AustraliaEast -c --no-wait -f "ESLZDeploy.deploy.json" -p "@ESLZDeploy.parameters.json"
+
+Note: Ensure "DeploymentName" is unique if running multiple deployments
 ```
 
 # Confirming Deployment
 
-Private cloud deployment takes around 3-4 hours. Once the deployment has completed it is important to check that the deployment succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).
+Private cloud deployment takes around 3-4 hours. Once the deployment has completed it is important to check that the deployment is succeeded & the AVS Private Cloud status is "Succeeded". If the Private Cloud fails to deploy, you may need to [raise a support ticket](https://docs.microsoft.com/en-us/azure/azure-vmware/fix-deployment-failures).

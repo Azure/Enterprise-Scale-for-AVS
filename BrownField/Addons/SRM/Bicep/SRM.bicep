@@ -8,6 +8,9 @@ param SRMLicenseKey string = ''
 @minValue(1)
 param ReplicationServerCount int = 1
 
+// Customer Usage Attribution Id
+var varCuaid = 'c542e61c-1907-483f-9e18-76f5b85eee0a'
+
 // Get a reference to the existing private cloud
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
   name: PrivateCloudName
@@ -37,3 +40,9 @@ resource VR 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
   ]
 }
 
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdResourceGroup.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(resourceGroup().location)}'
+  params: {}
+}

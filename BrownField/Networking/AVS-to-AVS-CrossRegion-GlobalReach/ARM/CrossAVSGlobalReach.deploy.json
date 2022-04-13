@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "7714480193584756616"
+      "version": "0.4.1318.3566",
+      "templateHash": "4827878110747686168"
     }
   },
   "parameters": {
@@ -59,8 +59,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1124.51302",
-              "templateHash": "812177194752214735"
+              "version": "0.4.1318.3566",
+              "templateHash": "12049220193843438421"
             }
           },
           "parameters": {
@@ -77,11 +77,38 @@
               }
             }
           },
+          "variables": {
+            "varCuaid": "1593acc2-6932-462b-af58-28f7fa9df52d"
+          },
           "resources": [
             {
               "type": "Microsoft.AVS/privateClouds/authorizations",
               "apiVersion": "2021-06-01",
               "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('AuthKeyName'))]"
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1318.3566",
+                      "templateHash": "10779157790839886898"
+                    }
+                  },
+                  "resources": []
+                }
+              }
             }
           ],
           "outputs": {
@@ -112,10 +139,10 @@
             "value": "[parameters('PrimaryPrivateCloudName')]"
           },
           "ExpressRouteId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteId.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteId.value]"
           },
           "ExpressRouteAuthorizationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteAuthorizationKey.value]"
           }
         },
         "template": {
@@ -124,8 +151,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1124.51302",
-              "templateHash": "16188408207026649776"
+              "version": "0.4.1318.3566",
+              "templateHash": "3739766238709142225"
             }
           },
           "parameters": {
@@ -148,6 +175,9 @@
               }
             }
           },
+          "variables": {
+            "varCuaid": "1593acc2-6932-462b-af58-28f7fa9df52d"
+          },
           "resources": [
             {
               "type": "Microsoft.AVS/privateClouds/globalReachConnections",
@@ -156,6 +186,30 @@
               "properties": {
                 "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
                 "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.4.1318.3566",
+                      "templateHash": "10779157790839886898"
+                    }
+                  },
+                  "resources": []
+                }
               }
             }
           ]

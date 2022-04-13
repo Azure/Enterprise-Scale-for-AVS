@@ -1,6 +1,6 @@
 param Prefix string
 param SubnetId string
-param Location string = resourceGroup().location
+param Location string
 param Username string
 @secure()
 param Password string

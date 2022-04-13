@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "11170766057734741285"
+      "version": "0.4.1318.3566",
+      "templateHash": "16213799529944616957"
     }
   },
   "parameters": {
@@ -24,6 +24,7 @@
     }
   },
   "variables": {
+    "varCuaid": "a182f0f1-a209-42fd-aa05-e12bda423653",
     "suffix": "[uniqueString(parameters('PrivateCloudResourceId'))]",
     "formattedEmails": "[if(empty(trim(parameters('ActionGroupEmails'))), createArray(), split(parameters('ActionGroupEmails'), ','))]"
   },
@@ -92,6 +93,30 @@
       "dependsOn": [
         "[resourceId('microsoft.insights/actionGroups', format('AVS-ServiceHealth-{0}', variables('suffix')))]"
       ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "10779157790839886898"
+            }
+          },
+          "resources": []
+        }
+      }
     }
   ]
 }
