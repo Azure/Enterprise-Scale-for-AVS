@@ -3,6 +3,8 @@ targetScope = 'subscription'
 param Location string
 param Prefix string
 param PrivateCloudAddressSpace string
+param PrivateCloudSKU string
+param PrivateCloudHostCount int
 param TelemetryOptOut bool
 
 resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -17,6 +19,8 @@ module PrivateCloud 'AVSCore/PrivateCloud.bicep' = {
     Prefix: Prefix
     Location: Location
     NetworkBlock: PrivateCloudAddressSpace
+    SKUName: PrivateCloudSKU
+    ManagementClusterSize: PrivateCloudHostCount
     TelemetryOptOut: TelemetryOptOut
   }
 }

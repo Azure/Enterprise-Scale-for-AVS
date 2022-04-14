@@ -5,10 +5,19 @@ targetScope = 'subscription'
 @maxLength(20)
 param Prefix string = 'AVS'
 
+@description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
 param Location string = deployment().location
 
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string
+@description('The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying')
+@allowed([
+  'AV36'
+  'AV36T'
+])
+param PrivateCloudSKU string = 'AV36'
+@description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')
+param PrivateCloudHostCount int = 3
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param VNetExists bool = false
@@ -56,6 +65,8 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     Prefix: Prefix
     Location: Location
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
+    PrivateCloudHostCount: PrivateCloudHostCount
+    PrivateCloudSKU: PrivateCloudSKU
     TelemetryOptOut: TelemetryOptOut
   }
 }

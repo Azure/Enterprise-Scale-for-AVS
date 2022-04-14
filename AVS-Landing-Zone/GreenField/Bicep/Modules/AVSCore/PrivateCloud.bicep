@@ -1,13 +1,14 @@
 param Prefix string
 param NetworkBlock string
-param ManagementClusterSize int = 3
+param ManagementClusterSize int
+param SKUName string
 param Location string
 param TelemetryOptOut bool
 
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: '${Prefix}-SDDC'
   sku: {
-    name: 'AV36'
+    name: SKUName
   }
   location: Location
   properties: {
