@@ -15,6 +15,16 @@ variable "avs-networkblock" {
   type    = string
 }
 
+variable "avs-sku" {
+  type    = string
+  default = "AV36"
+}
+
+variable "avs-hostcount" {
+  type    = number
+  default = 3
+}
+
 variable "adminusername" {
   type    = string
 }
