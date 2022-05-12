@@ -32,6 +32,14 @@ cd ARM
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-InterConnect-Deployment -c -f "CrossAVSWithinRegion.deploy.json" -p "@CrossAVSWithinRegion.parameters.json"
 ```
 
+### Azure PowerShell
+
+```powershell
+cd PowerShell
+
+.\CrossAVSWithinRegion.ps1
+```
+
 ### Terraform
 
 * If deploying stand-alone, update the sample .tfvars.sample file in the Terraform directory with the deployment values, remove the .sample extension, and run the terraform workflow that fits your environment.
