@@ -57,6 +57,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         MSI_credential = ManagedIdentityCredential(client_id=os.environ['client_id'])
         credential = ChainedTokenCredential(MSI_credential)
     avs_client = AVSClient(credential, subscription_id)
+    avs_client.config.add_user_agent("pid-34e084ca-f63c-4a73-a4ce-0a31869cd664")
     clouds = avs_client.private_clouds.list_in_subscription()
     for cloud in list(clouds):
         vcenter_ip = cloud.endpoints.vcsa[8:-1]
