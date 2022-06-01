@@ -30,6 +30,15 @@ cd ARM
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Dashboard -c -f "AVSDashboard.deploy.json" -p "@AVSDashboard.parameters.json"
 ```
 
+### Terraform
+
+Edit `terraform.tfvars` file with appropriate settings, then:
+
+```bash
+terraform plan
+terraform apply
+```
+
 ## Post-deployment Steps
 
 * Navigate to Dashboard page in Azure Portal. Clicking the down arrow in the top left corner should allow you to switch to the newly created dashboard.
