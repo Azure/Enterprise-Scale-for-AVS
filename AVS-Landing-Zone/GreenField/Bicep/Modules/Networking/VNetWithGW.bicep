@@ -1,13 +1,10 @@
 @description('''
-The name (string) of AVS Prvate Cloud 
+The name (string) of AVS Private Cloud 
 This is used to:
-- More easily generate an Express Route Authoiration Key. 
+- More easily generate an Express Route Authorization Key. 
 - Obtain a handle on the AVS Express Route itself.
 ''')
 param PrivateCloudName string
-
-@description('Label name for the Express Route Authorization Key. This value is NOT the key itself.')
-param AuthKeyName string = 'bicepGeneratedAuthKey-${utcNow()}'
 
 @description('Azure region to use to deploy new resources')
 param Location string
@@ -38,6 +35,9 @@ param NewVNetAddressSpace string
 param NewGatewaySubnetAddressPrefix string
 param NewGatewaySku string = 'Standard'
 
+// Label name for the Express Route Authorization Key. This value is NOT the key itself.
+var AuthKeyName = '${Prefix}-authkey'
+
 var NewVNetName = '${Prefix}-vnet'
 // NewGatewaySubnet name must be 'GatewaySubnet'
 var NewGatewayName = '${Prefix}-gw'
@@ -51,7 +51,7 @@ resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-08-01' existing = 
 resource NewVNet 'Microsoft.Network/virtualNetworks@2021-08-01' = if (!VNetExists) {
   name: NewVNetName
   location: Location
-  properties: {
+    properties: {
     addressSpace: {
       addressPrefixes: [
         NewVNetAddressSpace
@@ -64,9 +64,16 @@ resource ExistingGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-0
   name: '${ExistingVNet.name}/GatewaySubnet'
 }
 
-resource NewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' = if (!GatewaySubnetExists) {
+resource NewGatewaySubnetExitingVnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' = if ((!GatewaySubnetExists) && VNetExists) {
   name: 'GatewaySubnet'
-  parent: VNetExists ? ExistingVNet : NewVNet
+  parent: ExistingVNet
+  properties: {
+    addressPrefix: NewGatewaySubnetAddressPrefix
+  }
+}
+resource NewGatewaySubnetNewVnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' = if ((!GatewaySubnetExists) && (!VNetExists)) {
+  name: 'GatewaySubnet'
+  parent: NewVNet
   properties: {
     addressPrefix: NewGatewaySubnetAddressPrefix
   }
@@ -88,7 +95,7 @@ resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = if (!G
   }
 }
 
-resource NewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if (!GatewayExists) {
+resource NewGatewayExistingGatewaySubnet 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && GatewaySubnetExists) {
   name: NewGatewayName
   location: Location
   properties: {
@@ -103,7 +110,7 @@ resource NewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if (
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: GatewaySubnetExists ? ExistingGatewaySubnet.id : NewGatewaySubnet.id
+            id: ExistingGatewaySubnet.id
           }
           publicIPAddress: {
             id: NewGatewayPIP.id
@@ -113,6 +120,33 @@ resource NewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if (
     ]
   }
 }
+
+resource NewGatewayNewGatewaySubnet 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (!GatewaySubnetExists)) {
+  name: NewGatewayName
+  location: Location
+  properties: {
+    gatewayType: 'ExpressRoute'
+    sku: {
+      name: NewGatewaySku
+      tier: NewGatewaySku
+    }
+    ipConfigurations: [
+      {
+        name: 'default'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: NewGatewaySubnetExitingVnet.id
+          }
+          publicIPAddress: {
+            id: NewGatewayPIP.id
+          }
+        }
+      }
+    ]
+  }
+}
+
 
 // Use AVS Private Cloud to Generate an Express Route Authoriation Key.
 resource ExistingPrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' existing = {
@@ -124,11 +158,9 @@ resource ExpressRouteAuthKey 'Microsoft.AVS/privateClouds/authorizations@2021-12
   name: AuthKeyName
   parent: ExistingPrivateCloud
 }
-output ExpressRouteAuthorizationKey string = ExpressRouteAuthKey.properties.expressRouteAuthorizationKey
-output ExpressRouteId string = ExistingPrivateCloud.properties.circuit.expressRouteID
 
 // Create Connection from vnet via Express Route Gateway to AVS Private Cloud 
-resource VnetToAvsConn 'Microsoft.Network/connections@2021-08-01' = {
+resource VnetToAvsConnExisitingGateway 'Microsoft.Network/connections@2021-08-01' = if (GatewayExists) {
   name: VnetToAvsConnName
   properties: {
     connectionType: 'ExpressRoute'
@@ -141,11 +173,54 @@ resource VnetToAvsConn 'Microsoft.Network/connections@2021-08-01' = {
       id: AvsExpressRouteId
     }
     virtualNetworkGateway1: {
-      id: GatewayExists ? ExistingGateway.id: NewGateway.id
+      id: ExistingGateway.id
       properties: {}
     }
   }
 }
-output DeploymentVNetName string = VNetExists ? ExistingVNet.name : NewVNet.name
-output DeploymentGatewayName string = GatewayExists ? ExistingGateway.name : NewGateway.name
-output DeploymentVNetResourceId string = VNetExists ? ExistingVNet.id : NewVNet.id
+
+// Create Connection from vnet via Express Route Gateway to AVS Private Cloud 
+resource VnetToAvsConnNewGatewayExistingSubnet 'Microsoft.Network/connections@2021-08-01' = if ((!GatewayExists) && GatewaySubnetExists) {
+  name: VnetToAvsConnName
+  properties: {
+    connectionType: 'ExpressRoute'
+    authorizationKey: ExpressRouteAuthKey.properties.expressRouteAuthorizationKey
+    enableBgp: true
+    // FastPath option incurs additional costs, yet has performance benefit.
+    // This can be enabled later.
+    expressRouteGatewayBypass: false
+    peer: {
+      id: AvsExpressRouteId
+    }
+    virtualNetworkGateway1: {
+      id: NewGatewayExistingGatewaySubnet.id
+      properties: {}
+    }
+  }
+}
+
+// Create Connection from vnet via Express Route Gateway to AVS Private Cloud 
+resource VnetToAvsConnNewGatewayNewSubnet 'Microsoft.Network/connections@2021-08-01' = if ((!GatewayExists) && (!GatewaySubnetExists)) {
+  name: VnetToAvsConnName
+  properties: {
+    connectionType: 'ExpressRoute'
+    authorizationKey: ExpressRouteAuthKey.properties.expressRouteAuthorizationKey
+    enableBgp: true
+    // FastPath option incurs additional costs, yet has performance benefit.
+    // This can be enabled later.
+    expressRouteGatewayBypass: false
+    peer: {
+      id: AvsExpressRouteId
+    }
+    virtualNetworkGateway1: {
+      id: NewGatewayNewGatewaySubnet.id
+      properties: {}
+    }
+  }
+}
+
+output ExpressRouteAuthorizationKey string = ExpressRouteAuthKey.properties.expressRouteAuthorizationKey
+output ExpressRouteId string = ExistingPrivateCloud.properties.circuit.expressRouteID
+// output DeploymentVNetName string = VNetExists ? ExistingVNet.name : NewVNet.name
+// output DeploymentGatewayName string = GatewayExists ? ExistingGateway.name : NewGateway.name
+// output DeploymentVNetResourceId string = VNetExists ? ExistingVNet.id : NewVNet.id
