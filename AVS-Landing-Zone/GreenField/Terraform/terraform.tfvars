@@ -13,10 +13,10 @@ avs-hostcount = 3
 #Input the Jumpbox local username, password and SKU of your choice
 adminusername = "replace me"
 adminpassword = "replace me"
-jumpboxsku = "Standard_D2as_v4"
+jumpboxsku    = "Standard_D2as_v4"
 
 #Virtual network address space and required subnets, can be any CIDR range
-vnetaddressspace = "192.168.1.0/24"
-gatewaysubnet = "192.168.1.0/27"
+vnetaddressspace   = "192.168.1.0/24"
+gatewaysubnet      = "192.168.1.0/27"
 azurebastionsubnet = "192.168.1.32/27"
-jumpboxsubnet = "192.168.1.128/25"
+jumpboxsubnet      = "192.168.1.128/25"
