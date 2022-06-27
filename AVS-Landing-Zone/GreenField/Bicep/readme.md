@@ -18,7 +18,7 @@ The location the deployment metadata will be stored: `-l Location` You can use t
 bicepFile=ESLZDeploy.bicep
 ## naming our deployment based on file name and date
 deploymentName=${bicepFile}-$(date +"%d%m%Y-%H%M%S")"-deployment"
-az deployment sub create -n $deploymentName -l AustraliaEast -c -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n $deploymentName -l AustraliaEast -c -f $bicepFile -p "@ESLZDeploy.parameters.json"
 
 Note: Ensure "DeploymentName" is unique if running multiple deployments. All resources will be deployed in the location specified as deployment location.
 ```
@@ -30,7 +30,7 @@ You can also use `--no-wait` option to kick of the deployment without waiting fo
 bicepFile=ESLZDeploy.bicep
 ## naming our deployment based on file name and date
 deploymentName=${bicepFile}-$(date +"%d%m%Y-%H%M%S")"-deployment"
-az deployment sub create -n $deploymentName -l AustraliaEast -c --no-wait -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+az deployment sub create -n $deploymentName -l AustraliaEast -c --no-wait -f $bicepFile -p "@ESLZDeploy.parameters.json"
 
 Note: Ensure "DeploymentName" is unique if running multiple deployments. All resources will be deployed in the location specified as deployment location.
 
