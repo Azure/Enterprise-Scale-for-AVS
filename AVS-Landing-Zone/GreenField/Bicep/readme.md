@@ -4,7 +4,7 @@
 2. Modify the `ESLZDeploy.parameters.json` parameters file to define desired parameters, networking, and alert emails
 3. Before deploying, confirm the correct subscription is selected using the following command:
 
-```
+```bash
 az account show
 ```
 
@@ -13,21 +13,28 @@ az account show
 
 The location the deployment metadata will be stored: `-l Location` You can use the `-c` option to validate what resources will be deployed prior to be deploying:
 
-```
-az deployment sub create -n DeploymentName -l AustraliaEast -c -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+```bash
+## file to deploy
+bicepFile=ESLZDeploy.bicep
+## naming our deployment based on file name and date
+deploymentName=${bicepFile}-$(date +"%d%m%Y-%H%M%S")"-deployment"
+az deployment sub create -n $deploymentName -l AustraliaEast -c -f $bicepFile -p "@ESLZDeploy.parameters.json"
 
 Note: Ensure "DeploymentName" is unique if running multiple deployments. All resources will be deployed in the location specified as deployment location.
 ```
 
 You can also use `--no-wait` option to kick of the deployment without waiting for it to complete:
 
-```
-az deployment sub create -n DeploymentName -l AustraliaEast -c --no-wait -f "ESLZDeploy.bicep" -p "@ESLZDeploy.parameters.json"
+```bash
+## file to deploy
+bicepFile=ESLZDeploy.bicep
+## naming our deployment based on file name and date
+deploymentName=${bicepFile}-$(date +"%d%m%Y-%H%M%S")"-deployment"
+az deployment sub create -n $deploymentName -l AustraliaEast -c --no-wait -f $bicepFile -p "@ESLZDeploy.parameters.json"
 
 Note: Ensure "DeploymentName" is unique if running multiple deployments. All resources will be deployed in the location specified as deployment location.
 
 ```
-
 
 # Confirming Deployment
 
