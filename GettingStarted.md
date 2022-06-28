@@ -51,7 +51,7 @@ az bicep version
 ```
 
 ```Powershell
-bicep --help
+az bicep --help
 ```
 
 ## Deployment Flow
