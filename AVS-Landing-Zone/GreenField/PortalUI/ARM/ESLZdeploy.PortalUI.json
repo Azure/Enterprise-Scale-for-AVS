@@ -1,0 +1,1033 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "AVS Landing Zone Accelerator (Preview)",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Azure core setup",
+                    "subLabel": {
+                        "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
+                        "postValidation": "Done"
+                    },
+                    "bladeTitle": "avsBasics",
+                    "elements": [
+                        {
+                            "name": "avsDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },
+                        {
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.InfoBox",
+                            "options": {
+                                "text": "The subscription and location selected in this step will be used to deploy the AVS Workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "avsWorkloadSubscription",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Deployment Prefix",
+                            "elements": [
+                                {
+                                    "name": "info",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "This AVS Landing Zone Accelerator will create a defined resource group hierarchy in the chosen subscription with the prefix provided at this step. Each resource created as part of the deployment will also utilize this prefix in the name. For more details, click the link below ",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "avsDeploymentPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Deployment prefix",
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
+                            "placeholder": "Example: AVS",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-z0-9A-Z-]{1,8}$",
+                                "validationMessage": "The prefix must be 1-8 characters."
+                            }
+                        },
+                        {
+                            "name": "rbacInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Azure AVS Landing Zones ARM deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "PrivateCloud",
+                    "label": "Private Cloud",
+                    "elements": [
+                        {
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Prerequisites",
+                            "elements": [
+                                {
+                                    "name": "avsPrerequisites2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Before you start, you must request AVS quote allocation for your subscription",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites5",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployPrivateCloud",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy Private Cloud",
+                            "defaultValue": "Yes",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "avsPrivateCloudSettings",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
+                            "label": "Private Cloud details",
+                            "elements": [
+                                {
+                                    "name": "avsAddressSpace",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": true,
+                                    "label": "AVS Address Space",
+                                    "defaultValue": "",
+                                    "toolTip": "This CIDR represents the Private Cloud Management network and will be used for the cluster management services (i.e vCenter Server, NSX-T Manager, etc.). Please use /22 address space. The address should be unique and should not overlap with other Azure Virtual Networks (VNET) as well as with on-premises networks.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(/[2][2])$",
+                                        "validationMessage": "Address space must be /22"
+                                    }
+                                },
+                                {
+                                    "name": "avsSkuType",
+                                    "type": "Microsoft.Common.DropDown",
+                                    "visible": true,
+                                    "label": "AVS SKU",
+                                    "defaultValue": "AV36",
+                                    "multiLine": true,
+                                    "toolTip": "Ensure you select the correct SKU as per your quota request",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "AV36",
+                                                "description": "",
+                                                "value": "AV36"
+                                            },
+                                            {
+                                                "label": "AV36T",
+                                                "description": "",
+                                                "value": "AV36T"
+                                            },
+                                            {
+                                                "label": "AV36P",
+                                                "description": "",
+                                                "value": "AV36P"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "avsHostCount",
+                                    "type": "Microsoft.Common.Slider",
+                                    "label": "AVS Host Count",
+                                    "subLabel": "",
+                                    "toolTip": "This is the number of ESXi hosts that will make up the default cluster of your private cloud, minimum is 3",
+                                    "min": 3,
+                                    "max": 16,
+                                    "defaultValue": 3,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                }
+                                
+                            ]
+                        },
+                        {
+                            "name": "existingAVSPrivateCloudSettings",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, false)]",
+                            "label": "Existing Private Cloud details",
+                            "elements": [
+                                {
+                                    "name": "existingAVSSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "",
+                                    "label": "Select the Existing AVS Private Cloud",
+                                    "resourceType": "Microsoft.AVS/privateClouds",
+                                    "options": {
+                                        "filter": {
+                                            "subscription": "onBasics",
+                                            "location": "onBasics"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "azureNetwork",
+                    "label": "Azure Connectivity",
+                    "bladeTitle": "azureNetworkingSettings",
+                    "elements": [
+                        {
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Connectivity",
+                            "elements": [
+                                {
+                                    "name": "networkinfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "networkinfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "This deployment with allow you to select a new or existing Virtual Network, input the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from this gateway to your AVS Private Cloud, allowing Azure Resources in this vNet to communicate with AVS. See link below for more information.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployNetworking",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Connect AVS to Azure VNet",
+                            "defaultValue": "Yes",
+                            "toolTip": "Select Yes to continue with this step, or No to Skip",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {   
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Skip)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "VNetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').DeployNetworking, true)]",
+                            "label": "Virtual Network",
+                            "defaultValue": "New",
+                            "toolTip": "Select New to deploy a new virtual network, or choose an existing VNet",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {   
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "vNetAddressSpace",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Virtual Network address range",
+                            "toolTip": "Virtual network in Azure Native to host the ExpressRoute Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
+                            "defaultValue": "192.168.0.0/22",
+                            "placeholder": "Example: 192.168.0.0/22",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                            }
+                        },
+                        {
+                            "name": "GatewaySubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/27",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
+                            }
+                        },
+                        {
+                            "name": "VnetSelectorId",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "Virtual Network",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "constraints": {
+                                "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
+                            "name": "GatewayExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "ExpressRoute Gateway",
+                            "defaultValue": "None",
+                            "toolTip": "Deploy a new ExpressRoute Gateway or choose an existing gateway. Gateway must be of type ExpressRoute",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "gatewaySelectorId",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
+                            "label": "Select Existing ExpressRoute Gateway",
+                            "resourceType": "Microsoft.Network/virtualNetworkGateways",
+                            "constraints": {
+                                "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
+                            "name": "GatewaySubnetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, false)]",
+                            "label": "Does a GatewaySubnet Exist?",
+                            "defaultValue": "none",
+                            "toolTip": "Ensure that the virtual network has a GatewaySubnet, otherwise the deployment will fail",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "gatewaySubnetApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "request": {
+                                "method": "GET",
+                                "path": "[concat(steps('azureNetwork').VnetSelectorId.id, '/subnets?api-version=2021-03-01')]"
+                            }
+                        },
+                        {
+                            "name": "gatewaySubnetSubnetSelectorName",
+                            "label": "Subnet",
+                            "type": "Microsoft.Common.DropDown",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "defaultValue": "",
+                            "toolTip": "Select the existing GatewaySubnet",
+                            "multiselect": false,
+                            "selectAll": false,
+                            "filter": true,
+                            "filterPlaceholder": "Filter items ...",
+                            "multiLine": true,
+                            "constraints": {
+                                "allowedValues": "[map(steps('azureNetwork').gatewaySubnetApi.value,(item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.id, '\",\"description\":\"', 'Resource Group: ', last(take(split(item.id, '/'), 5)), '\"}')))]",
+                                "required": true
+                            }
+                        },
+                        {
+                            "name": "ExistingVnetNewGatewaySubnetPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/27",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
+                            }
+                        },
+                        {
+                            "name": "GWSubnetExistsTrue",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
+                            "options": {
+                                "text": "Ensure subnet prefix is correct and available in your virtual network",
+                                "uri": "",
+                                "style": "Warning"
+                            }
+                        },                    
+                        {
+                            "name": "jumpboxinfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Jumpbox and Bastion (Optional)",
+                            "elements": [
+                                {
+                                    "name": "jumpboxinfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Once AVS connectivity to Azure Native has been established, you will want to connect to vCenter. Choose the options below to deploy a Jumpbox and Azure Bastion into the new virtual network specified above, or skip if one already exists ",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "jumpboxinfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "You will need to specify the subnets for these resources to be deployed into, ensure these are from the same address space of the new virtual network",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "createJumpbox",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Deploy Jumpbox and Azure Bastion",
+                            "defaultValue": "No",
+                            "toolTip": "Deploy a Jumpbox and Azure Bastion",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "BastionSubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Azure Bastion Subnet Prefix",
+                            "toolTip": "The Bastion host is deployed in the virtual network that contains the AzureBastionSubnet subnet that has a minimum /26 prefix.",
+                            "defaultValue": "192.168.1.0/24",
+                            "placeholder": "Example: 192.168.1.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-4]|2[0-6]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 24 to 26."
+                            }
+                        },
+                        {
+                            "name": "JumpboxSubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox Subnet Prefix",
+                            "toolTip": "New Subnet for the Jumpbox",
+                            "defaultValue": "192.168.2.0/24",
+                            "placeholder": "Example: 192.168.2.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-8]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 28."
+                            }
+                        },
+                        {
+                            "name": "vmSkuSelector",
+                            "type": "Microsoft.Compute.SizeSelector",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox SKU",
+                            "toolTip": "Select a VM SKU for the Jumpbox",
+                            "recommendedSizes": [
+                                "Standard_D1",
+                                "Standard_D2",
+                                "Standard_D3"
+                            ],
+                            "constraints": {
+                                "allowedSizes": [],
+                                "excludedSizes": [],
+                                "required": true
+                            },
+                            "options": {
+                                "hideDiskTypeFilter": true
+                            },
+                            "osPlatform": "Windows",
+                            "imageReference": {
+                                "publisher": "MicrosoftWindowsDesktop",
+                                "offer": "Windows-11",
+                                "sku": "21h2-avd"
+                            }
+                        },
+                        {
+                            "name": "jumpboxCredentials",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox login credentials",
+                            "elements": [
+                                {
+                                    "name": "jumpboxLocalUserName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Username",
+                                    "toolTip": "Provide username for the Jumpbox local admin account.",
+                                    "placeholder": "Example: avsadmin",
+                                    "defaultValue": "",
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "JumpboxPassword",
+                                    "type": "Microsoft.Compute.CredentialsCombo",
+                                    "visible": true,
+                                    "label": {
+                                        "password": "Password",
+                                        "confirmPassword": "Confirm password"
+                                    },
+                                    "toolTip": {
+                                        "password": "The password must be alphanumeric, contain at least 8 characters, have at least 1 letter, 1 number and 1 special character."
+                                    },
+                                    "constraints": {
+                                        "required": true,
+                                        "customPasswordRegex": "^(?=.*[0-9])(?=.*[a-z])(?=.*[@#$%^&+=_!*<>()])(?=\\S+$).{12,123}$",
+                                        "customValidationMessage": "Password must include at least 8 characters, have at least 1 letter, 1 number and 1 special character."
+                                    },
+                                    "options": {
+                                        "hideConfirmation": false
+                                    },
+                                    "osPlatform": "Windows"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "onpremises",
+                    "label": "On-premises Connectivity",
+                    "bladeTitle": "onpremisesconnectivity",
+                    "elements": [
+                        {
+                            "name": "Info",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "On-Premise Connectivity",
+                            "elements": [
+                                {
+                                    "name": "onpreminfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "On-premise connectivity is also typically required especially for any migrations of workloads via HCX. There are a few ways for connectivity - ExpressRoute, vWAN or VPN. In the previous section we connected AVS to Azure using an ExpressRoute Gateway. When a VPN is used for connectivity, a VPN Gateway is used instead. If vWAN is used, then route exchanges between gateway happen automatically. However for standalone VPN Gateways, in order for the VPN traffic to flow to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. See diagram in the link below",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://raw.githubusercontent.com/shaunjacob/AVSAccelerator/main/docs/images/AVS-RouteServer.png"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "onpreminfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "IIf you choose to deploy the Route Server below, this deployment will create a RouteServer Subnet if one does not exist, the Route Server itself and enable the Branch-to-Branch feature for the route sharing. See link below for more details ",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "OnpremiseConnect",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "How does Azure connect to On-premises?",
+                            "defaultValue": "ExpressRoute",
+                            "toolTip": "Choose the current method of Azure to On-premise connectivity",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "ExpressRoute",
+                                        "value": "ExpressRoute"
+                                    },
+                                    {
+                                        "label": "VPN",
+                                        "value": "VPN"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "OnpremiseConnectInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'ExpressRoute')]",
+                            "options": {
+                                "text": "This option does not make any changes and does not deploy any resources. When ExpressRoute is used for Azure connectivity, you will need to request an ExpressRoute authorization key from the existing circuit to create the AVS Global Reach connection This is a manual step and must be performed separately. Click here to learn more",
+                                "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "DeployRouteServer",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'VPN')]",
+                            "label": "Deploy an Azure Route Server",
+                            "defaultValue": "Null",
+                            "toolTip": "Deploy an Azure Route Server or Skip to come back to this step later",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Skip)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "RouteServerVnetSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "label": "Existing Virtual Network with the VPN Gateway",
+                            "toolTip": "Choose the existing Virtual Network that contains the VPN Gateway",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "constraints": {
+                                "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
+                            "name": "DeployRouteServerInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "options": {
+                                "text": "Existing Azure VPN gateway must be configured in active-active mode, this is usually not done by default. If not set to active-active, this deployment will fail",
+                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "label": "RouteServer Subnet",
+                            "toolTip": "Deploy new RouteServerSubnet or choose Existing",
+                            "defaultValue": "No",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
+                            "label": "RouteServer Subnet Prefix",
+                            "toolTip": "Subnet for the Azure RouteServer",
+                            "defaultValue": "192.168.2.0/24",
+                            "placeholder": "Example: 192.168.2.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-7]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 27."
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetPrefixInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
+                            "options": {
+                                "text": "Ensure that the subnet prefix is valid and is in the range of the chosen VNet above ",
+                                "uri": "",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetExistsInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, true)]",
+                            "options": {
+                                "text": "Ensure that a subnet called RouteServerSubnet exists in the chosen Virtual Network or else the deployment will fail. Click here for more information",
+                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/quickstart-configure-route-server-portal#create-a-route-server",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Monitoring",
+                    "label": "Monitoring",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Monitoring and Alerts",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted for any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployDashboard",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Deploy AVS Dashboard",
+                            "defaultValue": "No",
+                            "toolTip": "Deploy AVS Dashboard",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployAVSAlerts",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Enable AVS Metric Alerts",
+                            "defaultValue": "No",
+                            "toolTip": "Enable AVS Metric Alerts (CPU, Memory, Storage etc)",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployServiceHealth",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "Enable AVS Service Health Alerts",
+                            "label": "Enable Service Health alerts",
+                            "defaultValue": "No",
+                            "toolTip": "Enable Service Health alerts for AVS",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "ActionGroupEmails",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Action Group Email",
+                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
+                            "toolTip": "Provide an email address to send the service health alerts to",
+                            "placeholder": "Example: alerts@company.com",
+                            "defaultValue": "alerts@company.com",
+                            "constraints": {
+                                "required": true,
+                                "regex": "",
+                                "validationMessage": "Please provide a valid email address"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Addons",
+                    "label": "AVS Addons",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Addons",
+                            "elements": []
+                        },
+                        {
+                            "name": "deployHCX",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy HCX",
+                            "defaultValue": "No",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "deploySRM",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy SRM",
+                            "defaultValue": "No",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "srmInfo",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "options": {
+                                "text": "Placeholder for SRM info.",
+                                "link": {
+                                    "label": "Learn more",
+                                    "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
+                                }
+                            }
+                        },
+                        {
+                            "name": "srmLicenseKey",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "License Key",
+                            "toolTip": "The license key is required to install SRM.",
+                            "placeholder": "Enter your license key",
+                            "defaultValue": "",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}$",
+                                "validationMessage": "Invalid license key, the license must be formatted as 5 groups of 5 alphanumeric characters, separated by hyphens."
+                            }
+                        },
+                        {
+                            "name": "srmVRCount",
+                            "type": "Microsoft.Common.Slider",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "Number of Replication Servers",
+                            "subLabel": "",
+                            "toolTip": "Number of vSphere replication servers to be deployed, minimum 1",
+                            "min": 1,
+                            "max": 3,
+                            "defaultValue": 1,
+                            "showStepMarkers": true,
+                            "constraints": {
+                                "required": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "Prefix": "[steps('basics').avsDeploymentPrefix]",
+                "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployPrivateCloud": "[steps('PrivateCloud').DeployPrivateCloud]",
+                "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
+                "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
+                "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
+                "ExistingPrivateCloudName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, false), steps('PrivateCloud').existingAVSPrivateCloudSettings.existingAVSSelector.name, 'none')]",
+                "ExistingPrivateCloudResourceId": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, false), steps('PrivateCloud').existingAVSPrivateCloudSettings.existingAVSSelector.id, 'none')]",
+                "VNetExists": "[steps('azureNetwork').VNetExists]",
+                "DeployNetworking": "[steps('azureNetwork').DeployNetworking]",
+                "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId.name]",
+                "GatewayExists": "[steps('azureNetwork').GatewayExists]",
+                "ExistingGatewayName": "[steps('azureNetwork').gatewaySelectorId.name]",
+                "GatewaySubnetExists": "[if(equals(steps('azureNetwork').GatewayExists, true), true, steps('azureNetwork').GatewaySubnetExists)]",
+                "ExistingGatewaySubnetId": "[steps('azureNetwork').gatewaySubnetSubnetSelectorName]",
+                "NewVNetAddressSpace": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').vNetAddressSpace, 'none')]",
+                "NewVnetNewGatewaySubnetAddressPrefix": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]",
+                "ExistingVnetNewGatewaySubnetPrefix": "[if(equals(steps('azureNetwork').GatewaySubnetExists, false), steps('azureNetwork').ExistingVnetNewGatewaySubnetPrefix, 'none')]",
+                "BastionSubnet": "[steps('azureNetwork').BastionSubnet]",
+                "JumpboxSubnet": "[steps('azureNetwork').JumpboxSubnet]",
+                "DeployJumpbox": "[steps('azureNetwork').createJumpbox]",
+                "JumpboxSku": "[steps('azureNetwork').vmSkuSelector]",
+                "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
+                "JumpboxPassword": "[steps('azureNetwork').jumpboxCredentials.JumpboxPassword.password]",
+                "VNetName": "[steps('azureNetwork').VnetSelectorId.name]",
+                "OnPremConnectivity": "[steps('onpremises').OnpremiseConnect]",
+                "DeployRouteServer": "[steps('onpremises').DeployRouteServer]",
+                "RouteServerVNetName": "[steps('onpremises').RouteServerVnetSelector.name]",
+                "RouteServerSubnetExists": "[steps('onpremises').RouteServerSubnetExists]",
+                "RouteServerSubnetPrefix": "[if(equals(steps('onpremises').RouteServerSubnetExists, false), steps('onpremises').RouteServerSubnetPrefix, 'none')]",
+                "DeployDashboard": "[steps('Monitoring').DeployDashboard]",
+                "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
+                "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
+                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
+                "DeployHCX": "[steps('Addons').deployHCX]",
+                "DeploySRM": "[steps('Addons').deploySRM]",
+                "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
+                "VRServerCount": "[steps('Addons').srmVRCount]",
+                "TelemetryOptOut": "false"
+            },
+            "kind": "Subscription",
+            "location": "[steps('basics').avsDeploymentScope.location.name]",
+            "subscriptionId": "[steps('basics').avsDeploymentScope.subscription.id]"
+        }
+    }
+}
