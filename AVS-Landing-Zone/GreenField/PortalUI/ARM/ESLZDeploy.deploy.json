@@ -1,0 +1,2713 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.8.9.13224",
+      "templateHash": "8867038297604102104"
+    }
+  },
+  "parameters": {
+    "Prefix": {
+      "type": "string",
+      "defaultValue": "AVS",
+      "maxLength": 20,
+      "minLength": 1,
+      "metadata": {
+        "description": "The prefix to use on resources inside this template"
+      }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[deployment().location]",
+      "metadata": {
+        "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
+      }
+    },
+    "DeployPrivateCloud": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set this to false if the Private Cloud already exists"
+      }
+    },
+    "PrivateCloudAddressSpace": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22"
+      }
+    },
+    "PrivateCloudSKU": {
+      "type": "string",
+      "defaultValue": "AV36",
+      "allowedValues": [
+        "AV36",
+        "AV36T",
+        "AV36P"
+      ],
+      "metadata": {
+        "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
+      }
+    },
+    "PrivateCloudHostCount": {
+      "type": "int",
+      "defaultValue": 3,
+      "metadata": {
+        "description": "The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying"
+      }
+    },
+    "ExistingPrivateCloudName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Existing Private Cloud Name"
+      }
+    },
+    "ExistingPrivateCloudResourceId": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Existing Private Cloud Id"
+      }
+    },
+    "VNetExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set this to true if you are redeploying, and the VNet already exists"
+      }
+    },
+    "DeployNetworking": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "A string value to skip the networking deployment"
+      }
+    },
+    "GatewayExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set this to true if you are redeploying, and the VNet already exists"
+      }
+    },
+    "GatewaySubnetExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Does the GatewaySubnet Exist"
+      }
+    },
+    "NewVNetAddressSpace": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks"
+      }
+    },
+    "NewVnetNewGatewaySubnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace"
+      }
+    },
+    "ExistingVnetName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The Existing VNet name"
+      }
+    },
+    "ExistingGatewayName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The Existing Gateway name"
+      }
+    },
+    "ExistingGatewaySubnetId": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The existing vnet gatewaysubnet id"
+      }
+    },
+    "ExistingVnetNewGatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The existing vnet new gatewaysubnet prefix"
+      }
+    },
+    "DeployJumpbox": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should a Jumpbox & Bastion be deployed to access the Private Cloud"
+      }
+    },
+    "JumpboxUsername": {
+      "type": "string",
+      "defaultValue": "avsjump",
+      "metadata": {
+        "description": "Username for the Jumpbox VM"
+      }
+    },
+    "JumpboxPassword": {
+      "type": "secureString",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Password for the Jumpbox VM, can be changed later"
+      }
+    },
+    "JumpboxSubnet": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The subnet CIDR used for the Jumpbox VM Subnet. Must be a /26 or greater within the VNetAddressSpace"
+      }
+    },
+    "JumpboxSku": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3",
+      "metadata": {
+        "description": "The sku to use for the Jumpbox VM, must have quota for this within the target region"
+      }
+    },
+    "BastionSubnet": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace"
+      }
+    },
+    "DeployRouteServer": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "A boolean flag to deploy a Route Serrver or skip"
+      }
+    },
+    "RouteServerVNetName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "A boolean flag to deploy a Route Serrver or skip"
+      }
+    },
+    "RouteServerSubnetExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Does a RouteServerSubnet exists?"
+      }
+    },
+    "OnPremConnectivity": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Flag to check onpremise connectivity method, ExpressRoute or VPN"
+      }
+    },
+    "RouteServerSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The subnet CIDR used for the RouteServer Subnet"
+      }
+    },
+    "DeployDashboard": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Deploy AVS Dashboard"
+      }
+    },
+    "DeployMetricAlerts": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Deploy Azure Monitor metric alerts for your AVS Private Cloud"
+      }
+    },
+    "DeployServiceHealth": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Deploy Service Health Alerts for AVS"
+      }
+    },
+    "AlertEmails": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Email addresses to be added to the alerting action group. Use the format [\"name1@domain.com\",\"name2@domain.com\"]."
+      }
+    },
+    "DeployHCX": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Should HCX be deployed as part of the deployment"
+      }
+    },
+    "DeploySRM": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should SRM be deployed as part of the deployment"
+      }
+    },
+    "SRMLicenseKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "License key to be used if SRM is deployed"
+      }
+    },
+    "VRServerCount": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Number of vSphere Replication Servers to be created if SRM is deployed"
+      },
+      "maxValue": 10,
+      "minValue": 1
+    },
+    "TelemetryOptOut": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Opt-out of deployment telemetry"
+      }
+    }
+  },
+  "variables": {
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-AVS', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "PrivateCloudAddressSpace": {
+            "value": "[parameters('PrivateCloudAddressSpace')]"
+          },
+          "PrivateCloudHostCount": {
+            "value": "[parameters('PrivateCloudHostCount')]"
+          },
+          "PrivateCloudSKU": {
+            "value": "[parameters('PrivateCloudSKU')]"
+          },
+          "TelemetryOptOut": {
+            "value": "[parameters('TelemetryOptOut')]"
+          },
+          "DeployPrivateCloud": {
+            "value": "[parameters('DeployPrivateCloud')]"
+          },
+          "ExistingPrivateCloudResourceId": {
+            "value": "[parameters('ExistingPrivateCloudResourceId')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "5834528418593570147"
+            }
+          },
+          "parameters": {
+            "Location": {
+              "type": "string"
+            },
+            "Prefix": {
+              "type": "string"
+            },
+            "PrivateCloudAddressSpace": {
+              "type": "string"
+            },
+            "PrivateCloudSKU": {
+              "type": "string"
+            },
+            "PrivateCloudHostCount": {
+              "type": "int"
+            },
+            "TelemetryOptOut": {
+              "type": "bool"
+            },
+            "DeployPrivateCloud": {
+              "type": "bool"
+            },
+            "ExistingPrivateCloudResourceId": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "condition": "[parameters('DeployPrivateCloud')]",
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-PrivateCloud', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
+            },
+            {
+              "condition": "[parameters('DeployPrivateCloud')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-PrivateCloud', deployment().name)]",
+              "resourceGroup": "[format('{0}-PrivateCloud', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "NetworkBlock": {
+                    "value": "[parameters('PrivateCloudAddressSpace')]"
+                  },
+                  "SKUName": {
+                    "value": "[parameters('PrivateCloudSKU')]"
+                  },
+                  "ManagementClusterSize": {
+                    "value": "[parameters('PrivateCloudHostCount')]"
+                  },
+                  "TelemetryOptOut": {
+                    "value": "[parameters('TelemetryOptOut')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "8896949074412948394"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "NetworkBlock": {
+                      "type": "string"
+                    },
+                    "ManagementClusterSize": {
+                      "type": "int"
+                    },
+                    "SKUName": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "TelemetryOptOut": {
+                      "type": "bool"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds",
+                      "apiVersion": "2021-12-01",
+                      "name": "[format('{0}-SDDC', parameters('Prefix'))]",
+                      "sku": {
+                        "name": "[parameters('SKUName')]"
+                      },
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "networkBlock": "[parameters('NetworkBlock')]",
+                        "internet": "Disabled",
+                        "managementCluster": {
+                          "clusterSize": "[parameters('ManagementClusterSize')]"
+                        }
+                      }
+                    },
+                    {
+                      "condition": "[not(parameters('TelemetryOptOut'))]",
+                      "type": "Microsoft.Resources/deployments",
+                      "apiVersion": "2021-04-01",
+                      "name": "pid-1cf4a3e3-529c-4fb2-ba6a-63dff7d71586",
+                      "properties": {
+                        "mode": "Incremental",
+                        "template": {
+                          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                          "contentVersion": "1.0.0.0",
+                          "resources": []
+                        }
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "PrivateCloudName": {
+                      "type": "string",
+                      "value": "[format('{0}-SDDC', parameters('Prefix'))]"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.AVS/privateClouds', format('{0}-SDDC', parameters('Prefix')))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-PrivateCloud', parameters('Prefix')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "PrivateCloudName": {
+              "type": "string",
+              "value": "[if(parameters('DeployPrivateCloud'), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-PrivateCloud', deployment().name)), '2020-10-01').outputs.PrivateCloudName.value, '')]"
+            },
+            "PrivateCloudResourceGroupName": {
+              "type": "string",
+              "value": "[if(parameters('DeployPrivateCloud'), format('{0}-PrivateCloud', parameters('Prefix')), split(parameters('ExistingPrivateCloudResourceId'), '/')[4])]"
+            },
+            "PrivateCloudResourceId": {
+              "type": "string",
+              "value": "[if(parameters('DeployPrivateCloud'), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-PrivateCloud', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-PrivateCloud', deployment().name)), '2020-10-01').outputs.PrivateCloudResourceId.value, '')]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "condition": "[parameters('DeployNetworking')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-AzureNetworking', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "VNetExists": {
+            "value": "[parameters('VNetExists')]"
+          },
+          "ExistingVnetName": {
+            "value": "[parameters('ExistingVnetName')]"
+          },
+          "GatewayExists": {
+            "value": "[parameters('GatewayExists')]"
+          },
+          "ExistingGatewayName": {
+            "value": "[parameters('ExistingGatewayName')]"
+          },
+          "GatewaySubnetExists": {
+            "value": "[parameters('GatewaySubnetExists')]"
+          },
+          "ExistingGatewaySubnetId": {
+            "value": "[parameters('ExistingGatewaySubnetId')]"
+          },
+          "ExistingVnetNewGatewaySubnetPrefix": {
+            "value": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
+          },
+          "NewVNetAddressSpace": {
+            "value": "[parameters('NewVNetAddressSpace')]"
+          },
+          "NewVnetNewGatewaySubnetAddressPrefix": {
+            "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "10245303427895349085"
+            }
+          },
+          "parameters": {
+            "Location": {
+              "type": "string"
+            },
+            "Prefix": {
+              "type": "string"
+            },
+            "VNetExists": {
+              "type": "bool"
+            },
+            "ExistingVnetName": {
+              "type": "string"
+            },
+            "GatewayExists": {
+              "type": "bool"
+            },
+            "ExistingGatewayName": {
+              "type": "string"
+            },
+            "NewVNetAddressSpace": {
+              "type": "string"
+            },
+            "NewVnetNewGatewaySubnetAddressPrefix": {
+              "type": "string"
+            },
+            "GatewaySubnetExists": {
+              "type": "bool"
+            },
+            "ExistingVnetNewGatewaySubnetPrefix": {
+              "type": "string"
+            },
+            "ExistingGatewaySubnetId": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Network', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
+            },
+            {
+              "condition": "[not(parameters('VNetExists'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-NewNetwork', deployment().name)]",
+              "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "NewVNetAddressSpace": {
+                    "value": "[parameters('NewVNetAddressSpace')]"
+                  },
+                  "NewVnetNewGatewaySubnetAddressPrefix": {
+                    "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "3196098191154039424"
+                    }
+                  },
+                  "parameters": {
+                    "Location": {
+                      "type": "string"
+                    },
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "NewVNetAddressSpace": {
+                      "type": "string"
+                    },
+                    "NewVnetNewGatewaySubnetAddressPrefix": {
+                      "type": "string"
+                    },
+                    "NewGatewaySku": {
+                      "type": "string",
+                      "defaultValue": "Standard"
+                    }
+                  },
+                  "variables": {
+                    "NewVNetName": "[format('{0}-vnet', parameters('Prefix'))]",
+                    "NewVnetNewGatewayName": "[format('{0}-gw', parameters('Prefix'))]"
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/virtualNetworks",
+                      "apiVersion": "2021-02-01",
+                      "name": "[variables('NewVNetName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "addressSpace": {
+                          "addressPrefixes": [
+                            "[parameters('NewVNetAddressSpace')]"
+                          ]
+                        },
+                        "subnets": [
+                          {
+                            "name": "GatewaySubnet",
+                            "properties": {
+                              "addressPrefix": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/publicIPAddresses",
+                      "apiVersion": "2021-08-01",
+                      "name": "[format('{0}-pip', variables('NewVnetNewGatewayName'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publicIPAllocationMethod": "Dynamic"
+                      },
+                      "sku": {
+                        "name": "Basic",
+                        "tier": "Regional"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('NewVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))).subnets[0].id]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "VNetName": {
+                      "type": "string",
+                      "value": "[variables('NewVNetName')]"
+                    },
+                    "GatewayName": {
+                      "type": "string",
+                      "value": "[variables('NewVnetNewGatewayName')]"
+                    },
+                    "VNetResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "condition": "[parameters('VNetExists')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ExistingNetwork', deployment().name)]",
+              "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "ExistingVnetName": {
+                    "value": "[parameters('ExistingVnetName')]"
+                  },
+                  "GatewayExists": {
+                    "value": "[parameters('GatewayExists')]"
+                  },
+                  "ExistingGatewayName": {
+                    "value": "[parameters('ExistingGatewayName')]"
+                  },
+                  "GatewaySubnetExists": {
+                    "value": "[parameters('GatewaySubnetExists')]"
+                  },
+                  "ExistingGatewaySubnetId": {
+                    "value": "[parameters('ExistingGatewaySubnetId')]"
+                  },
+                  "ExistingVnetNewGatewaySubnetPrefix": {
+                    "value": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "2093150853957873838"
+                    }
+                  },
+                  "parameters": {
+                    "GatewayExists": {
+                      "type": "bool"
+                    },
+                    "GatewaySubnetExists": {
+                      "type": "bool"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "ExistingVnetName": {
+                      "type": "string"
+                    },
+                    "ExistingGatewayName": {
+                      "type": "string"
+                    },
+                    "NewGatewaySku": {
+                      "type": "string",
+                      "defaultValue": "Standard"
+                    },
+                    "ExistingGatewaySubnetId": {
+                      "type": "string"
+                    },
+                    "ExistingVnetNewGatewaySubnetPrefix": {
+                      "type": "string"
+                    }
+                  },
+                  "variables": {
+                    "ExistingVnetNewGatewayName": "[format('{0}-gw', parameters('Prefix'))]"
+                  },
+                  "resources": [
+                    {
+                      "condition": "[not(parameters('GatewaySubnetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', parameters('ExistingVnetName'), 'GatewaySubnet')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
+                      }
+                    },
+                    {
+                      "condition": "[not(parameters('GatewayExists'))]",
+                      "type": "Microsoft.Network/publicIPAddresses",
+                      "apiVersion": "2021-08-01",
+                      "name": "[format('{0}-pip', variables('ExistingVnetNewGatewayName'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publicIPAllocationMethod": "Dynamic"
+                      },
+                      "sku": {
+                        "name": "Basic",
+                        "tier": "Regional"
+                      }
+                    },
+                    {
+                      "condition": "[not(parameters('GatewayExists'))]",
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('ExistingVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[if(not(parameters('GatewaySubnetExists')), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('ExistingVnetName'), 'GatewaySubnet'), parameters('ExistingGatewaySubnetId'))]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('ExistingVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('ExistingVnetName'), 'GatewaySubnet')]",
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('ExistingVnetNewGatewayName')))]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "VNetName": {
+                      "type": "string",
+                      "value": "[parameters('ExistingVnetName')]"
+                    },
+                    "GatewayName": {
+                      "type": "string",
+                      "value": "[if(not(parameters('GatewayExists')), variables('ExistingVnetNewGatewayName'), parameters('ExistingGatewayName'))]"
+                    },
+                    "ExistingGatewayName": {
+                      "type": "string",
+                      "value": "[parameters('ExistingGatewayName')]"
+                    },
+                    "VNetResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('ExistingVnetName'))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "GatewayName": {
+              "type": "string",
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.GatewayName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.GatewayName.value)]"
+            },
+            "VNetName": {
+              "type": "string",
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.VNetName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.VNetName.value)]"
+            },
+            "VNetResourceId": {
+              "type": "string",
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.VNetResourceId.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.VNetResourceId.value)]"
+            },
+            "NetworkResourceGroup": {
+              "type": "string",
+              "value": "[format('{0}-Network', parameters('Prefix'))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "condition": "[parameters('DeployNetworking')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-VNetConnection', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "GatewayName": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.GatewayName.value, 'none')]"
+          },
+          "NetworkResourceGroup": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value, 'none')]"
+          },
+          "VNetPrefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "PrivateCloudName": {
+            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
+          },
+          "PrivateCloudResourceGroup": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "16420393180155695568"
+            }
+          },
+          "parameters": {
+            "VNetPrefix": {
+              "type": "string"
+            },
+            "AVSPrefix": {
+              "type": "string",
+              "defaultValue": "[parameters('VNetPrefix')]"
+            },
+            "PrivateCloudResourceGroup": {
+              "type": "string"
+            },
+            "PrivateCloudName": {
+              "type": "string"
+            },
+            "NetworkResourceGroup": {
+              "type": "string"
+            },
+            "GatewayName": {
+              "type": "string"
+            },
+            "Location": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ExRAuth', deployment().name)]",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ConnectionName": {
+                    "value": "[format('{0}-VNet', parameters('VNetPrefix'))]"
+                  },
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "1515537628270861084"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    },
+                    "ConnectionName": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/authorizations",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
+                    }
+                  ],
+                  "outputs": {
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+                    },
+                    "ExpressRouteId": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName')), '2021-06-01').circuit.expressRouteID]"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ExR', deployment().name)]",
+              "resourceGroup": "[parameters('NetworkResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ConnectionName": {
+                    "value": "[format('{0}-AVS', parameters('AVSPrefix'))]"
+                  },
+                  "GatewayName": {
+                    "value": "[parameters('GatewayName')]"
+                  },
+                  "ExpressRouteAuthorizationKey": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteAuthorizationKey.value]"
+                  },
+                  "ExpressRouteId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteId.value]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "6025036195034280107"
+                    }
+                  },
+                  "parameters": {
+                    "GatewayName": {
+                      "type": "string"
+                    },
+                    "ConnectionName": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "secureString"
+                    },
+                    "ExpressRouteId": {
+                      "type": "secureString"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/connections",
+                      "apiVersion": "2021-02-01",
+                      "name": "[parameters('ConnectionName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "connectionType": "ExpressRoute",
+                        "routingWeight": 0,
+                        "virtualNetworkGateway1": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]",
+                          "properties": {}
+                        },
+                        "peer": {
+                          "id": "[parameters('ExpressRouteId')]"
+                        },
+                        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "ExRConnectionResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/connections', parameters('ConnectionName'))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "ExRConnectionResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExR', deployment().name))).outputs.ExRConnectionResourceId.value]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))]",
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix')))]"
+      ]
+    },
+    {
+      "condition": "[and(equals(parameters('OnPremConnectivity'), 'VPN'), parameters('DeployRouteServer'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-RouteServer', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "VNetName": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value, parameters('RouteServerVNetName'))]"
+          },
+          "RouteServerSubnetPrefix": {
+            "value": "[parameters('RouteServerSubnetPrefix')]"
+          },
+          "RouteServerSubnetExists": {
+            "value": "[parameters('RouteServerSubnetExists')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "7690545718361773025"
+            }
+          },
+          "parameters": {
+            "Location": {
+              "type": "string"
+            },
+            "Prefix": {
+              "type": "string"
+            },
+            "VNetName": {
+              "type": "string"
+            },
+            "RouteServerSubnetPrefix": {
+              "type": "string"
+            },
+            "RouteServerSubnetExists": {
+              "type": "bool"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Network', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-Network', deployment().name)]",
+              "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "VNetName": {
+                    "value": "[parameters('VNetName')]"
+                  },
+                  "RouteServerSubnetPrefix": {
+                    "value": "[parameters('RouteServerSubnetPrefix')]"
+                  },
+                  "RouteServerSubnetExists": {
+                    "value": "[parameters('RouteServerSubnetExists')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "8595763680656051483"
+                    }
+                  },
+                  "parameters": {
+                    "Location": {
+                      "type": "string"
+                    },
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "VNetName": {
+                      "type": "string"
+                    },
+                    "RouteServerSubnetPrefix": {
+                      "type": "string"
+                    },
+                    "RouteServerSubnetExists": {
+                      "type": "bool"
+                    }
+                  },
+                  "variables": {
+                    "RouteServerName": "[format('{0}-RS', parameters('Prefix'))]"
+                  },
+                  "resources": [
+                    {
+                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', parameters('VNetName'), 'RouteServerSubnet')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('RouteServerSubnetPrefix')]"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/publicIPAddresses",
+                      "apiVersion": "2021-05-01",
+                      "name": "[format('{0}-PIP', variables('RouteServerName'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publicIPAllocationMethod": "Static"
+                      },
+                      "sku": {
+                        "name": "Standard",
+                        "tier": "Regional"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/virtualHubs",
+                      "apiVersion": "2021-05-01",
+                      "name": "[variables('RouteServerName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "allowBranchToBranchTraffic": true,
+                        "sku": "Standard"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/virtualHubs/ipConfigurations",
+                      "apiVersion": "2021-05-01",
+                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-pipconfig', variables('RouteServerName')))]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[if(not(parameters('RouteServerSubnetExists')), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet'), resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1]))]"
+                        },
+                        "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "RouteServer": {
+                      "type": "string",
+                      "value": "[variables('RouteServerName')]"
+                    },
+                    "NewRouteServerSubnetId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                    },
+                    "ExistingRouteServerSubnetId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1])]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "RouteServer": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.RouteServer.value]"
+            },
+            "RouteServerSubnetId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.NewRouteServerSubnetId.value]"
+            },
+            "ExistingRouteServerSubnetId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.ExistingRouteServerSubnetId.value]"
+            },
+            "NetworkResourceGroup": {
+              "type": "string",
+              "value": "[format('{0}-Network', parameters('Prefix'))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix')))]"
+      ]
+    },
+    {
+      "condition": "[parameters('DeployJumpbox')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-Jumpbox', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "Username": {
+            "value": "[parameters('JumpboxUsername')]"
+          },
+          "Password": {
+            "value": "[parameters('JumpboxPassword')]"
+          },
+          "VNetName": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value, '')]"
+          },
+          "VNetResourceGroup": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value, '')]"
+          },
+          "BastionSubnet": {
+            "value": "[parameters('BastionSubnet')]"
+          },
+          "JumpboxSubnet": {
+            "value": "[parameters('JumpboxSubnet')]"
+          },
+          "JumpboxSku": {
+            "value": "[parameters('JumpboxSku')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "3555190416939922270"
+            }
+          },
+          "parameters": {
+            "Prefix": {
+              "type": "string"
+            },
+            "Location": {
+              "type": "string"
+            },
+            "Username": {
+              "type": "secureString"
+            },
+            "Password": {
+              "type": "secureString"
+            },
+            "VNetResourceGroup": {
+              "type": "string"
+            },
+            "VNetName": {
+              "type": "string"
+            },
+            "JumpboxSubnet": {
+              "type": "string"
+            },
+            "JumpboxSku": {
+              "type": "string"
+            },
+            "BastionSubnet": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Jumpbox', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "Jumpbox-Subnet",
+              "resourceGroup": "[parameters('VNetResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "VNetName": {
+                    "value": "[parameters('VNetName')]"
+                  },
+                  "BastionSubnet": {
+                    "value": "[parameters('BastionSubnet')]"
+                  },
+                  "JumpboxSubnet": {
+                    "value": "[parameters('JumpboxSubnet')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "14524662931660786226"
+                    }
+                  },
+                  "parameters": {
+                    "VNetName": {
+                      "type": "string"
+                    },
+                    "JumpboxSubnet": {
+                      "type": "string"
+                    },
+                    "BastionSubnet": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', parameters('VNetName'), 'JumpBox')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('JumpboxSubnet')]"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', parameters('VNetName'), 'AzureBastionSubnet')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('BastionSubnet')]"
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'JumpBox')]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "JumpBoxSubnetId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'JumpBox')]"
+                    },
+                    "BastionSubnetId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'AzureBastionSubnet')]"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-Bastion', deployment().name)]",
+              "resourceGroup": "[format('{0}-Jumpbox', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "SubnetId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')).outputs.BastionSubnetId.value]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "3494574494094398857"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "SubnetId": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/publicIPAddresses",
+                      "apiVersion": "2020-05-01",
+                      "name": "[format('{0}-bastion-pip', parameters('Prefix'))]",
+                      "location": "[parameters('Location')]",
+                      "sku": {
+                        "name": "Standard"
+                      },
+                      "properties": {
+                        "publicIPAllocationMethod": "Static"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Network/bastionHosts",
+                      "apiVersion": "2020-05-01",
+                      "name": "[format('{0}-bastion', parameters('Prefix'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "ipConfigurations": [
+                          {
+                            "name": "IpConf",
+                            "properties": {
+                              "subnet": {
+                                "id": "[parameters('SubnetId')]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-bastion-pip', parameters('Prefix')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-bastion-pip', parameters('Prefix')))]"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Jumpbox', parameters('Prefix')))]",
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')]"
+              ]
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-VM', deployment().name)]",
+              "resourceGroup": "[format('{0}-Jumpbox', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "SubnetId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')).outputs.JumpBoxSubnetId.value]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "Username": {
+                    "value": "[parameters('Username')]"
+                  },
+                  "Password": {
+                    "value": "[parameters('Password')]"
+                  },
+                  "VMSize": {
+                    "value": "[parameters('JumpboxSku')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "12572035402376807226"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "SubnetId": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "Username": {
+                      "type": "string"
+                    },
+                    "Password": {
+                      "type": "secureString"
+                    },
+                    "VMSize": {
+                      "type": "string"
+                    },
+                    "OSVersion": {
+                      "type": "string",
+                      "defaultValue": "2019-Datacenter-smalldisk"
+                    }
+                  },
+                  "variables": {
+                    "Name": "[format('{0}-jumpbox', parameters('Prefix'))]",
+                    "Hostname": "avsjumpbox"
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Network/networkInterfaces",
+                      "apiVersion": "2021-02-01",
+                      "name": "[variables('Name')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "ipConfigurations": [
+                          {
+                            "name": "ipconfig1",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[parameters('SubnetId')]"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Microsoft.Compute/virtualMachines",
+                      "apiVersion": "2021-03-01",
+                      "name": "[variables('Name')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "hardwareProfile": {
+                          "vmSize": "[parameters('VMSize')]"
+                        },
+                        "osProfile": {
+                          "computerName": "[variables('Hostname')]",
+                          "adminUsername": "[parameters('Username')]",
+                          "adminPassword": "[parameters('Password')]"
+                        },
+                        "storageProfile": {
+                          "imageReference": {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "[parameters('OSVersion')]",
+                            "version": "latest"
+                          },
+                          "osDisk": {
+                            "createOption": "FromImage",
+                            "managedDisk": {
+                              "storageAccountType": "Standard_LRS"
+                            }
+                          }
+                        },
+                        "networkProfile": {
+                          "networkInterfaces": [
+                            {
+                              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('Name'))]"
+                            }
+                          ]
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/networkInterfaces', variables('Name'))]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "JumpboxResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Compute/virtualMachines', variables('Name'))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Jumpbox', parameters('Prefix')))]",
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')]"
+              ]
+            }
+          ],
+          "outputs": {
+            "JumpboxResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Jumpbox', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-VM', deployment().name))).outputs.JumpboxResourceId.value]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix')))]"
+      ]
+    },
+    {
+      "condition": "[or(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), parameters('DeployDashboard'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-Monitoring', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "AlertEmails": {
+            "value": "[parameters('AlertEmails')]"
+          },
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "PrimaryLocation": {
+            "value": "[parameters('Location')]"
+          },
+          "DeployMetricAlerts": {
+            "value": "[parameters('DeployMetricAlerts')]"
+          },
+          "DeployServiceHealth": {
+            "value": "[parameters('DeployServiceHealth')]"
+          },
+          "DeployDashboard": {
+            "value": "[parameters('DeployDashboard')]"
+          },
+          "PrimaryPrivateCloudName": {
+            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
+          },
+          "PrimaryPrivateCloudResourceId": {
+            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceId.value, parameters('ExistingPrivateCloudResourceId'))]"
+          },
+          "ExRConnectionResourceId": {
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNetConnection', variables('deploymentPrefix'))), '2020-10-01').outputs.ExRConnectionResourceId.value, '')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "10940611846724206879"
+            }
+          },
+          "parameters": {
+            "DeployMetricAlerts": {
+              "type": "bool"
+            },
+            "DeployServiceHealth": {
+              "type": "bool"
+            },
+            "DeployDashboard": {
+              "type": "bool"
+            },
+            "Prefix": {
+              "type": "string"
+            },
+            "PrimaryLocation": {
+              "type": "string"
+            },
+            "AlertEmails": {
+              "type": "string"
+            },
+            "PrimaryPrivateCloudName": {
+              "type": "string"
+            },
+            "PrimaryPrivateCloudResourceId": {
+              "type": "string"
+            },
+            "ExRConnectionResourceId": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Operational', parameters('Prefix'))]",
+              "location": "[parameters('PrimaryLocation')]"
+            },
+            {
+              "condition": "[parameters('DeployDashboard')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-Dashboard', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('PrimaryLocation')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrimaryPrivateCloudResourceId')]"
+                  },
+                  "ExRConnectionResourceId": {
+                    "value": "[parameters('ExRConnectionResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "14051640298139847680"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    },
+                    "ExRConnectionResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "variables": {
+                    "DashboardHeading": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 1,
+                        "x": 0,
+                        "y": 0
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MarkdownPart",
+                        "inputs": [],
+                        "settings": {
+                          "content": {
+                            "settings": {
+                              "content": "[format('# {0}-SDDC Private Cloud Metrics', parameters('Prefix'))]",
+                              "title": "",
+                              "subtitle": "",
+                              "markdownSource": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "PrivateCloudLink": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 1,
+                        "x": 6,
+                        "y": 0
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/ResourcePart",
+                        "asset": {
+                          "idInputName": "id"
+                        },
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[parameters('PrivateCloudResourceId')]"
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudCPUMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 0,
+                        "y": 1
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "EffectiveCpuAverage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": "Percentage CPU"
+                                    }
+                                  }
+                                ],
+                                "title": "Percentage CPU by Cluster Name",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "clustername",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudDiskMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 6,
+                        "y": 1
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "DiskUsedPercentage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": " Percentage Datastore Disk Used"
+                                    }
+                                  }
+                                ],
+                                "title": "Percentage Datastore Disk Used by Datastore",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "dsname",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudMemoryMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 0,
+                        "y": 5
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "UsageAverage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": "Average Memory Usage"
+                                    }
+                                  }
+                                ],
+                                "title": "Average Memory Usage by Cluster Name",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "clustername",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "ExpressRouteConnectionsMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 6,
+                        "y": 5
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('ExRConnectionResourceId')]"
+                                    },
+                                    "name": "BitsInPerSecond",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.network/connections",
+                                    "metricVisualization": {
+                                      "displayName": "BitsInPerSecond"
+                                    }
+                                  },
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('ExRConnectionResourceId')]"
+                                    },
+                                    "name": "BitsOutPerSecond",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.network/connections",
+                                    "metricVisualization": {
+                                      "displayName": "BitsOutPerSecond"
+                                    }
+                                  }
+                                ],
+                                "title": "Private Cloud to VNet Utilization",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "dsname",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Portal/dashboards",
+                      "apiVersion": "2019-01-01-preview",
+                      "name": "[format('{0}-Dashboard', parameters('Prefix'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "lenses": {
+                          "0": {
+                            "order": 0,
+                            "parts": {
+                              "0": "[variables('DashboardHeading')]",
+                              "1": "[variables('PrivateCloudLink')]",
+                              "2": "[variables('PrivateCloudDiskMetric')]",
+                              "3": "[variables('PrivateCloudCPUMetric')]",
+                              "4": "[variables('PrivateCloudMemoryMetric')]",
+                              "5": "[variables('ExpressRouteConnectionsMetric')]"
+                            }
+                          }
+                        }
+                      },
+                      "tags": {
+                        "hidden-title": "[format('{0}-Dashboard', parameters('Prefix'))]"
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "condition": "[or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth'))]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ActionGroup', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "ActionGroupEmails": {
+                    "value": "[parameters('AlertEmails')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "2776308478473413108"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupEmails": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "microsoft.insights/actionGroups",
+                      "apiVersion": "2019-06-01",
+                      "name": "[format('{0}-ActionGroup', parameters('Prefix'))]",
+                      "location": "Global",
+                      "properties": {
+                        "enabled": true,
+                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]",
+                        "emailReceivers": [
+                          {
+                            "emailAddress": "[parameters('ActionGroupEmails')]",
+                            "name": "[split(parameters('ActionGroupEmails'), '@')[0]]",
+                            "useCommonAlertSchema": false
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "ActionGroupResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('microsoft.insights/actionGroups', format('{0}-ActionGroup', parameters('Prefix')))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "condition": "[parameters('DeployMetricAlerts')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-MetricAlerts', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ActionGroupResourceId": {
+                    "value": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value, '')]"
+                  },
+                  "AlertPrefix": {
+                    "value": "[parameters('PrimaryPrivateCloudName')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrimaryPrivateCloudResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "18248580094637330618"
+                    }
+                  },
+                  "parameters": {
+                    "AlertPrefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupResourceId": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "variables": {
+                    "Alerts": [
+                      {
+                        "Name": "CPU",
+                        "Description": "CPU Usage per Cluster",
+                        "Metric": "EffectiveCpuAverage",
+                        "SplitDimension": "clustername",
+                        "Threshold": 80,
+                        "Severity": 2
+                      },
+                      {
+                        "Name": "Memory",
+                        "Description": "Memory Usage per Cluster",
+                        "Metric": "UsageAverage",
+                        "SplitDimension": "clustername",
+                        "Threshold": 80,
+                        "Severity": 2
+                      },
+                      {
+                        "Name": "Storage",
+                        "Description": "Storage Usage per Datastore",
+                        "Metric": "DiskUsedPercentage",
+                        "SplitDimension": "dsname",
+                        "Threshold": 70,
+                        "Severity": 2
+                      },
+                      {
+                        "Name": "StorageCritical",
+                        "Description": "Storage Usage per Datastore",
+                        "Metric": "DiskUsedPercentage",
+                        "SplitDimension": "dsname",
+                        "Threshold": 75,
+                        "Severity": 0
+                      }
+                    ]
+                  },
+                  "resources": [
+                    {
+                      "copy": {
+                        "name": "MetricAlert",
+                        "count": "[length(variables('Alerts'))]"
+                      },
+                      "type": "Microsoft.Insights/metricAlerts",
+                      "apiVersion": "2018-03-01",
+                      "name": "[format('{0}-{1}', parameters('AlertPrefix'), variables('Alerts')[copyIndex()].Name)]",
+                      "location": "Global",
+                      "properties": {
+                        "description": "[variables('Alerts')[copyIndex()].Description]",
+                        "criteria": {
+                          "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                          "allOf": [
+                            {
+                              "name": "Metric1",
+                              "operator": "GreaterThan",
+                              "threshold": "[variables('Alerts')[copyIndex()].Threshold]",
+                              "timeAggregation": "Average",
+                              "criterionType": "StaticThresholdCriterion",
+                              "metricName": "[variables('Alerts')[copyIndex()].Metric]",
+                              "dimensions": [
+                                {
+                                  "name": "[variables('Alerts')[copyIndex()].SplitDimension]",
+                                  "operator": "Include",
+                                  "values": [
+                                    "*"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "scopes": [
+                          "[parameters('PrivateCloudResourceId')]"
+                        ],
+                        "severity": "[variables('Alerts')[copyIndex()].Severity]",
+                        "evaluationFrequency": "PT5M",
+                        "windowSize": "PT30M",
+                        "autoMitigate": true,
+                        "enabled": true,
+                        "actions": [
+                          {
+                            "actionGroupId": "[parameters('ActionGroupResourceId')]"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name))]",
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "condition": "[parameters('DeployServiceHealth')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ServiceHealth', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ActionGroupResourceId": {
+                    "value": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value, '')]"
+                  },
+                  "AlertPrefix": {
+                    "value": "[parameters('PrimaryPrivateCloudName')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrimaryPrivateCloudResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "4726979985646009935"
+                    }
+                  },
+                  "parameters": {
+                    "AlertPrefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupResourceId": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Insights/activityLogAlerts",
+                      "apiVersion": "2020-10-01",
+                      "name": "[format('{0}-ServiceHealth', parameters('AlertPrefix'))]",
+                      "location": "Global",
+                      "properties": {
+                        "description": "Service Health Alerts",
+                        "condition": {
+                          "allOf": [
+                            {
+                              "field": "category",
+                              "equals": "ServiceHealth"
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ServiceName",
+                              "containsAny": [
+                                "Azure VMware Solution"
+                              ]
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+                              "containsAny": [
+                                "[reference(parameters('PrivateCloudResourceId'), '2021-06-01', 'Full').location]",
+                                "Global"
+                              ]
+                            }
+                          ]
+                        },
+                        "scopes": [
+                          "[subscription().id]"
+                        ],
+                        "enabled": true,
+                        "actions": {
+                          "actionGroups": [
+                            {
+                              "actionGroupId": "[parameters('ActionGroupResourceId')]"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name))]",
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))]",
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNetConnection', variables('deploymentPrefix')))]"
+      ]
+    },
+    {
+      "condition": "[or(parameters('DeployHCX'), parameters('DeploySRM'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-AVSAddons', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "PrivateCloudName": {
+            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
+          },
+          "PrivateCloudResourceGroup": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+          },
+          "DeployHCX": {
+            "value": "[parameters('DeployHCX')]"
+          },
+          "DeploySRM": {
+            "value": "[parameters('DeploySRM')]"
+          },
+          "SRMLicenseKey": {
+            "value": "[parameters('SRMLicenseKey')]"
+          },
+          "VRServerCount": {
+            "value": "[parameters('VRServerCount')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.8.9.13224",
+              "templateHash": "6881436580612479626"
+            }
+          },
+          "parameters": {
+            "PrivateCloudName": {
+              "type": "string"
+            },
+            "PrivateCloudResourceGroup": {
+              "type": "string"
+            },
+            "DeployHCX": {
+              "type": "bool"
+            },
+            "DeploySRM": {
+              "type": "bool"
+            },
+            "SRMLicenseKey": {
+              "type": "string"
+            },
+            "VRServerCount": {
+              "type": "int",
+              "maxValue": 10,
+              "minValue": 1
+            }
+          },
+          "resources": [
+            {
+              "condition": "[parameters('DeployHCX')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-HCX', deployment().name)]",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "9134327683351865553"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/addons",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'hcx')]",
+                      "properties": {
+                        "addonType": "HCX",
+                        "offer": "VMware MaaS Cloud Provider"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "condition": "[parameters('DeploySRM')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-SRM', deployment().name)]",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  },
+                  "SRMLicenseKey": {
+                    "value": "[parameters('SRMLicenseKey')]"
+                  },
+                  "VRServerCount": {
+                    "value": "[parameters('VRServerCount')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.8.9.13224",
+                      "templateHash": "2406418508034114002"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    },
+                    "SRMLicenseKey": {
+                      "type": "string"
+                    },
+                    "VRServerCount": {
+                      "type": "int",
+                      "maxValue": 10,
+                      "minValue": 1
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/addons",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+                      "properties": {
+                        "licenseKey": "[parameters('SRMLicenseKey')]",
+                        "addonType": "SRM"
+                      }
+                    },
+                    {
+                      "type": "Microsoft.AVS/privateClouds/addons",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
+                      "properties": {
+                        "vrsCount": "[parameters('VRServerCount')]",
+                        "addonType": "VR"
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))]"
+      ]
+    }
+  ]
+}
