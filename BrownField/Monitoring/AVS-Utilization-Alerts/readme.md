@@ -32,6 +32,15 @@ cd ARM
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Deployment -c -f "AVSMonitor.deploy.json" -p "@AVSMonitor.parameters.json"
 ```
 
+### Terraform
+
+Edit `terraform.tfvars` file with appropriate settings, then:
+
+```bash
+terraform plan
+terraform apply
+```
+
 ## Post-deployment Steps
 
 * Navigate to Azure Monitor service in Azure Portal. Click "Alerts" tab and navigate to "Manage alert rules". Newly created alert - *AVSAlert* - should be listed with status as "Enabled".
