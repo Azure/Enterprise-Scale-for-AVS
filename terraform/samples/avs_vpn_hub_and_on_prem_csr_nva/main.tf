@@ -63,7 +63,8 @@ resource "azurerm_key_vault_secret" "vpn_shared_key" {
 
 
 
-#Deploy an dummy on-prem
+#Deploy a dummy on-prem
+#Requires that the marketplace offer language has been accepted.
 ######## Deploy the CSR and on-prem jump #########
 module "deploy_on_prem_nva_vpn" {
   source = "../../avs-terraform/avs_deployment_scenarios/avs_test_vpn_nva_one_node"
