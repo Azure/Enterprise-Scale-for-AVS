@@ -11,15 +11,21 @@
 ## Scenario Details
 
 ### Overview
-This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for use when deploying a 3rd party NVA for internet ingress/egress inspection. 
+This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for Azure workloads. This configuration allows for inclusion of custom subnets for adding your choice of 3rd party NVA's in the hub, but does not deploy the Firewall resources.
+
+A spoke subnet with a Jumpbox VM and Azure Bastion is included in this deployment for initial configuration and troubleshooting.  If you determine that these aren't desired or needed in your deployment, you can remove the last module in main.tf and leave the defaults for the input values.
+
+### Naming
+
+Resource naming is included at the top of the module and is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with corporate naming conventions so by using locals, the names can be updated in one location.
 
 <TODO: consider adding a bastion and jump spoke to the hub for testing purposes>
 
-![VPN Hub for AVS with 3rd Party NVA](./images/AVS_VWAN_VPN_BGP.png)
+![VPN Hub for AVS with 3rd Party NVA](./images/avs_vpn_hub_spoke.png)
 
 
 ### Internet Ingress/Egress
-Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the 3rd party firewall NVA in the hub. On-premises ingress/egress is expected to use existing internet routing configurations and would not send internet traffic via the VPN. (Although this can be permitted by removing any route filters for 0/0 routes on-prem.)  
+Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the 3rd party firewall NVA in the hub. On-premises ingress/egress is expected to use existing internet routing configurations and would not send internet traffic via the VPN. (Although this can be permitted by removing any route filters for 0/0 routes on-prem.) If the firewall is excluded, internet Internet and Egress can be enabled using the managed VWAN resource options included with the AVS private cloud.   
 
 ### Network Inspection
 The solution enables network inspection with the 3rd party NVA on the following flows: 
@@ -28,9 +34,9 @@ The solution enables network inspection with the 3rd party NVA on the following 
 
 Source                    | Azure VMWare Solution | Internet | On-Premises | Spoke Vnets 
 ---                       | :---:                 | :---:    | :---:       | :---:
-**Azure VMWare Solution** | Yes                   | Yes      | Yes         | Yes 
-**Internet**              | Yes                   | N/A      | Yes         | Yes 
-**On-Premises**           | Yes                   | N/A      | N/A         | Yes 
+**Azure VMWare Solution** | N/A                   | Yes      | No          | Yes 
+**Internet**              | Yes                   | N/A      | N/A         | Yes 
+**On-Premises**           | No                    | N/A      | N/A         | Yes 
 **Spoke Vnets**           | Yes                   | Yes      | Yes         | Yes
 
 ### Assumptions
@@ -48,33 +54,25 @@ These steps represent deploying a configuration using the portal and vcenter.
 
 - Create the required **resource groups** in the target subscription
     - Private Cloud - used to deploy the private cloud and any associated resources
-    - Networking  - Used to deploy the firewall, VWAN, and VWAN hub resources
+    - Networking  - Used to deploy the hub resources
     - Jump/Bastion - Used to deploy the jump host and bastion related resources
 - Deploy the **AVS private cloud**
     - Create a private cloud with an initial management cluster
     - Do not enable the internet access toggle as this will be managed in the secure hub
-    - Upon deployment completion, create an initial expressroute authorization key for attaching to the VWAN hub
-- Create a new **VWAN** resource
-    - This is only required if an existing VWAN resource does not already exist
-- Create an **Azure Firewall** and **Log Analytics** workspace
-    - Create a Log Analytics workspace if one doesn't already exist for the firewall logs 
-    - Create the Azure Firewall to use **Azure Firewall Policies**
-    - The standard sku can be used unless premium features are required in the environment
-    - Enable the **DNS proxy** to allow for future DNS configurations
-    - Configure the firewall Diags to go the log analytics workspace
-- Create an initial **Firewall Policy** for internet access
-    - Create new **network rule collection** for testing
-    - Create a new **network rule** in the rule collection 
-        - Source = AVS Address Space, JumpServer Address space
-        - Target = *
-        - Ports  = 80, 443, 53, 123
-        - Protocols = TCP, UDP
-- Create a new **VWAN virtual hub** using the VWAN created previously
-    - Ensure **Branch-to-Branch** is enabled
-    - Deploy an **ExpressRoute gateway** in the hub
-    - Deploy a **VPN gateway** in the hub
-    - Configure the AVS **expressRoute connection** using the authorization key created previously with the **internet security** toggle enabled
-    - Add a route to the default route table with **0.0.0.0/0** pointing to the resource id of the **azure firewall**
+    - Upon deployment completion, create an initial expressroute authorization key for attaching to the Hub ExpressRoute Gateway
+- Create a new **Hub and Spoke network** 
+    - Deploy hub **Virtual Network**
+        - Include Subnets for:
+            - **GatewaySubnet**
+            - **AzureRouteServer**
+            - **Firewall NVA subnets**
+    - Deploy a **VPN** Virtual Network Gateway in the Hub VNet
+        - ASN **65515**
+        - **Active/Active**
+    - Deploy an **ExpressRoute** Virtual Network Gateway in the Hub VNet
+    - Deploy a **Route Server** instance in the Hub Vnet
+        - Ensure **Branch-to-Branch** is enabled
+    - Configure the AVS **expressRoute connection** using the authorization key created previously 
 - Create **Service Health Alerts** for the AVS SLA related items
     Name    | Description | Metric | SplitDimension | Threshold | Severity 
     ---     | :---:       | :---:  | :---:          | :---:     | :---:
@@ -100,7 +98,7 @@ These steps represent deploying a configuration using the portal and vcenter.
         - No public IP attached 
         - Only deploy an NSG if required
         - If an NSG is deployed, ensure the firewall allows testing traffic
-- Test Jump Server connectivity
+- Test Jump Server access to the Vcenter to validate Azure Services connectivity
     - Confirm that the **VCenter** comes up in a browser and logins succeed
         - Vcenter login information is found on the **Identity** menu item of the private cloud SDDC
     - Confirm that the jumpserver can access the internet
@@ -110,17 +108,14 @@ These steps represent deploying a configuration using the portal and vcenter.
     - Create a new segment and link to the DHCP server
     - Create a DNS scope on the AVS private cloud for any custom DNS required for LDAP configuration
 - Deploy a test VM into AVS 
-    - <TODO: determine guest configuration and testing >
-- Connect the Remote VPN within VWAN
-    - Create a **VWAN site** for both tunnels
+- Connect the Remote VPN 
+    - Create a **Local Gateway** for both tunnels
         - Configure the **Link** BGP details 
-    - Create two VWAN vpn gateway connections 
-        - link to the two sites created previously
-        - Ensure internet security enabled is set to false
+    - Create two vpn gateway connections 
+        - link to the two Local Gateways created previously
         - Ensure BGP is enabled on the Connection link
-        - <TODO: Confirm whether we need two links per connection>
 - Create the on-prem connections on the **existing on-prem firewall or router**
-    - Ensure the redundant tunnels are create to each VPN site
+    - Ensure the redundant tunnels are created to each azure VPN node
     - Validate the BGP configuration
 - Test the connectivity
     - Validate the VPN is showing connected on each side of the tunnel
@@ -131,14 +126,11 @@ These steps represent deploying a configuration using the portal and vcenter.
 [(Back to top)](#table-of-contents)
 ## Automation implementation
 
-Multiple automation options exist for deploying this scenario into Azure. Please use the links below to access the desired automation solution.
-Solution | Code and Guidance
----                       | :---:  
-**Azure ARM templates**   | <TODO: Insert link here>
-**Bicep template**        | <TODO: Insert link here>
-**Terraform**             | <TODO: Insert link here>
-**Powershell**            | <TODO: Insert link here>
-**AZ CLI**                | <TODO: Insert link here>
+This scenario is organized using a root module included in this folder, and a number of child modules included in the modules subdirectory of the terraform directory of this repo.  This root module includes a tfvars sample file that contains an example set of input values. This module also includes a sample providers file that can be modified to fit your specific environment.
+
+To deploy this module, ensure you have a deployment resource that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
+
+Execute the terraform init/plan/apply workflow to execute the deployment.
 
 [(Back to top)](#table-of-contents)
 
@@ -148,15 +140,7 @@ There are several variations of this implementation that can use the general fra
 
 ### On-Prem VPN without BGP capability
 
-In some cases the existing on-premise VPN device may not be able to do BGP.  In this case, the routes can be published statically and the VWAN VPN gateway will share the routes with the AVS and the other VWAN spokes.  Modify these instructions by configuring the VWAN VPN connections and the on-prem VPN connections to not use BGP when sharing routing information.
-
-### Use of an existing VWAN or VWAN hub 
-
-In some cases it may be desired to connect to an existing VWAN and/or VWAN hub.  In those cases, modify the instructions to use the existing resources and make any necessary configuration changes on the existing hub.  (i.e. create new VPN and/or ExpressRoute gateways) Connection guidance for the connections should be the same in these cases.
-
-### Use of an existing Log Analytics workspace
-
-This solution assumes the creation of a new firewall with an associated log analytics workspace. If a previous workspace exists it is possible to use that workspace for the firewall logs and diagnostics.
+In some cases the existing on-premise VPN device may not be able to do BGP.  In this case, the routes can be published statically and the VPN gateway will share the routes with the AVS and the other hub spokes.  Modify these instructions by configuring the Azure VPN connections and the on-prem VPN connections to not use BGP when sharing routing information.
 
 
 [(Back to top)](#table-of-contents)

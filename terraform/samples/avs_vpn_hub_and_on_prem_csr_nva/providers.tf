@@ -9,7 +9,7 @@ terraform {
     }
   }
 
-/*
+  /*
   backend "azurerm" {
     resource_group_name  = "sample_tfstate_resource_group_name"
     storage_account_name = "samplestatestorage"

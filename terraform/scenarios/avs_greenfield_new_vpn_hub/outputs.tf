@@ -53,3 +53,7 @@ output "network_resource_group_name" {
 output "network_resource_group_location" {
   value = azurerm_resource_group.greenfield_network.location
 }
+
+output "vnet_name" {
+  value = local.vnet_name
+}
