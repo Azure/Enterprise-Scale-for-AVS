@@ -114,6 +114,7 @@ module "avs_routeserver" {
   route_server_subnet_id = module.avs_virtual_network.subnet_ids["RouteServerSubnet"].id
 }
 
+#deploy the default service health and azure monitor alerts
 module "avs_service_health" {
   source = "../../modules/avs_service_health"
 
@@ -124,4 +125,24 @@ module "avs_service_health" {
   service_health_alert_name     = local.service_health_alert_name
   service_health_alert_scope_id = azurerm_resource_group.greenfield_privatecloud.id
   private_cloud_id              = module.avs_private_cloud.sddc_id
+}
+
+#deploy a test VM and bastion spoke for initial configuration and testing
+module "avs_jumpbox_and_bastion" {
+  source = "../../modules/avs_test_spoke_with_jump_vm"
+
+  prefix                           = var.prefix
+  region                           = var.region
+  jumpbox_sku                      = var.jumpbox_sku
+  admin_username                   = var.jumpbox_admin_username
+  tags                             = var.tags
+  hub_vnet_name                    = local.vnet_name
+  hub_rg_name                      = azurerm_resource_group.greenfield_network.name
+  jumpbox_spoke_vnet_address_space = var.jumpbox_spoke_vnet_address_space
+  bastion_subnet_prefix            = var.bastion_subnet_prefix
+  jumpbox_subnet_prefix            = var.jumpbox_subnet_prefix
+
+  depends_on = [
+    module.avs_virtual_network
+  ]
 }
