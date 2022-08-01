@@ -19,8 +19,6 @@ A spoke subnet with a Jumpbox VM and Azure Bastion is included in this deploymen
 
 Resource naming is included at the top of the module and is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with corporate naming conventions so by using locals, the names can be updated in one location.
 
-<TODO: consider adding a bastion and jump spoke to the hub for testing purposes>
-
 ![VPN Hub for AVS with 3rd Party NVA](./images/avs_vpn_hub_spoke.png)
 
 
@@ -29,8 +27,6 @@ Internet ingress and egress to AVS and Azure VM's will be enabled through one or
 
 ### Network Inspection
 The solution enables network inspection with the 3rd party NVA on the following flows: 
-
-<TODO: test spoke VNETs to confirm whether a UDR is required or if the NVA route injection extends to spokes>
 
 Source                    | Azure VMWare Solution | Internet | On-Premises | Spoke Vnets 
 ---                       | :---:                 | :---:    | :---:       | :---:
