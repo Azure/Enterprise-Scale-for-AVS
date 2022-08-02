@@ -13,7 +13,7 @@
 ### Overview
 This scenario is meant for customers who want to implement a new AVS private cloud connecting to an existing VWAN virtual hub. The solution implements a new AVS private cloud and creates an expressRoute connection to the VWAN hub. If the hub is a secure hub, then a flag can be set to toggle the connection to use the Azure firewall in the hub.
 
-![VPN Hub for AVS with 3rd Party NVA](./images/avs_vpn_hub_spoke.png)
+![Existing VWAN Hub](./images/avs_vpn_hub_spoke.png)
 
 ### Naming
 
@@ -40,9 +40,9 @@ These steps represent deploying a configuration using the portal and vcenter.
     - Create a private cloud with an initial management cluster
     - Do not enable the internet access toggle as this will be managed in the existing VWAN hub
     - Upon deployment completion, create an initial expressroute authorization key for attaching to the Hub ExpressRoute Gateway
-- Create a new ExpressRoute connection linking AVS to the existing ExpressRoute Gateway in the VWAN hub
+- Create a new **ExpressRoute connection** linking AVS to the existing ExpressRoute Gateway in the VWAN hub
     - Configure any addtional route table associations if required to ensure the 0.0.0.0/0 route gets propogated to AVS
-    - Enable the internet sec
+    - Enable the **Propogate Default Route** on the AVS expressRoute connection
 - Create **Service Health Alerts** for the AVS SLA related items
     Name    | Description | Metric | SplitDimension | Threshold | Severity 
     ---     | :---:       | :---:  | :---:          | :---:     | :---:
