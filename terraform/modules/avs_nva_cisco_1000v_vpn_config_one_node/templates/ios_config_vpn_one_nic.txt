@@ -1,0 +1,80 @@
+Section: IOS configuration
+interface GigabitEthernet1
+ ip address dhcp
+ ip nat outside
+ negotiation auto
+ no mop enabled
+ no mop sysid
+crypto ikev2 proposal azure-proposal-connectionS1HubCSR 
+ encryption aes-cbc-256 aes-cbc-128
+ integrity sha1 sha256
+ group 2
+!
+crypto ikev2 policy azure-policy-connectionS1HubCSR 
+ proposal azure-proposal-connectionS1HubCSR
+!
+crypto ikev2 keyring azure-keyring
+ peer ${remote_gw_pubip0}
+  address ${remote_gw_pubip0}
+  pre-shared-key ${pre_shared_key}
+ peer ${remote_gw_pubip1}
+  address ${remote_gw_pubip1}
+  pre-shared-key ${pre_shared_key}
+!
+crypto ikev2 profile azure-profile-connectionB1HubCSR
+ match address local interface GigabitEthernet1
+ match identity remote address ${remote_gw_pubip0} 255.255.255.255 
+ match identity remote address ${remote_gw_pubip1} 255.255.255.255 
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local azure-keyring
+ lifetime 28800
+ dpd 10 5 on-demand
+!
+crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha256-hmac 
+ mode tunnel
+!
+crypto ipsec profile azure-ipsec-b1
+ set security-association lifetime kilobytes 102400000
+ set transform-set azure-ipsec-proposal-set 
+ set ikev2-profile azure-profile-connectionB1HubCSR
+!
+interface Tunnel101
+ ip address ${csr_tunnel_ip_0} 255.255.255.255
+ ip tcp adjust-mss 1350
+ tunnel source GigabitEthernet1
+ tunnel mode ipsec ipv4
+ tunnel destination ${remote_gw_pubip0}
+ tunnel protection ipsec profile azure-ipsec-b1
+!
+interface Tunnel102
+ ip address ${csr_tunnel_ip_1} 255.255.255.255
+ ip tcp adjust-mss 1350
+ tunnel source GigabitEthernet1
+ tunnel mode ipsec ipv4
+ tunnel destination ${remote_gw_pubip1}
+ tunnel protection ipsec profile azure-ipsec-b1
+!
+interface Loopback11
+ ip address ${csr_bgp_ip} 255.255.255.255
+!
+! default route pointing to CSR subnet default gateway, so that tunnel outside traffic and internet go out LAN port
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet1 ${csr_subnet_gateway}
+! static routes for remote VPN BGP addresses pointing to Tunnel101 and Tunnel102, so that Remote BGP peer address is reachable
+ip route ${remote_bgp_peer_ip_0} ${remote_bgp_peer_ip_mask_0} Tunnel101
+ip route ${remote_bgp_peer_ip_1} ${remote_bgp_peer_ip_mask_1} Tunnel102
+! static route for the csr vnet pointing to the external gateway
+ip route ${csr_vnet} ${csr_vnet_mask} ${csr_subnet_gateway}
+
+router bgp ${asn}
+ bgp log-neighbor-changes
+! network statement advertising the hub vnet prefix
+ network ${csr_vnet} mask ${csr_vnet_mask}
+ neighbor ${remote_bgp_peer_ip_0} remote-as 65515
+ neighbor ${remote_bgp_peer_ip_0} ebgp-multihop 255
+ neighbor ${remote_bgp_peer_ip_0} update-source Loopback11
+ neighbor ${remote_bgp_peer_ip_0} activate
+ neighbor ${remote_bgp_peer_ip_1} remote-as 65515
+ neighbor ${remote_bgp_peer_ip_1} ebgp-multihop 255
+ neighbor ${remote_bgp_peer_ip_1} update-source Loopback11
+ neighbor ${remote_bgp_peer_ip_1} activate

@@ -1,7 +1,6 @@
 #This file is a sample tfvars input for this module. 
 #Copy this file to your root module, populate the file with the target deployment values and remove the .sample extension.
 
-
 prefix                = "SDDC1"
 region                = "Southeast Asia"
 vnet_address_space    = ["10.1.0.0/16"]
@@ -14,14 +13,6 @@ subnets = [
     {
         name           = "RouteServerSubnet",
         address_prefix = ["10.40.2.0/24"]
-    },
-    {
-        name           = "AzureBastionSubnet",
-        address_prefix = ["10.40.3.0/24"]
-    },
-    {
-        name           = "JumpBoxSubnet"
-        address_prefix = ["10.40.4.0/24"]
     }
 ]
 
@@ -41,6 +32,6 @@ bastion_subnet_prefix            = ["192.168.32.0/24"]
 jumpbox_subnet_prefix            = ["192.168.33.0/24"]
 
 tags = {
-environment = "Dev"
-CreatedBy   = "Terraform"
+    environment = "Dev"
+    CreatedBy   = "Terraform"
 }

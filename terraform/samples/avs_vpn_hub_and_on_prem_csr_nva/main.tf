@@ -1,6 +1,6 @@
 ###### Deploy the AVS side hub ###############
 module "deploy_greenfield_new_vpn_hub_no_firewall" {
-  source = "../../official/Enterprise-Scale-for-AVS/terraform/scenarios/avs_greenfield_new_vpn_hub"
+  source = "../../scenarios/avs_greenfield_new_vpn_hub"
 
   prefix = "sample"
   region = "Southeast Asia"
@@ -14,18 +14,6 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
     {
       name           = "RouteServerSubnet",
       address_prefix = ["10.40.2.0/24"]
-    },
-    {
-      name           = "AzureBastionSubnet",
-      address_prefix = ["10.40.3.0/24"]
-    },
-    {
-      name           = "JumpBoxSubnet"
-      address_prefix = ["10.40.4.0/24"]
-    },
-    {
-      name           = "AzureFirewallSubnet"
-      address_prefix = ["10.40.5.0/24"]
     }
   ]
 
@@ -38,13 +26,17 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   firewall_sku_tier        = "Standard"
   email_addresses          = ["donotreply@microsoft.com"]
 
+  jumpbox_sku                      = "Standard_D2as_v4"
+  jumpbox_admin_username           = "azureuser"
+  jumpbox_spoke_vnet_address_space = ["10.41.0.0/16"]
+  bastion_subnet_prefix            = ["10.41.1.0/16"]
+  jumpbox_subnet_prefix            = ["10.41.2.0/16"]
 
   tags = {
     environment = "Dev"
     CreatedBy   = "Terraform"
   }
 }
-
 
 ######## Create a pre-shared key for the VPN ######
 resource "random_password" "shared_key" {
@@ -61,13 +53,11 @@ resource "azurerm_key_vault_secret" "vpn_shared_key" {
   depends_on   = [module.deploy_on_prem_nva_vpn.key_vault_id]
 }
 
-
-
 #Deploy a dummy on-prem
 #Requires that the marketplace offer language has been accepted.
 ######## Deploy the CSR and on-prem jump #########
 module "deploy_on_prem_nva_vpn" {
-  source = "../../avs-terraform/avs_deployment_scenarios/avs_test_vpn_nva_one_node"
+  source = "../../modules/avs_test_vpn_nva_one_node"
 
   prefix = "sample-on-prem"
   region = "Southeast Asia"
@@ -106,7 +96,7 @@ module "deploy_on_prem_nva_vpn" {
 
 
 module "create_vpn_connections" {
-  source = "../../avs-terraform/modules/avs_vpn_create_local_gateways_and_connections_active_active_w_bgp"
+  source = "../../modules/avs_vpn_create_local_gateways_and_connections_active_active_w_bgp"
 
   rg_name                    = module.deploy_greenfield_new_vpn_hub_no_firewall.network_resource_group_name
   rg_location                = module.deploy_greenfield_new_vpn_hub_no_firewall.network_resource_group_location
@@ -128,5 +118,4 @@ module "create_vpn_connections" {
     module.deploy_on_prem_nva_vpn,
     module.deploy_greenfield_new_vpn_hub_no_firewall
   ]
-
 }
