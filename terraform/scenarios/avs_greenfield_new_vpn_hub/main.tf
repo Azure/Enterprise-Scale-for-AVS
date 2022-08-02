@@ -4,7 +4,7 @@ locals {
   private_cloud_rg_name               = "${var.prefix}-PrivateCloud-${random_string.namestring.result}"
   network_rg_name                     = "${var.prefix}-Network-${random_string.namestring.result}"
   vnet_name                           = "${var.prefix}-VirtualNetwork-${random_string.namestring.result}"
-  sddc_name                           = "${var.prefix}-SDDC-${random_string.namestring.result}"
+  sddc_name                           = "${var.prefix}-AVS-SDDC-${random_string.namestring.result}"
   expressroute_authorization_key_name = "${var.prefix}-AVS-ExpressrouteAuthKey-${random_string.namestring.result}"
   express_route_connection_name       = "${var.prefix}-AVS-ExpressrouteConnection-${random_string.namestring.result}"
   expressroute_pip_name               = "${var.prefix}-AVS-expressroute-gw-pip-${random_string.namestring.result}"

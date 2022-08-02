@@ -4,7 +4,7 @@ locals {
   #resource group names
   private_cloud_rg_name = "${var.prefix}-PrivateCloud-${random_string.namestring.result}"
   network_rg_name       = "${var.prefix}-Network-${random_string.namestring.result}"
-  #jumpbox_rg_name       = "${var.prefix}-Jumpbox-${random_string.namestring.result}"
+  jumpbox_rg_name       = "${var.prefix}-Jumpbox-${random_string.namestring.result}"
 
   #AVS specific names
   sddc_name                           = "${var.prefix}-AVS-SDDC-${random_string.namestring.result}"
@@ -25,7 +25,7 @@ locals {
   action_group_shortname    = "avs-sddc-sh1"
   service_health_alert_name = "${var.prefix}-AVS-service-health-alert-${random_string.namestring.result}"
 
-  /*
+
   #jumpbox and bastion resource names
   jumpbox_spoke_vnet_name            = "${var.prefix}-AVS-vnet-jumpbox-${random_string.namestring.result}"
   jumpbox_spoke_vnet_connection_name = "${var.prefix}-AVS-vnet-connection-jumpbox-${random_string.namestring.result}"
@@ -34,11 +34,9 @@ locals {
   bastion_pip_name                   = "${var.prefix}-AVS-bastion-pip-${random_string.namestring.result}"
   bastion_name                       = "${var.prefix}-AVS-bastion-${random_string.namestring.result}"
   keyvault_name                      = "${var.prefix}-AVS-jump-kv-${random_string.namestring.result}"
-*/
 
   #list of RFC1918 top level summaries for use in VWAN routing
   private_range_prefixes = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
-
 }
 
 #create a random string for uniqueness during redeployments using the same values
@@ -132,16 +130,16 @@ module "avs_service_health" {
   private_cloud_id              = module.avs_private_cloud.sddc_id
 }
 
-/*
+
 ##NOTE: The modules below this line are for initial testing and can be removed after the implementation if desired 
 #Deploy firewall rules allowing outbound http, https, ntp, and dns
 module "outbound_internet_test_firewall_rules" {
   source = "../../modules/avs_azure_firewall_internet_outbound_rules"
 
-  firewall_policy_id  = module.avs_vwan_azure_firewall_w_policy_and_log_analytics.firewall_policy_id
+  firewall_policy_id = module.avs_vwan_azure_firewall_w_policy_and_log_analytics.firewall_policy_id
   #avs_ip_ranges       = [var.avs_network_cidr, var.jumpbox_spoke_vnet_address_space[0]]
   private_range_prefixes = local.private_range_prefixes
-  has_firewall_policy = true
+  has_firewall_policy    = true
 }
 
 #deploy a new resource group for the jumpbox and bastion components
@@ -198,8 +196,7 @@ module "avs_keyvault_with_access_policy" {
   rg_location               = azurerm_resource_group.greenfield_jumpbox.location
   keyvault_name             = local.keyvault_name
   azure_ad_tenant_id        = data.azurerm_client_config.current.tenant_id
-  #deployment_user_object_id = data.azurerm_client_config.current.object_id
-  deployment_user_object_id = data.azuread_client_config.current.object_id #temp fix for az cli breaking change
+  deployment_user_object_id = data.azuread_client_config.current.object_id
   tags                      = var.tags
 }
 
@@ -221,4 +218,3 @@ module "avs_jumpbox" {
     module.avs_keyvault_with_access_policy
   ]
 }
-*/

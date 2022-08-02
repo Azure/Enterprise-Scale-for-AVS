@@ -11,7 +11,7 @@
 ## Scenario Details
 
 ### Overview
-This scenario is meant for new Greenfield customers who want to implement a greenfield AVS environment using VPN to make the hybrid connection. The solution implements a new Secure VWAN hub with VPN and ExpressRoute gateways and Azure Firewall. 
+This scenario is meant for new Greenfield customers who want to implement a greenfield AVS environment using VPN to make the hybrid connection. The solution implements a new Secure VWAN hub with VPN and ExpressRoute gateways as well as an Azure Firewall with some basic connectivity rules. 
 
 This scenario also deploys a temporary spoke Vnet with a bastion and jump host.  These resources can be used for initial setup and testing and then be removed if there are prohibitions against allowing remote virtual machine access from the internet.
 
@@ -19,7 +19,7 @@ This scenario also deploys a temporary spoke Vnet with a bastion and jump host. 
 
 
 ### Internet Ingress/Egress
-Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the Azure Firewall in the secure hub. On-premises ingress/egress is expected to use existing routing configurations and not migrate to the VWAN hub.  <TODO: Add SNAT language?>
+Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the Azure Firewall in the secure hub. On-premises ingress/egress is expected to use existing routing configurations and not migrate to the VWAN hub.  
 
 ### Network Inspection
 The solution configures network inspection with the Azure Firewall on the following flows:
@@ -35,7 +35,7 @@ Source                    | Azure VMWare Solution | Internet | On-Premises | Spo
 
 - Any AVS guest-to-guest inspection will occur in the private cloud using NSX-T's firewall capability 
 - Traffic inspection between on-premises sites will be managed by existing equipment and configurations
-- If subnet to subnet traffic inspection is required then UDR's will need to be configured on each subnet. <TODO: confirm this statement>
+- If subnet to subnet traffic inspection within a spoke Vnet is required then additional routes will need to be configured to override the default behavior.
 
 [(Back to top)](#table-of-contents)
 
@@ -129,14 +129,11 @@ These steps represent deploying a configuration using the portal and vcenter.
 [(Back to top)](#table-of-contents)
 ## Automation implementation
 
-Multiple automation options exist for deploying this scenario into Azure. Please use the links below to access the desired automation solution.
-Solution | Code and Guidance
----                       | :---:  
-**Azure ARM templates**   | <TODO: Insert link here>
-**Bicep template**        | <TODO: Insert link here>
-**Terraform**             | <TODO: Insert link here>
-**Powershell**            | <TODO: Insert link here>
-**AZ CLI**                | <TODO: Insert link here>
+This scenario is organized using a root module included in this folder, and a number of child modules included in the modules subdirectory of the terraform directory of this repo.  This root module includes a tfvars sample file that contains an example set of input values. This module also includes a sample providers file that can be modified to fit your specific environment.
+
+To deploy this module, ensure you have a deployment resource that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
+
+Execute the terraform init/plan/apply workflow to execute the deployment.
 
 [(Back to top)](#table-of-contents)
 
@@ -150,7 +147,7 @@ In some cases the existing on-premise VPN device may not be able to do BGP.  In 
 
 ### Use of an existing VWAN or VWAN hub 
 
-In some cases it may be desired to connect to an existing VWAN and/or VWAN hub.  In those cases, modify the instructions to use the existing resources and make any necessary configuration changes on the existing hub.  (i.e. create new VPN and/or ExpressRoute gateways) Connection guidance for the connections should be the same in these cases.
+In some cases it may be desired to connect to an existing VWAN and/or VWAN hub.  In those cases, you can modify the instructions to use the existing resources and make any necessary configuration changes on the existing hub or take advantage of other published brownfield scenarios.  (i.e. create new VPN and/or ExpressRoute gateways) Connection guidance for the connections should be the same in these cases.
 
 ### Use of an existing Log Analytics workspace
 

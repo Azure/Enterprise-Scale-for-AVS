@@ -5,7 +5,7 @@
 prefix                = "SDDC1"
 region                = "Southeast Asia"
 
-vwan_name                  = ""
+vwan_name                  = "avs_vwan"
 vwan_already_exists        = false
 vwan_hub_address_prefix    = "10.100.0.0/23"
 express_route_scale_units  = 1
