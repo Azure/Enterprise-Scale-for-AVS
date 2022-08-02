@@ -1,4 +1,4 @@
-# Implement AVS with new VPN hub/spoke with 3rd Party NVA
+# Implement AVS with an existing VWAN hub
 
 ## Table of contents
 
