@@ -17,6 +17,9 @@ This scenario also deploys a temporary spoke Vnet with a bastion and jump host. 
 
 ![Secure VWAN VPN gateway with BGP scenario image](./images/AVS_VWAN_VPN_BGP.png)
 
+### Naming
+
+Resource naming is configured by using local variables at the top of the root module.  Each name is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with their unique corporate naming conventions, so all the names are maintained in the locals for simplicity in modifying the naming during deployment. 
 
 ### Internet Ingress/Egress
 Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the Azure Firewall in the secure hub. On-premises ingress/egress is expected to use existing routing configurations and not migrate to the VWAN hub.  

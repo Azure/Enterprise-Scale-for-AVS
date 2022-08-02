@@ -15,11 +15,11 @@ This scenario is meant for customers who want to implement a greenfield AVS envi
 
 A spoke subnet with a Jumpbox VM and Azure Bastion is included in this deployment for initial configuration and troubleshooting.  If you determine that these aren't desired or needed in your deployment, you can remove the last module in main.tf and leave the defaults for the input values. The initial random password is stored as a secret in the key vault deployed in the jumpbox resource group. An initial access policy is created for the deployment user, but any additional users will need to first update the key vault access policy prior to being able to access the secret.
 
+![VPN Hub for AVS with 3rd Party NVA](./images/avs_vpn_hub_spoke.png)
+
 ### Naming
 
-Resource naming is included at the top of the module and is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with corporate naming conventions so by using locals, the names can be updated in one location.
-
-![VPN Hub for AVS with 3rd Party NVA](./images/avs_vpn_hub_spoke.png)
+Resource naming is configured by using local variables at the top of the root module.  Each name is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with their unique corporate naming conventions, so all the names are maintained in the locals for simplicity in modifying the naming during deployment. 
 
 
 ### Internet Ingress/Egress
