@@ -92,11 +92,11 @@ variable "jumpbox_spoke_vnet_address_space" {
 }
 
 variable "bastion_subnet_prefix" {
-  type        = list(string)
-  description = "A list of subnet prefix CIDR values used for the bastion subnet address space"
+  type        = string
+  description = "the subnet prefix CIDR value used for the bastion subnet address space"
 }
 
 variable "jumpbox_subnet_prefix" {
-  type        = list(string)
-  description = "A list of subnet prefix CIDR values used for the jumpbox subnet address space"
+  type        = string
+  description = "the subnet prefix CIDR value used for the jumpbox subnet address space"
 }

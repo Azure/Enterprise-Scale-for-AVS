@@ -62,7 +62,7 @@ These steps represent deploying a configuration using the portal and vcenter.
 
 This scenario is organized using a root module included in this folder, and a number of child modules included in the modules subdirectory of the terraform directory of this repo.  This root module includes a tfvars sample file that contains an example set of input values. This module also includes a sample providers file that can be modified to fit your specific environment.
 
-To deploy this module, ensure you have a deployment resource that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
+To deploy this module, ensure you have a deployment machine that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
 
 Execute the terraform init/plan/apply workflow to execute the deployment.
 

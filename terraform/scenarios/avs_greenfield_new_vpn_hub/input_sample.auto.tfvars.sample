@@ -28,8 +28,8 @@ email_addresses          = ["test1@test.com","test2@test.com"]
 jumpbox_sku                      = "Standard_D2as_v4"
 jumpbox_admin_username           = "azureuser"
 jumpbox_spoke_vnet_address_space = ["192.168.32.0/22"]
-bastion_subnet_prefix            = ["192.168.32.0/24"]
-jumpbox_subnet_prefix            = ["192.168.33.0/24"]
+bastion_subnet_prefix            = "192.168.32.0/24"
+jumpbox_subnet_prefix            = "192.168.33.0/24"
 
 tags = {
     environment = "Dev"

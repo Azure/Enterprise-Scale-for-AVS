@@ -29,8 +29,8 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   jumpbox_sku                      = "Standard_D2as_v4"
   jumpbox_admin_username           = "azureuser"
   jumpbox_spoke_vnet_address_space = ["10.41.0.0/16"]
-  bastion_subnet_prefix            = ["10.41.1.0/16"]
-  jumpbox_subnet_prefix            = ["10.41.2.0/16"]
+  bastion_subnet_prefix            = "10.41.1.0/16"
+  jumpbox_subnet_prefix            = "10.41.2.0/16"
 
   tags = {
     environment = "Dev"
