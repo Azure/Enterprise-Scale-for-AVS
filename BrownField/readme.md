@@ -41,3 +41,10 @@ This section contains templates to deploy specific components and add-ins for AV
 | Deploy                                                       | Description                                                  | More Info                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/readme.md) |
+
+
+## Identity LDAP/LDAPS step by step
+
+| Item                                                       | Description                                                  | More Info                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Add Active Directory Domain as external identity in AVS vCenter Server      | Step-by-step guide  | [Link](/BrownField/Identity/configure-identity-source-vcenter.md) |
