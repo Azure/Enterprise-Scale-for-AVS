@@ -11,7 +11,8 @@ This section contains templates to deploy specific components and add-ins for AV
 | Enable SRM for AVS Private Cloud     | This example will enable the VMware Site Recovery Manger add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FAddons%2FSRM%2FARM%2FSRM.deploy.json) | [Link](Addons/SRM//readme.md) |
 | Enable HCX for AVS Private Cloud     | This example will enable the VMware HCX add-on to an existing AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FAddons%2FHCX%2FARM%2FHCX.deploy.json) | [Link](Addons/HCX/readme.md) |
 
-###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+>[!NOTE]
+> *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
 ## AVS Monitoring
 
@@ -21,7 +22,8 @@ This section contains templates to deploy specific components and add-ins for AV
 | Service Health Alerts              | This example will create an action group & set up Service Health alerting for AVS in a specified region | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json) | [Link](Monitoring/AVS-Service-Health/readme.md) |
 | AVS Dashboard                     | This example will create an Azure Dashboard showing the Private Cloud metrics, and optionally ExpressRoute connection metrics | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Dashboard%2FARM%2FAVSDashboard.deploy.json) | [Link](Monitoring/AVS-Dashboard/readme.md) |
 
-###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+>[!NOTE]
+>Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
 ## AVS Networking
 
@@ -34,7 +36,8 @@ This section contains templates to deploy specific components and add-ins for AV
 | Connect AVS to AVS in a different region via Global Reach    | This example will connect 2 AVS Private Clouds in 2 different regions using ExpressRoute Global Reach | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-AVS-CrossRegion-GlobalReach%2FARM%2FCrossAVSGlobalReach.deploy.json) | [Link](Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md) |
 | Connect AVS to AVS in the same region via AVS Interconnect   | This example will connect 2 AVS Private Clouds in same region using the AVS Interconnect feature | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-AVS-SameRegion%2FARM%2FCrossAVSWithinRegion.deploy.json) | [Link](Networking/AVS-to-AVS-SameRegion/readme.md) |
 
-###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+>[!NOTE]
+>Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
 ## Run Commands
 
@@ -42,9 +45,9 @@ This section contains templates to deploy specific components and add-ins for AV
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/readme.md) |
 
-
-## Identity LDAP/LDAPS step by step
+## Identity Secure LDAP step by step
 
 | Item                                                       | Description                                                  | More Info                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Add Active Directory Domain as external identity in AVS vCenter Server      | Step-by-step guide  | [Link](/BrownField/Identity/configure-identity-source-vcenter.md) |
+| Add Active Directory Domain as external identity in NSX-T      | Step-by-step guide  | [Link](/BrownField/Identity/configure-identity-source-nsxt.md) |
