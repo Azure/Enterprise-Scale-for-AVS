@@ -34,9 +34,6 @@ In this how-to, you learn how to:
     - [Export the certificate for LDAPS authentication](#export-the-certificate-for-ldaps-authentication) and upload it to an Azure Storage account as blob storage. Then, you'll need to [grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md).  
 
 - Ensure AVS has DNS resolution configured to your on-premises AD. Enable DNS Forwarder from Azure portal. See [Configure DNS forwarder for Azure VMware Solution](https://docs.microsoft.com/azure/azure-vmware/configure-dns-azure-vmware-solution) for further information.
-- In the DNS service tab, ensure there is a DNS Service similar to the image below[ This is sample image]
-![image](https://user-images.githubusercontent.com/67286499/184913580-64df81fc-877e-4dbc-842b-28c21b7f1065.png)
-
 
 >[!NOTE]
 >For further information about LDAPS and certificate issuance, consult with your security or identity management team.
@@ -105,13 +102,16 @@ Click OK to create the DNS Zone.
 
 DNS Service Configuration
 
-After the DNS Zone has been created (may take a few minutes), navigate to the DNS Service tab
+- After the DNS Zone has been created (may take a few minutes), navigate to the DNS Service tab
 Click Edit.
 From the FQDN Zones drop down, select the FQDN Zone that was created in the previous step.
 Ensure the default DNS Zone is selected, similar to the photo below.
 Click OK to configure the DNS Service.
 
 ![image](https://user-images.githubusercontent.com/67286499/184912921-3327eae5-b068-4bc1-85fb-cbe1c46e194b.png)
+
+- In the DNS service tab, ensure there is a DNS Service similar to the image below[ This is sample image]
+![image](https://user-images.githubusercontent.com/67286499/184913580-64df81fc-877e-4dbc-842b-28c21b7f1065.png)
 
 ## Add Active Directory over LDAP with SSL
 
