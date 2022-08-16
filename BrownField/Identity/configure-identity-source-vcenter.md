@@ -23,7 +23,7 @@ In this how-to, you learn how to:
 > * Remove existing external identity sources
 
 
-## Prerequisites
+## Prerequisites/Steps
 
 - Established connectivity from your Active Directory network to your private cloud.
 
@@ -34,6 +34,8 @@ In this how-to, you learn how to:
     - [Export the certificate for LDAPS authentication](#export-the-certificate-for-ldaps-authentication) and upload it to an Azure Storage account as blob storage. Then, you'll need to [grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md).  
 
 - Ensure AVS has DNS resolution configured to your on-premises AD. Enable DNS Forwarder from Azure portal. See [Configure DNS forwarder for Azure VMware Solution](https://docs.microsoft.com/azure/azure-vmware/configure-dns-azure-vmware-solution) for further information.
+- In the DNS service tab, ensure there is a DNS Service similar to the image below[ This is sample image]
+![image](https://user-images.githubusercontent.com/67286499/184913580-64df81fc-877e-4dbc-842b-28c21b7f1065.png)
 
 
 >[!NOTE]
@@ -88,6 +90,29 @@ Now proceed to export the certificate.
 
 Now you can continue with the next step [Add Active Directory over LDAP with SSL](#add-active-directory-over-ldap-with-ssl).
 
+## Configuring NSX-T DNS
+DNS Zone Configuration
+
+In the DNS Zone tab, click add
+Under Type, select FQDN zone
+Fill in the remaining fields
+DNS zone name - User friendly name
+Domain - FQDN that the customer would like to resolve
+DNS server IP - DNS Servers that would be used to resolve the domain FQDN
+Source IP - Can leave blank
+Click OK to create the DNS Zone.
+![image](https://user-images.githubusercontent.com/67286499/184912575-ee0a6cef-dcb1-48f7-87ae-aa54be466538.png)
+
+DNS Service Configuration
+
+After the DNS Zone has been created (may take a few minutes), navigate to the DNS Service tab
+Click Edit.
+From the FQDN Zones drop down, select the FQDN Zone that was created in the previous step.
+Ensure the default DNS Zone is selected, similar to the photo below.
+Click OK to configure the DNS Service.
+
+![image](https://user-images.githubusercontent.com/67286499/184912921-3327eae5-b068-4bc1-85fb-cbe1c46e194b.png)
+
 ## Add Active Directory over LDAP with SSL
 
 You'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL as an external identity source to use with SSO into vCenter Server. 
@@ -112,8 +137,8 @@ You'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL 
    | **Credential**  | The domain username and password used for authentication with the AD source (not cloudadmin). The user must be in the **username@avslab.local** format. |
    | **BaseDNGroups**  | Where to look for groups, for example, **CN=group1, DC=avsldap,DC=local**. Base DN is needed to use LDAP Authentication.  |
    | **BaseDNUsers**  |  Where to look for valid users, for example, **CN=users,DC=avsldap,DC=local**.  Base DN is needed to use LDAP Authentication.  |
-   | **PrimaryUrl**  | Primary URL of the external identity source, for example, **ldaps://yourserver.avslab.local:636**.  |
-   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local:636**. |
+   | **PrimaryUrl**  | Primary URL of the external identity source, for example, **ldaps://yourserver.avslab.local.:636**.  |
+   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local.:636**. |
    | **DomainAlias**  | For Active Directory identity sources, the domain's NetBIOS name. Add the NetBIOS name of the AD domain as an alias of the identity source. Typically the **avsldap\** format.    |
    | **DomainName**  | The FQDN of the domain, for example **avslab.local**.  |
    | **Name**  | User-friendly name of the external identity source, for example, **avslab.local**. This is how it will be displayed in vCenter. |
