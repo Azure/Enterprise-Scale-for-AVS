@@ -112,8 +112,8 @@ You'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL 
    | **Credential**  | The domain username and password used for authentication with the AD source (not cloudadmin). The user must be in the **username@avslab.local** format. |
    | **BaseDNGroups**  | Where to look for groups, for example, **CN=group1, DC=avsldap,DC=local**. Base DN is needed to use LDAP Authentication.  |
    | **BaseDNUsers**  |  Where to look for valid users, for example, **CN=users,DC=avsldap,DC=local**.  Base DN is needed to use LDAP Authentication.  |
-   | **PrimaryUrl**  | Primary URL of the external identity source, for example, **ldaps://yourserver.avslab.local.:636**.  |
-   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local.:636**. |
+   | **PrimaryUrl**  | Primary URL of the external identity source, for example, **ldaps://yourserver.avslab.local:636**.  |
+   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local:636**. |
    | **DomainAlias**  | For Active Directory identity sources, the domain's NetBIOS name. Add the NetBIOS name of the AD domain as an alias of the identity source. Typically the **avsldap\** format.    |
    | **DomainName**  | The FQDN of the domain, for example **avslab.local**.  |
    | **Name**  | User-friendly name of the external identity source, for example, **avslab.local**. This is how it will be displayed in vCenter. |
