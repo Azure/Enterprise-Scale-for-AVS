@@ -14,4 +14,20 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 * Enable Azure actity log collection to Log Analytics
 
-* Import Azure Monitor workbook using Advanced editor
+* Run one of the following scripts.
+
+### ARM
+
+```powershell
+cd ARM
+
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Workbook -c -f "AVSWorkbook.deploy.json"
+```
+
+## Post-deployment Steps
+
+* Navigate to the Azure Monitor Workbooks blade page in the Azure Portal. The workbook should appear under recently modified workbooks.
+
+## Next Steps
+
+[Configure Alerts](../AVS-Utilization-Alerts/)
