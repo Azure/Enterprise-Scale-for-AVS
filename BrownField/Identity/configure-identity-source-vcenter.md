@@ -15,22 +15,24 @@ In this how-to, you learn how to:
 
 > [!div class="checklist"]
 > * Export the certificate for LDAPS authentication
-> * Add Active Directory over LDAP, with or without SSL
+> * Upload the LDAPS certificate to blob storage and generate a SAS URL
+> * Configure NSX-T DNS for resolution to your Active Directory Domain
+> * Add Active Directory over (Secure) LDAPS (LDAP over SSL) or (unsecure) LDAP
 > * Add existing AD group to cloudadmin group
 > * List all existing external identity sources integrated with vCenter Server SSO
-> * Assign vCenter Server Roles to external identity
+> * Assign additional vCenter Server Roles to Active Directory Identities
 > * Remove AD group from the cloudadmin role
 > * Remove existing external identity sources
 
 
 ## Prerequisites/Steps
 
-- Established connectivity from your Active Directory network to your private cloud.
+- Connectivity from your Active Directory network to your AVS private cloud must be operational.
 
-- If you require AD authentication with LDAPS:
+- For AD authentication with LDAPS:
 
     - You will need access to the Active Directory Domain Controller(s) with Administrator permissions
-    - You will to verify your Active Directory Domain Controller(s) have LDAPS enabled and a valid certificate. The certificate could be issued by an [Active Directory Certificate Services Certificate Authority (CA)](https://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx) or [third-party CA](https://docs.microsoft.com/troubleshoot/windows-server/identity/enable-ldap-over-ssl-3rd-certification-authority). **Note**: Self-sign certificates are not recommended for production environments.  
+    - Your Active Directory Domain Controller(s) must have LDAPS enabled and should be using a valid certificate. The certificate could be issued by an [Active Directory Certificate Services Certificate Authority (CA)](https://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx) or [third-party CA](https://docs.microsoft.com/troubleshoot/windows-server/identity/enable-ldap-over-ssl-3rd-certification-authority). **Note**: Self-sign certificates are not recommended for production environments.  
     - [Export the certificate for LDAPS authentication](#export-the-certificate-for-ldaps-authentication) and upload it to an Azure Storage account as blob storage. Then, you'll need to [grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md).  
 
 - Ensure AVS has DNS resolution configured to your on-premises AD. Enable DNS Forwarder from Azure portal. See [Configure DNS forwarder for Azure VMware Solution](https://docs.microsoft.com/azure/azure-vmware/configure-dns-azure-vmware-solution) for further information.
@@ -85,48 +87,50 @@ Now proceed to export the certificate.
 >[!NOTE]
 >If more than one domain controller is LDAPS enabled, repeat the export procedure in the additional domain controller(s) to also export the corresponding certificate(s). Be aware that you can only reference two LDAPS server in the `New-LDAPSIdentitySource` Run Command. If the certificate is a wildcard certificate, for example ***.avsdemo.net** you only need to export the certificate from one of the domain controllers.
 
-Now you can continue with the next step [Add Active Directory over LDAP with SSL](#add-active-directory-over-ldap-with-ssl).
+## Upload the LDAPS certificate to blob storage and generate a SAS URL
 
-## Configuring NSX-T DNS
-DNS Zone Configuration
+- Upload the certificate file (.cer format) you just exported to an Azure Storage account as blob storage. Then [grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md). 
 
-In the DNS Zone tab, click add
+- If multiple certificates are required, upload each certificate individually and for each certificate, generate a SAS URL.
+
+> [!IMPORTANT]
+> Make sure to copy each SAS URL string(s), because they will no longer be available once you leave the page. 
+
+> [!TIP]
+> Another alternative method for consolidating certificates is saving the certificate chains in a single file as mentioned in [this VMware KB article](https://kb.vmware.com/s/article/2041378) and generate a single SAS URL for the file that contains all of the certificates.
+
+## Configure NSX-T DNS for resolution to your Active Directory Domain
+- **DNS Zone Configuration**
+
+1. In the DNS Zone tab, click add
 Under Type, select FQDN zone
-Fill in the remaining fields
+1. Fill in the remaining fields
 DNS zone name - User friendly name
 Domain - FQDN that the customer would like to resolve
 DNS server IP - DNS Servers that would be used to resolve the domain FQDN
 Source IP - Can leave blank
-Click OK to create the DNS Zone.
+1. Click OK to create the DNS Zone.
 ![image](https://user-images.githubusercontent.com/67286499/184912575-ee0a6cef-dcb1-48f7-87ae-aa54be466538.png)
 
-DNS Service Configuration
+- **DNS Service Configuration**
 
-- After the DNS Zone has been created (may take a few minutes), navigate to the DNS Service tab
-Click Edit.
+1. After the DNS Zone has been created (may take a few minutes), navigate to the DNS Service tab
+1. Click Edit.
 From the FQDN Zones drop down, select the FQDN Zone that was created in the previous step.
-Ensure the default DNS Zone is selected, similar to the photo below.
+1. Ensure the default DNS Zone is selected, similar to the photo below.
 Click OK to configure the DNS Service.
 
 ![image](https://user-images.githubusercontent.com/67286499/184912921-3327eae5-b068-4bc1-85fb-cbe1c46e194b.png)
 
-- In the DNS service tab, ensure there is a DNS Service similar to the image below[ This is sample image]
+- In the DNS service tab, ensure there is a DNS Service similar to the image below.
 ![image](https://user-images.githubusercontent.com/67286499/184913580-64df81fc-877e-4dbc-842b-28c21b7f1065.png)
 
-## Add Active Directory over LDAP with SSL
+AVS should now be able to resolve your on-prem Active Directory properly.
+## Add Active Directory over LDAPS
 
-You'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL as an external identity source to use with SSO into vCenter Server. 
+In your AVS private cloud you'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL as an external identity source to use with SSO into vCenter Server.
 
-1. Now that you have exported the certificate (.cer) to an Azure Storage account as blob storage, [grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md). If multiple certificates are required, upload each certificate individually.  
-
-1. For each certificate, [Grant access to Azure Storage resources using shared access signature (SAS)](../storage/common/storage-sas-overview.md). These SAS strings are supplied to the cmdlet as a parameter.
-
-1. An alternative method for consolidating certificates is saving the certificate chains in a single file as mentioned in [this VMware KB article](https://kb.vmware.com/s/article/2041378).
-
-   >[!IMPORTANT]
-   >Make sure to copy each SAS URL string(s), because they will no longer be available once you leave the page.  
-   
-1. Select **Run command** > **Packages** > **New-LDAPSIdentitySource**.
+1. Browse to your AVS private cloud and then select **Run command** > **Packages** > **New-LDAPSIdentitySource**.
 
 1. Provide the required values or change the default values, and then select **Run**.
 
@@ -138,7 +142,7 @@ You'll run the `New-LDAPSIdentitySource` cmdlet to add an AD over LDAP with SSL 
    | **BaseDNGroups**  | Where to look for groups, for example, **CN=group1, DC=avsldap,DC=local**. Base DN is needed to use LDAP Authentication.  |
    | **BaseDNUsers**  |  Where to look for valid users, for example, **CN=users,DC=avsldap,DC=local**.  Base DN is needed to use LDAP Authentication.  |
    | **PrimaryUrl**  | Primary URL of the external identity source, for example, **ldaps://yourserver.avslab.local.:636**.  |
-   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local.:636**. |
+   | **SecondaryURL**  | Secondary fall-back URL if there's primary failure. For example, **ldaps://yourbackupldapserver.avslab.local:636**. |
    | **DomainAlias**  | For Active Directory identity sources, the domain's NetBIOS name. Add the NetBIOS name of the AD domain as an alias of the identity source. Typically the **avsldap\** format.    |
    | **DomainName**  | The FQDN of the domain, for example **avslab.local**.  |
    | **Name**  | User-friendly name of the external identity source, for example, **avslab.local**. This is how it will be displayed in vCenter. |
@@ -202,12 +206,8 @@ You'll run the `Get-ExternalIdentitySources` cmdlet to list all external identit
 
 1. Select **Run command** > **Packages** > **Get-ExternalIdentitySources**.
 
-   :::image type="content" source="media/run-command/run-command-overview.png" alt-text="Screenshot showing how to access the run commands available." lightbox="media/run-command/run-command-overview.png":::
-
-1. Provide the required values or change the default values, and then select **Run**.
-
-   :::image type="content" source="media/run-command/run-command-get-external-identity-sources.png" alt-text="Screenshot showing how to list external identity source. ":::
-   
+   1. Provide the required values or change the default values, and then select **Run**.
+  
    | **Field** | **Value** |
    | --- | --- |
    | **Retain up to**  |Retention period of the cmdlet output. The default value is 60 days.   |
@@ -216,8 +216,6 @@ You'll run the `Get-ExternalIdentitySources` cmdlet to list all external identit
 
 1. Check **Notifications** or the **Run Execution Status** pane to see the progress.
     
-    :::image type="content" source="media/run-command/run-packages-execution-command-status.png" alt-text="Screenshot showing how to check the run commands notification or status." lightbox="media/run-command/run-packages-execution-command-status.png":::
-
 ## Assign additional vCenter Server Roles to Active Directory Identities
 Once you added an external identity over LDAP or LDAPS you can assign vCenter Server Roles to Active Directory security groups based on your organization's security controls.
 
@@ -270,7 +268,6 @@ You'll run the `Remove-ExternalIdentitySources` cmdlet to remove all existing ex
 
 Now that you've learned about how to configure LDAP and LDAPS, you can learn more about:
 
-- [How to configure storage policy](configure-storage-policy.md) - Each VM deployed to a vSAN datastore is assigned at least one VM storage policy. You can assign a VM storage policy in an initial deployment of a VM or when you do other VM operations, such as cloning or migrating.
+- [Configure external identity source for NSX-T](/BrownField/Identity/configure-identity-source-nsxt.md) - Use Active Directory as external identity in NSX-T. 
 
 - [Azure VMware Solution identity concepts](concepts-identity.md) - Use vCenter Server to manage virtual machine (VM) workloads and NSX-T Manager to manage and extend the private cloud. Access and identity management use the CloudAdmin role for vCenter Server and restricted administrator rights for NSX-T Manager. 
-
