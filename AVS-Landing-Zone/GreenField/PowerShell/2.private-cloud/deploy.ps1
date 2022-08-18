@@ -21,13 +21,14 @@ if (Get-Module -ListAvailable -Name Az.VMware)
 
 ## deploying new private cloud
 
-## TODO hard coded variables for now - need to be removed
+## TODO - hard coded variables for now - need to be removed
 $technology = "avs"
 $resourceGroupLocation = "germanywestcentral"
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## private cloud variables
 $sku = "av36"
+## TODO - ask for networking block
 $networkBlock = "192.168.48.0/22"
 $managementClusterSize = "3"
 $cloudName = "azps_test_cloud"
