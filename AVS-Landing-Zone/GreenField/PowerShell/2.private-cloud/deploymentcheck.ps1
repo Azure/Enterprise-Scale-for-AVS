@@ -1,11 +1,11 @@
 ## TODO hard coded variables for now - need to be removed
-$rgName = "private_cloud_rg4"
+$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## private cloud variables
 $cloudName = "azps_test_cloud"
 
 ## get private cloud
-$privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $rgName -Name $cloudName
+$privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
 
 ##does private cloud exist?
 if ($null -eq $privateCloud) {
@@ -16,7 +16,7 @@ if ($null -eq $privateCloud) {
 if ($null -ne $privateCloud)
 {
     do {
-        $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $rgName -Name $cloudName
+        $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
         $provisioningStatus = $privateCloud.provisioningState
         $timestamp = get-date -Format "dd-MM-yyyy - HH:mm:ss"
         switch ($provisioningStatus) {
