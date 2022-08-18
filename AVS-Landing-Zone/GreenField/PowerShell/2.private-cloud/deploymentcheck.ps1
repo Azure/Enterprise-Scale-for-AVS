@@ -2,8 +2,9 @@
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## private cloud variables
-$cloudName = "azps_test_cloud"
-
+$technology = "avs"
+$resourceGroupLocation = "germanywestcentral"
+$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 ## get private cloud
 $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
 
