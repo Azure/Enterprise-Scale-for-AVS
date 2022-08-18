@@ -10,7 +10,7 @@
 ###############################################
 
 
-## Do yo have AVS Module installed?
+## Do you have AVS Module installed?
 if (Get-Module -ListAvailable -Name Az.VMware)
 { write-output "Module exists"
 } else {
