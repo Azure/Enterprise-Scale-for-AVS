@@ -1,3 +1,14 @@
+###############################################
+#                                             #
+#  Author : Fletcher Kelly                    #
+#  Github : github.com/fskelly                #
+#  Purpose : AVS - Deploy reporting sample    #
+#  Built : 21-July-2022                       #
+#  Last Tested : 02-August-2022               #
+#  Language : PowerShell                      #
+#                                             #
+###############################################
+
 ## resource group variables
 ## Define location for resource groups
 $technology = "avs"
