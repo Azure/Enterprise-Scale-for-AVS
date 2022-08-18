@@ -10,7 +10,7 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 ## Deployment Steps
 
-* Enable metric and log colelction for AVS
+* Enable metric and log collection for AVS
 
 * Enable Azure actity log collection to Log Analytics
 
