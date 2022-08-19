@@ -870,28 +870,11 @@
                 "name": "text - 4"
               },
               {
-                "type": 11,
+                "type": 1,
                 "content": {
-                  "version": "LinkItem/1.0",
-                  "style": "nav",
-                  "links": [
-                    {
-                      "id": "7c78275e-a657-4501-a90c-26107427336b",
-                      "cellValue": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json",
-                      "linkTarget": "Url",
-                      "linkLabel": "Deploy Metric Alerts",
-                      "style": "link"
-                    },
-                    {
-                      "id": "15af649e-1348-45dc-a822-ef3d0ce3fae5",
-                      "cellValue": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json",
-                      "linkTarget": "Url",
-                      "linkLabel": "Deploy Service Health Alerts",
-                      "style": "link"
-                    }
-                  ]
+                  "json": "[![Metric Alerts](https://shields.io/badge/Deploy-Metric--Alerts-blue?logo=appveyor&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json)\r\n[![Metric Alerts](https://shields.io/badge/Deploy-Service--Health--Alerts-blue?logo=appveyor&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json)\r\n"
                 },
-                "name": "links - 3"
+                "name": "text - 6"
               },
               {
                 "type": 3,
