@@ -872,7 +872,7 @@
               {
                 "type": 1,
                 "content": {
-                  "json": "[![Metric Alerts](https://shields.io/badge/Deploy-Metric--Alerts-blue?logo=appveyor&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json)\r\n[![Metric Alerts](https://shields.io/badge/Deploy-Service--Health--Alerts-blue?logo=appveyor&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json)\r\n"
+                  "json": "[![Metric Alerts](https://shields.io/badge/-Deploy--Metric--Alerts-blue?logo=MicrosoftAzure&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json)\r\n[![Metric Alerts](https://shields.io/badge/-Deploy--Service--Health--Alerts-blue?logo=MicrosoftAzure&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json)\r\n"
                 },
                 "name": "text - 6"
               },
