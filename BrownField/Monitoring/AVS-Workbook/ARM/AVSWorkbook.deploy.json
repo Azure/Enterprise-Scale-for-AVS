@@ -870,11 +870,28 @@
                 "name": "text - 4"
               },
               {
-                "type": 1,
+                "type": 11,
                 "content": {
-                  "json": "[![Metric Alerts](https://shields.io/badge/-Deploy--Metric--Alerts-blue?logo=MicrosoftAzure&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json)\r\n[![Metric Alerts](https://shields.io/badge/-Deploy--Service--Health--Alerts-blue?logo=MicrosoftAzure&style=for-the-badge)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json)\r\n"
+                  "version": "LinkItem/1.0",
+                  "style": "nav",
+                  "links": [
+                    {
+                      "id": "11763710-bc13-4652-85c8-e2fa66a62c0a",
+                      "cellValue": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json",
+                      "linkTarget": "Url",
+                      "linkLabel": "Deploy Metric Alerts",
+                      "style": "link"
+                    },
+                    {
+                      "id": "93c23f27-38e9-429c-a1fb-3c24fa4b17fd",
+                      "cellValue": "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json",
+                      "linkTarget": "Url",
+                      "linkLabel": "Deploy Service Health Alerts",
+                      "style": "link"
+                    }
+                  ]
                 },
-                "name": "text - 6"
+                "name": "links - 6"
               },
               {
                 "type": 3,
