@@ -24,9 +24,9 @@ $tags = @{"deploymentMethod"="PowerShell"; "Can Be Deleted"="yes"; "Technology"=
 foreach ($resourceGroup in $resourceGroups) {
   ## Create resource group
   $resourceGroupName = $resourceGroup
-  New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
-  #New-AzTag -ResourceId $rg.ResourceId -Tag $tags
-  write-host "Resource group " -NoNewline 
-  write-host $resourceGroupName -NoNewline -ForegroundColor Green 
-  write-host " created successfully"
+  $rg = New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
+  ## Uncomment line below to add tags
+  ## New-AzTag -ResourceId $rg.ResourceId -Tag $tags
+  $resourceGropupMessage = "Resource group " + $resourceGroupName + " created successfully"
+  Write-Output $resourceGropupMessage
 }
