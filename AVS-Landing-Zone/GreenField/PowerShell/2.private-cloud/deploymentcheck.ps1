@@ -14,7 +14,7 @@ if ($null -ne $rgCheck) {
     $cloudName = "azps_test_cloud"
 
     ## get private cloud
-    $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $rgName -Name $cloudName -erroraction silentlycontinue
+    $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName -erroraction silentlycontinue
 
     ##does private cloud exist?
     if ($null -eq $privateCloud) {
