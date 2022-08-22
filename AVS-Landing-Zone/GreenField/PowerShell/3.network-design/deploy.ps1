@@ -23,10 +23,15 @@ $frontEndName = "frontend"
 ## Define location for resource groups
 $networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
 
+## Virtual Network Variables
+$frontEndSubnetCidr = "10.0.1.0/26"
+$AzureBastionSubnetCidr = "10.0.1.64/26"
+$GatewaySubnetCidr = "10.0.1.128/26"
+
 ## Virtual Network Deployment
-$frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name $frontEndName -AddressPrefix "10.0.1.0/26"
-$bastionSubnet = New-AzVirtualNetworkSubnetConfig -Name AzureBastionSubnet -AddressPrefix "10.0.1.64/26"
-$gatewaySubnet = New-AzVirtualNetworkSubnetConfig -Name GatewaySubnet -AddressPrefix "10.0.1.128/26"
+$frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name $frontEndName -AddressPrefix $frontEndSubnetCidr
+$bastionSubnet = New-AzVirtualNetworkSubnetConfig -Name AzureBastionSubnet -AddressPrefix $AzureBastionSubnetCidr
+$gatewaySubnet = New-AzVirtualNetworkSubnetConfig -Name GatewaySubnet -AddressPrefix $GatewaySubnetCidr
 $vnet = New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $networkingRgName -Location $vnetLocation -AddressPrefix $vnetCidr -Subnet $frontendSubnet,$bastionSubnet,$gatewaySubnet
 
 ## virtual network gateway variables
