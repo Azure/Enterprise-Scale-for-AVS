@@ -41,7 +41,8 @@ This section contains templates to deploy specific components and add-ins for AV
 
 | Scenario                                                 | Description                                                          | More Info |
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
-| Scenario 2                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Scenario-2/readme.md) |
+| Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Scenario-2/readme.md) |
+| Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
 
 
 ## Run Commands
