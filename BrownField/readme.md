@@ -39,11 +39,9 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ## AVS Networking Step-by-Step Guides
 
-| Scenario   | Description                                                                                                                | More Info |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------- | ----------|
-| Scenario 2 | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure | [Link](Step-By-Step-Guides\Scenario-2\readme.md)
-
-
+| Scenario               | Description                                                                                                    | More Info |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- | --------- |
+| Scenario 2             | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure | [Link](Networking\Step-By-Step-Guides\Scenario-2\readme.md)
 
 
 ## Run Commands
