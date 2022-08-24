@@ -31,3 +31,11 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Workbook -c 
 ## Next Steps
 
 [Configure Alerts](../AVS-Utilization-Alerts/)
+
+## Screenshots
+
+Summary View
+![image](https://user-images.githubusercontent.com/50588165/186345393-aecbc021-c449-47f0-ba28-f4ac26554f6e.png)
+
+VM View
+![image](https://user-images.githubusercontent.com/50588165/186345524-8db1a634-856f-4d8a-98a7-23641ab5ca7e.png)
