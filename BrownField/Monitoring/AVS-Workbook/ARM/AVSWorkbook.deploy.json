@@ -8,20 +8,6 @@
         "description": "The friendly name for the workbook that is used in the Gallery or Saved List.  This name must be unique within a resource group."
       }
     },
-    "workbookType": {
-      "type": "string",
-      "defaultValue": "workbook",
-      "metadata": {
-        "description": "The gallery that the workbook will been shown under. Supported values include workbook, tsg, etc. Usually, this is 'workbook'"
-      }
-    },
-    "workbookSourceId": {
-      "type": "string",
-      "defaultValue": "Azure Monitor",
-      "metadata": {
-        "description": "The id of resource instance to which the workbook will be associated"
-      }
-    },
     "workbookId": {
       "type": "string",
       "defaultValue": "[newGuid()]",
@@ -1120,7 +1106,8 @@
       "fallbackResourceIds": [
         "Azure Monitor"
       ]
-    }
+    },
+    "varCuaid":"5de39fbe-0b6b-4acf-b01c-cbf2cb8638fc"
   },
   "resources": [
     {
@@ -1134,8 +1121,32 @@
         "displayName": "[parameters('workbookDisplayName')]",
         "serializedData": "[string(variables('workbookContent'))]",
         "version": "1.0",
-        "sourceId": "[parameters('workbookSourceId')]",
-        "category": "[parameters('workbookType')]"
+        "sourceId": "Azure Monitor",
+        "category": "workbook"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1318.3566",
+              "templateHash": "10779157790839886898"
+            }
+          },
+          "resources": []
+        }
       }
     }
   ],

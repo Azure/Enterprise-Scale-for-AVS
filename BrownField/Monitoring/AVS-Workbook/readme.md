@@ -12,9 +12,9 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 ## Deployment Steps
 
-* Enable metric and log collection for AVS
+* Enable metric and log collection for your AVS Private Cloud
 
-* Enable Azure actity log collection to Log Analytics
+* Enable Azure activity log collection from your AVS Private Cloud to Log Analytics
 
 * Run the following script
 
