@@ -84,20 +84,16 @@ variable "email_addresses" {
   description = "A list of email addresses where service health alerts will be sent"
 }
 
-/*
 variable "jumpbox_spoke_vnet_address_space" {
   type        = list(string)
-  description = "Address space summaries for the spoke Vnet"
+  description = "List of CIDR ranges assigned to the hub VNET.  Typically one larger range."
 }
 
-variable "bastion_subnet_prefix" {
-  type        = list(string)
-  description = "A list of subnet prefix CIDR values used for the bastion subnet address space"
-}
-
-variable "jumpbox_subnet_prefix" {
-  type        = list(string)
-  description = "A list of subnet prefix CIDR values used for the jumpbox subnet address space"
+variable "jumpbox_spoke_vnet_subnets" {
+  type = list(object({
+    name           = string
+    address_prefix = list(string)
+  }))
 }
 
 variable "jumpbox_sku" {
@@ -110,4 +106,4 @@ variable "admin_username" {
   type        = string
   description = "The username for the jumpbox admin login"
 }
-*/
+

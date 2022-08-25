@@ -158,16 +158,7 @@ module "spoke_vnet_for_jump_and_bastion" {
   virtual_hub_spoke_vnet_connection_name = local.jumpbox_spoke_vnet_connection_name
   virtual_hub_id                         = module.avs_vwan_hub_with_vpn_and_express_route_gateways.vwan_hub_id
   tags                                   = var.tags
-  vwan_spoke_subnets = [
-    {
-      name           = "JumpboxSubnet",
-      address_prefix = var.jumpbox_subnet_prefix
-    },
-    {
-      name           = "AzureBastionSubnet",
-      address_prefix = var.bastion_subnet_prefix
-    }
-  ]
+  vwan_spoke_subnets                     = var.jumpbox_spoke_vnet_subnets
 }
 
 #deploy the bastion host
@@ -209,7 +200,7 @@ module "avs_jumpbox" {
   jumpbox_sku       = var.jumpbox_sku
   rg_name           = azurerm_resource_group.greenfield_jumpbox.name
   rg_location       = azurerm_resource_group.greenfield_jumpbox.location
-  jumpbox_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpboxSubnet"].id
+  jumpbox_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpBoxSubnet"].id
   admin_username    = var.admin_username
   key_vault_id      = module.avs_keyvault_with_access_policy.keyvault_id
   tags              = var.tags

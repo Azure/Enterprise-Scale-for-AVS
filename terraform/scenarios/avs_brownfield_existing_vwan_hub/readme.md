@@ -3,8 +3,8 @@
 ## Table of contents
 
 - [Scenario Details](#scenario-details)
-- [Scenario Implementation - Manual Steps](#scenario-implementation-with-manual-steps)
 - [Scenario Implementation - Automation Options](#automation-implementation)
+- [Scenario Implementation - Manual Steps](#scenario-implementation-with-manual-steps)
 - [Appendix](#appendix)
 
 
@@ -26,6 +26,16 @@ Internet ingress and egress to AVS will leverage the existing customer VWAN conf
 
 - The existing VWAN hub will be configured with an ExpressRoute gateway.
 - The default route table has the 0.0.0.0/0 route sending internet traffic to the preferred security appliance
+
+[(Back to top)](#table-of-contents)
+
+## Automation implementation
+
+This scenario is organized using a root module included in this folder, and a number of child modules included in the modules subdirectory of the terraform directory of this repo.  This root module includes a tfvars sample file that contains an example set of input values. This module also includes a sample providers file that can be modified to fit your specific environment.
+
+To deploy this module, ensure you have a deployment machine that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
+
+Execute the terraform init/plan/apply workflow to execute the deployment.
 
 [(Back to top)](#table-of-contents)
 
@@ -58,15 +68,7 @@ These steps represent deploying a configuration using the portal and vcenter.
 - Test the connectivity from the on-premises connection and validate any internet connectivity
 
 [(Back to top)](#table-of-contents)
-## Automation implementation
 
-This scenario is organized using a root module included in this folder, and a number of child modules included in the modules subdirectory of the terraform directory of this repo.  This root module includes a tfvars sample file that contains an example set of input values. This module also includes a sample providers file that can be modified to fit your specific environment.
-
-To deploy this module, ensure you have a deployment machine that meets the pre-requisites for Azure Deployments with terraform. Clone this repo to a local directory on the deployment machine.  Update the providers and tfvars sample files and remove the .sample extension.
-
-Execute the terraform init/plan/apply workflow to execute the deployment.
-
-[(Back to top)](#table-of-contents)
 
 ## Appendix
 

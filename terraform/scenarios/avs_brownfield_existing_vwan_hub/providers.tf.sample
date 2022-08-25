@@ -21,7 +21,7 @@ terraform {
     tenant_id            = "<Azure AD tenant guid for the tfstate storage account>"
   }
 */
-
+ required_version = ">= 1.0"
 }
 
 provider "azapi" {
@@ -31,5 +31,6 @@ provider "azuread" {
 }
 
 provider "azurerm" {
+  partner_id = "d8a06ade-2654-4a78-99da-e941f87a3a2a"
   features {}
 }
