@@ -3,7 +3,7 @@
     "view": {
         "kind": "Form",
         "properties": {
-            "title": "AVS Landing Zone Accelerator (Preview)",
+            "title": "AVS Landing Zone Accelerator",
             "steps": [
                 {
                     "name": "basics",
@@ -320,7 +320,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
                             "toolTip": "Virtual network in Azure Native to host the ExpressRoute Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
-                            "defaultValue": "192.168.0.0/22",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.0.0/22",
                             "constraints": {
                                 "required": true,
@@ -334,7 +334,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Enter the address prefix for the new GatewaySubnet",
-                            "defaultValue": "192.168.0.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.0.0/27",
                             "constraints": {
                                 "required": true,
@@ -447,7 +447,7 @@
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Enter the address prefix for the new GatewaySubnet",
-                            "defaultValue": "192.168.0.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.0.0/27",
                             "constraints": {
                                 "required": true,
@@ -460,8 +460,7 @@
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
                             "options": {
-                                "text": "Ensure subnet prefix is correct and available in your virtual network",
-                                "uri": "",
+                                "text": "Ensure subnet prefix is correct and available in your virtual network.",
                                 "style": "Warning"
                             }
                         },                    
@@ -522,7 +521,7 @@
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "The Bastion host is deployed in the virtual network that contains the AzureBastionSubnet subnet that has a minimum /26 prefix.",
-                            "defaultValue": "192.168.1.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.1.0/24",
                             "constraints": {
                                 "required": true,
@@ -536,7 +535,7 @@
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "New Subnet for the Jumpbox",
-                            "defaultValue": "192.168.2.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.2.0/24",
                             "constraints": {
                                 "required": true,
@@ -627,10 +626,10 @@
                                     "name": "onpreminfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "On-premise connectivity is also typically required especially for any migrations of workloads via HCX. There are a few ways for connectivity - ExpressRoute, vWAN or VPN. In the previous section, we connected AVS to Azure using an ExpressRoute Gateway. When a VPN is used for connectivity, a VPN Gateway is used instead. If vWAN is used, then route exchanges between gateway happen automatically. However for standalone VPN Gateways, in order for the VPN traffic to flow to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. See diagram in the link below:",
+                                        "text": "On-premise connectivity is also typically required especially for any migrations of workloads via HCX. There are a few ways for connectivity - ExpressRoute, vWAN or VPN. In the previous section we connected AVS to Azure using an ExpressRoute Gateway. When a VPN is used for connectivity, a VPN Gateway is used instead. However, in order for the VPN traffic to flow from the VPN Gateway to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. See diagram in the link below. See diagram in the link below:",
                                         "link": {
                                             "label": "Learn more",
-                                            "uri": "https://raw.githubusercontent.com/shaunjacob/AVSAccelerator/main/docs/images/AVS-RouteServer.png"
+                                            "uri": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/docs/images/AVS-RouteServer.png"
                                         }
                                     }
                                 },
@@ -887,7 +886,7 @@
                 },
                 {
                     "name": "Addons",
-                    "label": "AVS Addons",
+                    "label": "Addons",
                     "elements": [
                         {
                             "name": "AVSBaseAlerts",
@@ -901,7 +900,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Deploy HCX",
-                            "defaultValue": "No",
+                            "defaultValue": "Yes",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
