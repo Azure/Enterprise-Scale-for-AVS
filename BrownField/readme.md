@@ -44,8 +44,3 @@ This section contains templates to deploy specific components and add-ins for AV
 | Scenario 2                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Scenario-2/readme.md) |
 
 
-## Run Commands
-
-| Deploy                                                       | Description                                                  | More Info                                                    |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/readme.md) |
