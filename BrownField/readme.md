@@ -45,8 +45,3 @@ This section contains templates to deploy specific components and add-ins for AV
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
 
 
-## Run Commands
-
-| Deploy                                                       | Description                                                  | More Info                                                    |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/readme.md) |
