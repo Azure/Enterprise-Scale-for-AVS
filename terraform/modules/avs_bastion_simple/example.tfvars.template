@@ -1,0 +1,8 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  bastion_pip_name  = "AVS_Sample_Bastion_PIP"
+  bastion_name      = "AVS_Sample_Bastion"
+  rg_name           = "AVS_Sample_RG_Name"
+  rg_location       = "Southeast Asia"
+  bastion_subnet_id = "<Resource_ID_of_the_Bastion_Subnet>"
+  tags              = {Sample_key = "Sample_value"}

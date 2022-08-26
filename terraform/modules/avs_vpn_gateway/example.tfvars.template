@@ -1,0 +1,10 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  vpn_pip_name_1    = "AVS_VPN_Gateway_PIP_1"
+  vpn_pip_name_2    = "AVS_VPN_Gateway_PIP_1"
+  vpn_gateway_name  = "AVS_VPN_Gateway"
+  vpn_gateway_sku   = "VpnGw2"
+  asn               = 65515 
+  rg_name           = "AVS_Sample_RG_Name"
+  rg_location       = "Southeast Asia"
+  gateway_subnet_id = "<Resource_ID_of_the_Gateway_Subnet>"

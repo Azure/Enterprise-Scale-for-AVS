@@ -1,0 +1,11 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  rg_name              = "AVS_Sample_RG_Name"
+  rg_location          = "Southeast Asia"
+  firewall_sku_tier    = "Standard" 
+  firewall_pip_name    = "AVS_Azure_Firewall_PIP_1"
+  firewall_name        = "AVS_Azure_Firewall"
+  firewall_subnet_id   = "<Resource_ID_of_the_firewall_Subnet>"
+  log_analytics_name   = "AVS_Firewall_LA"
+  firewall_policy_name = "AVS_Firewall_Policy"
+  tags                 = {Sample_key = "Sample_value"}
