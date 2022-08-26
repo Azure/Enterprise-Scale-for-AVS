@@ -3,7 +3,7 @@
   "parameters": {
     "workbookDisplayName": {
       "type": "string",
-      "defaultValue": "Azure VMWare Solution AVS",
+      "defaultValue": "Azure VMware Solution AVS",
       "metadata": {
         "description": "The friendly name for the workbook that is used in the Gallery or Saved List.  This name must be unique within a resource group."
       }
@@ -160,14 +160,14 @@
         {
           "type": 1,
           "content": {
-            "json": "# This workbook shows information relevant to deployed Azure VMWare Solutions"
+            "json": "# This workbook shows information relevant to deployed Azure VMware Solutions"
           },
           "name": "text - 4"
         },
         {
           "type": 1,
           "content": {
-            "json": "# Change Log\r\n\r\n### Version 1\r\nThis is the origional version of the AVS workbooks and features:\r\n1. A summary of the AVS soltuons deployed\r\n2. Metrics performance view\r\n3. Activity section related to AVS\r\n\r\nVersion 2\r\nAdded VMWare resource view\r\n\r\n### Version 3 \r\nAdded VM Information \r\n\r\n### Version 4\r\nAdded Alert information\r\n\r\n### Version 5\r\nAdded help for configuring Alerts"
+            "json": "# Change Log\r\n\r\n### Version 1\r\nThis is the origional version of the AVS workbooks and features:\r\n1. A summary of the AVS soltuons deployed\r\n2. Metrics performance view\r\n3. Activity section related to AVS\r\n\r\nVersion 2\r\nAdded VMware resource view\r\n\r\n### Version 3 \r\nAdded VM Information \r\n\r\n### Version 4\r\nAdded Alert information\r\n\r\n### Version 5\r\nAdded help for configuring Alerts"
           },
           "conditionalVisibility": {
             "parameterName": "ChangeLog",
