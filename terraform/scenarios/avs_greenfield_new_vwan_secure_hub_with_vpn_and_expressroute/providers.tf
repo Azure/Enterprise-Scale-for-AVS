@@ -9,8 +9,8 @@ terraform {
     }
   }
 
-#This block can be populated and uncommented if using Azure Storage for remote state
-/*
+  #This block can be populated and uncommented if using Azure Storage for remote state
+  /*
   backend "azurerm" {
     resource_group_name  = "<tfstate storage account resource group name>"
     storage_account_name = "<tfstate storage account name>"
@@ -21,7 +21,7 @@ terraform {
     tenant_id            = "<Azure AD tenant guid for the tfstate storage account>"
   }
 */
- required_version = ">= 1.0"
+  required_version = ">= 1.0"
 }
 
 provider "azapi" {
