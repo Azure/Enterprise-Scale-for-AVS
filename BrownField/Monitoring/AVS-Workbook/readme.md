@@ -4,7 +4,7 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 ## Note Preview Features
 
-**Some features of this workbook (Resources and Virtual Machines Tab) require the Azure Arc Enabled VMWare feature which is currently in preview and only available in East US and West Europe**
+**Some features of this workbook (Resources and Virtual Machines Tab) require the Azure Arc Enabled VMware feature which is currently in preview and only available in East US and West Europe**
 
 ## Prerequisites
 
