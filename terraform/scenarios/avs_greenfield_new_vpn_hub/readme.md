@@ -11,7 +11,7 @@
 ## Scenario Details
 
 ### Overview
-This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for Azure workloads. This configuration allows for inclusion of custom subnets for adding your choice of 3rd party NVA's in the hub, but does not deploy the Firewall resources.
+This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for Azure workloads. This configuration allows for inclusion of custom subnets for adding your choice of 3rd party NVA's in the hub, but does not deploy the Firewall resources. AVS Landing Zone concepts can be explored in more detail via the [official documentation page](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/ready). 
 
 A spoke subnet with a Jumpbox VM and Azure Bastion is included in this deployment for initial configuration and troubleshooting.  If you determine that these aren't desired or needed in your deployment, you can remove the last module in main.tf and leave the defaults for the input values. The initial random password is stored as a secret in the key vault deployed in the jumpbox resource group. An initial access policy is created for the deployment user, but any additional users will need to first update the key vault access policy prior to being able to access the secret.
 

@@ -11,7 +11,7 @@
 ## Scenario Details
 
 ### Overview
-This scenario is meant for customers who want to implement a new AVS private cloud connecting to an existing VWAN virtual hub. The solution implements a new AVS private cloud and creates an expressRoute connection to the VWAN hub. If the hub is a secure hub, then a flag can be set to toggle the connection to use the Azure firewall in the hub.
+This scenario is meant for customers who want to implement a new AVS private cloud connecting to an existing VWAN virtual hub. The solution implements a new AVS private cloud and creates an expressRoute connection to the VWAN hub. If the hub is a secure hub, then a flag can be set to toggle the connection to use the Azure firewall in the hub. AVS Landing Zone concepts can be explored in more detail via the [official documentation page](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/ready). 
 
 ![Existing VWAN Hub](./images/avs_vpn_hub_spoke.png)
 

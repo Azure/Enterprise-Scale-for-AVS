@@ -11,7 +11,7 @@
 ## Scenario Details
 
 ### Overview
-This scenario is meant for new Greenfield customers who want to implement a greenfield AVS environment using VPN to make the hybrid connection. The solution implements a new Secure VWAN hub with VPN and ExpressRoute gateways as well as an Azure Firewall with some basic connectivity rules. 
+This scenario is meant for new Greenfield customers who want to implement a greenfield AVS environment using VPN to make the hybrid connection. The solution implements a new Secure VWAN hub with VPN and ExpressRoute gateways as well as an Azure Firewall with some basic connectivity rules.  AVS Landing Zone concepts can be explored in more detail via the [official documentation page](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/ready). 
 
 This scenario also deploys a temporary spoke Vnet with a bastion and jump host.  These resources can be used for initial setup and testing and then be removed if there are prohibitions against allowing remote virtual machine access from the internet.
 
