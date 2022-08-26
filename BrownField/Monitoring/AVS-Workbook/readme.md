@@ -4,7 +4,7 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 ## Note Preview Features
 
-**Some features of this workbook (Resources and Virtual Machines Tab) require the Azure Arc Enabled VMWare feature which is currently in preview and only available in East US and West Europe**
+**Some features of this workbook (Resources and Virtual Machines Tab) require the Azure Arc Enabled VMware feature which is currently in preview and only available in East US and West Europe**
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Workbook -c 
 ## Screenshots
 
 Summary View
-![image](https://user-images.githubusercontent.com/50588165/186345393-aecbc021-c449-47f0-ba28-f4ac26554f6e.png)
+![image](https://user-images.githubusercontent.com/50588165/186952640-4083c8c9-ef10-4147-ab0e-6e62716afbc2.png)
 
 VM View
 ![image](https://user-images.githubusercontent.com/50588165/186345524-8db1a634-856f-4d8a-98a7-23641ab5ca7e.png)
