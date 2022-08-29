@@ -48,23 +48,20 @@ $cluster = New-AzVMwarePrivateCloud @cluster
 
 $deploySRM = $true
 if ($deploySRM) {
-$srmKey = ""
-$vrInstances = "1"
+    $srmKey = ""
+    $vrInstances = "1"
 
-#$privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
+    # Deploy SRM
+    $srmProperties = New-AzVMwareAddonSrmPropertiesObject -LicenseKey $srmKey
+    New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $srmProperties
 
-# Deploy SRM
-$srmProperties = New-AzVMwareAddonSrmPropertiesObject -LicenseKey $srmKey
-New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $srmProperties
-
-# Deploy vSphere Replication
-$vrsProperties = New-AzVMwareAddonVrPropertiesObject -VrsCount $vrInstances
-New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
+    # Deploy vSphere Replication
+    $vrsProperties = New-AzVMwareAddonVrPropertiesObject -VrsCount $vrInstances
+    New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
 }
 
 $deployHCX = $true
 if ($deployHCX) {
-
     ## TODO - try find equivalent PS code
     az vmware addon hcx create --resource-group $privateCloudRgName --private-cloud $cloudName --offer "VMware MaaS Cloud Provider"
 }
