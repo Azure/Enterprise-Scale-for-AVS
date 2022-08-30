@@ -46,9 +46,15 @@ $cluster = @{
 ## Azure private Cloud deployment deployment
 $cluster = New-AzVMwarePrivateCloud @cluster
 
-$deploySRM = $true
+## false is the default, change to $true to deploy SRM
+$deploySRM = $false
 if ($deploySRM) {
     $srmKey = ""
+    if ($srmKey -eq "")
+    {
+        $srmErrorMessage = "SRM key is not set"
+        Exit SRMKeyMissing
+    }
     $vrInstances = "1"
 
     # Deploy SRM
@@ -60,7 +66,8 @@ if ($deploySRM) {
     New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
 }
 
-$deployHCX = $true
+## false is the default, change to $true to deploy HCX
+$deployHCX = $false
 if ($deployHCX) {
     ## TODO - try find equivalent PS code
     az vmware addon hcx create --resource-group $privateCloudRgName --private-cloud $cloudName --offer "VMware MaaS Cloud Provider"
