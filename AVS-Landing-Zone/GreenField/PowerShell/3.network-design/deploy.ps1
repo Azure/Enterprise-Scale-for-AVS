@@ -79,7 +79,7 @@ $gwConfig = @{
 $exrVirtualNetworkGateway = New-AzVirtualNetworkGateway @gwConfig
 
 ## Authourization variables
-$privateCloudName = "GWC-PrivateCloud-1"
+#$privateCloudName = "GWC-PrivateCloud-1"
 $cloudName = "azps_test_cloud"
 $authName = "$technology-$resourceGroupLocation-$cloudName-authorization"
 #$privateCloudRgName =  "private_cloud_rg3"
@@ -128,7 +128,7 @@ if ($deployVpn) {
     }
     $arsSubnetConfig = Add-AzVirtualNetworkSubnetConfig @arsSubnet
     $vnet | Set-AzVirtualNetwork
-    $vnetInfo = get-azvirtualnetwork -resourcegroupname $networkingRgName -name $vnetName
+    $vnetInfo = get-azvirtualnetwork -ResourceGroupName $networkingRgName -name $vnetName
     $arsSubnetId = (Get-AzVirtualNetworkSubnetConfig -Name RouteServerSubnet -VirtualNetwork $vnetInfo).Id
 
     $arsPipName = "$technology-$resourceGroupLocation-ars-pip1"
