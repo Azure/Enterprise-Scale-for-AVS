@@ -5,7 +5,7 @@ $resourceGroupLocation = "germanywestcentral"
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## check for Resource Group and only continue if valid
-$rgCheck = Get-AzResourcegroup -Name $rgName -ErrorAction SilentlyContinue
+$rgCheck = Get-AzResourcegroup -Name $privateCloudRgName -ErrorAction SilentlyContinue
 
 ## if an error occurs, $rgCheck is NOT empty 
 if ($null -ne $rgCheck) {
