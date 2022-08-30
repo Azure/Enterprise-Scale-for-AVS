@@ -25,7 +25,7 @@ if ($null -ne $rgCheck) {
     if ($null -ne $privateCloud)
     {
         do {
-        $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $rgName -Name $cloudName
+        $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
         $provisioningStatus = $privateCloud.provisioningState
         $timestamp = get-date -Format "dd-MM-yyyy - HH:mm:ss"
         switch ($provisioningStatus) {
