@@ -60,11 +60,10 @@ $config = @{
     SubnetId = $gatewaySubnetConfig.Id
     PublicIpAddressId = $gwPublicIp.Id
 }
-#$ngwipconfig = New-AzVirtualNetworkGatewayIpConfig -Name $gatewayIpConfigName -SubnetId $gatewaySubnetConfig.Id -PublicIpAddressId $gwPublicIp.Id
 $ngwipconfig = New-AzVirtualNetworkGatewayIpConfig @config
 
-#$gatewaySKU = "ErGw1AZ"
-$gatewaySKU = "Standard"
+$gatewaySKU = "ErGw1AZ"
+#$gatewaySKU = "Standard"
 $vpnType = "PolicyBased"
 $gatewayType = "ExpressRoute"
 
@@ -81,11 +80,12 @@ $exrVirtualNetworkGateway = New-AzVirtualNetworkGateway @gwConfig
 
 ## Authourization variables
 $privateCloudName = "GWC-PrivateCloud-1"
-$authName = "$technology-$resourceGroupLocation-$privateCloudName-authorization"
+$cloudName = "azps_test_cloud"
+$authName = "$technology-$resourceGroupLocation-$cloudName-authorization"
 #$privateCloudRgName =  "private_cloud_rg3"
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 ## todo - add ExpressRoute authourization
-$avsAuth = New-AzVMwareAuthorization -Name $authName -PrivateCloudName $privateCloudName -ResourceGroupName $privateCloudRgName
+$avsAuth = New-AzVMwareAuthorization -Name $authName -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName
 
 ## ExpressRoute connection variables
 $authKey = $avsAuth.Key
@@ -118,10 +118,13 @@ if ($deployVpn) {
     $newgw = New-AzVirtualNetworkGateway -Name $vngName -ResourceGroupName $networkingRgName -IpConfigurations $gwIpconfig1, $gwIpconfig2 -GatewayType $gatewayType -EnableBgp $enableBGP -VpnType $vpnType -GatewaySku $vngSKU -Asn $vngASN -EnableActiveActiveFeature -Location $resourceGroupLocation
     
     $vnet = get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $networkingRgName
+
+    ## Azure Route Server variables
+    $arsPrefix = "10.0.2.0/16"
     $arsSubnet = @{
         Name = 'RouteServerSubnet'
         VirtualNetwork = $vnet
-        AddressPrefix = '10.0.2.0/26'
+        AddressPrefix = $arsPrefix
     }
     $arsSubnetConfig = Add-AzVirtualNetworkSubnetConfig @arsSubnet
     $vnet | Set-AzVirtualNetwork
