@@ -29,9 +29,8 @@ foreach ($receiver in $receivers) {
     $name = $receiver.Split("@")[0].replace(".","")
     $email = $receiver
     # $emailReceiver = New-AzActionGroupReceiver -Name $name -EmailReceiver -EmailAddress '$email'
-    $emailReceiver
     $emailReceiver = New-AzActionGroupReceiver -Name $name -EmailReceiver -EmailAddress $email
-    $actionGroup = Set-AzActionGroup -Name $actionGroupName -ShortName "avsalerts" -ResourceGroupName $actionGroupRgName -Receiver $email1
+    $actionGroup = Set-AzActionGroup -Name $actionGroupName -ShortName "avsalerts" -ResourceGroupName $actionGroupRgName -Receiver $emailReceiver
 }
 
 # Creates an ActionGroup reference object in memory.
@@ -73,9 +72,9 @@ Add-AzMetricAlertRuleV2 -Name "DiskUsedPercentageCritical" -ResourceGroupName $a
 
 ## Azure Activity Log Alerts
 ## TODO - Look at continuing to use bicepo file and pass parameters to the script
-$condition1 = New-AzActivityLogAlertCondition -Field 'category' -Equal 'ServiceHealth'
-$condition2 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ServiceName' -equal 'Azure VMware Solution'
-$condition3 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ImpactedRegions[*].RegionName' -equal 'germanywestcentral'
+#$condition1 = New-AzActivityLogAlertCondition -Field 'category' -Equal 'ServiceHealth'
+#$condition2 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ServiceName' -equal 'Azure VMware Solution'
+#$condition3 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ImpactedRegions[*].RegionName' -equal 'germanywestcentral'
 
 ## TODO - convert dashboard to workbook?
 ## deploy workbook as referenced object
