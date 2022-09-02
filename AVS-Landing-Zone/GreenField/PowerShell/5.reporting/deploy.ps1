@@ -9,6 +9,26 @@
 #                                             #
 ###############################################
 
+## Important link around azure-partner-customer-usage-attribution
+## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+
+<# 
+Notification for SDK or API deployments
+When you deploy <PARTNER> software, Microsoft can identify the installation of <PARTNER> software with the deployed Azure resources. Microsoft can correlate these resources used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The data is collected and governed by Microsoft's privacy policies, located at https://www.microsoft.com/trustcenter. 
+#>
+
+## Telemetry enabled by default, Can be disabled by change the value of the telemetry parameter to false
+$telemetry = $true
+
+if ($telemetry) {
+  ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+    Write-Output "Telemetry enabled"
+    $telemetryId = "pid-1b3bba10-820a-4081-9c50-a3b9861be3f9"
+    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent($telemetryId)
+} else {
+    Write-Host "Telemetry disabled"
+}
+
 ## resource group variables
 ## Define location for resource groups
 $technology = "avs"
