@@ -90,11 +90,11 @@ Add-AzMetricAlertRuleV2 -Name "DiskUsedPercentage" -ResourceGroupName $actionGro
 $criteria4 = New-AzMetricAlertRuleV2Criteria -MetricName "DiskUsedPercentage" -DimensionSelection $dsnameDim1 -TimeAggregation Average -Operator GreaterThan -Threshold 75
 Add-AzMetricAlertRuleV2 -Name "DiskUsedPercentageCritical" -ResourceGroupName $actionGroupRgName -WindowSize 0:30 -Frequency 0:5 -TargetResourceId $targetResourceID -Condition $criteria2 -ActionGroup $act -Severity 0 -Description "Storage Usage per Datastore Critical"
 
-## Azure Activity Log Alerts
+## Azure Activity Log Alerts (work in progress)
 ## TODO - Look at continuing to use bicepo file and pass parameters to the script
 #$condition1 = New-AzActivityLogAlertCondition -Field 'category' -Equal 'ServiceHealth'
 #$condition2 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ServiceName' -equal 'Azure VMware Solution'
 #$condition3 = New-AzActivityLogAlertCondition -Field 'properties.impactedServices[*].ImpactedRegions[*].RegionName' -equal 'germanywestcentral'
 
-## TODO - convert dashboard to workbook?
+## TODO - convert dashboard to workbook? (work in progress)
 ## deploy workbook as referenced object
