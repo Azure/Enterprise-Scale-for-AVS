@@ -18,7 +18,9 @@ $resourceGroupLocation = "germanywestcentral"
 $resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$technology-$resourceGroupLocation-networking_rg","$technology-$resourceGroupLocation-operational_rg","$technology-$resourceGroupLocation-jumpbox_rg"
 
 ## Define tags to be used if needed
-$tags = @{"deploymentMethod"="PowerShell"; "Can Be Deleted"="yes"; "Technology"="AVS"; "Onwer"="flkelly"}
+## other examples - to add technology, simply add $owner to the tags
+# $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"; "Onwer"="flkelly"}
+$tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"}
 
 ## create a loop to create resource groups
 foreach ($resourceGroup in $resourceGroups) {

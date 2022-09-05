@@ -47,23 +47,29 @@ $cluster = New-AzVMwarePrivateCloud @cluster
 
 $deploySRM = $true
 if ($deploySRM) {
-$srmKey = ""
-$vrInstances = "1"
+    ## update SRM Key
+    $srmKey = ""
 
-#$privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName
+    ## Checking if key is set
+    if ($srmKey -eq "")
+    {
+        $srmErrorMessage = "SRM key is not set"
+        write-output $srmErrorMessage
+        break
+    } else {
+        # Deploy SRM
+        $srmProperties = New-AzVMwareAddonSrmPropertiesObject -LicenseKey $srmKey
+        New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $srmProperties
+    }
 
-# Deploy SRM
-$srmProperties = New-AzVMwareAddonSrmPropertiesObject -LicenseKey $srmKey
-New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $srmProperties
-
-# Deploy vSphere Replication
-$vrsProperties = New-AzVMwareAddonVrPropertiesObject -VrsCount $vrInstances
-New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
+    $vrInstances = "1"
+    # Deploy vSphere Replication
+    $vrsProperties = New-AzVMwareAddonVrPropertiesObject -VrsCount $vrInstances
+    New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
 }
 
 $deployHCX = $true
 if ($deployHCX) {
-
     ## TODO - try find equivalent PS code
     az vmware addon hcx create --resource-group $privateCloudRgName --private-cloud $cloudName --offer "VMware MaaS Cloud Provider"
 }

@@ -21,7 +21,6 @@ $bastionName = "$technology-$resourceGroupLocation-bastion1"
 $vnetName = "$technology-$resourceGroupLocation-vnet1"
 $vnetLocation = "germanywestcentral"
 
-## TODO hard coded variables for now - need to be removed
 $jumpboxRgName = "$technology-$resourceGroupLocation-jumpbox_rg"
 $networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
 
@@ -45,23 +44,19 @@ $bastionConfig = @{
     PublicIpAddress = $bastionPublicIp
     VirtualNetwork = $vnet
 }
-#$bastion = New-AzBastion -ResourceGroupName $jumpboxRgName -Name $bastionName -PublicIpAddress $bastionPublicIp -VirtualNetwork $vnet
+## Deploy bastion
 $bastion = New-AzBastion @bastionConfig
 
 ## Deploy jumpbox
-##TODO - add jumpbox deployment - server 2019-smalldisk ; LRS ;  username = avsjump ; password = avsjump ; Standard_D2s_v3
+## update password as needed
+$password = ""
+
 $deployJumpbox = $true
 if ($deployJumpbox) {
     $vmSize = "Standard_D2s_v3"
-    #$vmName = "jumpbox-vm1"
-    $computerName = "jumpbox-vm2"
+    $computerName = "jumpbox-vm1"
     $vmUsername = "avsjump"
-    $vmPassword = ConvertTo-SecureString "86598gfsgHFEASJF" -AsPlainText -Force
-
-    ##TODO - update to prompted creds
-    #$SecureUserInput = Read-Host "Please enter your secure code" -AsSecureString
-    #$EncryptedInput = ConvertFrom-SecureString -String $SecureUserInput
-    #$SecureString = ConvertTo-SecureString -String $EncryptedInput
+    $vmPassword = ConvertTo-SecureString $password -AsPlainText -Force
 
     $vmCreds = New-Object System.Management.Automation.PSCredential($vmUsername, $vmPassword)
     $vmLocation = "germanywestcentral"
@@ -82,7 +77,6 @@ if ($deployJumpbox) {
     $VirtualMachine = New-AzVMConfig -VMName $computerName -VMSize $vmSize
 
     if ($vmBootDiagnostics) {
-
         $guid = New-Guid
         $vmBootDiagnosticsSaName = "vmbootdiag"
         $vmBootDiagnosticsSaSuffix = $guid.ToString().Split("-")[0]
