@@ -83,7 +83,6 @@ $config = @{
 $ngwipconfig = New-AzVirtualNetworkGatewayIpConfig @config
 
 $gatewaySKU = "ErGw1AZ"
-#$gatewaySKU = "Standard"
 $vpnType = "PolicyBased"
 $gatewayType = "ExpressRoute"
 
@@ -99,12 +98,9 @@ $gwConfig = @{
 $exrVirtualNetworkGateway = New-AzVirtualNetworkGateway @gwConfig
 
 ## Authourization variables
-#$privateCloudName = "GWC-PrivateCloud-1"
 $cloudName = "azps_test_cloud"
 $authName = "$technology-$resourceGroupLocation-$cloudName-authorization"
-#$privateCloudRgName =  "private_cloud_rg3"
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
-## todo - add ExpressRoute authourization
 $avsAuth = New-AzVMwareAuthorization -Name $authName -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName
 
 ## ExpressRoute connection variables
@@ -113,7 +109,8 @@ $avsPeerCircuitURI = $avsAuth.ExpressRouteId
 New-AzVirtualNetworkGatewayConnection -ResourceGroupName $networkingRgName -VirtualNetworkGateway1 $exrVirtualNetworkGateway -Name avs-er-connection -AuthorizationKey $authKey -PeerId $avsPeerCircuitURI -ConnectionType ExpressRoute -Location $vnetLocation
 
 ## Advanced option
-$deployVpn = $true
+## false is the default, change to $true to deploy VPN
+$deployVpn = $false
 if ($deployVpn) {
 
     ## VPN gateway variables
