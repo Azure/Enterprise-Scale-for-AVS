@@ -38,7 +38,11 @@ It is not required for the resources listed above to be in the same Azure subscr
 At the end of this step-by-step, your environment will mirror the diagram below:
 
 
+<<<<<<< HEAD
 ![nva.png](/.attachments/nva-199add93-9f05-444c-a56b-014a0c3ee079.png)
+=======
+![nva.png](https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/BrownField/Networking/Step-By-Step-Guides/Transit%20VNET%20with%20Traffic%20Inspection%20for%20AVS/media/nva.png)
+>>>>>>> 8e2b30dd8fbba57756406fbc4525a5cb4448eb1b
 
 
 

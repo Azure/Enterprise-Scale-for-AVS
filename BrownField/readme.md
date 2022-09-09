@@ -41,7 +41,11 @@ This section contains templates to deploy specific components and add-ins for AV
 
 | Scenario                                                 | Description                                                          | More Info |
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
+<<<<<<< HEAD
 | Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
+=======
+| Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Step-By-Step-Guides/Implement%20Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
+>>>>>>> 8e2b30dd8fbba57756406fbc4525a5cb4448eb1b
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
 | Transit Hub and Spoke with Azure Route Server | Simple example of how to inspect within an Azure VNET using Route Server| [Link](Networking/Step-By-Step-Guides/ars-hub-and-spoke/readme.me)
 |Transit VNET with Traffic Inspection for AVS|  Securely inspect traffic from AVS to Azure Hub & Spokes using NVA  | [Link](Networking/Step-By-Step-Guides/Transit%20VNET%20with%20Traffic%20Inspection%20for%20AVS/readme.md) |
