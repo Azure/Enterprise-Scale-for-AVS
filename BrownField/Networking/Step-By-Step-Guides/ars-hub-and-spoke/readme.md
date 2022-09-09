@@ -4,7 +4,7 @@ This blog post will discuss one of Azure’s latest offerings, Azure Route Serve
 Users will often extend their AVS environments to connect with Azure networks. Common network topologies include Hub & Spoke and SD-WAN. From your AVS environment, you want to securely inspect traffic from your AVS workloads to a workload in a spoke network. Reasons for wanting to filter traffic include but are not limited to prevention of data exfiltration from egress traffic exiting paas and iaas services to the internet, or cross VNET ingress/egress traffic. A conceptual design of a Hub & Spoke topology with connectivity to Azure VMWare Solution is referenced below:
 
 
-![figure1](https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/BrownField/Networking/Step-By-Step-Guides/ars-hub-and-spoke/media/nva.png)
+![figure1](Networking/Step-By-Step-Guides/ars-hub-and-spoke/media/eslz-net-scenario-5.png)
 
  
 In this design, ingress/egress traffic flows from the AVS Tier-0 router, hits the Dedicated Microsoft Edge over the Expressroute connection via BGP and terminates at the Expressroute gateway. Where this gets interesting is what happens after the traffic enters the VNET’s. How will the AVS workload segments know how to reach the internet or communicate with a workload that lives in the peered spoke?
