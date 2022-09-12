@@ -1,0 +1,37 @@
+#This file is a sample tfvars input for this module. 
+#Copy this file to your root module, populate the file with the target deployment values and remove the .sample extension.
+
+prefix                = "SDDC1"
+region                = "Southeast Asia"
+vnet_address_space    = ["10.1.0.0/16"]
+#Add any additional required NVA subnets if adding a 3rd party NVA.
+subnets = [
+    {
+        name           = "GatewaySubnet",
+        address_prefix = ["10.40.1.0/24"]
+    },
+    {
+        name           = "RouteServerSubnet",
+        address_prefix = ["10.40.2.0/24"]
+    }
+]
+
+expressroute_gateway_sku = "Standard"
+sddc_sku                 = "av36"
+management_cluster_size  = 3
+avs_network_cidr         = "192.168.1.0/22"
+vpn_gateway_sku          = "VpnGw2"
+asn                      = 65515
+firewall_sku_tier        = "Standard"
+email_addresses          = ["test1@test.com","test2@test.com"]
+
+jumpbox_sku                      = "Standard_D2as_v4"
+jumpbox_admin_username           = "azureuser"
+jumpbox_spoke_vnet_address_space = ["192.168.32.0/22"]
+bastion_subnet_prefix            = "192.168.32.0/24"
+jumpbox_subnet_prefix            = "192.168.33.0/24"
+
+tags = {
+    environment = "Dev"
+    CreatedBy   = "Terraform"
+}

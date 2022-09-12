@@ -24,7 +24,24 @@ This repository contains reference implementation scenarios based on a number of
 
 ## This Repository
 
-In this repository, you get access to various customer scenarios that can help accelerate the development and deployment of AVS clusters that conform with Enterprise-Scale for AVS best practices and guidelines. Each scenario aims to represent common customer experiences with the goal of accelerating the process of developing and deploying conforming AVS clusters using IaC as well as providing a step-by-step learning experience. Each scenario will eventually have an ARM, Bicep, PowerShell and CLI version to choose from.
+In this repository, you get access to various customer scenarios that can help accelerate the development and deployment of AVS clusters that conform with Enterprise-Scale for AVS best practices and guidelines. Each scenario aims to represent common customer experiences with the goal of accelerating the process of developing and deploying conforming AVS clusters using IaC as well as providing a step-by-step learning experience.
+
+## AVS Greenfield Deployment
+
+This deployment is best suited to those looking to provision a new AVS Private Cloud, the automation will let you choose and deploy the following:
+- AVS Private Cloud
+- Choose New or Existing virtual network (VNet)
+- [Optional]: Deploy Azure Route Server for VPN Connections
+- [Optional]: Deploy AVS Monitoring 
+- [Optional]: Deploy HCX and SRM
+
+
+|Greenfield deployment options:          |                           |
+|:-------------------------------------|:------------------------: |
+|Azure portal UI          |[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2FPortalUI%2FARM%2FESLZDeploy.deploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2FPortalUI%2FARM%2FESLZdeploy.PortalUI.json)      |
+|Command line (Bicep/ARM)              |[![Powershell/Azure CLI](./docs/images/powershell.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Bicep)          |
+|Terraform                             |[![Terraform](./docs/images/terraform.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Terraform)                  |
+
 
 ## Next Steps
 
