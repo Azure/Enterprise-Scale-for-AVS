@@ -5,7 +5,7 @@ with default route propagation" [Click here](https://docs.microsoft.com/en-us/az
 
 ExpressRoute & Global Reach </br>
 
-![](./media/image1.png) </br></br>
+![](./media/image1a.png) </br></br>
 
 **Require infrastructure - Step by Step **
 
