@@ -436,8 +436,8 @@
             "parameters": {
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "DeployPrivateCloud": "[steps('PrivateCloud').DeployPrivateCloud]",
-				"PrivateCloudResourceGroupName": "[steps('PrivateCloud').avsPrivateCloudSettings.AVSResourceGroup]",
-				"PrivateCloudName": "[steps('PrivateCloud').avsPrivateCloudSettings.AVSName]",
+				"PrivateCloudResourceGroupName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, true), steps('PrivateCloud').avsPrivateCloudSettings.AVSResourceGroup, 'none')]",
+				"PrivateCloudName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, true), steps('PrivateCloud').avsPrivateCloudSettings.AVSName, 'none')]",
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
