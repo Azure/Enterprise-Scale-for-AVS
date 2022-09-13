@@ -38,7 +38,7 @@ It is not required for the resources listed above to be in the same Azure subscr
 At the end of this step-by-step, your environment will mirror the diagram below:
 
 
-![nva.png](./media/eslz-net-scenario.png)
+![nva.png](./media/eslz-net-scenario-5.png)
 
 
 
