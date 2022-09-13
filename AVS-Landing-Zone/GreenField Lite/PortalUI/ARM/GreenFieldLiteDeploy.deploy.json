@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.13.619",
-      "templateHash": "11196792073892379689"
+      "templateHash": "2261736118799458663"
     }
   },
   "parameters": {
@@ -25,18 +25,21 @@
     },
     "PrivateCloudName": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
       }
     },
     "PrivateCloudResourceGroupName": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
       }
     },
     "PrivateCloudAddressSpace": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22"
       }
