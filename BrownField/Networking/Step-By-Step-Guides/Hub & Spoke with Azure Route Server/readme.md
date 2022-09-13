@@ -32,7 +32,9 @@ Azure Route Server supports traffic entering and leaving the VNET. For intra-vne
 **Plan for IP Address** – ARS can support up to 8 peers with each peer supporting 1K routes. Please note this for wide-scale networks and or when there is extensive microsegmentation of CIDR ranges. There are also high-throughput scenarios might requiring more than two NVAs. The approach presented in this article is horizontally-scalable up to the maximum number of BGP peers supported by Azure Route Server
 Deploying a Route Server instance in a VNET that already contains an Expressroute Gateway will temporarily disrupt Expressroute connectivity. If you are working in a production environment, you need to perform this step during a scheduled maintenance window. Detailed information on why this occurs is available here.
 
-On-Premises environments connected to AVS with Global Reach will also advertise the default route 0.0.0.0/0.  Implement a route filter on-premises to prevent default route 0.0.0.0/0 learning.
+NOTE: If the On-Premises environments is connected to AVS with Global Reach, it will also advertise the default route 0.0.0.0/0.  Implement a route filter on-premises to prevent default route 0.0.0.0/0 learning.
+
+The follow steps below demonstrate how to inspect traffic within an Azure VNET
 
 
 #Step 1 Open the Azure Shell and set your subscription 
