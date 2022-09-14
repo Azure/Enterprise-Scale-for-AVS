@@ -98,6 +98,6 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
 // Optional Deployment for Customer Usage Attribution
 module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdSubscription.bicep' = if (!TelemetryOptOut) {
   #disable-next-line no-loc-expr-outside-params
-  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  name: 'pid-${varCuaid}-${uniqueString(deployment().name, Location)}'
   params: {}
 }

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "11600745697271709761"
+      "templateHash": "5677979809472279471"
     }
   },
   "parameters": {
@@ -1185,7 +1185,7 @@
       "condition": "[not(parameters('TelemetryOptOut'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
-      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(deployment().location))]",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(deployment().name, parameters('Location')))]",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
