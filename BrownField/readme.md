@@ -43,6 +43,6 @@ This section contains templates to deploy specific components and add-ins for AV
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
 | Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
-| Transit Hub and Spoke with Azure Route Server | Simple example of how to inspect within an Azure VNET using Route Server| [Link](Networking/Step-By-Step-Guides/Hub%20%26%20Spoke%20with%20Azure%20Route%20Server/readme.md)
+| Transit Hub and Spoke with Azure Route Server | Simple example of how to inspect within an Azure VNET using Route Server| [Link](Networking/Step-By-Step-Guides/Transit%20Hub%20with%20Azure%20Route%20Server/readme.md)
 |Transit VNET with Traffic Inspection for AVS|  Securely inspect traffic from AVS to Azure Hub & Spokes using NVA  | [Link](Networking/Step-By-Step-Guides/Transit%20VNET%20with%20Traffic%20Inspection%20for%20AVS/readme.md) |
 
