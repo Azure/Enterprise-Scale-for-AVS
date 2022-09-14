@@ -350,7 +350,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Deploy HCX",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "Deploy HCX",
                             "constraints": {
                                 "required": true,
