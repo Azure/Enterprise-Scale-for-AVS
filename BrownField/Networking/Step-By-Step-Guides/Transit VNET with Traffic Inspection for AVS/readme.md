@@ -26,6 +26,16 @@ Prerequisites:
 - SDDC with ER Circuit
 - On-Premise environment to test route filter blocking  (optional)
 
+### Network Inspection
+The solution configures network inspection with a third-party Nextgen Firewall on the following flows:
+
+Source                    | Azure VMWare Solution | Internet | On-Premises | Spoke Vnets 
+---                       | :---:                 | :---:    | :---:       | :---:
+**Azure VMWare Solution** | Yes                   | Yes      | No          | Yes 
+**Internet**              | Yes                   | Yes      | Yes         | Yes 
+**On-Premises**           | No                    | Yes      | N/A         | Yes 
+**Spoke Vnets**           | Yes                   | Yes      | Yes         | Yes
+
  
 It is not required for the resources listed above to be in the same Azure subscription, nor in subscriptions associated with the same AAD tenant. This guide will deploy the following:
 -	An Azure Virtual Network, referred to as the “Hub Virtual Network”
