@@ -7,7 +7,7 @@
             "steps": [
                 {
                     "name": "basics",
-                    "label": "Azure core setup",
+                    "label": "Azure Scope",
                     "subLabel": {
                         "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
                         "postValidation": "Done"
@@ -112,7 +112,7 @@
                                         "value": true
                                     },
                                     {
-                                        "label": "No (Existing)",
+                                        "label": "No (Choose Existing)",
                                         "value": false
                                     }
                                 ]
@@ -325,7 +325,7 @@
                             "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
                             "toolTip": "Provide an email address to send the service health alerts to",
                             "placeholder": "Example: alerts@company.com",
-                            "defaultValue": "alerts@company.com",
+                            "defaultValue": "",
                             "constraints": {
                                 "required": true,
                                 "regex": "",
@@ -351,7 +351,7 @@
                             "visible": true,
                             "label": "Deploy HCX",
                             "defaultValue": "Yes",
-                            "toolTip": "",
+                            "toolTip": "Deploy HCX",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -372,7 +372,7 @@
                             "visible": true,
                             "label": "Deploy SRM",
                             "defaultValue": "No",
-                            "toolTip": "",
+                            "toolTip": "Deploy SRM",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
