@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "1397249243648447857"
+      "templateHash": "11600745697271709761"
     }
   },
   "parameters": {
@@ -144,7 +144,8 @@
     }
   },
   "variables": {
-    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]",
+    "varCuaid": "pid-8a85fe17-c0c9-439c-9d98-1ae024815163"
   },
   "resources": [
     {
@@ -181,9 +182,6 @@
           },
           "ExistingPrivateCloudResourceId": {
             "value": "[parameters('ExistingPrivateCloudResourceId')]"
-          },
-          "TelemetryOptOut": {
-            "value": "[parameters('TelemetryOptOut')]"
           }
         },
         "template": {
@@ -193,7 +191,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "12680864748089648073"
+              "templateHash": "9399399834964455064"
             }
           },
           "parameters": {
@@ -214,9 +212,6 @@
             },
             "PrivateCloudHostCount": {
               "type": "int"
-            },
-            "TelemetryOptOut": {
-              "type": "bool"
             },
             "DeployPrivateCloud": {
               "type": "bool"
@@ -259,9 +254,6 @@
                   },
                   "ManagementClusterSize": {
                     "value": "[parameters('PrivateCloudHostCount')]"
-                  },
-                  "TelemetryOptOut": {
-                    "value": "[parameters('TelemetryOptOut')]"
                   }
                 },
                 "template": {
@@ -271,7 +263,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.10.61.36676",
-                      "templateHash": "10673500065539845327"
+                      "templateHash": "8763346094878543377"
                     }
                   },
                   "parameters": {
@@ -289,9 +281,6 @@
                     },
                     "Location": {
                       "type": "string"
-                    },
-                    "TelemetryOptOut": {
-                      "type": "bool"
                     }
                   },
                   "resources": [
@@ -307,20 +296,6 @@
                         "networkBlock": "[parameters('NetworkBlock')]",
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
-                        }
-                      }
-                    },
-                    {
-                      "condition": "[not(parameters('TelemetryOptOut'))]",
-                      "type": "Microsoft.Resources/deployments",
-                      "apiVersion": "2021-04-01",
-                      "name": "pid-8a85fe17-c0c9-439c-9d98-1ae024815163",
-                      "properties": {
-                        "mode": "Incremental",
-                        "template": {
-                          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                          "contentVersion": "1.0.0.0",
-                          "resources": []
                         }
                       }
                     }
@@ -1205,6 +1180,32 @@
       "dependsOn": [
         "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))]"
       ]
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(deployment().location))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.10.61.36676",
+              "templateHash": "8692195644938117442"
+            }
+          },
+          "resources": []
+        }
+      }
     }
   ]
 }

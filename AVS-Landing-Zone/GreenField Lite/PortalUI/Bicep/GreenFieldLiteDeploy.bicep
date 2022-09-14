@@ -51,7 +51,9 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+//Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
+var varCuaid = 'pid-8a85fe17-c0c9-439c-9d98-1ae024815163'
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -64,7 +66,6 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     PrivateCloudHostCount: PrivateCloudHostCount
     PrivateCloudSKU: PrivateCloudSKU
     ExistingPrivateCloudResourceId : ExistingPrivateCloudResourceId
-    TelemetryOptOut: TelemetryOptOut
   }
 }
 
@@ -92,4 +93,11 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = {
     PrivateCloudName: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
     PrivateCloudResourceId: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdSubscription.bicep' = if (!TelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(deployment().location)}'
+  params: {}
 }
