@@ -43,5 +43,6 @@ This section contains templates to deploy specific components and add-ins for AV
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
 | Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Step-By-Step-Guides/Implement%20Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
+| Inspecting traffic between AVS,Internet, Azure VNets                        | NVA in the hub VNet inspects traffic between AVS and the internet and between AVS and Azure VNets            | Work In Progress |
 
 
