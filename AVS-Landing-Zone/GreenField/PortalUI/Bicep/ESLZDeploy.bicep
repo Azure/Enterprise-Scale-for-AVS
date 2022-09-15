@@ -102,7 +102,7 @@ param TelemetryOptOut bool = false
 
 //Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
-var varCuaid = '8a85fe17-c0c9-439c-9d98-1ae024815163'
+var varCuaid = '1cf4a3e3-529c-4fb2-ba6a-63dff7d71586'
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
