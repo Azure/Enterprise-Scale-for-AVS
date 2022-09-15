@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "5677979809472279471"
+      "templateHash": "18323384222491796477"
     }
   },
   "parameters": {
@@ -145,7 +145,7 @@
   },
   "variables": {
     "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]",
-    "varCuaid": "pid-8a85fe17-c0c9-439c-9d98-1ae024815163"
+    "varCuaid": "8a85fe17-c0c9-439c-9d98-1ae024815163"
   },
   "resources": [
     {
