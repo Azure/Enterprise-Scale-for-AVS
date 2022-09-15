@@ -1,0 +1,8 @@
+AVSvCenter:
+  URL: "10.102.0.2" # Please enter the AVS vCenter from the Azure Portal here, do not include https:// or any slashes
+  Username: "cloudadmin@vsphere.local" # AVS vCenter Username, should be consistent
+  Password: "863j!Fb2n)mU" #Enter the password for the cloudadmin user for the AVS vCenter from the Azure portal
+AVSNSXT:
+  Host: "10.102.0.3" # Enter the URL for NSX-T from the Azure portal, do not include https:// or any slashes
+  Username: "cloudadmin" # NSX-T Username from the Azure portal
+  Password: "8m4VcrJ2*p@0" # NSX-T user password from the Azure portal
