@@ -24,7 +24,7 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
-## AVS Networking
+## AVS Networking (Basic)
 
 | Deploy                                                       | Description                                                  | Deploy                                                       | More Info                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -37,11 +37,10 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
-## AVS Networking Step-by-Step Guides
+## AVS Networking (Advanced)
 
 | Scenario                                                 | Description                                                          | More Info |
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
 | Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Step-By-Step-Guides/Implement%20Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
-
-
+| [Egress from Azure VMware Solution through 0.0.0.0/0 advertisement from on-premises](https://docs.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-4-egress-from-azure-vmware-solution-through-00000-advertisement-from-on-premises)                        | Egress from Azure VMware Solution through 0.0.0.0/0 advertisement from on-premises            | Work In Progress |
