@@ -28,6 +28,7 @@ To disable this tracking, we have included a variable called $telemetry to every
 If you are happy with leaving telemetry tracking enabled, no changes are required. Please do not edit the module name or value of the variable $telemetry in any file.
 
 For example, in each deploy.ps1 file, you will see the following:
+
 ```powershell
 if ($telemetry) {
   ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
@@ -40,7 +41,6 @@ if ($telemetry) {
 ```  
 
 The default value is true, but by changing the parameter value false and saving this file, when you deploy this module either via PowerShell, Azure CLI, or as part of a pipeline the module deployment below will be ignored and therefore telemetry will not be tracked.
-
 
 ## Module PID Value Mapping
 
