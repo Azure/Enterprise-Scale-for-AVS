@@ -3,7 +3,7 @@ This blog post will discuss one of Azure’s latest offerings, Azure Route Serve
 
 Users will often extend their AVS environments to connect with Azure networks. Common network topologies include Hub & Spoke and SD-WAN. From your AVS environment, you want to securely inspect traffic from your AVS workloads to a workload in a spoke network. Reasons for wanting to filter traffic include but are not limited to prevention of data exfiltration from egress traffic exiting paas and iaas services to the internet, or cross VNET ingress/egress traffic. A conceptual design of a Hub & Spoke topology with connectivity to Azure VMWare Solution is referenced below:
 
-![figure1](https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/BrownField/Networking/Step-By-Step-Guides/ars-hub-and-spoke/media/nva.png)
+![figure1](./media/nva.png)
  
 In this design, ingress/egress traffic flows from the AVS Tier-0 router, hits the Dedicated Microsoft Edge over the Expressroute connection via BGP and terminates at the Expressroute gateway. Where this gets interesting is what happens after the traffic enters the VNET’s. How will the AVS workload segments know how to reach the internet or communicate with a workload that lives in the peered spoke?
 It’s important to note that in Azure:
@@ -32,7 +32,9 @@ Azure Route Server supports traffic entering and leaving the VNET. For intra-vne
 **Plan for IP Address** – ARS can support up to 8 peers with each peer supporting 1K routes. Please note this for wide-scale networks and or when there is extensive microsegmentation of CIDR ranges. There are also high-throughput scenarios might requiring more than two NVAs. The approach presented in this article is horizontally-scalable up to the maximum number of BGP peers supported by Azure Route Server
 Deploying a Route Server instance in a VNET that already contains an Expressroute Gateway will temporarily disrupt Expressroute connectivity. If you are working in a production environment, you need to perform this step during a scheduled maintenance window. Detailed information on why this occurs is available here.
 
-On-Premises environments connected to AVS with Global Reach will also advertise the default route 0.0.0.0/0.  Implement a route filter on-premises to prevent default route 0.0.0.0/0 learning.
+NOTE: If the On-Premises environments is connected to AVS with Global Reach, it will also advertise the default route 0.0.0.0/0.  Implement a route filter on-premises to prevent default route 0.0.0.0/0 learning.
+
+The follow steps below demonstrate how to inspect traffic within an Azure VNET
 
 
 #Step 1 Open the Azure Shell and set your subscription 
