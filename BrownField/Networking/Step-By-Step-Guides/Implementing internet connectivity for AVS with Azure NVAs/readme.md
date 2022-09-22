@@ -15,7 +15,7 @@ This step-by-step guide assumes that the following resources have been already d
 
 The picture below shows how your environment should look like before you execute the steps described in this article.
 
-![figure1](media\figure1.png)
+![figure1](./media/figure1.PNG)
 
 It is not required for the resources listed above to be in the same Azure subscription, nor in subscriptions associated to the same AAD tenant.
 
@@ -26,7 +26,7 @@ By following the steps in this article, the following new resources will be depl
 
 At the end of this step-by-step guide, your environemnt will look like the one in the picture below.
 
-![figure2](media/figure2.png)
+![figure2](./media/figure2.PNG)
 
 Connectivity among the AVS private cloud, the Firewall VNet and the spoke VNet(s), if any, is entirely based on Expressroute and VNet peering, both of which  work cross-subscription and cross-tenant. Therefore, the resources listed above can be deployed across multiple subscriptions, if so mandated by security/billing/governance requirements. Also, it is not required for Firewall VNet and the AVS private cloud to be in same Azure region. However, the latency implications of deploying across multiple regions must be carefully evaluated. Latency increases with the geographical distance travelled by traffic exchanged between the AVS private cloud and the firewall VNet. Cost is affected by the VNet peering type (intra-region vs. global) and by the SKU of the Expressroute circuit that connects the on-prem site(s).  
 
@@ -216,7 +216,7 @@ If a custom route table is already associated to the AzureFirewallSubnet in your
 
 At the end of this step, your environment will look as shown in the figure below.
 
-![figure3](media/figure3.png) 
+![figure3](./media/figure3.PNG) 
 
 ## Step #2 - Provision the BGP-capable NVAs
 
@@ -290,7 +290,7 @@ az vm create --name bgp-nva-1 \
 
 At the end of this step, your environment will look as shown in the figure below.
 
-![figure4](media/figure4.png) 
+![figure4](./media/figure4.PNG) 
 
 ## Step #3 - Configure BGP-capable NVAs
 In this step you will finalize the routing configuration of your BGP-capable NVAs. Configuration details may vary depending on which NVAs are used. 
