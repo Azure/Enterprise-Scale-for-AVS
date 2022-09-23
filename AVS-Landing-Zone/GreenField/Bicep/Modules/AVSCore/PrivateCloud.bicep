@@ -3,6 +3,7 @@ param NetworkBlock string
 param ManagementClusterSize int
 param SKUName string
 param Location string
+param Internet string
 
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: '${Prefix}-SDDC'
@@ -12,6 +13,7 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   location: Location
   properties: {
     networkBlock: NetworkBlock
+    internet: Internet
     managementCluster: {
       clusterSize: ManagementClusterSize
     }
