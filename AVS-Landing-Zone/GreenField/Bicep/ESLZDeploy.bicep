@@ -46,6 +46,10 @@ param JumpboxPassword string = ''
 param JumpboxSubnet string = ''
 @description('The sku to use for the Jumpbox VM, must have quota for this within the target region')
 param JumpboxSku string = 'Standard_D2s_v3'
+@description('Should run a bootstrap PowerShell script on the Jumpbox VM or not')
+param BootstrapJumpboxVM bool = false
+@description('The path for Jumpbox VM bootstrap PowerShell script (expecting "bootstrap.ps1" file)')
+param BootstrapPath string = ''
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
 
@@ -127,6 +131,8 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
+    BootstrapJumpboxVM: BootstrapJumpboxVM
+    BootstrapPath: BootstrapPath
   }
 }
 
