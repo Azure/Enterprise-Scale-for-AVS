@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "2808069592840379161"
+      "templateHash": "9367882054556873673"
     }
   },
   "parameters": {
@@ -119,6 +119,20 @@
       "defaultValue": "Standard_D2s_v3",
       "metadata": {
         "description": "The sku to use for the Jumpbox VM, must have quota for this within the target region"
+      }
+    },
+    "BootstrapJumpboxVM": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should run a bootstrap PowerShell script on the Jumpbox VM or not"
+      }
+    },
+    "BootstrapPath": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The path for Jumpbox VM bootstrap PowerShell script (expecting \"bootstrap.ps1\" file)"
       }
     },
     "BastionSubnet": {
@@ -1034,6 +1048,12 @@
           },
           "JumpboxSku": {
             "value": "[parameters('JumpboxSku')]"
+          },
+          "BootstrapJumpboxVM": {
+            "value": "[parameters('BootstrapJumpboxVM')]"
+          },
+          "BootstrapPath": {
+            "value": "[parameters('BootstrapPath')]"
           }
         },
         "template": {
@@ -1043,7 +1063,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "1545008297839157519"
+              "templateHash": "16317864618169931005"
             }
           },
           "parameters": {
@@ -1069,6 +1089,13 @@
               "type": "string"
             },
             "JumpboxSku": {
+              "type": "string"
+            },
+            "BootstrapJumpboxVM": {
+              "type": "bool",
+              "defaultValue": false
+            },
+            "BootstrapPath": {
               "type": "string"
             },
             "BastionSubnet": {
@@ -1273,6 +1300,12 @@
                   },
                   "VMSize": {
                     "value": "[parameters('JumpboxSku')]"
+                  },
+                  "BootstrapVM": {
+                    "value": "[parameters('BootstrapJumpboxVM')]"
+                  },
+                  "BootstrapPath": {
+                    "value": "[parameters('BootstrapPath')]"
                   }
                 },
                 "template": {
@@ -1282,7 +1315,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.10.61.36676",
-                      "templateHash": "16289752300662783142"
+                      "templateHash": "15272743673954455660"
                     }
                   },
                   "parameters": {
@@ -1306,7 +1339,15 @@
                     },
                     "OSVersion": {
                       "type": "string",
-                      "defaultValue": "2019-Datacenter-smalldisk"
+                      "defaultValue": "2022-datacenter-azure-edition-smalldisk"
+                    },
+                    "BootstrapVM": {
+                      "type": "bool",
+                      "defaultValue": false
+                    },
+                    "BootstrapPath": {
+                      "type": "string",
+                      "defaultValue": ""
                     }
                   },
                   "variables": {
@@ -1371,6 +1412,28 @@
                       },
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/networkInterfaces', variables('Name'))]"
+                      ]
+                    },
+                    {
+                      "condition": "[parameters('BootstrapVM')]",
+                      "type": "Microsoft.Compute/virtualMachines/extensions",
+                      "apiVersion": "2015-06-15",
+                      "name": "[format('{0}/CustomScriptExtension', reference(resourceId('Microsoft.Compute/virtualMachines', variables('Name')), '2021-03-01', 'full'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                          "fileUris": [
+                            "[parameters('BootstrapPath')]"
+                          ],
+                          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1"
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('Name'))]"
                       ]
                     }
                   ],
