@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "10678651943679665278"
+      "templateHash": "9323121376170104681"
     }
   },
   "parameters": {
@@ -40,6 +40,17 @@
       ],
       "metadata": {
         "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
+      }
+    },
+    "Internet": {
+      "type": "string",
+      "defaultValue": "Disabled",
+      "allowedValues": [
+        "Disabled",
+        "Enabled"
+      ],
+      "metadata": {
+        "description": "Optional: Connectivity to Internet through Managed SNAT Service"
       }
     },
     "PrivateCloudHostCount": {
@@ -108,6 +119,20 @@
       "defaultValue": "Standard_D2s_v3",
       "metadata": {
         "description": "The sku to use for the Jumpbox VM, must have quota for this within the target region"
+      }
+    },
+    "BootstrapJumpboxVM": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Should run a bootstrap PowerShell script on the Jumpbox VM or not"
+      }
+    },
+    "BootstrapPath": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The path for Jumpbox VM bootstrap PowerShell script (expecting \"bootstrap.ps1\" file)"
       }
     },
     "BastionSubnet": {
@@ -185,6 +210,9 @@
           },
           "PrivateCloudSKU": {
             "value": "[parameters('PrivateCloudSKU')]"
+          },
+          "Internet": {
+            "value": "[parameters('Internet')]"
           }
         },
         "template": {
@@ -194,7 +222,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "8536903555123647642"
+              "templateHash": "10979053566964901444"
             }
           },
           "parameters": {
@@ -212,6 +240,9 @@
             },
             "PrivateCloudHostCount": {
               "type": "int"
+            },
+            "Internet": {
+              "type": "string"
             }
           },
           "resources": [
@@ -246,6 +277,9 @@
                   },
                   "ManagementClusterSize": {
                     "value": "[parameters('PrivateCloudHostCount')]"
+                  },
+                  "Internet": {
+                    "value": "[parameters('Internet')]"
                   }
                 },
                 "template": {
@@ -255,7 +289,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.10.61.36676",
-                      "templateHash": "13714281109908522838"
+                      "templateHash": "9805519276288613404"
                     }
                   },
                   "parameters": {
@@ -273,6 +307,9 @@
                     },
                     "Location": {
                       "type": "string"
+                    },
+                    "Internet": {
+                      "type": "string"
                     }
                   },
                   "resources": [
@@ -286,6 +323,7 @@
                       "location": "[parameters('Location')]",
                       "properties": {
                         "networkBlock": "[parameters('NetworkBlock')]",
+                        "internet": "[parameters('Internet')]",
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
                         }
@@ -1010,6 +1048,12 @@
           },
           "JumpboxSku": {
             "value": "[parameters('JumpboxSku')]"
+          },
+          "BootstrapJumpboxVM": {
+            "value": "[parameters('BootstrapJumpboxVM')]"
+          },
+          "BootstrapPath": {
+            "value": "[parameters('BootstrapPath')]"
           }
         },
         "template": {
@@ -1019,7 +1063,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.10.61.36676",
-              "templateHash": "1545008297839157519"
+              "templateHash": "12811011298774943017"
             }
           },
           "parameters": {
@@ -1045,6 +1089,13 @@
               "type": "string"
             },
             "JumpboxSku": {
+              "type": "string"
+            },
+            "BootstrapJumpboxVM": {
+              "type": "bool",
+              "defaultValue": false
+            },
+            "BootstrapPath": {
               "type": "string"
             },
             "BastionSubnet": {
@@ -1249,6 +1300,12 @@
                   },
                   "VMSize": {
                     "value": "[parameters('JumpboxSku')]"
+                  },
+                  "BootstrapVM": {
+                    "value": "[parameters('BootstrapJumpboxVM')]"
+                  },
+                  "BootstrapPath": {
+                    "value": "[parameters('BootstrapPath')]"
                   }
                 },
                 "template": {
@@ -1258,7 +1315,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.10.61.36676",
-                      "templateHash": "16289752300662783142"
+                      "templateHash": "4881189909724553341"
                     }
                   },
                   "parameters": {
@@ -1282,7 +1339,15 @@
                     },
                     "OSVersion": {
                       "type": "string",
-                      "defaultValue": "2019-Datacenter-smalldisk"
+                      "defaultValue": "2022-datacenter-azure-edition-smalldisk"
+                    },
+                    "BootstrapVM": {
+                      "type": "bool",
+                      "defaultValue": false
+                    },
+                    "BootstrapPath": {
+                      "type": "string",
+                      "defaultValue": ""
                     }
                   },
                   "variables": {
@@ -1347,6 +1412,28 @@
                       },
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/networkInterfaces', variables('Name'))]"
+                      ]
+                    },
+                    {
+                      "condition": "[parameters('BootstrapVM')]",
+                      "type": "Microsoft.Compute/virtualMachines/extensions",
+                      "apiVersion": "2015-06-15",
+                      "name": "[format('{0}/CustomScriptExtension', variables('Name'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                          "fileUris": [
+                            "[parameters('BootstrapPath')]"
+                          ],
+                          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1"
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('Name'))]"
                       ]
                     }
                   ],

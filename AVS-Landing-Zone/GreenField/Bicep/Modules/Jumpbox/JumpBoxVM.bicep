@@ -67,8 +67,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
 }
 
 resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = if(BootstrapVM) {
-  
-  name: '${VM}/CustomScriptExtension'
+  name: '${VM.name}/CustomScriptExtension'
   location: Location
   properties: {
     publisher: 'Microsoft.Compute'
