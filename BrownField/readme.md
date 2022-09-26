@@ -41,8 +41,12 @@ This section contains templates to deploy specific components and add-ins for AV
 
 | Scenario                                                 | Description                                                          | More Info |
 | -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
-| Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Step-By-Step-Guides/Implement%20Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
+| Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
+| Implementing internet connectivity for AVS with Azure NVAs | Internet outbound access for AVS via Azure NVAs running in an Azure VNet | [Link](Networking/Step-By-Step-Guides/Implementing%20internet%20connectivity%20for%20AVS%20with%20Azure%20NVAs) |
+| Transit Hub with Azure Route Server | Simple example of how to inspect within an Azure VNET using Route Server| [Link](Networking/Step-By-Step-Guides/Transit%20Hub%20with%20Azure%20Route%20Server/readme.md)
 | Egress from Azure VMware Solution                        | Egress from Azure VMware Solution through an NVA in Azure            | Work In Progress |
-| Inspecting traffic between AVS,Internet, Azure VNets                        | NVA in the hub VNet inspects traffic between AVS and the internet and between AVS and Azure VNets            | Work In Progress |
+| Transit Hub with Azure Route Server | Simple example of how to inspect within an Azure VNET using Route Server| [Link](Networking/Step-By-Step-Guides/Transit%20Hub%20with%20Azure%20Route%20Server/readme.md)
+|Transit VNET with Traffic Inspection for AVS|  Securely inspect traffic from AVS to Azure Hub & Spokes using NVA  | [Link](Networking/Step-By-Step-Guides/Transit%20VNET%20with%20Traffic%20Inspection%20for%20AVS/readme.md) |
+
 
 
