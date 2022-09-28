@@ -1,0 +1,466 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "AVS Greenfield Lite",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Azure Scope",
+                    "subLabel": {
+                        "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
+                        "postValidation": "Done"
+                    },
+                    "bladeTitle": "avsBasics",
+                    "elements": [
+                        {
+                            "name": "avsDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },
+                        {
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.InfoBox",
+                            "options": {
+                                "text": "The subscription and location selected in this step will be used to deploy the AVS Private Cloud and Monitoring resources.",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "rbacInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "This deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "PrivateCloud",
+                    "label": "Private Cloud",
+                    "elements": [
+                        {
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Prerequisites",
+                            "elements": [
+                                {
+                                    "name": "avsPrerequisites2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Before you start, you must request AVS quota allocation for your subscription",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites5",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployPrivateCloud",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy Private Cloud",
+                            "defaultValue": "Yes",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Choose Existing)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "avsPrivateCloudSettings",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
+                            "label": "Private Cloud details",
+                            "elements": [
+								{
+                                    "name": "AVSResourceGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": true,
+                                    "label": "AVS Resource Group Name",
+                                    "defaultValue": "",
+                                    "toolTip": "Name of a resource group to host the AVS Resources. This can also be an existing resource group name",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your Resource Group"
+                                    }
+                                },
+								{
+                                    "name": "AVSName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": true,
+                                    "label": "AVS Private Cloud Name",
+                                    "defaultValue": "",
+                                    "toolTip": "Name of your AVS Private Cloud resource, e.g. AVS-SDDC",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your Private Cloud"
+                                    }
+                                },
+                                {
+                                    "name": "avsAddressSpace",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": true,
+                                    "label": "AVS Address Space",
+                                    "defaultValue": "",
+                                    "toolTip": "This CIDR represents the Private Cloud Management network and will be used for the cluster management services (i.e vCenter Server, NSX-T Manager, etc.). Please use /22 address space. The address should be unique and should not overlap with other Azure Virtual Networks (VNET) as well as with on-premises networks.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(/[2][2])$",
+                                        "validationMessage": "Address space must be /22"
+                                    }
+                                },
+                                {
+                                    "name": "avsSkuType",
+                                    "type": "Microsoft.Common.DropDown",
+                                    "visible": true,
+                                    "label": "AVS SKU",
+                                    "defaultValue": "AV36",
+                                    "multiLine": true,
+                                    "toolTip": "Ensure you select the correct SKU as per your quota request",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "AV36",
+                                                "description": "",
+                                                "value": "AV36"
+                                            },
+                                            {
+                                                "label": "AV36T",
+                                                "description": "",
+                                                "value": "AV36T"
+                                            },
+                                            {
+                                                "label": "AV36P",
+                                                "description": "",
+                                                "value": "AV36P"
+                                            },
+                                            {
+                                                "label": "AV52",
+                                                "description": "",
+                                                "value": "AV52"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "avsHostCount",
+                                    "type": "Microsoft.Common.Slider",
+                                    "label": "AVS Host Count",
+                                    "subLabel": "",
+                                    "toolTip": "This is the number of ESXi hosts that will make up the default cluster of your private cloud, minimum is 3",
+                                    "min": 3,
+                                    "max": 16,
+                                    "defaultValue": 3,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                }
+                                
+                            ]
+                        },
+                        {
+                            "name": "existingAVSPrivateCloudSettings",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, false)]",
+                            "label": "Existing Private Cloud details",
+                            "elements": [
+                                {
+                                    "name": "existingAVSSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "",
+                                    "label": "Select the Existing AVS Private Cloud",
+                                    "resourceType": "Microsoft.AVS/privateClouds",
+                                    "options": {
+                                        "filter": {
+                                            "subscription": "onBasics",
+                                            "location": "onBasics"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Monitoring",
+                    "label": "Monitoring",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Monitoring and Alerts",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted of any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployDashboard",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Deploy AVS Dashboard",
+                            "defaultValue": "Yes",
+                            "toolTip": "Deploy AVS Dashboard",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployAVSAlerts",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Enable AVS Metric Alerts",
+                            "defaultValue": "Yes",
+                            "toolTip": "Enable AVS Metric Alerts (CPU, Memory, Storage etc)",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployServiceHealth",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "Enable AVS Service Health Alerts",
+                            "label": "Enable Service Health alerts",
+                            "defaultValue": "Yes",
+                            "toolTip": "Enable Service Health alerts for AVS",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "ActionGroupEmails",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Action Group Email",
+                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
+                            "toolTip": "Provide an email address to send the service health alerts to",
+                            "placeholder": "Example: alerts@company.com",
+                            "defaultValue": "",
+                            "constraints": {
+                                "required": true,
+                                "regex": "",
+                                "validationMessage": "Please provide a valid email address"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Addons",
+                    "label": "Addons",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Addons",
+                            "elements": []
+                        },
+                        {
+                            "name": "deployHCX",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy HCX",
+                            "defaultValue": "No",
+                            "toolTip": "Deploy HCX",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "deploySRM",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy SRM",
+                            "defaultValue": "No",
+                            "toolTip": "Deploy SRM",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "srmInfo",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "options": {
+                                "text": "Placeholder for SRM info.",
+                                "link": {
+                                    "label": "Learn more",
+                                    "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
+                                }
+                            }
+                        },
+                        {
+                            "name": "srmLicenseKey",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "License Key",
+                            "toolTip": "The license key is required to install SRM.",
+                            "placeholder": "Enter your license key",
+                            "defaultValue": "",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}$",
+                                "validationMessage": "Invalid license key, the license must be formatted as 5 groups of 5 alphanumeric characters, separated by hyphens."
+                            }
+                        },
+                        {
+                            "name": "srmVRCount",
+                            "type": "Microsoft.Common.Slider",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "Number of Replication Servers",
+                            "subLabel": "",
+                            "toolTip": "Number of vSphere replication servers to be deployed, minimum 1",
+                            "min": 1,
+                            "max": 3,
+                            "defaultValue": 1,
+                            "showStepMarkers": true,
+                            "constraints": {
+                                "required": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployPrivateCloud": "[steps('PrivateCloud').DeployPrivateCloud]",
+				"PrivateCloudResourceGroupName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, true), steps('PrivateCloud').avsPrivateCloudSettings.AVSResourceGroup, 'none')]",
+				"PrivateCloudName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, true), steps('PrivateCloud').avsPrivateCloudSettings.AVSName, 'none')]",
+                "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
+                "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
+                "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
+                "ExistingPrivateCloudName": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, false), steps('PrivateCloud').existingAVSPrivateCloudSettings.existingAVSSelector.name, 'none')]",
+                "ExistingPrivateCloudResourceId": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, false), steps('PrivateCloud').existingAVSPrivateCloudSettings.existingAVSSelector.id, 'none')]",
+                "DeployDashboard": "[steps('Monitoring').DeployDashboard]",
+                "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
+                "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
+                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
+                "DeployHCX": "[steps('Addons').deployHCX]",
+                "DeploySRM": "[steps('Addons').deploySRM]",
+                "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
+                "VRServerCount": "[steps('Addons').srmVRCount]",
+                "TelemetryOptOut": "false"
+            },
+            "kind": "Subscription",
+            "location": "[steps('basics').avsDeploymentScope.location.name]",
+            "subscriptionId": "[steps('basics').avsDeploymentScope.subscription.id]"
+        }
+    }
+}
