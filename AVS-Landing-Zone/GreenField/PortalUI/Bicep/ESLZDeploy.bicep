@@ -17,6 +17,7 @@ param PrivateCloudAddressSpace string = ''
   'AV36'
   'AV36T'
   'AV36P'
+  'AV52'
 ])
 param PrivateCloudSKU string = 'AV36'
 @description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')
@@ -100,7 +101,9 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+//Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
+var varCuaid = '1cf4a3e3-529c-4fb2-ba6a-63dff7d71586'
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -110,7 +113,6 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
     PrivateCloudHostCount: PrivateCloudHostCount
     PrivateCloudSKU: PrivateCloudSKU
-    TelemetryOptOut: TelemetryOptOut
     DeployPrivateCloud : DeployPrivateCloud
     ExistingPrivateCloudResourceId : ExistingPrivateCloudResourceId
   }
@@ -197,4 +199,11 @@ module Addons 'Modules/AVSAddons.bicep' = if ((DeployHCX) || (DeploySRM)) {
     SRMLicenseKey: SRMLicenseKey
     VRServerCount: VRServerCount
   }
+}
+
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdSubscription.bicep' = if (!TelemetryOptOut) {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(deployment().name, Location)}'
+  params: {}
 }
