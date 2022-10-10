@@ -16,6 +16,8 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 * Enable Azure activity log collection from your AVS Private Cloud to Log Analytics
 
+* Enable SysLog collection from your AVS Private Cloud to Log Analytics
+
 * Run the following script
 
 ### ARM
