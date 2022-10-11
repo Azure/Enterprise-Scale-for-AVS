@@ -17,6 +17,7 @@ param PrivateCloudAddressSpace string = ''
   'AV36'
   'AV36T'
   'AV36P'
+  'AV52'
 ])
 param PrivateCloudSKU string = 'AV36'
 @description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')

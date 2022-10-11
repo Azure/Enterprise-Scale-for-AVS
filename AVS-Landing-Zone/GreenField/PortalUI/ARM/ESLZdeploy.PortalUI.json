@@ -193,6 +193,11 @@
                                                 "label": "AV36P",
                                                 "description": "",
                                                 "value": "AV36P"
+                                            },
+                                            {
+                                                "label": "AV52",
+                                                "description": "",
+                                                "value": "AV52"
                                             }
                                         ]
                                     }

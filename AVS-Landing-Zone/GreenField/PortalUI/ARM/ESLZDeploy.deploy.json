@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.10.61.36676",
-      "templateHash": "16127477139902863755"
+      "templateHash": "7169719867357220277"
     }
   },
   "parameters": {
@@ -45,7 +45,8 @@
       "allowedValues": [
         "AV36",
         "AV36T",
-        "AV36P"
+        "AV36P",
+        "AV52"
       ],
       "metadata": {
         "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
