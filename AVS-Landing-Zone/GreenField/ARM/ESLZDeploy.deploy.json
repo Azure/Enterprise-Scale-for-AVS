@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.11.1.770",
-      "templateHash": "16630486965284834758"
+      "templateHash": "5953021857991257643"
     }
   },
   "parameters": {
@@ -222,7 +222,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.11.1.770",
-              "templateHash": "6422917006816093978"
+              "templateHash": "7963207558726733320"
             }
           },
           "parameters": {
@@ -289,7 +289,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.11.1.770",
-                      "templateHash": "3945357562050773827"
+                      "templateHash": "4668649072318594386"
                     }
                   },
                   "parameters": {
@@ -315,10 +315,13 @@
                   "resources": [
                     {
                       "type": "Microsoft.AVS/privateClouds",
-                      "apiVersion": "2021-06-01",
+                      "apiVersion": "2021-12-01",
                       "name": "[format('{0}-SDDC', parameters('Prefix'))]",
                       "sku": {
                         "name": "[parameters('SKUName')]"
+                      },
+                      "identity": {
+                        "type": "SystemAssigned"
                       },
                       "location": "[parameters('Location')]",
                       "properties": {

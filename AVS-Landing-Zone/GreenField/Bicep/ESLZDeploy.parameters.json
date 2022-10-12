@@ -11,6 +11,9 @@
         "PrivateCloudSKU": {
             "value": "AV36"
         },
+        "Internet": {
+            "value": "Disabled"
+        },
         "PrivateCloudHostCount": {
             "value": 3
         },
@@ -36,6 +39,12 @@
         },
         "JumpboxSubnet": {
             "value": "10.1.1.0/25"
+        },
+        "BootstrapJumpboxVM": {
+            "value": false
+        },
+        "BootstrapPath": {
+            "value": ""
         },
         "BastionSubnet": {
             "value": "10.1.1.128/25"
