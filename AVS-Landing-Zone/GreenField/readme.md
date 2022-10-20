@@ -58,7 +58,7 @@ Azure Bastion provides secure access to AVS Private Cloud's vCenter, NSX-T and o
 
 ### Jumpbox VM
 
-Jumpbox VM provides an easy way to validate and interact with AVS Private Cloud services such as vCenter & NSX-T UI portals. Jumpbox VM username, password, subnet address space and SKU should be provided at the time of deployment.
+Jumpbox VM provides an easy way to validate and interact with AVS Private Cloud services such as vCenter & NSX-T UI portals. Jumpbox VM username, password, subnet address space and SKU should be provided at the time of deployment. In addition, a bootstrap script can be enabled to preload the Jumpbox VM with necessary applications such as Powershell Core, 7zip, VMware Remote Console (VMRC), etc...
 
 ### Monitoring
 
