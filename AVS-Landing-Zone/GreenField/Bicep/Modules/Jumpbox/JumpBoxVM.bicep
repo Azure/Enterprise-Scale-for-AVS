@@ -8,7 +8,7 @@ param VMSize string
 param OSVersion string = '2022-datacenter-azure-edition-smalldisk'
 param BootstrapVM bool = false
 param BootstrapPath string = ''
-param BootstrapCommand string = 'powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1'
+param BootstrapCommand string = ''
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'

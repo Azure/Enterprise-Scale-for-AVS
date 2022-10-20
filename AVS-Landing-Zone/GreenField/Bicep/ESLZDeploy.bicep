@@ -51,7 +51,7 @@ param BootstrapJumpboxVM bool = false
 @description('The path for Jumpbox VM bootstrap PowerShell script file (expecting "bootstrap.ps1" file)')
 param BootstrapPath string = 'https://raw.githubusercontent.com/husamhilal/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1'
 @description('The command to trigger running the bootstrap script. If was not provided, then the expected script file name must be "bootstrap.ps1")')
-param BootstrapCommand string
+param BootstrapCommand string = 'powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1'
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
 

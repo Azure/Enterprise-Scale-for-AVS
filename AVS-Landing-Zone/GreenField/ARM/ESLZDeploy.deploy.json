@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.11.1.770",
-      "templateHash": "5953021857991257643"
+      "templateHash": "16252221738617703439"
     }
   },
   "parameters": {
@@ -130,9 +130,16 @@
     },
     "BootstrapPath": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "https://raw.githubusercontent.com/husamhilal/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1",
       "metadata": {
-        "description": "The path for Jumpbox VM bootstrap PowerShell script (expecting \"bootstrap.ps1\" file)"
+        "description": "The path for Jumpbox VM bootstrap PowerShell script file (expecting \"bootstrap.ps1\" file)"
+      }
+    },
+    "BootstrapCommand": {
+      "type": "string",
+      "defaultValue": "powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1",
+      "metadata": {
+        "description": "The command to trigger running the bootstrap script. If was not provided, then the expected script file name must be \"bootstrap.ps1\")"
       }
     },
     "BastionSubnet": {
@@ -1057,6 +1064,9 @@
           },
           "BootstrapPath": {
             "value": "[parameters('BootstrapPath')]"
+          },
+          "BootstrapCommand": {
+            "value": "[parameters('BootstrapCommand')]"
           }
         },
         "template": {
@@ -1066,7 +1076,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.11.1.770",
-              "templateHash": "14614051531195891670"
+              "templateHash": "342319162266186431"
             }
           },
           "parameters": {
@@ -1099,6 +1109,9 @@
               "defaultValue": false
             },
             "BootstrapPath": {
+              "type": "string"
+            },
+            "BootstrapCommand": {
               "type": "string"
             },
             "BastionSubnet": {
@@ -1309,6 +1322,9 @@
                   },
                   "BootstrapPath": {
                     "value": "[parameters('BootstrapPath')]"
+                  },
+                  "BootstrapCommand": {
+                    "value": "[parameters('BootstrapCommand')]"
                   }
                 },
                 "template": {
@@ -1318,7 +1334,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.11.1.770",
-                      "templateHash": "2285135802329565109"
+                      "templateHash": "18137590009420842615"
                     }
                   },
                   "parameters": {
@@ -1349,6 +1365,10 @@
                       "defaultValue": false
                     },
                     "BootstrapPath": {
+                      "type": "string",
+                      "defaultValue": ""
+                    },
+                    "BootstrapCommand": {
                       "type": "string",
                       "defaultValue": ""
                     }
@@ -1435,7 +1455,7 @@
                           "fileUris": [
                             "[parameters('BootstrapPath')]"
                           ],
-                          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1"
+                          "commandToExecute": "[parameters('BootstrapCommand')]"
                         }
                       },
                       "dependsOn": [
