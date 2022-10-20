@@ -12,6 +12,7 @@ param JumpboxSubnet string
 param JumpboxSku string
 param BootstrapJumpboxVM bool = false
 param BootstrapPath string
+param BootstrapCommand string
 param BastionSubnet string
 
 
@@ -52,6 +53,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     VMSize: JumpboxSku
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
+    BootstrapCommand: BootstrapCommand
   }
 }
 
