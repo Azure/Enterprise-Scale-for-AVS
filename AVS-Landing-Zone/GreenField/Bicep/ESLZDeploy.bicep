@@ -46,6 +46,16 @@ param JumpboxPassword string = ''
 param JumpboxSubnet string = ''
 @description('The sku to use for the Jumpbox VM, must have quota for this within the target region')
 param JumpboxSku string = 'Standard_D2s_v3'
+@description('The OS Version for the Jumpbox VM. By default, it is Microsoft Windows Server 2012 Azure Edition with small disk for storage to reduce costs.')
+@allowed([
+  '2016-Datacenter'
+  '2016-Datacenter-smalldisk'
+  '2019-Datacenter'
+  '2019-Datacenter-smalldisk'
+  '2022-datacenter-azure-edition'
+  '2022-datacenter-azure-edition-smalldisk'
+])
+param OSVersion string  = '2022-datacenter-azure-edition-smalldisk'
 @description('Should run a bootstrap PowerShell script on the Jumpbox VM or not')
 param BootstrapJumpboxVM bool = false
 @description('The path for Jumpbox VM bootstrap PowerShell script file (expecting "bootstrap.ps1" file)')
@@ -133,6 +143,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
+    OSVersion: OSVersion
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand

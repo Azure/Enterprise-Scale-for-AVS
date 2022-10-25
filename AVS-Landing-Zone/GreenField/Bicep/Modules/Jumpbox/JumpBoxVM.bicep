@@ -5,7 +5,7 @@ param Username string
 @secure()
 param Password string
 param VMSize string
-param OSVersion string = '2022-datacenter-azure-edition-smalldisk'
+param OSVersion string
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
