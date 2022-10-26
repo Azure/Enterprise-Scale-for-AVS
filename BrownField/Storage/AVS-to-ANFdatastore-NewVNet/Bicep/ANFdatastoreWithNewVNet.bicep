@@ -8,7 +8,7 @@ param PrivateCloudClusterName string
 param PrivateCloudResourceGroup string = resourceGroup().name
 
 @description('The subscription id that the existing Private Cloud resides in')
-param PrivateCloudSubscriptionId string = subscription().id
+param PrivateCloudSubscriptionId string = subscription().subscriptionId
 
 @description('The location the new virtual network & gateway should reside in')
 param Location string = resourceGroup().location

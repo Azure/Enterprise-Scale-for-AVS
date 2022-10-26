@@ -9,7 +9,7 @@
             "value": "Cluster-1"
         },
         "VNetName": {
-            "value": "Sean1VNet"
+            "value": "ExampleVNet"
         },
         "VNetAddressSpace": {
             "value": "10.4.0.0/16"

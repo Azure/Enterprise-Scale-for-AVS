@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.11.1.770",
-      "templateHash": "577362732368522047"
+      "templateHash": "10267762444906134790"
     }
   },
   "parameters": {
@@ -30,7 +30,7 @@
     },
     "PrivateCloudSubscriptionId": {
       "type": "string",
-      "defaultValue": "[subscription().id]",
+      "defaultValue": "[subscription().subscriptionId]",
       "metadata": {
         "description": "The subscription id that the existing Private Cloud resides in"
       }

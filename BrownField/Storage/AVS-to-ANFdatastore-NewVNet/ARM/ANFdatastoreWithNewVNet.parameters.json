@@ -3,7 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrivateCloudName": {
-            "value": "ExamplePrivateCloud"
+            "value": "AVS-VMwareExplore-HOL-PC03"
+        },
+        "PrivateCloudClusterName": {
+            "value": "Cluster-1"
         },
         "VNetName": {
             "value": "ExampleVNet"
@@ -16,6 +19,24 @@
         },
         "ANFDelegatedSubnet": {
             "value": "10.4.10.0/24"
+        },
+        "netappAccountName": {
+            "value": "NetAppAccount-AVSdatastore"
+        },
+        "netappCapacityPoolName": {
+            "value": "CapacityPool-AVSdatastore"
+        },
+        "netappCapacityPoolServiceLevel": {
+            "value": "Ultra"
+        },
+        "netappCapacityPoolSize": {
+            "value": 4398046511104
+        },
+        "netappVolumeName": {
+            "value": "ANFdatastore001"
+        },
+        "netappVolumeSize": {
+            "value": 4398046511104
         }
     }
 }
