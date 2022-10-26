@@ -40,6 +40,9 @@
         "JumpboxSubnet": {
             "value": "10.1.1.0/25"
         },
+        "OSVersion": {
+            "value": "2022-datacenter-azure-edition-smalldisk"
+        },
         "BootstrapJumpboxVM": {
             "value": false
         },
