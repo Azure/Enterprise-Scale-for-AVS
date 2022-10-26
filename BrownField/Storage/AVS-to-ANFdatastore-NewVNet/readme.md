@@ -19,7 +19,7 @@ This tutorial walks through the scenario of connecting Azure VMware Solution Pri
 ```azurecli-interactive
 cd Bicep
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "VNetWithExR.deploy.json" -p "@VNetWithExR.deploy.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ANF-datastore-Deployment -c -f "ANFdatastoreWithNewVNet.bicep" -p "@ANFdatastoreWithNewVNet.parameters.json"
 ```
 
 ### ARM
@@ -27,7 +27,7 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c 
 ```powershell
 cd ARM
 
-az deployment group create -g AVS-Step-By-Step-RG -n AVS-ExR-VNet-Deployment -c -f "VNetWithExR.deploy.json" -p "@VNetWithExR.deploy.parameters.json"
+az deployment group create -g AVS-Step-By-Step-RG -n AVS-ANF-datastore-Deployment -c -f "ANFdatastoreWithNewVNet.deploy.json" -p "@ANFdatastoreWithNewVNet.parameters.json"
 ```
 
 ### Terraform
@@ -39,8 +39,8 @@ terraform apply
 ```
 * If deploying as a module within a larger implementation, use a module block similar to the following sample and follow your organization's Terraform workflow:
 ```terraform
-module "AVS-to-New-Vnet" {
-    source = "../AVS-to-VNet-NewVNet/Terraform/"
+module "AVS-to-ANFdatastore-NewVnet" {
+    source = "../AVS-to-ANFdatastore-NewVNet/Terraform/"
     
     DeploymentResourceGroupName = "<resource group name where new vnet and gateway will be deployed>"
     PrivateCloudName            = "<existing private cloud name>"
@@ -50,8 +50,9 @@ module "AVS-to-New-Vnet" {
     VNetName                    = "<new vnet name>"
     VNetAddressSpaceCIDR        = ["<CIDR for new vnet>",]
     VNetGatewaySubnetCIDR       = ["<CIDR for gateway subnet>",]
+    VNetANFDelegatedSubnetCIDR  = ["<CIDR for gateway subnet>",]
     GatewayName                 = "<name for new vnet gateway>"
-    GatewaySku                  = "Standard"
+    GatewaySku                  = "Ultra"
 }
 ```
 ## Post-deployment Steps
