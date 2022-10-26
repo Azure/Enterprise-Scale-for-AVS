@@ -44,7 +44,7 @@
             "value": false
         },
         "BootstrapPath": {
-            "value": "https://raw.githubusercontent.com/husamhilal/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1"
+            "value": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1"
         },
         "BastionSubnet": {
             "value": "10.1.1.128/25"
