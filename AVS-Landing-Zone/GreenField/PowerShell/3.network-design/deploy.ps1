@@ -137,7 +137,7 @@ if ($deployVpn) {
     $vnet = get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $networkingRgName
 
     ## Azure Route Server variables
-    $arsPrefix = "10.0.2.0/16"
+    $arsPrefix = "10.0.2.0/26"
     $arsSubnet = @{
         Name = 'RouteServerSubnet'
         VirtualNetwork = $vnet
