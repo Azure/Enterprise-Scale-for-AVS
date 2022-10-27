@@ -1,6 +1,6 @@
 # Connect Azure VMware Solution to an Azure NetApp Files datastore with a new Azure Virtual Network by creating and redeeming Authorization Key
 
-This tutorial walks through the scenario of connecting Azure VMware Solution Private Cloud to and Azure NetApp Files datastore with a ***new*** Azure Virtual Network. 
+This tutorial walks through the scenario of connecting Azure VMware Solution Private Cloud to an Azure NetApp Files datastore with a ***new*** Azure Virtual Network. 
 
 ## Prerequisites
 
