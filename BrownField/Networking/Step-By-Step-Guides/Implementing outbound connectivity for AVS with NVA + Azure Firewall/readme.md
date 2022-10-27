@@ -56,7 +56,7 @@ We leveraged AVS ALZ Accelerator to deploy the Greenfield environment. This auto
 
 |**S.No**|**Action Plan**|**Time Required**| **Status** |
 |--|--|--|--|
-| 1 |Deploy and prepare AVS SDDC| 5 hours | Preprovisioned |
+| 1 |Deploy and prepare AVS SDDC| varies | Preprovisioned |
 | 2. | Hub VNet in Azure with ER GW, Jumpbox and Bastion Host |1 hour  | Preprovisioned |
 | 3. | Azure Firewall as a Security device | 10 mins | Preprovisioned  |
 | 4. |Confgure rules in Azure Firewall | 10 mins | **Participants** |
@@ -107,15 +107,15 @@ Wait for few mins and refresh to ensure peerings are in succeeded state. Your ro
 
 Provide your resource group name, region, route table name. Ensure you provide the same region as your Azure Firewall. Also, select propagate gateway routes as YES. Click on Review + Create.
 
-![image.png](/.attachments/image-7fffaab0-b141-4c51-89e6-63a46897c04d.png)
+![image.png](./media/rt_tbl.png)
 
 ### Once route table has been created we will add the route. The route table must contain a default route (0.0.0.0/0) with next hop type set to "Internet"
 
-![image.png](/.attachments/image-ad225e65-e547-455d-b6ae-12ff0a08a648.png)
+![image.png](./media/default_rt.png)
 
 ### Associate firewall subnet to this route in the Route table
 
-![image.png](/.attachments/image-7a5a1a7b-ba36-4af7-837e-9fe160e4e4b6.png)
+![image.png](./media/subnet.png)
 
 ### 2.b Configure network rules in Azure firewall to allow internet access to AVS.
 Source = AVS Test VM
