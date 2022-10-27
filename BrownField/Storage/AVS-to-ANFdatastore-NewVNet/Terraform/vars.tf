@@ -43,6 +43,36 @@ variable "VNetANFDelegatedSubnetCIDR" {
   description = "Subnet to be used for Azure NetApp Files datastores, should be a valid CIDR block within the address space provided above, in the format: 10.0.0.0/24"
 }
 
+variable "netappAccountName" {
+  type        = string
+  description = "Name of the NetApp Account to be created for the Azure NetApp Files datastore"
+}
+
+variable "netappCapacityPoolName" {
+  type        = string
+  description = "Name of the capacity pool to be created for the Azure NetApp Files datastore"
+}
+
+variable "netappCapacityPoolServiceLevel" {
+  type        = string
+  description = "Service level of the Azure NetApp Files capacity pool and volume to be created; Standard, Premium, Ultra"
+}
+
+variable "netappCapacityPoolSize" {
+  type        = number
+  description = "Size of the Azure NetApp Files datastore to be created"
+}
+
+variable "netappVolumeName" {
+  type        = string
+  description = "Name of the volume to be created for the Azure NetApp Files datastore"
+}
+
+variable "netappVolumeSize" {
+  type        = number
+  description = "Size of the volume to be created for the Azure NetApp Files datastore"
+}
+
 variable "GatewayName" {
   type        = string
   description = "Name of the virtual network gateway to be created"

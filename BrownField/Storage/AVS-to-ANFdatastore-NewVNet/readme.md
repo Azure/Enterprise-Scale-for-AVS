@@ -34,25 +34,31 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-ANF-datastore-Deploymen
 * If deploying stand-alone, update the sample .tfvars.sample file in the Terraform directory with the deployment values, remove the .sample extension, and run the terraform workflow that fits your environment.
 ```terraform
 terraform init
-terraform plan
-terraform apply
+terraform plan -var-file="AVS-to-ANFdatastore-NewVNet.tfvars"
+terraform apply -var-file="AVS-to-ANFdatastore-NewVNet.tfvars"
 ```
 * If deploying as a module within a larger implementation, use a module block similar to the following sample and follow your organization's Terraform workflow:
 ```terraform
 module "AVS-to-ANFdatastore-NewVnet" {
     source = "../AVS-to-ANFdatastore-NewVNet/Terraform/"
     
-    DeploymentResourceGroupName = "<resource group name where new vnet and gateway will be deployed>"
-    PrivateCloudName            = "<existing private cloud name>"
-    PrivateCloudResourceGroup   = "<resource group where existing private cloud is deployed"
-    PrivateCloudSubscriptionId  = "<private cloud subscription id value (not full resource id)>"
-    Location                    = "<vnet deployment region>"
-    VNetName                    = "<new vnet name>"
-    VNetAddressSpaceCIDR        = ["<CIDR for new vnet>",]
-    VNetGatewaySubnetCIDR       = ["<CIDR for gateway subnet>",]
-    VNetANFDelegatedSubnetCIDR  = ["<CIDR for gateway subnet>",]
-    GatewayName                 = "<name for new vnet gateway>"
-    GatewaySku                  = "Ultra"
+    DeploymentResourceGroupName    = "<resource group name where new vnet and gateway will be deployed>"
+    PrivateCloudName               = "<existing private cloud name>"
+    PrivateCloudResourceGroup      = "<resource group where existing private cloud is deployed"
+    PrivateCloudSubscriptionId     = "<private cloud subscription id value (not full resource id)>"
+    Location                       = "<vnet deployment region>"
+    VNetName                       = "<new vnet name>"
+    VNetAddressSpaceCIDR           = ["<CIDR for new vnet>",]
+    VNetGatewaySubnetCIDR          = ["<CIDR for gateway subnet>",]
+    VNetANFDelegatedSubnetCIDR     = ["<CIDR for gateway subnet>",]
+    GatewayName                    = "<name for new vnet gateway>"
+    GatewaySku                     = "UltraPerformance"
+    netappAccountName              = "NetAppAccount-AVSdatastore"
+    netappCapacityPoolName         = "CapacityPool-AVSdatastore"
+    netappCapacityPoolServiceLevel = "Premium"
+    netappCapacityPoolSize         = 4
+    netappVolumeName               = "ANFdatastore001"
+    netappVolumeSize               = 4398046511104
 }
 ```
 ## Post-deployment Steps
@@ -61,4 +67,4 @@ module "AVS-to-ANFdatastore-NewVnet" {
 
 ## Next Steps
 
-[Configure GlobalReach](../../Networking/AVS-to-OnPremises-ExpressRoute-GlobalReach/readme.md)
+[Understand Azure NetApp Files datastore best practices](https://learn.microsoft.com/azure/azure-vmware/attach-azure-netapp-files-to-azure-vmware-solution-hosts)

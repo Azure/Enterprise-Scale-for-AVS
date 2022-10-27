@@ -27,7 +27,7 @@
             "value": "CapacityPool-AVSdatastore"
         },
         "netappCapacityPoolServiceLevel": {
-            "value": "Ultra"
+            "value": "Premium"
         },
         "netappCapacityPoolSize": {
             "value": 4398046511104
