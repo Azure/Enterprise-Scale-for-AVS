@@ -14,7 +14,7 @@
 1. [Add a network segment in Azure VMware Solution](https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-nsx-t-network-segment?source=recommendations)
 1. [Configure DHCP profile for AVS](https://learn.microsoft.com/en-us/azure/azure-vmware/configure-dhcp-azure-vmware-solution)
 
-![image.png](../media/arch_diagram.png)
+![image.png](./media/arch_diagram.png)
 
 
 ## Customer Use Case scenario
@@ -80,19 +80,19 @@ As mentioned above, all the Azure resources are already pre-provisioned for this
 
     Note: A /27 (or larger) prefix is required for dedicated "RouteServerSubnet"
 
-![image.png](../media/create_ars.png)
+![image.png](./media/create_ars.png)
 
 Once the validation is passed click on Create button. The deployment of route server will take about 15-20 mins.
 
 ### 1.a Configure Route Server - Enable branch to branch flag in ARS (takes 2 mins) -Already created
 
-![image.png](../)
+![image.png](./media/enable_b2b.png)
 
 Select the Enable option and save it.
 
 ### 1.b Next, we will add BGP peers (NVAs) to Azure route server. Click on Add button on the top and furnish the ASN and Private IP address of NVA to create peering.
 
-![image.png](/.attachments/image-bfb59c09-db8b-4a19-85d5-30789a6093b0.png)
+![image.png](./media/ars_peers.png)
 
 Wait for few mins and refresh to ensure peerings are in succeeded state. Your route server configuration is complete now.
 
@@ -101,7 +101,7 @@ Wait for few mins and refresh to ensure peerings are in succeeded state. Your ro
      Note: The required size of the AzureFirewallSubnet subnet is /26.       
    
 
-![image.png](/.attachments/image-030985be-bb6b-470e-9c2a-023f855b6d99.png)
+![image.png](./media/azf_rules.png)
 
 ### 2.a Create a Route Table for Azure Firewall.
 
