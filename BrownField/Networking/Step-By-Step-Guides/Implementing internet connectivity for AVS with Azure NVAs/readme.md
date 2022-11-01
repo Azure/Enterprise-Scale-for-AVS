@@ -397,7 +397,7 @@ At the end of this step, your environment will look as shown in the figure below
 
 In the Azure portal, create Azure Firewall rules to allow access to the internet (0.0.0.0/0) from the AVS segments that exist in your private cloud.
 
-Note: When announcing a default route from Azure, DNS queries against public DNS servers will be routed accordingly. Make sure to configure Azure Firewall rules to allow outbound connections on ports TCP/35 and UDP/53. Depending on your AVS segments' DNS/DHCP configuration, those connections may originate from the VMs' IP addresses or from the service IP of DNS services defined in NSX-T. 
+Note: When announcing a default route from Azure, DNS queries against public DNS servers will be routed accordingly. Make sure to configure Azure Firewall rules to allow outbound connections on ports TCP/53 and UDP/53. Depending on your AVS segments' DNS/DHCP configuration, those connections may originate from the VMs' IP addresses or from the service IP of DNS services defined in NSX-T. 
 
 ## Verification
 
