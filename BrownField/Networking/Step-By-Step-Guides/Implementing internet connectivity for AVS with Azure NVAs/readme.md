@@ -356,6 +356,10 @@ Note: To avoid typos and ensure consistent replacements across the entire script
 ```
 conf term
 !
+route-map SET-NEXT-HOP-FW permit 10
+set ip next-hop <Firewall VIP>
+exit
+!
 router bgp <BGP-capable NVA's ASN>
 no bgp ebgp-requires-policy
 neighbor <IP address of Route Server instance #0> remote-as 65515  
@@ -369,9 +373,6 @@ address-family ipv4 unicast
   neighbor <IP address of Route Server instance #1> route-map SET-NEXT-HOP-FW out
 exit-address-family
 !
-route-map SET-NEXT-HOP-FW permit 10
-set ip next-hop <Firewall VIP>
-!
 exit
 !
 exit
@@ -380,7 +381,7 @@ write file
 !
 ```
 
-After updating the commands with the addresses and ASN's that fit your environment, lon into FRR's CLI y running
+After updating the commands with the addresses and ASN's that fit your environment, log into FRR's CLI by running
 
 ```Bash
 sudo vtysh
@@ -388,9 +389,15 @@ sudo vtysh
 
 You can now paste all the commands in the vtysh shell to apply the configuration and save it to configuration files. This will make your configuration persistent across VM reboots.
 
+At the end of this step, your environment will look as shown in the figure below.
+
+![figure5](./media/figure5.PNG) 
+
 ## Step #4 - Configure Azure Firewall to allow internet access from AVS segments
 
 In the Azure portal, create Azure Firewall rules to allow access to the internet (0.0.0.0/0) from the AVS segments that exist in your private cloud.
+
+Note: When announcing a default route from Azure, DNS queries against public DNS servers will be routed accordingly. Make sure to configure Azure Firewall rules to allow outbound connections on ports TCP/35 and UDP/53. Depending on your AVS segments' DNS/DHCP configuration, those connections may originate from the VMs' IP addresses or from the service IP of DNS services defined in NSX-T. 
 
 ## Verification
 
