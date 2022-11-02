@@ -8,6 +8,8 @@ This tutorial walks through the scenario of connecting Azure VMware Solution Pri
 
 * Be aware of the [limit on number of authorization keys](https://docs.microsoft.com/azure/expressroute/expressroute-faqs#can-i-link-to-more-than-one-virtual-network-to-an-expressroute-circuit) that can be generated per ExpressRoute circuit.
 
+* **Be aware of the costs associated with [Azure NetApp Files](https://azure.microsoft.com/pricing/details/netapp/) and the ExpressRoute gateway using the 'Ultra Performance' SKU.**
+
 ## Deployment Steps
 
 * Update the parameter values in appropriate parameter file.
