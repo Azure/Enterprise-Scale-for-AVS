@@ -13,6 +13,15 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
+## AVS Storage
+
+| Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ANF datastore                     | This example will create an [Azure NetApp Files datastore](https://learn.microsoft.com/azure/azure-vmware/attach-azure-netapp-files-to-azure-vmware-solution-hosts), dedicated virtual network, and virtual network gateway | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FStorage%2FAVS-to-ANFdatastore-NewVNet%2FARM%2FANFdatastoreWithNewVNet.deploy.json) | [Link](Storage/AVS-to-ANFdatastore-NewVNet/readme.md) |
+
+
+###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+
 ## AVS Monitoring
 
 | Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
