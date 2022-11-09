@@ -38,8 +38,13 @@ $resourceGroupLocation = "germanywestcentral"
 $resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$technology-$resourceGroupLocation-networking_rg","$technology-$resourceGroupLocation-operational_rg","$technology-$resourceGroupLocation-jumpbox_rg"
 
 ## Define tags to be used if needed
+<<<<<<< HEAD
 ## other examples - to add technology, simply add $owner to the tags
 # $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"; "Onwer"="flkelly"}
+=======
+## tags can be modified to suit your needs, another example below.
+#$tags = @{"Environment"="Development";"Owner"="Fletcher Kelly";"CostCenter"="123456"}
+>>>>>>> 3fa3b89ea39bf5a7241e6ff266396191f8e92257
 $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"}
 
 ## create a loop to create resource groups
@@ -47,8 +52,6 @@ foreach ($resourceGroup in $resourceGroups) {
   ## Create resource group
   $resourceGroupName = $resourceGroup
   $rg = New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
-  ## Uncomment line below to add tags
-  ## New-AzTag -ResourceId $rg.ResourceId -Tag $tags
   $resourceGropupMessage = "Resource group " + $resourceGroupName + " created successfully"
   Write-Output $resourceGropupMessage
 }

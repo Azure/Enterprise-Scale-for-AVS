@@ -32,6 +32,8 @@ if ($telemetry) {
 ##Global variables
 $technology = "avs"
 $resourceGroupLocation = "germanywestcentral"
+$jumpboxRgName = "$technology-$resourceGroupLocation-jumpbox_rg"
+$networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
 
 ## Azure bastion Variables
 $pipName = "$technology-$resourceGroupLocation--bastion-pip1"
@@ -71,12 +73,15 @@ $bastion = New-AzBastion @bastionConfig
 ## update password as needed
 $password = ""
 
-$deployJumpbox = $true
+$deployJumpbox = $false
 if ($deployJumpbox) {
+    ## Password field, update as needed
+    $userPassword = ""
     $vmSize = "Standard_D2s_v3"
-    $computerName = "jumpbox-vm1"
+    #$vmName = "jumpbox-vm1"
+    $computerName = "jumpbox-vm2"
     $vmUsername = "avsjump"
-    $vmPassword = ConvertTo-SecureString $password -AsPlainText -Force
+    $vmPassword = ConvertTo-SecureString $userPassword -AsPlainText -Force
 
     $vmCreds = New-Object System.Management.Automation.PSCredential($vmUsername, $vmPassword)
     $vmLocation = "germanywestcentral"
@@ -85,7 +90,7 @@ if ($deployJumpbox) {
     $vmOfferName = "WindowsServer"
     $vmOSEdition = "2019-Datacenter-smalldisk"
     $vmOSVersion = "latest"
-    $vmBootDiagnostics = $true
+    $deployVmBootDiagnostics = $false
 
     $vmSubnet = $vnet.Subnets | Where-Object {$_.name -eq "frontend"}
     $vmSubnetId = $vmSubnet.id
@@ -96,7 +101,8 @@ if ($deployJumpbox) {
     # Create the virtual machine configuration object
     $VirtualMachine = New-AzVMConfig -VMName $computerName -VMSize $vmSize
 
-    if ($vmBootDiagnostics) {
+    if ($deployVmBootDiagnostics) {
+
         $guid = New-Guid
         $vmBootDiagnosticsSaName = "vmbootdiag"
         $vmBootDiagnosticsSaSuffix = $guid.ToString().Split("-")[0]
