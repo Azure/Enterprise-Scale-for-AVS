@@ -9,6 +9,26 @@
 #                                             #
 ###############################################
 
+## Important link around azure-partner-customer-usage-attribution
+## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+
+<# 
+Notification for SDK or API deployments
+When you deploy <PARTNER> software, Microsoft can identify the installation of <PARTNER> software with the deployed Azure resources. Microsoft can correlate these resources used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The data is collected and governed by Microsoft's privacy policies, located at https://www.microsoft.com/trustcenter. 
+#>
+
+## Telemetry enabled by default, Can be disabled by change the value of the telemetry parameter to false
+$telemetry = $true
+
+if ($telemetry) {
+  ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+    Write-Output "Telemetry enabled"
+    $telemetryId = "pid-b3e5a0bb-b96b-4250-84a1-39eca087d10f"
+    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent($telemetryId)
+} else {
+    Write-Host "Telemetry disabled"
+}
+
 ##Global variables
 $technology = "avs"
 $resourceGroupLocation = "germanywestcentral"
@@ -23,10 +43,15 @@ $frontEndName = "frontend"
 ## Define location for resource groups
 $networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
 
+## Virtual Network Variables
+$frontEndSubnetCidr = "10.0.1.0/26"
+$AzureBastionSubnetCidr = "10.0.1.64/26"
+$GatewaySubnetCidr = "10.0.1.128/26"
+
 ## Virtual Network Deployment
-$frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name $frontEndName -AddressPrefix "10.0.1.0/26"
-$bastionSubnet = New-AzVirtualNetworkSubnetConfig -Name AzureBastionSubnet -AddressPrefix "10.0.1.64/26"
-$gatewaySubnet = New-AzVirtualNetworkSubnetConfig -Name GatewaySubnet -AddressPrefix "10.0.1.128/26"
+$frontendSubnet = New-AzVirtualNetworkSubnetConfig -Name $frontEndName -AddressPrefix $frontEndSubnetCidr
+$bastionSubnet = New-AzVirtualNetworkSubnetConfig -Name AzureBastionSubnet -AddressPrefix $AzureBastionSubnetCidr
+$gatewaySubnet = New-AzVirtualNetworkSubnetConfig -Name GatewaySubnet -AddressPrefix $GatewaySubnetCidr
 $vnet = New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $networkingRgName -Location $vnetLocation -AddressPrefix $vnetCidr -Subnet $frontendSubnet,$bastionSubnet,$gatewaySubnet
 
 ## virtual network gateway variables
@@ -55,11 +80,10 @@ $config = @{
     SubnetId = $gatewaySubnetConfig.Id
     PublicIpAddressId = $gwPublicIp.Id
 }
-#$ngwipconfig = New-AzVirtualNetworkGatewayIpConfig -Name $gatewayIpConfigName -SubnetId $gatewaySubnetConfig.Id -PublicIpAddressId $gwPublicIp.Id
 $ngwipconfig = New-AzVirtualNetworkGatewayIpConfig @config
 
-#$gatewaySKU = "ErGw1AZ"
-$gatewaySKU = "Standard"
+$gatewaySKU = "ErGw1AZ"
+#$gatewaySKU = "Standard"
 $vpnType = "PolicyBased"
 $gatewayType = "ExpressRoute"
 
@@ -75,15 +99,18 @@ $gwConfig = @{
 $exrVirtualNetworkGateway = New-AzVirtualNetworkGateway @gwConfig
 
 ## Authourization variables
-#####$privateCloudName = "GWC-PrivateCloud-1"
-#####$authName = "$technology-$resourceGroupLocation-$privateCloudName-authorization"
-#####$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
-#####$avsAuth = New-AzVMwareAuthorization -Name $authName -PrivateCloudName $privateCloudName -ResourceGroupName $privateCloudRgName
+#$privateCloudName = "GWC-PrivateCloud-1"
+$cloudName = "azps_test_cloud"
+$authName = "$technology-$resourceGroupLocation-$cloudName-authorization"
+#$privateCloudRgName =  "private_cloud_rg3"
+$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
+## todo - add ExpressRoute authourization
+$avsAuth = New-AzVMwareAuthorization -Name $authName -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName
 
 ## ExpressRoute connection variables
-#####$authKey = $avsAuth.Key
-#####$avsPeerCircuitURI = $avsAuth.ExpressRouteId
-#####New-AzVirtualNetworkGatewayConnection -ResourceGroupName $networkingRgName -VirtualNetworkGateway1 $exrVirtualNetworkGateway -Name avs-er-connection -AuthorizationKey $authKey -PeerId $avsPeerCircuitURI -ConnectionType ExpressRoute -Location $vnetLocation
+$authKey = $avsAuth.Key
+$avsPeerCircuitURI = $avsAuth.ExpressRouteId
+New-AzVirtualNetworkGatewayConnection -ResourceGroupName $networkingRgName -VirtualNetworkGateway1 $exrVirtualNetworkGateway -Name avs-er-connection -AuthorizationKey $authKey -PeerId $avsPeerCircuitURI -ConnectionType ExpressRoute -Location $vnetLocation
 
 ## Advanced option
 $deployVpn = $true
@@ -109,18 +136,19 @@ if ($deployVpn) {
     $gwIpconfig2 = New-AzVirtualNetworkGatewayIpConfig -SubnetId $subnet.Id -PublicIpAddressId $vngPip2.Id -Name "$technology-$resourceGroupLocation-ipconfig2"
 
     $newgw = New-AzVirtualNetworkGateway -Name $vngName -ResourceGroupName $networkingRgName -IpConfigurations $gwIpconfig1, $gwIpconfig2 -GatewayType $gatewayType -EnableBgp $enableBGP -VpnType $vpnType -GatewaySku $vngSKU -Asn $vngASN -EnableActiveActiveFeature -Location $resourceGroupLocation
-
-    ##TODO add ARS Deployment
     
     $vnet = get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $networkingRgName
+
+    ## Azure Route Server variables
+    $arsPrefix = "10.0.2.0/16"
     $arsSubnet = @{
         Name = 'RouteServerSubnet'
         VirtualNetwork = $vnet
-        AddressPrefix = '10.0.2.0/26'
+        AddressPrefix = $arsPrefix
     }
     $arsSubnetConfig = Add-AzVirtualNetworkSubnetConfig @arsSubnet
     $vnet | Set-AzVirtualNetwork
-    $vnetInfo = get-azvirtualnetwork -resourcegroupname $networkingRgName -name $vnetName
+    $vnetInfo = get-azvirtualnetwork -ResourceGroupName $networkingRgName -name $vnetName
     $arsSubnetId = (Get-AzVirtualNetworkSubnetConfig -Name RouteServerSubnet -VirtualNetwork $vnetInfo).Id
 
     $arsPipName = "$technology-$resourceGroupLocation-ars-pip1"

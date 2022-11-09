@@ -9,6 +9,26 @@
 #                                                #
 ##################################################
 
+## Important link around azure-partner-customer-usage-attribution
+## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+
+<# 
+Notification for SDK or API deployments
+When you deploy <PARTNER> software, Microsoft can identify the installation of <PARTNER> software with the deployed Azure resources. Microsoft can correlate these resources used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The data is collected and governed by Microsoft's privacy policies, located at https://www.microsoft.com/trustcenter. 
+#>
+
+## Telemetry enabled by default, Can be disabled by change the value of the telemetry parameter to false
+$telemetry = $true
+
+if ($telemetry) {
+  ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
+    Write-Output "Telemetry enabled"
+    $telemetryId = "pid-4c6f5558-ec2a-449b-9e68-7530d7ee8b1e"
+    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent($telemetryId)
+} else {
+    Write-Host "Telemetry disabled"
+}
+
 ## resource group variables
 ## Define location for resource groups
 $technology = "avs"
@@ -26,9 +46,9 @@ $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"}
 foreach ($resourceGroup in $resourceGroups) {
   ## Create resource group
   $resourceGroupName = $resourceGroup
-  New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
-  #New-AzTag -ResourceId $rg.ResourceId -Tag $tags
-  write-host "Resource group " -NoNewline 
-  write-host $resourceGroupName -NoNewline -ForegroundColor Green 
-  write-host " created successfully"
+  $rg = New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
+  ## Uncomment line below to add tags
+  ## New-AzTag -ResourceId $rg.ResourceId -Tag $tags
+  $resourceGropupMessage = "Resource group " + $resourceGroupName + " created successfully"
+  Write-Output $resourceGropupMessage
 }

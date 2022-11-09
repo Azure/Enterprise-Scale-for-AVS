@@ -6,7 +6,8 @@ $i = 0
 foreach ($subscription in $subscriptions)
 {
   $subValue = $i
-  Write-output $subValue ":" $subscription.Name "("$subscription.SubscriptionId")"
+  $subText = [string]$subValue + " : " + $subscription.Name + " ( " + $subscription.SubscriptionId + " ) "
+  Write-output $subText
   $i++
 }
 Do 
@@ -15,5 +16,6 @@ Do
 } 
 until ($subscriptionChoice -le $subscriptionCount)
 
-Write-output "You selected" $subscriptions[$subscriptionChoice].Name
+$selectedSub = "You selected " + $subscriptions[$subscriptionChoice].Name
+Write-output $selectedSub
 Set-AzContext -SubscriptionId $subscriptions[$subscriptionChoice].SubscriptionId
