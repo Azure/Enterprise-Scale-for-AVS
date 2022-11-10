@@ -355,12 +355,6 @@
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
                                 "required": true
-                            },
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
                             }
                         },
                         {
@@ -392,12 +386,6 @@
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
                                 "required": true
-                            },
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
                             }
                         },
                         {
@@ -662,7 +650,7 @@
                                 "required": true,
                                 "allowedValues": [
                                     {
-                                        "label": "ExpressRoute",
+                                        "label": "ExpressRoute (Skip)",
                                         "value": "ExpressRoute"
                                     },
                                     {
@@ -712,12 +700,6 @@
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
                                 "required": true
-                            },
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
                             }
                         },
                         {
