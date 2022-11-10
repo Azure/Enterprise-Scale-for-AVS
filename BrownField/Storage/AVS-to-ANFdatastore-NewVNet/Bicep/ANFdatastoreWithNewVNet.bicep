@@ -63,7 +63,7 @@ param GatewayName string = VNetName
 param GatewaySku string = 'UltraPerformance'
 
 // Customer Usage Attribution Id
-var varCuaid = '938cd838-e22a-47da-8a6f-bdda923e3edb'
+var varCuaid = '20f60d5e-587f-4145-aa6d-4901171eb752'
 
 @description('import the existing AVS private cloud')
 resource avsPrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' existing = {

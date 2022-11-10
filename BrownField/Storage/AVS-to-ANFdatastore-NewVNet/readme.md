@@ -2,6 +2,10 @@
 
 This tutorial walks through the scenario of connecting Azure VMware Solution Private Cloud to an Azure NetApp Files datastore with a ***new*** Azure Virtual Network. 
 
+## What will be deployed?
+
+![ANF Datastores](../../../docs/images/anf-datastores.png)
+
 ## Prerequisites
 
 * Steps as outlined in [Create Private Cloud](../../PrivateCloud/AVS-PrivateCloud/readme.md) or [Create Private Cloud with HCX](../../PrivateCloud/AVS-PrivateCloud-WithHCX/readme.md) section are completed.
