@@ -16,10 +16,10 @@ param DeployServiceHealth bool = false
 param AlertEmails string = ''
 param PrivateCloudName string = ''
 param PrivateCloudResourceId string = ''
-param CPUUsageThreshold int
-param MemoryUsageThreshold int
-param StorageUsageThreshold int
-param StorageCriticalThreshold int
+param CPUUsageThreshold int = 80
+param MemoryUsageThreshold int = 80
+param StorageUsageThreshold int = 70
+param StorageCriticalThreshold int = 80
 
 //Diagnostic Module Parameters
 param DeployDiagnostics bool = false
@@ -33,7 +33,7 @@ param ExistingWorkspaceId string = ''
 param ExistingStorageAccountId string = ''
 param DiagnosticsPrivateCloudName string = ''
 param DiagnosticsPrivateCloudResourceId string = ''
-param StorageRetentionDays int
+param StorageRetentionDays int = 1
 
 //Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
