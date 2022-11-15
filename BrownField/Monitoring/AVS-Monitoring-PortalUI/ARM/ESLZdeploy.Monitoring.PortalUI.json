@@ -373,7 +373,7 @@
                                     "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Diagnostic settings in Azure allow for the collection of resource and activity logs to either be stored to a storage account, to a Log Analytics Workspace or streamed to an Event Hub. This provides the ability to store and retrieve logs for future diagnosis or troubleshooting. In this deployment, you will select the Private Cloud you would to enable Diagnostic Settings for, specify or create a Log Analytics workspace and/or an Event Hub",
+                                        "text": "Diagnostic settings in Azure allow for the collection of resource and activity logs to either be stored to a storage account, to a Log Analytics Workspace or streamed to an Event Hub. This provides the ability to store and retrieve logs for future diagnosis or troubleshooting. In this deployment, you will select the Private Cloud you would like to enable Diagnostic Settings, and send these to a New or Existing Log Analytics Workspace or Storage Account",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs"
