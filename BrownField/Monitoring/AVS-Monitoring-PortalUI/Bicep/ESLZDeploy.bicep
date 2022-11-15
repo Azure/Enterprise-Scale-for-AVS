@@ -38,6 +38,9 @@ param StorageRetentionDays int
 //Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
+// Customer Usage Attribution Id
+var varCuaid = '4e6c118a-ccde-4471-a873-b91dc6d7b00e'
+
 module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMonitoring)) {
   name: '${deploymentPrefix}-Monitoring'
   params: {
@@ -75,3 +78,9 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
   }
 }
 
+// Optional Deployment for Customer Usage Attribution
+module modCustomerUsageAttribution '../../../../BrownField/Addons/CUAID/customerUsageAttribution/cuaIdSubscription.bicep' = {
+  #disable-next-line no-loc-expr-outside-params
+  name: 'pid-${varCuaid}-${uniqueString(deployment().name, Location)}'
+  params: {}
+}
