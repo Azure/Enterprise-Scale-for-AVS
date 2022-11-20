@@ -4,7 +4,9 @@ param PrivateCloudResourceId string
 param CPUUsageThreshold int
 param MemoryUsageThreshold int
 param StorageUsageThreshold int
-param StorageCriticalThreshold int
+param CPUCriticalThreshold int = 80
+param MemoryCriticalThreshold int = 80
+param StorageCriticalThreshold int = 75
 
 
 var Alerts = [
@@ -33,8 +35,24 @@ var Alerts = [
     Severity: 2
   }
   {
+    Name: 'CPUCritical'
+    Description: 'CPU Critical Usage per Cluster'
+    Metric: 'EffectiveCpuAverage'
+    SplitDimension: 'clustername'
+    Threshold: CPUCriticalThreshold
+    Severity: 0
+  }
+  {
+    Name: 'MemoryCritical'
+    Description: 'Memory Critical Usage per Cluster'
+    Metric: 'UsageAverage'
+    SplitDimension: 'clustername'
+    Threshold: MemoryCriticalThreshold
+    Severity: 0
+  }
+  {
     Name: 'StorageCritical'
-    Description: 'Storage Usage per Datastore'
+    Description: 'Storage Critical Usage per Datastore'
     Metric: 'DiskUsedPercentage'
     SplitDimension: 'dsname'
     Threshold: StorageCriticalThreshold

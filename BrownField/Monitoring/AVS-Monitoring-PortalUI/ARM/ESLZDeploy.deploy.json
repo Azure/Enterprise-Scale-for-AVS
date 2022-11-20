@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "5637300087608573649"
+      "templateHash": "5708838194790671037"
     }
   },
   "parameters": {
@@ -62,9 +62,6 @@
     "StorageUsageThreshold": {
       "type": "int"
     },
-    "StorageCriticalThreshold": {
-      "type": "int"
-    },
     "DeployDiagnostics": {
       "type": "bool",
       "defaultValue": false
@@ -110,7 +107,8 @@
       "defaultValue": ""
     },
     "StorageRetentionDays": {
-      "type": "int"
+      "type": "int",
+      "defaultValue": 1
     }
   },
   "variables": {
@@ -165,9 +163,6 @@
           },
           "StorageUsageThreshold": {
             "value": "[parameters('StorageUsageThreshold')]"
-          },
-          "StorageCriticalThreshold": {
-            "value": "[parameters('StorageCriticalThreshold')]"
           }
         },
         "template": {
@@ -177,7 +172,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "17897359122617599950"
+              "templateHash": "10678754587746353447"
             }
           },
           "parameters": {
@@ -215,9 +210,6 @@
               "type": "int"
             },
             "StorageUsageThreshold": {
-              "type": "int"
-            },
-            "StorageCriticalThreshold": {
               "type": "int"
             }
           },
@@ -325,9 +317,6 @@
                   },
                   "StorageUsageThreshold": {
                     "value": "[parameters('StorageUsageThreshold')]"
-                  },
-                  "StorageCriticalThreshold": {
-                    "value": "[parameters('StorageCriticalThreshold')]"
                   }
                 },
                 "template": {
@@ -337,7 +326,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.12.40.16777",
-                      "templateHash": "16434716623814106512"
+                      "templateHash": "4728087559461503811"
                     }
                   },
                   "parameters": {
@@ -359,8 +348,17 @@
                     "StorageUsageThreshold": {
                       "type": "int"
                     },
+                    "CPUCriticalThreshold": {
+                      "type": "int",
+                      "defaultValue": 80
+                    },
+                    "MemoryCriticalThreshold": {
+                      "type": "int",
+                      "defaultValue": 80
+                    },
                     "StorageCriticalThreshold": {
-                      "type": "int"
+                      "type": "int",
+                      "defaultValue": 75
                     }
                   },
                   "variables": {
@@ -390,8 +388,24 @@
                         "Severity": 2
                       },
                       {
+                        "Name": "CPUCritical",
+                        "Description": "CPU Critical Usage per Cluster",
+                        "Metric": "EffectiveCpuAverage",
+                        "SplitDimension": "clustername",
+                        "Threshold": "[parameters('CPUCriticalThreshold')]",
+                        "Severity": 0
+                      },
+                      {
+                        "Name": "MemoryCritical",
+                        "Description": "Memory Critical Usage per Cluster",
+                        "Metric": "UsageAverage",
+                        "SplitDimension": "clustername",
+                        "Threshold": "[parameters('MemoryCriticalThreshold')]",
+                        "Severity": 0
+                      },
+                      {
                         "Name": "StorageCritical",
-                        "Description": "Storage Usage per Datastore",
+                        "Description": "Storage Critical Usage per Datastore",
                         "Metric": "DiskUsedPercentage",
                         "SplitDimension": "dsname",
                         "Threshold": "[parameters('StorageCriticalThreshold')]",
@@ -933,7 +947,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.12.40.16777",
-                      "templateHash": "1369612828836823398"
+                      "templateHash": "6076813119698962958"
                     }
                   },
                   "parameters": {
@@ -1211,7 +1225,7 @@
                                 "id": "2d83b1b4-8a5f-4292-affc-8676c1d1b73e",
                                 "cellValue": "Tab",
                                 "linkTarget": "parameter",
-                                "linkLabel": "AVS Locations",
+                                "linkLabel": "AVS Deployed Regions",
                                 "subTarget": "Location",
                                 "style": "link"
                               },
@@ -1219,7 +1233,7 @@
                                 "id": "566405da-0058-405d-acc7-aac003be1f88",
                                 "cellValue": "Tab",
                                 "linkTarget": "parameter",
-                                "linkLabel": "Quota Information",
+                                "linkLabel": "AVS Quota Information",
                                 "subTarget": "Quota",
                                 "style": "link"
                               }

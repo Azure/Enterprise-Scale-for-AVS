@@ -341,18 +341,13 @@
                                     }
                                 },
                                 {
-                                    "name": "storageCriticalThreshold",
-                                    "type": "Microsoft.Common.Slider",
+                                    "name": "MonitoringInputsInfo1",
+                                    "type": "Microsoft.Common.InfoBox",
                                     "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
-                                    "label": "Storage Critical % Threshold (Sev 0 Alert)",
-                                    "subLabel": "",
-                                    "toolTip": "Set the Critical Storage Usage Threshold to be alerted on per Cluster",
-                                    "min": 1,
-                                    "max": 100,
-                                    "defaultValue": 80,
-                                    "showStepMarkers": true,
-                                    "constraints": {
-                                        "required": true
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "In addition to the above alerts, we will create Sev 0 alerts based on VMware recommended thresholds. These will be set as 80% for CPU and Memory, 75% for Storage",
+                                        "style": "Info"
                                     }
                                 }
                             ]
@@ -589,7 +584,6 @@
                 "CPUUsageThreshold": "[steps('Monitoring').MonitoringInputs.cpuUsageThreshold]",
                 "MemoryUsageThreshold": "[steps('Monitoring').MonitoringInputs.memoryUsageThreshold]",
                 "StorageUsageThreshold": "[steps('Monitoring').MonitoringInputs.storageUsageThreshold]",
-                "StorageCriticalThreshold": "[steps('Monitoring').MonitoringInputs.storageCriticalThreshold]",
                 "DeployDiagnostics": "[steps('Diagnostics').DeployDiagnostics]",
                 "DeployAVSLogsWorkspace": "[steps('Diagnostics').Workspace.AVSLogCollection]",
                 "DiagnosticsPrivateCloudName": "[steps('Diagnostics').avsSelector2.name]",

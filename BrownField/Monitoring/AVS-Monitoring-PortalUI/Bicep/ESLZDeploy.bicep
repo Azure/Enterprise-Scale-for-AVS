@@ -16,10 +16,9 @@ param DeployServiceHealth bool = false
 param AlertEmails string = ''
 param PrivateCloudName string = ''
 param PrivateCloudResourceId string = ''
-param CPUUsageThreshold int = 80
-param MemoryUsageThreshold int = 80
-param StorageUsageThreshold int = 70
-param StorageCriticalThreshold int = 80
+param CPUUsageThreshold int
+param MemoryUsageThreshold int
+param StorageUsageThreshold int
 
 //Diagnostic Module Parameters
 param DeployDiagnostics bool = false
@@ -56,7 +55,6 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMonitoring)
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
-    StorageCriticalThreshold: StorageCriticalThreshold
   }
 }
 

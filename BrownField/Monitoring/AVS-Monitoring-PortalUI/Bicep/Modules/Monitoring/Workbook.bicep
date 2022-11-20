@@ -264,7 +264,7 @@ var workbookContent = {
             id: '2d83b1b4-8a5f-4292-affc-8676c1d1b73e'
             cellValue: 'Tab'
             linkTarget: 'parameter'
-            linkLabel: 'AVS Locations'
+            linkLabel: 'AVS Deployed Regions'
             subTarget: 'Location'
             style: 'link'
           }
@@ -272,7 +272,7 @@ var workbookContent = {
             id: '566405da-0058-405d-acc7-aac003be1f88'
             cellValue: 'Tab'
             linkTarget: 'parameter'
-            linkLabel: 'Quota Information'
+            linkLabel: 'AVS Quota Information'
             subTarget: 'Quota'
             style: 'link'
           }

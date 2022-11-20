@@ -12,7 +12,6 @@ param PrivateCloudResourceId string
 param CPUUsageThreshold int
 param MemoryUsageThreshold int
 param StorageUsageThreshold int
-param StorageCriticalThreshold int
 
 
 resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -39,7 +38,6 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = if (DeployMetricAle
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
-    StorageCriticalThreshold: StorageCriticalThreshold
   }
 }
 
