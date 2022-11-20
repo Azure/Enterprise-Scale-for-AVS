@@ -304,7 +304,7 @@
                                     "toolTip": "Set the CPU Usage Threshold to be alerted on per Cluster",
                                     "min": 1,
                                     "max": 100,
-                                    "defaultValue": 80,
+                                    "defaultValue": 60,
                                     "showStepMarkers": true,
                                     "constraints": {
                                         "required": true
@@ -319,7 +319,7 @@
                                     "toolTip": "Set the Memory Usage Threshold to be alerted on per Cluster",
                                     "min": 1,
                                     "max": 100,
-                                    "defaultValue": 80,
+                                    "defaultValue": 60,
                                     "showStepMarkers": true,
                                     "constraints": {
                                         "required": true
@@ -334,7 +334,7 @@
                                     "toolTip": "Set the Storage Usage Threshold to be alerted on per Cluster",
                                     "min": 1,
                                     "max": 100,
-                                    "defaultValue": 70,
+                                    "defaultValue": 60,
                                     "showStepMarkers": true,
                                     "constraints": {
                                         "required": true
@@ -346,7 +346,7 @@
                                     "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
                                     "options": {
                                         "icon": "None",
-                                        "text": "In addition to the above alerts, we will create Sev 0 alerts based on VMware recommended thresholds. These will be set as 80% for CPU and Memory, 75% for Storage",
+                                        "text": "In addition to the alerts above, we will create Sev 0 alerts based on VMware recommended thresholds. These will be set as 80% for CPU and Memory, 75% for Storage",
                                         "style": "Info"
                                     }
                                 }
