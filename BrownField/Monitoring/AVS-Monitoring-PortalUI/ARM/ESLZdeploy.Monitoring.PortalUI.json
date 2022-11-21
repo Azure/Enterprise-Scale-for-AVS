@@ -1,0 +1,604 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "AVS Landing Zone Accelerator - Monitoring and Logging",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Azure core setup",
+                    "subLabel": {
+                        "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
+                        "postValidation": "Done"
+                    },
+                    "bladeTitle": "avsBasics",
+                    "elements": [  
+                        {
+                            "name": "avsDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },                   
+                        {
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.InfoBox",
+                            "options": {
+                                "text": "The subscription and location selected in this step will be used to deploy the AVS Workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "avsWorkloadSubscription",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Deployment",
+                            "elements": [
+                                {
+                                    "name": "info",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "avsDeploymentPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Deployment prefix",
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
+                            "placeholder": "Example: AVS",
+                            "defaultValue": "SJAVS",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-z0-9A-Z-]{1,8}$",
+                                "validationMessage": "The prefix must be 1-8 characters."
+                            }
+                        },
+                        {
+                            "name": "rbacInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Azure AVS Landing Zones ARM deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Monitoring",
+                    "label": "Monitoring",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Monitoring and Alerts",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Monitoring and Alerts",
+                                    "options": {
+                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted for any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployMonitoring",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy Monitoring Module",
+                            "toolTip": "Deploy or Skip this Monitoring Module",
+                            "defaultValue": "No (Skip)",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Skip)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "AVSWorkbook",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "AVS Workbook",
+                            "elements": [
+                                {
+                                    "name": "WorkbookInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Workbook",
+                                    "options": {
+                                        "text": "Workbooks provide a flexible canvas for data analysis and the creation of rich visual reports within the Azure portal. We have created an AVS specific Workbook which will show you all the information you need to monitor and view all your AVS Private Clouds. This Workbook includes a Dasbboard, Alerts, Syslog, Virtual Machines, Usage and Quota information. For more details of this workbook, click the link below",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/BrownField/Monitoring/AVS-Workbook"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DeployAVSWorkbook",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Deploy an Azure Workbook for AVS",
+                                    "toolTip": "Deploy an AVS Workbook that provides a Dashboard, Logging, Monitoring, Quota etc",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "WorkbookInfo2",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSWorkbook.DeployAVSWorkbook, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "Some elements of the Workbook require logging to be enabled for the Subscription and Private Cloud. Head over to the Logging tab in the next screen to turn this on, or perform this task manually after this deployment",
+                                        "style": "Info"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "AVSDashboard",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "AVS Dashboard and Alerts",
+                            "elements": [
+                                {
+                                    "name": "DashboardInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Dashboard",
+                                    "options": {
+                                        "text": "In addition to the workbook above, we have provided the ability to also deploy a dedicated Azure dashboard for your Private Cloud. Also, optionally select to enable AVS Service Health alerts and Metric alerts to be sent to an email address",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DeployDashboard",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Deploy an Azure Dashboard for AVS",
+                                    "toolTip": "Deploy a dedicated AVS Dashboard for the Private Cloud selected",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployServiceHealth",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                                    "label": "Enable Service Health alerts for AVS",
+                                    "defaultValue": "No",
+                                    "toolTip": "Enable Service Health alerts for AVS on this subscription",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployAVSAlerts",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Enable Azure Monitor alerts for AVS",
+                                    "toolTip": "Enable AVS Metric alerts for your Private Cloud, use the sliders below to define your alert thresholds",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "MonitoringInputs",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "",
+                            "elements": [
+                                {
+                                    "name": "avsSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "[or(equals(steps('Monitoring').AVSDashboard.DeployDashboard, true), equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true))]",
+                                    "label": "Select AVS Private Cloud",
+                                    "resourceType": "Microsoft.AVS/privateClouds",
+                                    "options": {
+                                        "filter": {
+                                            "subscription": "onBasics",
+                                            "location": "onBasics"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "ActionGroupEmails",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Email address to send the alerts to",
+                                    "visible": "[or(equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true), equals(steps('Monitoring').AVSDashboard.DeployServiceHealth, true))]",
+                                    "toolTip": "Provide an email address to send the service health alerts to",
+                                    "placeholder": "Example: alerts@contoso.com",
+                                    "defaultValue": "alerts@contoso.com",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+                                        "validationMessage": "Please provide a valid email address"
+                                    }
+                                },
+                                {
+                                    "name": "MetricAlertInfo1",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "The default values below are set as a reference only, use the sliders to adjust as required",
+                                        "style": "Info"
+                                    }
+                                },
+                                {
+                                    "name": "cpuUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "CPU Usage % per Cluster (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the CPU Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "memoryUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "Memory Usage % Threshold (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the Memory Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "storageUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "Storage Usage % Threshold (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the Storage Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "MonitoringInputsInfo1",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "In addition to the alerts above, we will create Sev 0 alerts based on VMware recommended thresholds. These will be set as 80% for CPU and Memory, 75% for Storage",
+                                        "style": "Info"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Diagnostics",
+                    "label": "Logging",
+                    "elements": [
+                        {
+                            "name": "DiagnosticInfo1",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Diagnostic Settings",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Diagnostic settings in Azure allow for the collection of resource and activity logs to either be stored to a storage account, to a Log Analytics Workspace or streamed to an Event Hub. This provides the ability to store and retrieve logs for future diagnosis or troubleshooting. In this deployment, you will select the Private Cloud you would like to enable Diagnostic Settings, and send these to a New or Existing Log Analytics Workspace or Storage Account",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs"
+                                        }        
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployDiagnostics",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Deploy Diagnostic Settings",
+                            "toolTip": "Deploy Diagnostic Settings",
+                            "defaultValue": "No (Skip)",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Skip)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DiagnosticInfo2",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "options": {
+                                "text": "Collecting logs and enabling diagnostic settings may incur additional charges such as storage, ingestion and retention. Click here for more information",
+                                "uri": "https://learn.microsoft.com/en-us/azure/azure-monitor/usage-estimated-costs",
+                                "style": "Warning"
+                            }
+                        },
+                        {
+                            "name": "avsSelector2",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "label": "Select the AVS Private Cloud to enable diagnostic settings",
+                            "resourceType": "Microsoft.AVS/privateClouds"
+                        },
+                        {
+                            "name": "Workspace",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "label": "Log Analytics Workspace Settings",
+                            "elements": [
+                                {
+                                    "name": "AVSLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send AVS Logs to a Log Analytics Workspace",
+                                    "toolTip": "Send AVS Logs to a Log Analytics Workspace",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "ActivityLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send Subscription Activity Logs to a Log Analytics Workspace",
+                                    "toolTip": "Send Subscription Activity Logs to a Log Analytics Workspace",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "WorkspaceExists",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[or(equals(steps('Diagnostics').Workspace.AVSLogCollection, true), equals(steps('Diagnostics').Workspace.ActivityLogCollection, true))]",
+                                    "label": "Deploy New or Choose Existing Workspace",
+                                    "toolTip": "Deploy New or Choose Existing Workspace",
+                                    "defaultValue": "New",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "New",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "Existing",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "existingWorkspaceSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "[equals(steps('Diagnostics').Workspace.WorkspaceExists, false)]",
+                                    "label": "Select the Existing Log Analytics Workspace",
+                                    "resourceType": "Microsoft.OperationalInsights/workspaces"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "StorageAccount",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "label": "Storage Account Settings",
+                            "elements": [
+                                {
+                                    "name": "StorageLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send AVS Logs to a storage account",
+                                    "toolTip": "Send AVS Logs to a storage account",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "StorageAccountExists",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageLogCollection, true)]",
+                                    "label": "Deploy New or Choose Existing Storage Account",
+                                    "toolTip": "Deploy New or Choose Existing Storage Account",
+                                    "defaultValue": "New",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "New",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "Existing",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "existingStorageAccountSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageAccountExists, false)]",
+                                    "label": "Select the Existing Storage Account",
+                                    "resourceType": "Microsoft.Storage/storageAccounts"
+                                },
+                                {
+                                    "name": "storageRetention",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageLogCollection, true)]",
+                                    "label": "Storage Account Retention Days",
+                                    "subLabel": "",
+                                    "toolTip": "Retention only applies to storage account. Retention policy ranges from 1 to 365 days. If you do not want to apply any retention policy and retain data forever, set retention (days) to 0.",
+                                    "min": 0,
+                                    "max": 365,
+                                    "defaultValue": 1,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "Prefix": "[steps('basics').avsDeploymentPrefix]",
+                "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployMonitoring": "[steps('Monitoring').DeployMonitoring]",
+                "DeployWorkbook": "[steps('Monitoring').AVSWorkbook.DeployAVSWorkbook]",
+                "DeployDashboard": "[steps('Monitoring').AVSDashboard.DeployDashboard]",
+                "DeployServiceHealth": "[steps('Monitoring').AVSDashboard.DeployServiceHealth]",
+                "DeployMetricAlerts": "[steps('Monitoring').AVSDashboard.DeployAVSAlerts]",
+                "PrivateCloudName": "[steps('Monitoring').MonitoringInputs.avsSelector.name]",
+                "PrivateCloudResourceId": "[steps('Monitoring').MonitoringInputs.avsSelector.id]",
+                "AlertEmails": "[steps('Monitoring').MonitoringInputs.ActionGroupEmails]",
+                "CPUUsageThreshold": "[steps('Monitoring').MonitoringInputs.cpuUsageThreshold]",
+                "MemoryUsageThreshold": "[steps('Monitoring').MonitoringInputs.memoryUsageThreshold]",
+                "StorageUsageThreshold": "[steps('Monitoring').MonitoringInputs.storageUsageThreshold]",
+                "DeployDiagnostics": "[steps('Diagnostics').DeployDiagnostics]",
+                "DeployAVSLogsWorkspace": "[steps('Diagnostics').Workspace.AVSLogCollection]",
+                "DiagnosticsPrivateCloudName": "[steps('Diagnostics').avsSelector2.name]",
+                "DiagnosticsPrivateCloudResourceId": "[steps('Diagnostics').avsSelector2.id]",
+                "DeployActivityLogDiagnostics": "[steps('Diagnostics').Workspace.ActivityLogCollection]",
+                "DeployAVSLogsStorage": "[steps('Diagnostics').StorageAccount.StorageLogCollection]",
+                "DeployWorkspace": "[steps('Diagnostics').Workspace.WorkspaceExists]",
+                "ExistingWorkspaceId": "[steps('Diagnostics').Workspace.existingWorkspaceSelector.id]",
+                "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
+                "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.StorageAccountExists]",
+                "StorageRetentionDays": "[steps('Diagnostics').StorageAccount.storageRetention]"
+            },
+            "kind": "Subscription",
+            "location": "[steps('basics').avsDeploymentScope.location.name]",
+            "subscriptionId": "[steps('basics').avsDeploymentScope.subscription.id]"
+        }
+    }
+}
