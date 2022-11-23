@@ -36,8 +36,6 @@ $resourceGroupLocation = "germanywestcentral"
 
 $actionGroupRgName = "$technology-$resourceGroupLocation-operational_rg"
 
-## TODO - create Action group
-
 ## GUID work
 $guid = New-Guid
 $actionGroupSuffix = $guid.ToString().Split("-")[0]

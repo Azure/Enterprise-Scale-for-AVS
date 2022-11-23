@@ -43,6 +43,9 @@ $bastionName = "$technology-$resourceGroupLocation-bastion1"
 $vnetName = "$technology-$resourceGroupLocation-vnet1"
 $vnetLocation = "germanywestcentral"
 
+$jumpboxRgName = "$technology-$resourceGroupLocation-jumpbox_rg"
+$networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
+
 $ip = @{
     Name = $pipName
     ResourceGroupName = $jumpboxRgName
@@ -63,16 +66,20 @@ $bastionConfig = @{
     PublicIpAddress = $bastionPublicIp
     VirtualNetwork = $vnet
 }
-#$bastion = New-AzBastion -ResourceGroupName $jumpboxRgName -Name $bastionName -PublicIpAddress $bastionPublicIp -VirtualNetwork $vnet
+## Deploy bastion
 $bastion = New-AzBastion @bastionConfig
 
 ## Deploy jumpbox
+## update password as needed
+$password = ""
+
 $deployJumpbox = $false
 if ($deployJumpbox) {
     ## Password field, update as needed
     $userPassword = ""
     $vmSize = "Standard_D2s_v3"
-    $computerName = "jumpbox-vm1"
+    #$vmName = "jumpbox-vm1"
+    $computerName = "jumpbox-vm2"
     $vmUsername = "avsjump"
     $vmPassword = ConvertTo-SecureString $userPassword -AsPlainText -Force
 
