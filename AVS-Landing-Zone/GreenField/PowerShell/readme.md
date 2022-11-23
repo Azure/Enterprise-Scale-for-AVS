@@ -8,7 +8,7 @@ This section is broken down into folders and sections so that you can deploy eac
 1. [Resource Groups](1.resource_group_design)
 2. [Azure VMware Private Cloud](2.private_cloud)
 3. [Networking](3.network-design)
-4. [Jumpbox](4.jumpbox-design)
+4. [Jump box](4.jumpbox-design)
 5. [Reporting](05.reporting)
 6. [Addons](06.add-ons)
 
