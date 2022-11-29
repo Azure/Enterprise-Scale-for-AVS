@@ -5,7 +5,7 @@ This section contains templates to deploy specific components and add-ins for AV
 ## AVS Portal UI Accelerators (All-in-one Portal Experience)
 | Deploy                     | Description                                                  | Deploy                                                       |
 | -------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| AVS Monitoring and Logging | This is an all in one portal experience to deploy AVS Monitoring components and enable logging for your Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FStorage%2FAVS-to-ANFdatastore-NewVNet%2FARM%2FANFdatastoreWithNewVNet.deploy.json) |
+| AVS Monitoring and Logging | This is an all in one portal experience to deploy AVS Monitoring components and enable logging for your Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Monitoring-PortalUI%2FARM%2FESLZDeploy.deploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Monitoring-PortalUI%2FARM%2FESLZdeploy.Monitoring.PortalUI.json) |
 
 ## AVS Private Cloud + Add-ons
 
