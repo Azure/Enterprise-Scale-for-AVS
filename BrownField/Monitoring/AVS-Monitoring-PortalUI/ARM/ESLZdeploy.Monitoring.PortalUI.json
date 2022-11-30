@@ -54,7 +54,7 @@
                             "label": "Deployment prefix",
                             "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
                             "placeholder": "Example: AVS",
-                            "defaultValue": "SJAVS",
+                            "defaultValue": "",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-z0-9A-Z-]{1,8}$",
