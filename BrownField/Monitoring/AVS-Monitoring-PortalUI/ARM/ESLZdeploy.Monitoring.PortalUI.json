@@ -594,7 +594,7 @@
                 "ExistingWorkspaceId": "[steps('Diagnostics').Workspace.existingWorkspaceSelector.id]",
                 "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
                 "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.StorageAccountExists]",
-                "StorageRetentionDays": "[steps('Diagnostics').StorageAccount.storageRetention]"
+                "StorageRetentionDays": "[if(equals(steps('Diagnostics').DeployStorageAccount, true), steps('Diagnostics').StorageAccount.storageRetention, '0')]"
             },
             "kind": "Subscription",
             "location": "[steps('basics').avsDeploymentScope.location.name]",
