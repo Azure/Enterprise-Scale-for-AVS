@@ -485,6 +485,20 @@
                                     }
                                 },
                                 {
+                                    "name": "newWorkspaceName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('Diagnostics').Workspace.WorkspaceExists, true)]",
+                                    "label": "New Workspace Name",
+                                    "placeholder": "",
+                                    "defaultValue": "",
+                                    "toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[a-z0-9A-Z-]{4,63}$",
+                                        "validationMessage": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol."
+                                    }
+                                },
+                                {
                                     "name": "existingWorkspaceSelector",
                                     "type": "Microsoft.Solutions.ResourceSelector",
                                     "visible": "[equals(steps('Diagnostics').Workspace.WorkspaceExists, false)]",
