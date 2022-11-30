@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "5708838194790671037"
+      "templateHash": "2046513678691148557"
     }
   },
   "parameters": {
@@ -85,6 +85,14 @@
     "DeployWorkspace": {
       "type": "bool",
       "defaultValue": false
+    },
+    "NewWorkspaceName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "NewStorageAccountName": {
+      "type": "string",
+      "defaultValue": ""
     },
     "DeployStorageAccount": {
       "type": "bool",
@@ -3180,8 +3188,14 @@
           "DeployWorkspace": {
             "value": "[parameters('DeployWorkspace')]"
           },
+          "NewWorkspaceName": {
+            "value": "[parameters('NewWorkspaceName')]"
+          },
           "DeployStorageAccount": {
             "value": "[parameters('DeployStorageAccount')]"
+          },
+          "NewStorageAccountName": {
+            "value": "[parameters('NewStorageAccountName')]"
           },
           "PrivateCloudName": {
             "value": "[parameters('DiagnosticsPrivateCloudName')]"
@@ -3206,7 +3220,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "15519860138785116855"
+              "templateHash": "3546126954653857492"
             }
           },
           "parameters": {
@@ -3229,6 +3243,14 @@
             "DeployAVSLogsWorkspace": {
               "type": "bool",
               "defaultValue": false
+            },
+            "NewWorkspaceName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "NewStorageAccountName": {
+              "type": "string",
+              "defaultValue": ""
             },
             "DeployActivityLogDiagnostics": {
               "type": "bool",
@@ -3279,8 +3301,8 @@
                   "Location": {
                     "value": "[parameters('Location')]"
                   },
-                  "Prefix": {
-                    "value": "[parameters('Prefix')]"
+                  "NewWorkspaceName": {
+                    "value": "[parameters('NewWorkspaceName')]"
                   }
                 },
                 "template": {
@@ -3290,14 +3312,14 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.12.40.16777",
-                      "templateHash": "8881033461838862562"
+                      "templateHash": "2876446036572930680"
                     }
                   },
                   "parameters": {
-                    "Prefix": {
+                    "Location": {
                       "type": "string"
                     },
-                    "Location": {
+                    "NewWorkspaceName": {
                       "type": "string"
                     }
                   },
@@ -3305,14 +3327,14 @@
                     {
                       "type": "Microsoft.OperationalInsights/workspaces",
                       "apiVersion": "2022-10-01",
-                      "name": "[format('{0}-Workspace', parameters('Prefix'))]",
+                      "name": "[parameters('NewWorkspaceName')]",
                       "location": "[parameters('Location')]"
                     }
                   ],
                   "outputs": {
                     "WorkspaceId": {
                       "type": "string",
-                      "value": "[resourceId('Microsoft.OperationalInsights/workspaces', format('{0}-Workspace', parameters('Prefix')))]"
+                      "value": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('NewWorkspaceName'))]"
                     }
                   }
                 }
@@ -3335,6 +3357,9 @@
                 "parameters": {
                   "Location": {
                     "value": "[parameters('Location')]"
+                  },
+                  "NewStorageAccountName": {
+                    "value": "[parameters('NewStorageAccountName')]"
                   }
                 },
                 "template": {
@@ -3344,22 +3369,22 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.12.40.16777",
-                      "templateHash": "4029383951596435329"
+                      "templateHash": "128356252218645058"
                     }
                   },
                   "parameters": {
                     "Location": {
                       "type": "string"
+                    },
+                    "NewStorageAccountName": {
+                      "type": "string"
                     }
-                  },
-                  "variables": {
-                    "storageaccountname": "[format('avs{0}', uniqueString(resourceGroup().id))]"
                   },
                   "resources": [
                     {
                       "type": "Microsoft.Storage/storageAccounts",
                       "apiVersion": "2022-05-01",
-                      "name": "[variables('storageaccountname')]",
+                      "name": "[parameters('NewStorageAccountName')]",
                       "location": "[parameters('Location')]",
                       "sku": {
                         "name": "Standard_LRS"
@@ -3373,11 +3398,11 @@
                   "outputs": {
                     "StorageAccountName": {
                       "type": "string",
-                      "value": "[variables('storageaccountname')]"
+                      "value": "[parameters('NewStorageAccountName')]"
                     },
                     "StorageAccountid": {
                       "type": "string",
-                      "value": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageaccountname'))]"
+                      "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('NewStorageAccountName'))]"
                     }
                   }
                 }

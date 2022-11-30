@@ -619,9 +619,11 @@
                 "DeployActivityLogDiagnostics": "[steps('Diagnostics').Workspace.ActivityLogCollection]",
                 "DeployAVSLogsStorage": "[steps('Diagnostics').StorageAccount.StorageLogCollection]",
                 "DeployWorkspace": "[steps('Diagnostics').Workspace.WorkspaceExists]",
+                "NewWorkspaceName": "[steps('Diagnostics').Workspace.newWorkspaceName]",
                 "ExistingWorkspaceId": "[steps('Diagnostics').Workspace.existingWorkspaceSelector.id]",
                 "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
                 "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.StorageAccountExists]",
+                "NewStorageAccountName": "[steps('Diagnostics').StorageAccount.newStorageAccountName]",
                 "StorageRetentionDays": "[if(equals(steps('Diagnostics').StorageAccount.StorageAccountExists, true), steps('Diagnostics').StorageAccount.storageRetention, '0')]"
             },
             "kind": "Subscription",

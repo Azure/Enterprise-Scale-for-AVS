@@ -27,6 +27,8 @@ param DeployActivityLogDiagnostics bool = false
 param DeployAVSLogsStorage bool = false
 param DeployWorkbook bool = false
 param DeployWorkspace bool = false
+param NewWorkspaceName string = ''
+param NewStorageAccountName string = ''
 param DeployStorageAccount bool = false
 param ExistingWorkspaceId string = ''
 param ExistingStorageAccountId string = ''
@@ -67,7 +69,9 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
     DeployActivityLogDiagnostics: DeployActivityLogDiagnostics
     DeployAVSLogsStorage: DeployAVSLogsStorage
     DeployWorkspace: DeployWorkspace
+    NewWorkspaceName: NewWorkspaceName
     DeployStorageAccount: DeployStorageAccount
+    NewStorageAccountName: NewStorageAccountName
     PrivateCloudName: DiagnosticsPrivateCloudName
     PrivateCloudResourceId: DiagnosticsPrivateCloudResourceId
     ExistingWorkspaceId: ExistingWorkspaceId

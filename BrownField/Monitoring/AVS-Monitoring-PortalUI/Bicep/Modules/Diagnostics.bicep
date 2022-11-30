@@ -5,6 +5,8 @@ param Prefix string = ''
 param PrivateCloudName string = ''
 param PrivateCloudResourceId string = ''
 param DeployAVSLogsWorkspace bool = false
+param NewWorkspaceName string = ''
+param NewStorageAccountName string = ''
 param DeployActivityLogDiagnostics bool = false
 param DeployAVSLogsStorage bool = false
 param ExistingWorkspaceId string
@@ -30,7 +32,7 @@ module Workspace 'Diagnostics/Workspace.bicep' = if ((DeployWorkspace)) {
   name: '${deployment().name}-Workspace'
   params: {
     Location: Location
-    Prefix: Prefix
+    NewWorkspaceName: NewWorkspaceName
   }
 }
 
@@ -39,6 +41,7 @@ module Storage 'Diagnostics/Storage.bicep' = if (DeployStorageAccount) {
   name: '${deployment().name}-Storage'
   params: {
     Location: Location
+    NewStorageAccountName: NewStorageAccountName
   }
 }
 
