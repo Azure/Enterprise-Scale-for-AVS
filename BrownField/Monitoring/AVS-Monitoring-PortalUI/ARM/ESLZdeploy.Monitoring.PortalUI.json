@@ -556,6 +556,20 @@
                                     }
                                 },
                                 {
+                                    "name": "newStorageAccountName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageAccountExists, true)]",
+                                    "label": "New Storage Account Name",
+                                    "placeholder": "",
+                                    "defaultValue": "",
+                                    "toolTip": "The name must be unique across all existing storage account names in Azure. It must be 3 to 24 characters long, and can contain only lowercase letters and numbers.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[a-z0-9]{3,24}$",
+                                        "validationMessage": "The name must be unique across all existing storage account names in Azure. It must be 3 to 24 characters long, and can contain only lowercase letters and numbers."
+                                    }
+                                },
+                                {
                                     "name": "existingStorageAccountSelector",
                                     "type": "Microsoft.Solutions.ResourceSelector",
                                     "visible": "[equals(steps('Diagnostics').StorageAccount.StorageAccountExists, false)]",
