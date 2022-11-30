@@ -54,7 +54,7 @@
                             "label": "Deployment prefix",
                             "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
                             "placeholder": "Example: AVS",
-                            "defaultValue": "SJAVS",
+                            "defaultValue": "",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-z0-9A-Z-]{1,8}$",
@@ -413,7 +413,14 @@
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
                             "label": "Select the AVS Private Cloud to enable diagnostic settings",
-                            "resourceType": "Microsoft.AVS/privateClouds"
+                            "resourceType": "Microsoft.AVS/privateClouds",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+
                         },
                         {
                             "name": "Workspace",
@@ -485,6 +492,20 @@
                                     }
                                 },
                                 {
+                                    "name": "newWorkspaceName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('Diagnostics').Workspace.WorkspaceExists, true)]",
+                                    "label": "New Workspace Name",
+                                    "placeholder": "",
+                                    "defaultValue": "",
+                                    "toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[a-z0-9A-Z-]{4,63}$",
+                                        "validationMessage": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol."
+                                    }
+                                },
+                                {
                                     "name": "existingWorkspaceSelector",
                                     "type": "Microsoft.Solutions.ResourceSelector",
                                     "visible": "[equals(steps('Diagnostics').Workspace.WorkspaceExists, false)]",
@@ -542,6 +563,20 @@
                                     }
                                 },
                                 {
+                                    "name": "newStorageAccountName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageAccountExists, true)]",
+                                    "label": "New Storage Account Name",
+                                    "placeholder": "",
+                                    "defaultValue": "",
+                                    "toolTip": "The name must be unique across all existing storage account names in Azure. It must be 3 to 24 characters long, and can contain only lowercase letters and numbers.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[a-z0-9]{3,24}$",
+                                        "validationMessage": "The name must be unique across all existing storage account names in Azure. It must be 3 to 24 characters long, and can contain only lowercase letters and numbers."
+                                    }
+                                },
+                                {
                                     "name": "existingStorageAccountSelector",
                                     "type": "Microsoft.Solutions.ResourceSelector",
                                     "visible": "[equals(steps('Diagnostics').StorageAccount.StorageAccountExists, false)]",
@@ -581,9 +616,9 @@
                 "PrivateCloudName": "[steps('Monitoring').MonitoringInputs.avsSelector.name]",
                 "PrivateCloudResourceId": "[steps('Monitoring').MonitoringInputs.avsSelector.id]",
                 "AlertEmails": "[steps('Monitoring').MonitoringInputs.ActionGroupEmails]",
-                "CPUUsageThreshold": "[steps('Monitoring').MonitoringInputs.cpuUsageThreshold]",
-                "MemoryUsageThreshold": "[steps('Monitoring').MonitoringInputs.memoryUsageThreshold]",
-                "StorageUsageThreshold": "[steps('Monitoring').MonitoringInputs.storageUsageThreshold]",
+                "CPUUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.cpuUsageThreshold, '0')]",
+                "MemoryUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.memoryUsageThreshold, '0')]",
+                "StorageUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.storageUsageThreshold, '0')]",
                 "DeployDiagnostics": "[steps('Diagnostics').DeployDiagnostics]",
                 "DeployAVSLogsWorkspace": "[steps('Diagnostics').Workspace.AVSLogCollection]",
                 "DiagnosticsPrivateCloudName": "[steps('Diagnostics').avsSelector2.name]",
@@ -591,10 +626,12 @@
                 "DeployActivityLogDiagnostics": "[steps('Diagnostics').Workspace.ActivityLogCollection]",
                 "DeployAVSLogsStorage": "[steps('Diagnostics').StorageAccount.StorageLogCollection]",
                 "DeployWorkspace": "[steps('Diagnostics').Workspace.WorkspaceExists]",
+                "NewWorkspaceName": "[steps('Diagnostics').Workspace.newWorkspaceName]",
                 "ExistingWorkspaceId": "[steps('Diagnostics').Workspace.existingWorkspaceSelector.id]",
                 "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
                 "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.StorageAccountExists]",
-                "StorageRetentionDays": "[steps('Diagnostics').StorageAccount.storageRetention]"
+                "NewStorageAccountName": "[steps('Diagnostics').StorageAccount.newStorageAccountName]",
+                "StorageRetentionDays": "[if(equals(steps('Diagnostics').StorageAccount.StorageAccountExists, true), steps('Diagnostics').StorageAccount.storageRetention, '0')]"
             },
             "kind": "Subscription",
             "location": "[steps('basics').avsDeploymentScope.location.name]",

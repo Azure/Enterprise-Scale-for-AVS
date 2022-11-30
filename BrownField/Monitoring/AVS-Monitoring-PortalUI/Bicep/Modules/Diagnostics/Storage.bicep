@@ -1,9 +1,10 @@
 param Location string
+param NewStorageAccountName string
 
-var storageaccountname = 'avs${uniqueString(resourceGroup().id)}'
+//var storageaccountname = 'avs${uniqueString(resourceGroup().id)}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
-  name: storageaccountname
+  name: NewStorageAccountName
   location: Location
   sku: {
     name: 'Standard_LRS'
