@@ -581,7 +581,7 @@
                 "PrivateCloudName": "[steps('Monitoring').MonitoringInputs.avsSelector.name]",
                 "PrivateCloudResourceId": "[steps('Monitoring').MonitoringInputs.avsSelector.id]",
                 "AlertEmails": "[steps('Monitoring').MonitoringInputs.ActionGroupEmails]",
-                "CPUUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.cpuUsageThreshold, 0)]",
+                "CPUUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.cpuUsageThreshold, '0')]",
                 "MemoryUsageThreshold": "[steps('Monitoring').MonitoringInputs.memoryUsageThreshold]",
                 "StorageUsageThreshold": "[steps('Monitoring').MonitoringInputs.storageUsageThreshold]",
                 "DeployDiagnostics": "[steps('Diagnostics').DeployDiagnostics]",
