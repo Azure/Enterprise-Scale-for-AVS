@@ -413,7 +413,14 @@
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
                             "label": "Select the AVS Private Cloud to enable diagnostic settings",
-                            "resourceType": "Microsoft.AVS/privateClouds"
+                            "resourceType": "Microsoft.AVS/privateClouds",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+
                         },
                         {
                             "name": "Workspace",
