@@ -37,9 +37,9 @@ data "vsphere_ovf_vm_template" "photon_ovf" {
   datastore_id      = data.vsphere_datastore.datastore.id
   host_system_id    = data.vsphere_host.host.id
 
-  remote_ovf_url    = "https://packages.vmware.com/photon/4.0/Rev2/ova/photon-ova-4.0-c001795b80.ova"
+  remote_ovf_url = "https://packages.vmware.com/photon/4.0/Rev2/ova/photon-ova-4.0-c001795b80.ova"
   ovf_network_map = {
-      "None" : data.vsphere_network.network.id
+    "None" : data.vsphere_network.network.id
   }
 
 }

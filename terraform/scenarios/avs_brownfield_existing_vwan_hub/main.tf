@@ -39,6 +39,9 @@ module "avs_private_cloud" {
   rg_location                         = azurerm_resource_group.greenfield_privatecloud.location
   avs_network_cidr                    = var.avs_network_cidr
   expressroute_authorization_key_name = local.expressroute_authorization_key_name
+  internet_enabled                    = false
+  hcx_enabled                         = var.hcx_enabled
+  hcx_key_names                       = var.hcx_key_names
   tags                                = var.tags
 }
 

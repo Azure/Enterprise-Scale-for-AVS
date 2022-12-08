@@ -13,24 +13,24 @@ variable "vsphere_password" {
 }
 
 variable "vm-name" {
-  type = string
+  type    = string
   default = "levelup-vm"
 }
 
 variable "datastore" {
-  type = string  
+  type    = string
   default = "vsanDatastore"
 }
 
 variable "cluster" {
-  type = string  
+  type    = string
   default = "Cluster-1"
 }
 
 variable "host" {
-  type = string  
+  type = string
 }
 variable "network" {
-  type = string  
+  type = string
 }
 

@@ -5,7 +5,7 @@
 resource "vsphere_folder" "folder" {
   path          = "Workloads"
   type          = "vm"
-  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 resource "vsphere_virtual_machine" "testvm01" {
@@ -23,28 +23,28 @@ resource "vsphere_virtual_machine" "testvm01" {
   dynamic "network_interface" {
     for_each = data.vsphere_ovf_vm_template.photon_ovf.ovf_network_map
     content {
-        network_id = network_interface.value
+      network_id = network_interface.value
     }
   }
   wait_for_guest_net_timeout = 0
   wait_for_guest_ip_timeout  = 0
 
   ovf_deploy {
-      allow_unverified_ssl_cert = false
-      remote_ovf_url            = data.vsphere_ovf_vm_template.photon_ovf.remote_ovf_url
-      disk_provisioning         = data.vsphere_ovf_vm_template.photon_ovf.disk_provisioning
-      ovf_network_map           = data.vsphere_ovf_vm_template.photon_ovf.ovf_network_map
-      ip_protocol               = "IPV4"
-      ip_allocation_policy      = "STATIC_MANUAL"
+    allow_unverified_ssl_cert = false
+    remote_ovf_url            = data.vsphere_ovf_vm_template.photon_ovf.remote_ovf_url
+    disk_provisioning         = data.vsphere_ovf_vm_template.photon_ovf.disk_provisioning
+    ovf_network_map           = data.vsphere_ovf_vm_template.photon_ovf.ovf_network_map
+    ip_protocol               = "IPV4"
+    ip_allocation_policy      = "STATIC_MANUAL"
   }
 
   lifecycle {
-      ignore_changes = [
+    ignore_changes = [
       annotation,
       disk[0].io_share_count,
       disk[1].io_share_count,
       disk[2].io_share_count,
       vapp[0].properties,
-      ]
+    ]
   }
 }

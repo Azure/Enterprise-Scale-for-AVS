@@ -9,12 +9,12 @@ resource "random_string" "namestring" {
 
 locals {
   #Variables for creating the new TF vm and pointing it at the target SDDC
-  tf_vm_name   = "tfvm-${random_string.namestring.result}"
+  tf_vm_name      = "tfvm-${random_string.namestring.result}"
   tf_vm_subnet_id = "<resource subnet id for the terraform vm. This subnet needs to be able to connect to nsx and vsphere>"
-  key_vault_id = "<resource id of the keyvault to store the terraform vm's password>"
-  sddc_name    = "multiregion-AVS-1-SDDC-qyfw"
-  sddc_rg_name = "multiregion-PrivateClouds-qyfw"
-  
+  key_vault_id    = "<resource id of the keyvault to store the terraform vm's password>"
+  sddc_name       = "multiregion-AVS-1-SDDC-qyfw"
+  sddc_rg_name    = "multiregion-PrivateClouds-qyfw"
+
   #Map of values for the state storage account. In scenarios where this account existed previously, then replace these values with the existing storage account.
   vmware_state_storage = {
     resource_group_name = "vmware-test-${random_string.namestring.result}"
