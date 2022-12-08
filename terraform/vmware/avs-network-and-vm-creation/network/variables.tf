@@ -1,10 +1,10 @@
 variable "nsx_ip" {
-    type = string
-    description = "NSX-T manager IP address"
+  type        = string
+  description = "NSX-T manager IP address"
 }
 
 variable "nsx_tag" {
-  type = string
+  type    = string
   default = "terraform-demo"
 }
 

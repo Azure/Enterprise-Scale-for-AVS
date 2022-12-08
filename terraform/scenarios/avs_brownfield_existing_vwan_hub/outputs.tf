@@ -25,3 +25,7 @@ output "sddc_hcx_cloud_manager_endpoint" {
 output "sddc_provisioning_subnet_cidr" {
   value = module.avs_private_cloud.sddc_provisioning_subnet_cidr
 }
+
+output "hcx_keys" {
+  value = module.avs_private_cloud.hcx_keys
+}

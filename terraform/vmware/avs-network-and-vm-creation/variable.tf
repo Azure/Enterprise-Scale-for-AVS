@@ -45,20 +45,20 @@ variable "vm-name" {
 }
 
 variable "datastore" {
-  type = string  
+  type    = string
   default = "vsanDatastore"
 }
 
 variable "cluster" {
-  type = string  
+  type    = string
   default = "Cluster-1"
 }
 
 variable "host" {
-  type = string  
+  type    = string
   default = "testvm"
 }
 variable "network" {
-  type = string  
+  type = string
 }
 

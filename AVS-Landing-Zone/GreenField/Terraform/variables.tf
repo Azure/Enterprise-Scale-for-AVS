@@ -54,4 +54,8 @@ variable "jumpboxsubnet" {
   type = string
 }
 
-
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}

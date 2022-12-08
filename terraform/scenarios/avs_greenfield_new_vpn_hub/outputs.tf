@@ -57,3 +57,7 @@ output "network_resource_group_location" {
 output "vnet_name" {
   value = local.vnet_name
 }
+
+output "hcx_keys" {
+  value = module.avs_private_cloud.hcx_keys
+}

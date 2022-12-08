@@ -14,6 +14,9 @@ vpn_scale_units            = 1
 sddc_sku                   = "av36"
 management_cluster_size    = 3
 avs_network_cidr           = "192.168.0.0/22"
+hcx_enabled                = true
+hcx_key_names              = ["keyname1", "keyname2"]
+
 jumpbox_spoke_vnet_address_space = ["10.110.0.0/22"]
 jumpbox_spoke_vnet_subnets = [
     {
