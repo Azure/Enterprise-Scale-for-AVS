@@ -17,6 +17,10 @@ resource "azapi_resource" "hcx_addon" {
       parent_id
     ]
   }
+
+  depends_on = [
+    azurerm_vmware_private_cloud.privatecloud
+  ]
 }
 
 #adding sleep wait to handle lag in hcx registration for keys
@@ -38,6 +42,12 @@ resource "azapi_resource" "hcx_keys" {
   depends_on = [
     time_sleep.wait_120_seconds
   ]
+
+  lifecycle {
+    ignore_changes = [
+      parent_id
+    ]
+  }
 }
 
 output "hcx_keys" {

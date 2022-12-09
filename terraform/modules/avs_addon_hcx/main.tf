@@ -44,6 +44,12 @@ resource "azapi_resource" "hcx_keys" {
   depends_on = [
     time_sleep.wait_120_seconds
   ]
+
+  lifecycle {
+    ignore_changes = [
+      parent_id
+    ]
+  }
 }
 
 
