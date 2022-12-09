@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "rg_name" {
   type        = string
   description = "The azure resource name for the resource group"
@@ -31,4 +34,19 @@ variable "service_health_alert_scope_id" {
 variable "private_cloud_id" {
   type        = string
   description = "The Azure resource id for the AVS private cloud resource"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

@@ -6,3 +6,4 @@ variable "vmware_creds" {
   description = "map of credential values for the terraform provider"
   sensitive   = true
 }
+

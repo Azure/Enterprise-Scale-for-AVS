@@ -61,11 +61,12 @@ resource "azurerm_resource_group" "greenfield_network" {
 module "avs_vwan" {
   source = "../../modules/avs_vwan"
 
-  rg_name             = azurerm_resource_group.greenfield_network.name
-  rg_location         = azurerm_resource_group.greenfield_network.location
-  vwan_name           = local.vwan_name
-  vwan_already_exists = var.vwan_already_exists
-  tags                = var.tags
+  rg_name                  = azurerm_resource_group.greenfield_network.name
+  rg_location              = azurerm_resource_group.greenfield_network.location
+  vwan_name                = local.vwan_name
+  vwan_already_exists      = var.vwan_already_exists
+  tags                     = var.tags
+  module_telemetry_enabled = false
 }
 
 #deploy the VWAN hub with the VPN and ExR gateways
@@ -88,6 +89,7 @@ module "avs_vwan_hub_with_vpn_and_express_route_gateways" {
   vpn_scale_units                     = var.vpn_scale_units
   tags                                = var.tags
   private_range_prefixes              = local.private_range_prefixes
+  module_telemetry_enabled            = false
 }
 
 #deploy the private cloud
@@ -105,6 +107,7 @@ module "avs_private_cloud" {
   hcx_enabled                         = var.hcx_enabled
   hcx_key_names                       = var.hcx_key_names
   tags                                = var.tags
+  module_telemetry_enabled            = false
 }
 
 module "avs_vwan_azure_firewall_w_policy_and_log_analytics" {
@@ -119,6 +122,7 @@ module "avs_vwan_azure_firewall_w_policy_and_log_analytics" {
   virtual_hub_id            = module.avs_vwan_hub_with_vpn_and_express_route_gateways.vwan_hub_id
   public_ip_count           = var.hub_firewall_public_ip_count
   tags                      = var.tags
+  module_telemetry_enabled  = false
 }
 
 module "avs_service_health" {
@@ -131,6 +135,7 @@ module "avs_service_health" {
   service_health_alert_name     = local.service_health_alert_name
   service_health_alert_scope_id = azurerm_resource_group.greenfield_privatecloud.id
   private_cloud_id              = module.avs_private_cloud.sddc_id
+  module_telemetry_enabled      = false
 }
 
 
@@ -141,8 +146,10 @@ module "outbound_internet_test_firewall_rules" {
 
   firewall_policy_id = module.avs_vwan_azure_firewall_w_policy_and_log_analytics.firewall_policy_id
   #avs_ip_ranges       = [var.avs_network_cidr, var.jumpbox_spoke_vnet_address_space[0]]
-  private_range_prefixes = local.private_range_prefixes
-  has_firewall_policy    = true
+  private_range_prefixes   = local.private_range_prefixes
+  has_firewall_policy      = true
+  module_telemetry_enabled = false
+  azure_firewall_rg_name   = azurerm_resource_group.greenfield_network.name
 }
 
 #deploy a new resource group for the jumpbox and bastion components
@@ -162,18 +169,20 @@ module "spoke_vnet_for_jump_and_bastion" {
   virtual_hub_id                         = module.avs_vwan_hub_with_vpn_and_express_route_gateways.vwan_hub_id
   tags                                   = var.tags
   vwan_spoke_subnets                     = var.jumpbox_spoke_vnet_subnets
+  module_telemetry_enabled               = false
 }
 
 #deploy the bastion host
 module "avs_bastion" {
   source = "../../modules/avs_bastion_simple"
 
-  bastion_pip_name  = local.bastion_pip_name
-  bastion_name      = local.bastion_name
-  rg_name           = azurerm_resource_group.greenfield_jumpbox.name
-  rg_location       = azurerm_resource_group.greenfield_jumpbox.location
-  bastion_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["AzureBastionSubnet"].id
-  tags              = var.tags
+  bastion_pip_name         = local.bastion_pip_name
+  bastion_name             = local.bastion_name
+  rg_name                  = azurerm_resource_group.greenfield_jumpbox.name
+  rg_location              = azurerm_resource_group.greenfield_jumpbox.location
+  bastion_subnet_id        = module.spoke_vnet_for_jump_and_bastion.subnet_ids["AzureBastionSubnet"].id
+  tags                     = var.tags
+  module_telemetry_enabled = false
 }
 
 #deploy the jumpbox
@@ -192,23 +201,67 @@ module "avs_keyvault_with_access_policy" {
   azure_ad_tenant_id        = data.azurerm_client_config.current.tenant_id
   deployment_user_object_id = data.azuread_client_config.current.object_id
   tags                      = var.tags
+  module_telemetry_enabled  = false
 }
 
 #deploy the jumpbox host
 module "avs_jumpbox" {
   source = "../../modules/avs_jumpbox"
 
-  jumpbox_nic_name  = local.jumpbox_nic_name
-  jumpbox_name      = local.jumpbox_name
-  jumpbox_sku       = var.jumpbox_sku
-  rg_name           = azurerm_resource_group.greenfield_jumpbox.name
-  rg_location       = azurerm_resource_group.greenfield_jumpbox.location
-  jumpbox_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpBoxSubnet"].id
-  admin_username    = var.admin_username
-  key_vault_id      = module.avs_keyvault_with_access_policy.keyvault_id
-  tags              = var.tags
+  jumpbox_nic_name         = local.jumpbox_nic_name
+  jumpbox_name             = local.jumpbox_name
+  jumpbox_sku              = var.jumpbox_sku
+  rg_name                  = azurerm_resource_group.greenfield_jumpbox.name
+  rg_location              = azurerm_resource_group.greenfield_jumpbox.location
+  jumpbox_subnet_id        = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpBoxSubnet"].id
+  admin_username           = var.admin_username
+  key_vault_id             = module.avs_keyvault_with_access_policy.keyvault_id
+  tags                     = var.tags
+  module_telemetry_enabled = false
 
   depends_on = [
     module.avs_keyvault_with_access_policy
   ]
+}
+
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_brownfield_existing_vwan_hub")
+  telem_arm_deployment_name               = "55c21dbf-9474-4276-bafc-85dde83adbcb.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = var.telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_privatecloud.location
+  template_content = local.telem_arm_subscription_template_content
 }

@@ -17,3 +17,4 @@ tags = {
 environment = "Dev"
 CreatedBy   = "Terraform"
 }
+telemetry_enabled = true

@@ -40,24 +40,26 @@ resource "azurerm_resource_group" "greenfield_jumpbox" {
 module "spoke_vnet_for_jump_and_bastion" {
   source = "../../modules/avs_vnet_variable_subnets"
 
-  rg_name            = azurerm_resource_group.greenfield_jumpbox.name
-  rg_location        = azurerm_resource_group.greenfield_jumpbox.location
-  vnet_name          = local.jumpbox_spoke_vnet_name
-  vnet_address_space = var.jumpbox_spoke_vnet_address_space
-  subnets            = local.subnets
-  tags               = var.tags
+  rg_name                  = azurerm_resource_group.greenfield_jumpbox.name
+  rg_location              = azurerm_resource_group.greenfield_jumpbox.location
+  vnet_name                = local.jumpbox_spoke_vnet_name
+  vnet_address_space       = var.jumpbox_spoke_vnet_address_space
+  subnets                  = local.subnets
+  tags                     = var.tags
+  module_telemetry_enabled = false
 }
 
 #create jump and bastion
 module "avs_bastion" {
   source = "../../modules/avs_bastion_simple"
 
-  bastion_pip_name  = local.bastion_pip_name
-  bastion_name      = local.bastion_name
-  rg_name           = azurerm_resource_group.greenfield_jumpbox.name
-  rg_location       = azurerm_resource_group.greenfield_jumpbox.location
-  bastion_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["AzureBastionSubnet"].id
-  tags              = var.tags
+  bastion_pip_name         = local.bastion_pip_name
+  bastion_name             = local.bastion_name
+  rg_name                  = azurerm_resource_group.greenfield_jumpbox.name
+  rg_location              = azurerm_resource_group.greenfield_jumpbox.location
+  bastion_subnet_id        = module.spoke_vnet_for_jump_and_bastion.subnet_ids["AzureBastionSubnet"].id
+  tags                     = var.tags
+  module_telemetry_enabled = false
 }
 
 #if vwan - create vwan vnet connection
@@ -75,21 +77,23 @@ module "avs_keyvault_with_access_policy" {
   azure_ad_tenant_id        = data.azurerm_client_config.current.tenant_id
   deployment_user_object_id = data.azuread_client_config.current.object_id
   tags                      = var.tags
+  module_telemetry_enabled  = false
 }
 
 #deploy the jumpbox host
 module "avs_jumpbox" {
   source = "../../modules/avs_jumpbox"
 
-  jumpbox_nic_name  = local.jumpbox_nic_name
-  jumpbox_name      = local.jumpbox_name
-  jumpbox_sku       = var.jumpbox_sku
-  rg_name           = azurerm_resource_group.greenfield_jumpbox.name
-  rg_location       = azurerm_resource_group.greenfield_jumpbox.location
-  jumpbox_subnet_id = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpBoxSubnet"].id
-  admin_username    = var.admin_username
-  key_vault_id      = module.avs_keyvault_with_access_policy.keyvault_id
-  tags              = var.tags
+  jumpbox_nic_name         = local.jumpbox_nic_name
+  jumpbox_name             = local.jumpbox_name
+  jumpbox_sku              = var.jumpbox_sku
+  rg_name                  = azurerm_resource_group.greenfield_jumpbox.name
+  rg_location              = azurerm_resource_group.greenfield_jumpbox.location
+  jumpbox_subnet_id        = module.spoke_vnet_for_jump_and_bastion.subnet_ids["JumpBoxSubnet"].id
+  admin_username           = var.admin_username
+  key_vault_id             = module.avs_keyvault_with_access_policy.keyvault_id
+  tags                     = var.tags
+  module_telemetry_enabled = false
 
   depends_on = [
     module.avs_keyvault_with_access_policy
@@ -128,3 +132,45 @@ resource "azurerm_virtual_network_peering" "spoke_owned_peer" {
   use_remote_gateways          = true
 }
 #TODO: If firewall add UDR
+
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_test_spoke_with_jump_vm")
+  telem_arm_deployment_name               = "${lower(var.guid_telemetry)}.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = var.module_telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_jumpbox.location
+  template_content = local.telem_arm_subscription_template_content
+}

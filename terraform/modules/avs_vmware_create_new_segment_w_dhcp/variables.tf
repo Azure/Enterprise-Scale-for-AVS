@@ -11,3 +11,4 @@ variable "t1_gateway_path" {
   type        = string
   description = "Path value for the t1 gateway where this segment will be created"
 }
+
