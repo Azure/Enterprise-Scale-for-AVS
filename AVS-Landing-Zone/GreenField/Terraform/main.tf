@@ -8,12 +8,20 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~>2.68"
     }
+
+    azapi = {
+      source  = "azure/azapi"
+      version = "~>1.1.0"
+    }
   }
 }
 
 provider "azurerm" {
   features {}
   partner_id = "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+}
+
+provider "azapi" {
 }
 
 ## Optional settings to setup a terraform backend in Azure storage

@@ -29,3 +29,23 @@ output "network_resource_group_location" {
 output "firewall_policy_id" {
   value = module.avs_vwan_azure_firewall_w_policy_and_log_analytics.firewall_policy_id
 }
+
+output "hcx_keys" {
+  value = module.avs_private_cloud.hcx_keys
+}
+
+output "sddc_id" {
+  value = module.avs_private_cloud.sddc_id
+}
+
+output "sddc_vcsa_endpoint" {
+  value = module.avs_private_cloud.sddc_vcsa_endpoint
+}
+
+output "sddc_nsxt_manager_endpoint" {
+  value = module.avs_private_cloud.sddc_nsxt_manager_endpoint
+}
+
+output "sddc_hcx_cloud_manager_endpoint" {
+  value = module.avs_private_cloud.sddc_hcx_cloud_manager_endpoint
+}

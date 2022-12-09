@@ -1,0 +1,59 @@
+#cloud-config
+write_files:
+- content: |
+    frr defaults traditional
+    !
+    hostname ${hostname}
+    !
+    router bgp ${nva_asn}
+    no bgp ebgp-requires-policy
+    neighbor ${rs_ip1} remote-as ${rs_asn}
+    neighbor ${rs_ip1} ebgp-multihop 2
+    neighbor ${rs_ip2} remote-as ${rs_asn}
+    neighbor ${rs_ip2} ebgp-multihop 2
+    !
+    address-family ipv4 unicast
+    network 0.0.0.0/0
+    neighbor ${rs_ip1} route-map SET-NEXT-HOP-FW out
+    neighbor ${rs_ip2} route-map SET-NEXT-HOP-FW out
+    exit-address-family
+    !
+    route-map SET-NEXT-HOP-FW permit 10
+    set ip next-hop ${azfw_private_ip}
+    set ip next-hop ${azfw_private_ip}
+    !
+    line vty
+    !
+    }
+  path: /etc/frr/bgpd.conf
+- content: |
+    frr defaults traditional
+    !
+    hostname ${hostname}
+    !
+    route-map SET-NEXT-HOP-FW permit 10
+    set ip next-hop ${azfw_private_ip}
+    !
+    no ip forwarding
+    no ipv6 forwarding
+    !
+    line vty
+    !
+  path: /etc/frr/zebra.conf
+- content: |
+    frr defaults traditional
+    !
+    hostname ${hostname}
+    !
+    line vty
+    !
+  path: /etc/frr/staticd.conf
+runcmd:
+  - [ dnf, install, frr, -y ]
+  - [ sed, -i, 's/bgpd=no/bgpd=yes/g', /etc/frr/daemons ]
+  - [ touch, /etc/frr/bgpd.conf ]
+  - [ chown, frr, /etc/frr/bgpd.conf ]
+  - [ chmod, 640, /etc/frr/bgpd.conf ]
+  - [ systemctl, enable, frr, --now ]
+  - [ ip, route, add, ${rs_subnet_prefix}, via, ${gateway}, dev, eth0 ]
+  - [ systemctl, restart, frr ]

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "PrivateCloudName": {
+            "value": "AVS-VMwareExplore-HOL-PC03"
+        },
+        "PrivateCloudClusterName": {
+            "value": "Cluster-1"
+        },
+        "VNetName": {
+            "value": "ExampleVNet"
+        },
+        "VNetAddressSpace": {
+            "value": "10.4.0.0/16"
+        },
+        "VNetGatewaySubnet": {
+            "value": "10.4.0.0/24"
+        },
+        "ANFDelegatedSubnet": {
+            "value": "10.4.10.0/24"
+        },
+        "netappAccountName": {
+            "value": "NetAppAccount-AVSdatastore"
+        },
+        "netappCapacityPoolName": {
+            "value": "CapacityPool-AVSdatastore"
+        },
+        "netappCapacityPoolServiceLevel": {
+            "value": "Premium"
+        },
+        "netappCapacityPoolSize": {
+            "value": 4398046511104
+        },
+        "netappVolumeName": {
+            "value": "ANFdatastore001"
+        },
+        "netappVolumeSize": {
+            "value": 4398046511104
+        }
+    }
+}

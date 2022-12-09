@@ -21,6 +21,8 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   sddc_sku                 = "av36"
   management_cluster_size  = 3
   avs_network_cidr         = "10.2.0.0/20"
+  hcx_enabled              = true
+  hcx_key_names            = ["DallasDC", "SeattleDC"]
   vpn_gateway_sku          = "VpnGw2"
   asn                      = 65515
   firewall_sku_tier        = "Standard"

@@ -39,3 +39,21 @@ variable "tags" {
   type        = map(string)
   description = "List of the tags that will be assigned to each resource"
 }
+
+variable "internet_enabled" {
+  type        = bool
+  description = "set the internet snat to on or off"
+  default     = false
+}
+
+variable "hcx_enabled" {
+  type        = bool
+  description = "Enable the HCX addon toggle value"
+  default     = false
+}
+
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}
