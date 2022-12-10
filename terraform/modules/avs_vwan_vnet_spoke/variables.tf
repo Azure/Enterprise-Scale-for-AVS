@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "rg_name" {
   type        = string
   description = "Resource Group Name where the jumpbox is deployed"
@@ -39,4 +42,19 @@ variable "tags" {
 variable "virtual_hub_id" {
   type        = string
   description = "Azure resource id for the virtual hub linked to the vnet spoke connection"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

@@ -3,7 +3,7 @@
 
 prefix                = "SDDC1"
 region                = "Southeast Asia"
-vnet_address_space    = ["10.1.0.0/16"]
+vnet_address_space    = ["10.40.0.0/16"]
 #Add any additional required NVA subnets if adding a 3rd party NVA.
 subnets = [
     {
@@ -37,3 +37,5 @@ tags = {
     environment = "Dev"
     CreatedBy   = "Terraform"
 }
+
+telemetry_enabled = true

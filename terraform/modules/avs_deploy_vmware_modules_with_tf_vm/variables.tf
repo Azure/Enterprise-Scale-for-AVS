@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "rg_name" {
   type        = string
   description = "Resource Group Name where the tf_vm is deployed"
@@ -45,4 +48,19 @@ variable "sddc_name" {
 variable "sddc_rg_name" {
   type        = string
   description = "the resource group name of the sddc where the vmware tf module will be deployed"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

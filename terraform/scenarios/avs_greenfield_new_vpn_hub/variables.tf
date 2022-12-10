@@ -112,3 +112,9 @@ variable "jumpbox_subnet_prefix" {
   type        = string
   description = "the subnet prefix CIDR value used for the jumpbox subnet address space"
 }
+
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}

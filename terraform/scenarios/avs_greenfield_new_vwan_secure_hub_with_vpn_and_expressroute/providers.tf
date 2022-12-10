@@ -8,6 +8,10 @@ terraform {
       source  = "azure/azapi"
       version = "~>1.1.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~>2.30.0"
+    }
   }
 
   #This block can be populated and uncommented if using Azure Storage for remote state
@@ -25,13 +29,7 @@ terraform {
   required_version = ">= 1.0"
 }
 
-provider "azapi" {
-}
-
-provider "azuread" {
-}
-
 provider "azurerm" {
-  partner_id = "55c21dbf-9474-4276-bafc-85dde83adbcb"
+  #partner_id = "55c21dbf-9474-4276-bafc-85dde83adbcb"
   features {}
 }

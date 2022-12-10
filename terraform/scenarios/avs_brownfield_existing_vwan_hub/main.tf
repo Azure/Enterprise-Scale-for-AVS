@@ -43,6 +43,8 @@ module "avs_private_cloud" {
   hcx_enabled                         = var.hcx_enabled
   hcx_key_names                       = var.hcx_key_names
   tags                                = var.tags
+  module_telemetry_enabled            = false
+
 }
 
 #connect the AVS private cloud to the existing ExpressRoute Gateway in the VWAN hub
@@ -65,5 +67,47 @@ module "avs_service_health" {
   service_health_alert_name     = local.service_health_alert_name
   service_health_alert_scope_id = azurerm_resource_group.greenfield_privatecloud.id
   private_cloud_id              = module.avs_private_cloud.sddc_id
+  module_telemetry_enabled      = false
 }
 
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_brownfield_existing_vwan_hub")
+  telem_arm_deployment_name               = "d8a06ade-2654-4a78-99da-e941f87a3a2a.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = var.telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_privatecloud.location
+  template_content = local.telem_arm_subscription_template_content
+}

@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "prefix" {
   type        = string
   description = "Simple prefix used for naming convention prepending"
@@ -76,4 +79,19 @@ variable "remote_gw_pubip0" {
 variable "remote_gw_pubip1" {
   type        = string
   description = "Remote peer public IP address 1"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

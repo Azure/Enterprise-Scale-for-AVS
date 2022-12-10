@@ -8,6 +8,11 @@ terraform {
       source  = "azure/azapi"
       version = "~>1.1.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~>2.30.0"
+    }
+
   }
 
   /*
@@ -22,12 +27,6 @@ terraform {
     tenant_id        = "00000000-0000-0000-0000-000000000000"
   }
 */
-}
-
-provider "azapi" {
-}
-
-provider "azuread" {
 }
 
 provider "azurerm" {

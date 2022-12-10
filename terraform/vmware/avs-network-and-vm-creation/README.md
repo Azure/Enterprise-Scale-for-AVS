@@ -12,7 +12,7 @@ This project is to POC a sample Linux virtual machine on Azure VMware Solution S
 3. AVS SDDC
 
 ## Topology Diagram
-![Network Topology](assests/AVS.jpg)
+![Network Topology](assets/AVS.jpg)
 ## Usage
 1. Copy sample.tfvars.bck to variables.tfvar. You can also use terraform.lup01.tfvars as a starting point for populating your tfvars.
 ```dotnetcli

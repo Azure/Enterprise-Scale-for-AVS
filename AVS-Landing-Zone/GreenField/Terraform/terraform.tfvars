@@ -21,3 +21,6 @@ vnetaddressspace   = "192.168.1.0/24"
 gatewaysubnet      = "192.168.1.0/27"
 azurebastionsubnet = "192.168.1.32/27"
 jumpboxsubnet      = "192.168.1.128/25"
+
+#Enable or Disable telemetry
+telemetry_enabled = true

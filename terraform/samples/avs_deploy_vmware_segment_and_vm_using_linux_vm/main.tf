@@ -12,8 +12,8 @@ locals {
   tf_vm_name      = "tfvm-${random_string.namestring.result}"
   tf_vm_subnet_id = "<resource subnet id for the terraform vm. This subnet needs to be able to connect to nsx and vsphere>"
   key_vault_id    = "<resource id of the keyvault to store the terraform vm's password>"
-  sddc_name       = "multiregion-AVS-1-SDDC-qyfw"
-  sddc_rg_name    = "multiregion-PrivateClouds-qyfw"
+  sddc_name       = "<resource name for the target private cloud where the vmware components will be deployed>"
+  sddc_rg_name    = "<resource group name where the target private cloud is deployed>"
 
   #Map of values for the state storage account. In scenarios where this account existed previously, then replace these values with the existing storage account.
   vmware_state_storage = {
@@ -136,8 +136,52 @@ module "deploy_tf_vm" {
   tf_template_github_source = local.tf_template_github_source
   sddc_name                 = local.sddc_name
   sddc_rg_name              = local.sddc_rg_name
+  module_telemetry_enabled  = false
 
   depends_on = [
     azurerm_storage_container.vmware_state_container
   ]
+}
+
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_deploy_vmware_segment_and_vm_using_linux_vm")
+  telem_arm_deployment_name               = "13a522f1-57c3-4f64-8432-1d697c12e2c2.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+  telemetry_enabled                       = true
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = local.telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_privatecloud.location
+  template_content = local.telem_arm_subscription_template_content
 }

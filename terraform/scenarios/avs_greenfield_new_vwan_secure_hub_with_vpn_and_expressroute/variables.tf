@@ -119,3 +119,8 @@ variable "admin_username" {
   description = "The username for the jumpbox admin login"
 }
 
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}

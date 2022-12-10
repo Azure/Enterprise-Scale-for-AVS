@@ -67,3 +67,9 @@ variable "tags" {
   type        = map(string)
   description = "List of the tags that will be assigned to each resource"
 }
+
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
