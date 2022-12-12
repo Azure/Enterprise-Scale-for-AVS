@@ -1,9 +1,7 @@
 # Implementing internet connectivity for AVS with Azure NVAs
-This article walks through the implementation of internet connectivity for AVS using NVAs (Network Virtual Appliances) running in an Azure Virtual Network. This approach is recommended for customers that have an existing internet edge in Azure and want to leverage it for their AVS workloads, both to optimize costs and to enforce consistent network policies.
+This article walks through the implementation of outbound internet connectivity for AVS VMs using Azure-native NVAs (such as Azure Firewall or 3rd party firewalling solutions) in a Virtual Network (VNet). This approach is recommended for AVS customers that have an existing internet edge in Azure and want to leverage it for their AVS workloads, both to optimize costs and to enforce consistent network policies across Azure-native and AVS VMs.
 
-Inbound internet access, i.e. the ability to expose applications running in AVS behind Public IPs associated with Azure NVAs, only requires connecting the AVS private cloud to the Azure VNet, using the private cloud's managed Expressroute circuit. No other configuration is required in Azure or AVS. The NVAs that expose the Public IPs must be configured to NAT (Destination-NAT + Source-NAT) inbound connections. While very basic and mostly dependent on the specific NVAs being used, this article provides guidance for configuring inbound internet access.
-
-Outbound internet access requires announcing a default (0.0.0.0/0) route from Azure to AVS over the managed Expressroute circuit, in order for the private cloud T0 gateways to send internet-bound traffic to the Azure VNet. If the internet edge NVAs in Azure support BGP, then they can be used as BGP speakers to originate the default route. If the NVAs do not support BGP (or cannot be used as BGP speakers due to security-related constraints), additional NVAs can be deployed to act as BGP speakers. A typical scenario that requires additional BGP-capable NVAs is when the Azure internet edge is Azure Firewall. This article provides configuration guidance for the latter case. 
+Internet-bound traffic emitted by AVS VMs can be routed to an Azure-native NVA by announcing a default route (0.0.0.0/0) over the AVS-managed Expressroute circuit that connects the private cloud to the NVA's VNet. The AVS private cloud's T0 gateways will honor the default route received from Azure and will send internet-bound traffic to the default route's next hop. If the internet edge NVAs in Azure support BGP, then they can be used as BGP speakers to originate the default route. If the NVAs do not support BGP (or cannot be used as BGP speakers due to security-related constraints), additional NVAs can be deployed to act as BGP speakers. A typical scenario that requires additional BGP-capable NVAs is when the Azure internet edge is Azure Firewall (Azure Firewall does not support BGP). This article provides configuration guidance for the latter case. 
 
 ## Prerequisites
 This step-by-step guide assumes that the following resources have been already deployed and configured:
@@ -11,7 +9,7 @@ This step-by-step guide assumes that the following resources have been already d
 - An AVS private cloud.
 - An Azure VNet hosting an Expressroute gateway and the internet edge (Azure Firewall or third-party NVAs). The VNet is typically the hub VNet of an hub&spoke network deployed in a single Azure region. However, a fully-fledged hub and spoke topology is not required to successfully implement the solution described in this article. Hence, this VNet will be referred to as the "Firewall VNet" in the sections below.
 
- The network architecture for internet access described in this guide is compatible and can work side-by-side with a connection to a customer-managed Expressroute circuit that provides access to remote, on-prem locations. If such a circuit is available, it can also be connected to the AVS private cloud's managed circuit using Global Reach. This configuration allows routing traffic directly between AVS and the on-prem locations, bypassing the firewall running in Azure. A customer-managed Expressroute circuit that provides connectivity to on-prem locations is not a prerequisite for completing this step-by step guide.  
+ The network design covered in this guide is compatible and can work side-by-side with a connection to a customer-managed Expressroute circuit that provides access to remote, on-prem locations. If such a circuit is available, it can also be connected to the AVS private cloud's managed circuit using Global Reach. This configuration allows routing traffic between the AVS private cloud and the remote on-prem sites directly, bypassing the firewall running in Azure. A customer-managed Expressroute circuit that provides connectivity to on-prem locations is not a prerequisite for completing this step-by step guide.  
 
 The picture below shows how your environment should look like before you execute the steps described in this article.
 
@@ -28,7 +26,7 @@ At the end of this step-by-step guide, your environemnt will look like the one i
 
 ![figure2](./media/figure2.PNG)
 
-Connectivity among the AVS private cloud, the Firewall VNet and the spoke VNet(s), if any, is entirely based on Expressroute and VNet peering, both of which  work cross-subscription and cross-tenant. Therefore, the resources listed above can be deployed across multiple subscriptions, if so mandated by security/billing/governance requirements. Also, it is not required for Firewall VNet and the AVS private cloud to be in same Azure region. However, the latency implications of deploying across multiple regions must be carefully evaluated. Latency increases with the geographical distance travelled by traffic exchanged between the AVS private cloud and the firewall VNet. Cost is affected by the VNet peering type (intra-region vs. global) and by the SKU of the Expressroute circuit that connects the on-prem site(s).  
+Connectivity among the AVS private cloud, the Firewall VNet and the spoke VNet(s), if any, is entirely based on Expressroute and VNet peering, both of which  work cross-subscription and cross-tenant. Therefore, the resources listed above can be deployed across multiple subscriptions, if so mandated by security/billing/governance requirements. Also, it is not required for the Firewall VNet and the AVS private cloud to be in same Azure region. However, the latency implications of deploying across multiple regions must be carefully evaluated. Latency increases with the geographical distance travelled by traffic exchanged between the AVS private cloud and the firewall VNet. Cost is affected by the VNet peering type (intra-region vs. global) and by the SKU of the Expressroute circuit that connects the on-prem site(s).  
 
 The following address prefixes must be allocated for the Firewall VNet:
  - a /27 (or larger) prefix for the RouteServerSubnet (the subnet that hosts Azure Route Server)
@@ -36,10 +34,10 @@ The following address prefixes must be allocated for the Firewall VNet:
 
 The table below summarizes the address allocation requirements. All the prefixes listed in the table *must not* overlap with any other prefixes used in the AVS private cloud, in the Firewall VNet (and its directly connected spokes, if any) or in the remote site(s) connected over Expressroute.
 
-| Virtual Network | Subnet              | Netmask | Notes                                                    |
-| --------------- | ------------------- | ------- | -------------------------------------------------------- |
-| Firewall VNet   | Route Server Subnet | /27     | The subnet must be named "RouteServerSubnet"             |
-| Firewall VNet   | BGP NVA subnet      | /28     | Only needed if the firewalling solution does not run BGP |
+| Virtual Network | Subnet              | Netmask | Notes                                                       |
+| --------------- | ------------------- | ------- | ------------------------------------------------------------|
+| Firewall VNet   | Route Server Subnet | /27     | The subnet must be named "RouteServerSubnet"                |
+| Firewall VNet   | BGP NVA subnet      | /28     | Subnet for the BGP-capable NVAs that announce the 0/0 route |
 
 ## Logging into Azure subscriptions
 As mentioned in the previous section, it is possible to deploy the required resources across multiple subscriptions and/or multiple regions. As the allocation of resources to subscriptions may vary greatly across real-world environments, this article does not provide prescriptive guidance as to where to deploy each resource. It is the reader's responsibility to properly set the Azure context for executing the code snippets provided below. Please review the official documentation for instructions on how to log into Azure and select a subscription to work in (with [Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/authenticate-azureps?view=azps-7.4.0) or [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/manage-azure-subscriptions-azure-cli)). 
@@ -187,7 +185,7 @@ routeServerIps=($(az network routeserver show \
         --query virtualRouterIps --output tsv))
 ```
 
-If in your environment there is no custom route table associated with the "AzureFirewall" subnet, create one. The custom route table must contain a default route (0.0.0.0/0) with next hop type set to "Internet"
+If in your environment there is no custom route table associated with the "AzureFirewall" subnet, create one and add a user-defined default route (0.0.0.0/0) with next hop type set to "Internet". This UDR is required to eliminate a routing loop for traffic emitted by the firewall and destined to the public internet that would be introduced by the default route announced by the BGP-capable NVA that you will configure in the next steps.
 
 ```
 # Deploy Custom Route Table for the Azure Firewall Subnet
@@ -212,7 +210,20 @@ az network vnet subnet update \
 
 ```
 
-If a custom route table is already associated to the AzureFirewallSubnet in your environment, then make sure that it contains a default route (0.0.0.0/0) with next hop type set to "Internet".
+If a custom route table is already associated to the AzureFirewallSubnet in your environment, then make sure that it contains a default route (0.0.0.0/0) with next hop type set to "Internet". If not, add it:
+
+```Azure CLI
+# Add default route with next hop "Internet" to override default route announced by BGP-capable NVAs
+rgName="<Name of your existing custom route table's resource group>"
+rtName="<Name of your existing custom route table>"
+
+az network route-table route create \
+        --name defaultToInternet \
+        --resource-group $rgName \
+        --route-table-name $rtName \
+        --address-prefix 0.0.0.0/0 \
+        --next-hop-type Internet
+```
 
 At the end of this step, your environment will look as shown in the figure below.
 
@@ -300,7 +311,7 @@ Irrespective of what BGP-capable NVAs (Linux VMs vs. commercial routing products
 
 - Azure Route Servers always use the reserved ASN 65515. The BGP capable NVAs must use a different ASN (not included in the Azure-reserved range 65515-65520). As such, all sessions between NVAs and Route servers are external BGP (eBGP) sessions.
 - Azure Route Servers are attached to dedicated subnets in their respective VNets. As such, BGP sessions with the BGP capable NVAs are established between interfaces that do not share a common subnet. Therefore, eBGP multihop must be supported and enabled on the NVAs.
-- Static routes must be defined in the NVAs' guest OS route tables to ensure reachability of the Route Servers (which are non-directly-connected external BGP peers). It is recommended to define static routes for the entire prefix of the RouteServerSubnets.
+- Static routes must be defined in the NVAs' guest OS route tables to ensure reachability of the Route Servers (which are non-directly-connected external BGP peers). It is recommended to define static routes for the entire prefix of the RouteServerSubnet.
 
 ### Linux NVA with FRRouting configuration
 This section shows how to implement the general routing guidelines when using CentOS Linux boxes with [FRRouting](https://frrouting.org/).
@@ -356,6 +367,10 @@ Note: To avoid typos and ensure consistent replacements across the entire script
 ```
 conf term
 !
+route-map SET-NEXT-HOP-FW permit 10
+set ip next-hop <Firewall VIP>
+exit
+!
 router bgp <BGP-capable NVA's ASN>
 no bgp ebgp-requires-policy
 neighbor <IP address of Route Server instance #0> remote-as 65515  
@@ -369,9 +384,6 @@ address-family ipv4 unicast
   neighbor <IP address of Route Server instance #1> route-map SET-NEXT-HOP-FW out
 exit-address-family
 !
-route-map SET-NEXT-HOP-FW permit 10
-set ip next-hop <Firewall VIP>
-!
 exit
 !
 exit
@@ -380,7 +392,7 @@ write file
 !
 ```
 
-After updating the commands with the addresses and ASN's that fit your environment, lon into FRR's CLI y running
+After updating the commands with the addresses and ASN's that fit your environment, log into FRR's CLI by running
 
 ```Bash
 sudo vtysh
@@ -388,9 +400,15 @@ sudo vtysh
 
 You can now paste all the commands in the vtysh shell to apply the configuration and save it to configuration files. This will make your configuration persistent across VM reboots.
 
+At the end of this step, your environment will look as shown in the figure below.
+
+![figure5](./media/figure5.PNG) 
+
 ## Step #4 - Configure Azure Firewall to allow internet access from AVS segments
 
-In the Azure portal, create Azure Firewall rules to allow access to the internet (0.0.0.0/0) from the AVS segments that exist in your private cloud.
+Configure the pre-existing firewall )Azure Firewall or third party NVAs) rules to allow access to the internet (0.0.0.0/0) from the AVS segments that exist in your private cloud.
+
+Note: When announcing a default route from Azure, DNS queries against public DNS servers will be routed accordingly. Make sure to configure Azure Firewall rules to allow outbound connections on ports TCP/53 and UDP/53. Depending on your AVS segments' DNS/DHCP configuration, those connections may originate from the VMs' IP addresses or from the service IP of DNS services defined in NSX-T. 
 
 ## Verification
 
@@ -412,9 +430,10 @@ and confirm that the default route is advertised to Azure Route Server with the 
 show ip bgp neighbor <IP address of Route Server instance #1> advertised-routes
 ```
 
-Log onto one of your AVS VMs, attached to a segment for which Azure Firewall allows outbound internet access, and confirm that you can reach internet destinations. Confirm that the outbound connections initiated from the AVS VMs get Source-NATted behind your Azure Firewall's public IP address, by running
+Log onto one of your AVS VMs, attached to a segment for which the firewall allows outbound internet access, and confirm that you can reach internet destinations. Confirm that the outbound connections initiated from the AVS VMs get Source-NATted behind your firewall's public IP address, by running
 
 ```vtysh
 curl ipinfo.io
 ```
+The public IP address returned by ipinfo.io should match the public IP address associated with your firewalling solution.
 
