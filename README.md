@@ -60,7 +60,7 @@ This deployment is a lite version of the full AVS Greenfield Deployment and will
 
 ## Terraform modules for additional deployment scenarios and samples
 
-We've created a number of additional Terraform modules for AVS related deployment activities. Details on these modules can be found in the [Terraform readme.](./terraform/readme.md)
+We've created a number of additional Terraform modules for AVS related deployment activities. Details on these modules can be found in the [Terraform readme.](./terraform/readme.md) 
 
 ## Next Steps
 
