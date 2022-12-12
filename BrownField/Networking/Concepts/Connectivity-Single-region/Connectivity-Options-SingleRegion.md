@@ -97,4 +97,4 @@ Use VWAN for existing workloads, Hub/Spoke VNET's for Azure traffic, and deployi
 If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecture
 
 ##Hub & Spoke with Next-Gen Firewall 
-![vwanandwaf.png](./images/vwanandwaf.png)
+![hubandspoke.png](./images/hubspoke.png)
