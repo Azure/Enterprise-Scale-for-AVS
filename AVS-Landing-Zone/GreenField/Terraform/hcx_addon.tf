@@ -40,7 +40,8 @@ resource "azapi_resource" "hcx_keys" {
   response_export_values = ["*"]
 
   depends_on = [
-    time_sleep.wait_120_seconds
+    time_sleep.wait_120_seconds,
+    azapi_resource.hcx_addon
   ]
 
   lifecycle {
