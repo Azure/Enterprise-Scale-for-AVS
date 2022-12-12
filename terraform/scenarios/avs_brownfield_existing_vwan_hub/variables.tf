@@ -41,6 +41,18 @@ variable "avs_network_cidr" {
   description = "The full /22 network CIDR range summary for the private cloud managed components"
 }
 
+variable "hcx_enabled" {
+  type        = bool
+  description = "Enable the HCX addon toggle value"
+  default     = false
+}
+
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}
+
 variable "express_route_gateway_id" {
   type        = string
   description = "The Azure resource ID for the expressRoute gateway resource deployed in the VWAN hub."
@@ -54,4 +66,10 @@ variable "email_addresses" {
 variable "tags" {
   type        = map(string)
   description = "List of the tags that will be assigned to each resource"
+}
+
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
 }

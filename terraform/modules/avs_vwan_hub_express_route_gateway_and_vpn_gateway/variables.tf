@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "rg_name" {
   type        = string
   description = "Resource Group Name where the jumpbox is deployed"
@@ -79,4 +82,19 @@ variable "tags" {
 variable "private_range_prefixes" {
   type        = list(string)
   description = "List of rfc1918 prefixes to next-hop to the firewall as part of the default route table default route"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

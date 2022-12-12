@@ -21,6 +21,8 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   sddc_sku                 = "av36"
   management_cluster_size  = 3
   avs_network_cidr         = "10.2.0.0/20"
+  hcx_enabled              = true
+  hcx_key_names            = ["DallasDC", "SeattleDC"]
   vpn_gateway_sku          = "VpnGw2"
   asn                      = 65515
   firewall_sku_tier        = "Standard"
@@ -36,6 +38,7 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
     environment = "Dev"
     CreatedBy   = "Terraform"
   }
+  module_telemetry_enabled = false
 }
 
 ######## Create a pre-shared key for the VPN ######
@@ -92,6 +95,7 @@ module "deploy_on_prem_nva_vpn" {
     environment = "Dev"
     CreatedBy   = "Terraform"
   }
+  module_telemetry_enabled = false
 }
 
 
@@ -113,9 +117,53 @@ module "create_vpn_connections" {
   bgp_peering_address_0          = module.deploy_on_prem_nva_vpn.bgp_peer_ip_0
   bgp_peering_address_1          = module.deploy_on_prem_nva_vpn.bgp_peer_ip_1
   shared_key                     = random_password.shared_key.result
+  module_telemetry_enabled       = false
 
   depends_on = [
     module.deploy_on_prem_nva_vpn,
     module.deploy_greenfield_new_vpn_hub_no_firewall
   ]
+}
+
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_deploy_vmware_segment_and_vm_using_linux_vm")
+  telem_arm_deployment_name               = "241716b3-e71d-481d-a333-e520ea00ccf2.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+  telemetry_enabled                       = true
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = local.telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_privatecloud.location
+  template_content = local.telem_arm_subscription_template_content
 }

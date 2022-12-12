@@ -5,7 +5,12 @@ terraform {
       version = "~>3.00"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "azure/azapi"
+      version = "~>1.1.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~>2.30.0"
     }
   }
 
@@ -24,13 +29,7 @@ terraform {
   required_version = ">= 1.0"
 }
 
-provider "azapi" {
-}
-
-provider "azuread" {
-}
-
 provider "azurerm" {
-  partner_id = "d2b1d33f-3e1e-4fe9-b9b4-d20b6147535b"
+  #partner_id = "d2b1d33f-3e1e-4fe9-b9b4-d20b6147535b"
   features {}
 }

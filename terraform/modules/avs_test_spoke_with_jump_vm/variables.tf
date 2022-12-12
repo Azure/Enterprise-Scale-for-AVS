@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "prefix" {
   type        = string
   description = "Simple prefix used for naming convention prepending"
@@ -47,4 +50,19 @@ variable "bastion_subnet_prefix" {
 variable "jumpbox_subnet_prefix" {
   type        = string
   description = "A subnet prefix CIDR value used for the jumpbox subnet address space"
+}
+
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
+
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
 }

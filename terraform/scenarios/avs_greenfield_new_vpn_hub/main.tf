@@ -47,12 +47,13 @@ resource "azurerm_resource_group" "greenfield_network" {
 module "avs_virtual_network" {
   source = "../../modules/avs_vnet_variable_subnets"
 
-  rg_name            = azurerm_resource_group.greenfield_network.name
-  rg_location        = azurerm_resource_group.greenfield_network.location
-  vnet_name          = local.vnet_name
-  vnet_address_space = var.vnet_address_space
-  subnets            = var.subnets
-  tags               = var.tags
+  rg_name                  = azurerm_resource_group.greenfield_network.name
+  rg_location              = azurerm_resource_group.greenfield_network.location
+  vnet_name                = local.vnet_name
+  vnet_address_space       = var.vnet_address_space
+  subnets                  = var.subnets
+  tags                     = var.tags
+  module_telemetry_enabled = false
 }
 
 #deploy the expressroute gateway in the gateway subnet 
@@ -68,6 +69,7 @@ module "avs_expressroute_gateway" {
   express_route_connection_name   = local.express_route_connection_name
   express_route_id                = module.avs_private_cloud.sddc_express_route_id
   express_route_authorization_key = module.avs_private_cloud.sddc_express_route_authorization_key
+  module_telemetry_enabled        = false
 
   depends_on = [
     module.avs_vpn_gateway
@@ -85,33 +87,39 @@ module "avs_private_cloud" {
   rg_location                         = azurerm_resource_group.greenfield_privatecloud.location
   avs_network_cidr                    = var.avs_network_cidr
   expressroute_authorization_key_name = local.expressroute_authorization_key_name
+  internet_enabled                    = false
+  hcx_enabled                         = var.hcx_enabled
+  hcx_key_names                       = var.hcx_key_names
   tags                                = var.tags
+  module_telemetry_enabled            = false
 }
 
 #deploy a VPNGateway
 module "avs_vpn_gateway" {
   source = "../../modules/avs_vpn_gateway"
 
-  vpn_pip_name_1    = local.vpn_pip_name_1
-  vpn_pip_name_2    = local.vpn_pip_name_2
-  vpn_gateway_name  = local.vpn_gateway_name
-  vpn_gateway_sku   = var.vpn_gateway_sku
-  asn               = var.asn
-  rg_name           = azurerm_resource_group.greenfield_network.name
-  rg_location       = azurerm_resource_group.greenfield_network.location
-  gateway_subnet_id = module.avs_virtual_network.subnet_ids["GatewaySubnet"].id
+  vpn_pip_name_1           = local.vpn_pip_name_1
+  vpn_pip_name_2           = local.vpn_pip_name_2
+  vpn_gateway_name         = local.vpn_gateway_name
+  vpn_gateway_sku          = var.vpn_gateway_sku
+  asn                      = var.asn
+  rg_name                  = azurerm_resource_group.greenfield_network.name
+  rg_location              = azurerm_resource_group.greenfield_network.location
+  gateway_subnet_id        = module.avs_virtual_network.subnet_ids["GatewaySubnet"].id
+  module_telemetry_enabled = false
 }
 
 #deploy a routeserver
 module "avs_routeserver" {
   source = "../../modules/avs_routeserver"
 
-  rg_name                = azurerm_resource_group.greenfield_network.name
-  rg_location            = azurerm_resource_group.greenfield_network.location
-  virtual_hub_name       = local.virtual_hub_name
-  virtual_hub_pip_name   = local.virtual_hub_pip_name
-  route_server_name      = local.route_server_name
-  route_server_subnet_id = module.avs_virtual_network.subnet_ids["RouteServerSubnet"].id
+  rg_name                  = azurerm_resource_group.greenfield_network.name
+  rg_location              = azurerm_resource_group.greenfield_network.location
+  virtual_hub_name         = local.virtual_hub_name
+  virtual_hub_pip_name     = local.virtual_hub_pip_name
+  route_server_name        = local.route_server_name
+  route_server_subnet_id   = module.avs_virtual_network.subnet_ids["RouteServerSubnet"].id
+  module_telemetry_enabled = false
 }
 
 #deploy the default service health and azure monitor alerts
@@ -125,6 +133,7 @@ module "avs_service_health" {
   service_health_alert_name     = local.service_health_alert_name
   service_health_alert_scope_id = azurerm_resource_group.greenfield_privatecloud.id
   private_cloud_id              = module.avs_private_cloud.sddc_id
+  module_telemetry_enabled      = false
 }
 
 #deploy a test VM and bastion spoke for initial configuration and testing
@@ -141,8 +150,51 @@ module "avs_jumpbox_and_bastion" {
   jumpbox_spoke_vnet_address_space = var.jumpbox_spoke_vnet_address_space
   bastion_subnet_prefix            = var.bastion_subnet_prefix
   jumpbox_subnet_prefix            = var.jumpbox_subnet_prefix
+  module_telemetry_enabled         = false
 
   depends_on = [
     module.avs_virtual_network
   ]
+}
+
+#############################################################################################
+# Telemetry Section - Toggled on and off with the telemetry variable
+# This allows us to get deployment frequency statistics for deployments
+# Re-using parts of the Core Enterprise Landing Zone methodology
+#############################################################################################
+locals {
+  #create an empty ARM template to use for generating the deployment value
+  telem_arm_subscription_template_content = <<TEMPLATE
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "variables": {},
+      "resources": [],
+      "outputs": {
+        "telemetry": {
+          "type": "String",
+          "value": "For more information, see https://aka.ms/alz/tf/telemetry"
+        }
+      }
+    }
+    TEMPLATE
+  module_identifier                       = lower("avs_brownfield_existing_vwan_hub")
+  telem_arm_deployment_name               = "d2b1d33f-3e1e-4fe9-b9b4-d20b6147535b.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
+}
+
+#create a random string for uniqueness  
+resource "random_string" "telemetry" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+}
+
+resource "azurerm_subscription_template_deployment" "telemetry_core" {
+  count = var.telemetry_enabled ? 1 : 0
+
+  name             = local.telem_arm_deployment_name
+  location         = azurerm_resource_group.greenfield_privatecloud.location
+  template_content = local.telem_arm_subscription_template_content
 }

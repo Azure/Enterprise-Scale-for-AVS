@@ -1,0 +1,19 @@
+#populate this file and remove the .sample extension when running this module standalone
+#if calling this module from another module leave this file commented out
+DeploymentResourceGroupName = "ExampleRG"
+PrivateCloudName = "MyPrivateCloud"
+PrivateCloudResourceGroup = "MyPrivateCloudRG"
+PrivateCloudSubscriptionId = "<private cloud subscription id value (not full resource id)>"
+Location = "example region"
+VNetName = "VNetName"
+VNetAddressSpaceCIDR = ["10.4.0.0/16",]
+VNetGatewaySubnetCIDR = ["10.4.0.0/24",]
+VNetANFDelegatedSubnetCIDR = ["10.4.10.0/24",]
+GatewayName = "GatewayTF"
+GatewaySku = "UltraPerformance"
+netappAccountName = "NetAppAccount-AVSdatastore"
+netappCapacityPoolName = "CapacityPool-AVSdatastore"
+netappCapacityPoolServiceLevel = "Premium"
+netappCapacityPoolSize = 4
+netappVolumeName = "ANFdatastore001"
+netappVolumeSize = 4398046511104
