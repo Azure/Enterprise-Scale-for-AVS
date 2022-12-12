@@ -15,7 +15,7 @@ AVS has many options for connectivity such as AVS native services like Managed S
 
 This blog will talk about the different tools and servies available to have internet flows from AVS. In addition to that, we'll also discuss how to "level up" your architecture using ALZ concept to build a more secure, resilient, scalable design. 
 
-##Default Route from On-Premises
+## Default Route from On-Premises
 Lets first look at a basic setup. In AVS, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
 
 Your segments are attached to the default tier 1 which as a direct path out to the tier-0. 
@@ -34,7 +34,7 @@ From AVS, this is a lot of hops. To simplify this architecture, rather that a VP
 
 This however still is not the most direct, low latent option. 
 
-##Managed SNAT
+## Managed SNAT
 If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet
 
 ![managedsnat.png](./images/snat.png)
@@ -51,7 +51,7 @@ Now here are some of the caveats.
 Consideration: Use Managed SNAT for POC or workloads that don't have these requirements. 
 Recommendation: Use Public IP at the NSX edge for a native, scalable, secure solution 
 
-##Public IP at the NSX Edge 
+## Public IP at the NSX Edge 
 
 This option gives you more flexibility as it can scale up to over thousands of public IP's and can be used down to the tier 1. This means the public IP can sit
 	- At the Virtual Machine
@@ -62,14 +62,14 @@ Which gives you flexibility in your design patterns.
 
 ![pubip.png](./images/pubip.png)
 
-###Design Considerations:
+### Design Considerations:
 
 Use this option to have a low-latent connection to Azure and need to scale number of outbound connections
 Leverage firewall for granular rule creation, URL filtering, and TLS Inspection  
 Consider using loadbalancer to evenly distribute traffic to workloads 
 Enable DDOS protoection 
 
-Secured VWAN HUB
+## Secured VWAN HUB
 
 So we've covered the simplest use case for integrating AVS with Azure and enabling workloads to have internet connectivity. You may however have a requirement to have your default route and/or traffic flows go through Azure. Lets take the example of a customer who has a WAN
 
@@ -91,10 +91,10 @@ In the diagram above, L7 can occur either with the NSX-T loadbalancer or using W
 
 **Note:** Azure Firewall is not a BGP capable device, so you can't route traffic to it through AVS natively. 
 
-###Design Consideration: 
+### Design Consideration: 
 Use VWAN for existing workloads, Hub/Spoke VNET's for Azure traffic, and deploying Public IP at the NSX-Edge 
 
-If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecture
+If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecturev
 
-##Hub & Spoke with Next-Gen Firewall 
+## Hub & Spoke with Next-Gen Firewall 
 ![hubandspoke.png](./images/hubspoke.png)
