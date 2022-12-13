@@ -25,10 +25,10 @@ The problem is, you haven't configured your default route, 0.0.0.0/0 (aka quad-0
 The AVS Portal shows that you have 3 options. Use the two native options, or something else. 
 ![internet_ops.png](./images/internet_ops.png)
 
-So let's say you choose to advertise the default route from on-premises over VPN. So from on-premises, your vpn terminates in a vnet. That vnet also has the AVS Expressroute circuit gateway. From there, you enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch.
+So let's say you choose to advertise the default route from on-premises over VPN. So from on-premises, your vpn terminates in a vnet. That vnet also has the AVS Expressroute circuit gateway. From there, you enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/expressroute-vpn-support
 ![transit.png](./images/vpn.png)
 
-From AVS, this is a lot of hops. To simplify this architecture, rather that a VPN from On-Premises, you can leverage Expressroute. You can peer the Expressroute circuit with AVS's Expressroute circuit using Global Reach 
+From AVS, this is a lot of hops. To simplify this architecture, rather that a VPN from On-Premises, you can leverage Expressroute. You can peer the Expressroute circuit with AVS's Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
 ![globalreach.png](./images/gr.png)
 
@@ -38,6 +38,7 @@ This however still is not the most direct, low latent option.
 If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet
 
 ![managedsnat.png](./images/snat.png)
+See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
 Now here are some of the caveats. 
 1.) No DNAT: You may have services that require DNAT - For example, if there is a service in Azure that needs to access a DMZ in AVS, AVS is now the destination, and a service is trying to access it via a public IP, however, that is not possible as AVS won't know how to translate that address
@@ -98,3 +99,10 @@ If you don't need a WAN and can use a third party, BGP capable device in a centr
 
 ## Hub & Spoke with Next-Gen Firewall 
 ![hubandspoke.png](./images/hubspoke.png)
+
+https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha?tabs=cli
+
+### DDOS Protection
+Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection
+
+![wafappgw.png](./images/wafappgw.png)
