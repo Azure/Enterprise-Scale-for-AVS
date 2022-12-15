@@ -12,7 +12,7 @@
     "PrivateCloudName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the existing Private Cloud that should be used to generate an autorization key"
+        "description": "The name of the existing Private Cloud that should be used to generate an authorization key"
       }
     },
     "PrivateCloudResourceGroup": {
@@ -24,7 +24,7 @@
     },
     "PrivateCloudSubscriptionId": {
       "type": "string",
-      "defaultValue": "[subscription().id]",
+      "defaultValue": "[subscription().subscriptionId]",
       "metadata": {
         "description": "The subscription id that the existing Private Cloud resides in"
       }
