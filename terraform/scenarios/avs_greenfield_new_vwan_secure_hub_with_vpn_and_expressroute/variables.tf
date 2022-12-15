@@ -59,6 +59,18 @@ variable "avs_network_cidr" {
   description = "The full /22 network CIDR range summary for the private cloud managed components"
 }
 
+variable "hcx_enabled" {
+  type        = bool
+  description = "Enable the HCX addon toggle value"
+  default     = false
+}
+
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}
+
 variable "firewall_sku_tier" {
   type        = string
   description = "Firewall Sku Tier - allowed values are Standard and Premium"
@@ -107,3 +119,8 @@ variable "admin_username" {
   description = "The username for the jumpbox admin login"
 }
 
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}

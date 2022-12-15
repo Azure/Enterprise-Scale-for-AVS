@@ -1,3 +1,6 @@
+#################################################################
+# module variables
+#################################################################
 variable "expressroute_pip_name" {
   type        = string
   description = "Azure resource name assigned to the expressroute public ip"
@@ -41,5 +44,18 @@ variable "express_route_authorization_key" {
   description = "AVS private cloud express route authorization key"
 }
 
+#################################################################
+# telemetry variables
+#################################################################
+variable "module_telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}
 
+variable "guid_telemetry" {
+  type        = string
+  description = "guid used for telemetry identification. Defaults to module guid, but overrides with root if needed."
+  default     = "0f9a8adc-9d37-40b3-aaed-ab34b95cf6dd"
+}
 

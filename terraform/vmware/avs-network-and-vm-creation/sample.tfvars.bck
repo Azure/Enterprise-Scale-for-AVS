@@ -1,0 +1,59 @@
+# Network configuration
+nsx_ip       = #<IP address of NSX-T manager>
+nsx_username = #<NSX-T username>
+nsx_password = #<NSX-T Password>
+nsx_tag      = #<Tags>
+dhcp_profile = {
+    # DHCP Server IP
+    server_address = "192.168.0.2/27"
+    # Lease
+    lease_time     = 86400
+    # DNS Server nsx_ip
+    dns_servers    = ["10.179.0.192"]
+}
+overlay_tz = {
+    # Overlay TZ Name
+    display_name = # <"TNTXX-OVERLAY-TZ">
+}
+t0_gateway = {
+    # T0 GW name
+    display_name = "TNTXX-T0"
+}
+t1_gateway = {
+    # T1 GW name
+    display_name = "TNTXX-T1"
+}
+edge_cluster = {
+    # Edge Cluster
+    display_name = "TNTXX-CLSTR"
+}
+lup_oct22_segment = {
+  description  = # <Segment desc>
+  display_name = # <Seg Name>
+  subnet = {
+    # CIDR for your segment
+    cidr                = "192.168.1.1/24"
+    # DHCP IP Range for VMs
+    dhcp_ranges         = ["192.168.1.4-192.168.1.20"]
+    # DHCP Details
+    dhcp_v4_config      = {
+      server_address = "192.168.0.2/27"
+      lease_time     = 86400
+      dns_servers    = ["10.179.0.192"]
+    }
+  }
+  tag = {
+    scope = # <Scope >
+    tag   = # <tag>
+  }
+}
+
+# VM configuration
+vsphere_datacenter = # <SDDC Name>
+vsphere_server     = # <vSphere Server IP>
+vsphere_user       = # <vSphere User>
+vsphere_password   = # <vSphere Password>
+vm-name            = # <VM Name>
+datastore          = # <vSphere Datastore Name>
+host               = # <ESXi Host Name>
+network            = # <Segment Name>

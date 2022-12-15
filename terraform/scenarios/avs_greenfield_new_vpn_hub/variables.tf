@@ -32,6 +32,18 @@ variable "sddc_sku" {
   default     = "av36"
 }
 
+variable "hcx_enabled" {
+  type        = bool
+  description = "Enable the HCX addon toggle value"
+  default     = false
+}
+
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}
+
 variable "management_cluster_size" {
   type        = number
   description = "The number of nodes to include in the management cluster"
@@ -99,4 +111,10 @@ variable "bastion_subnet_prefix" {
 variable "jumpbox_subnet_prefix" {
   type        = string
   description = "the subnet prefix CIDR value used for the jumpbox subnet address space"
+}
+
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
 }

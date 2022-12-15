@@ -30,3 +30,8 @@ output "sddc_provisioning_subnet_cidr" {
   value = azurerm_vmware_private_cloud.privatecloud.provisioning_subnet_cidr
 }
 
+#return the hcx keys if hcx is enabled, empty map if not.  
+#output will referenced using an index due to count on module.
+output "hcx_keys" {
+  value = module.hcx_addon[*].keys
+}

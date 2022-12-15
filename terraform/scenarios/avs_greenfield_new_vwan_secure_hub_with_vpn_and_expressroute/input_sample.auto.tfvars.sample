@@ -7,14 +7,17 @@ region                = "Southeast Asia"
 
 vwan_name                  = "avs_vwan"
 vwan_already_exists        = false
-vwan_hub_address_prefix    = "10.100.0.0/23"
+vwan_hub_address_prefix    = "10.100.0.0/16"
 express_route_scale_units  = 1
 all_branch_traffic_through_firewall = true
 vpn_scale_units            = 1
 sddc_sku                   = "av36"
 management_cluster_size    = 3
 avs_network_cidr           = "192.168.0.0/22"
-jumpbox_spoke_vnet_address_space = ["10.110.0.0/22"]
+hcx_enabled                = true
+hcx_key_names              = ["keyname1", "keyname2"]
+
+jumpbox_spoke_vnet_address_space = ["10.110.0.0/16"]
 jumpbox_spoke_vnet_subnets = [
     {
     name           = "AzureBastionSubnet",
@@ -38,3 +41,5 @@ tags = {
   environment = "Dev"
   CreatedBy   = "Terraform"
 }
+
+telemetry_enabled = true

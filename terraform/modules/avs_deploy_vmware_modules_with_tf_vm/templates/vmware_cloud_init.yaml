@@ -1,0 +1,70 @@
+#cloud-config
+write_files:
+- content: |
+    #define the providers, configure backend state, and configure managed identity to access state
+    terraform {
+        required_providers {
+            nsxt = {
+                source = "vmware/nsxt"
+            }
+            vsphere = {
+                source = "hashicorp/vsphere"
+            }
+            azurerm = {
+                source  = "hashicorp/azurerm"
+                version = "~>3.00"
+            }
+
+        }
+
+        backend "azurerm" {
+            resource_group_name  = "${vmware_state_storage_resource_group_name}"
+            storage_account_name = "${vmware_state_storage_account_name}"
+            container_name       = "${vmware_state_storage_container_name}"
+            key                  = "${vmware_state_storage_key_name}"
+
+            use_msi          = true
+            subscription_id  = "${vmware_state_storage_subscription_id}"
+            tenant_id        = "${vmware_state_storage_tenant_id}"
+            client_id        = "${vmware_state_storage_client_id}"
+        }
+    }
+
+    provider "azurerm" {
+        features {}
+    }
+
+    locals {
+        #convert the json variable objects back to a map in two steps:
+        ###Create a temporary variable using heredoc to handle unescaped double quotes
+        vmware_deployment_heredoc = <<VDH
+            ${vmware_deployment}
+        VDH
+
+        vmware_creds_heredoc = <<VCH
+            ${vmware_creds}
+        VCH
+
+        vmware_state_storage_heredoc = <<VSSH
+            ${vmware_state_storage}
+        VSSH
+        
+        ###JSON decode the heredoc strings to return them to a map
+        vmware_deployment    = jsondecode(local.vmware_deployment_heredoc)
+        vmware_creds         = jsondecode(local.vmware_creds_heredoc)
+        vmware_state_storage = jsondecode(local.vmware_state_storage_heredoc)
+    }
+
+    module "deploy_vmware_vms_and_networks" {
+        source = "${tf_template_github_source}"
+
+        vmware_deployment = local.vmware_deployment
+        vmware_creds      = local.vmware_creds
+    }
+  path: /tmp/terraform/main.tf
+runcmd:
+  - [ sudo, snap, install, terraform, --classic ]
+  - [ cd, /tmp/terraform ]
+  - [ terraform, init ]
+  - [ terraform, apply, -auto-approve ]
+#consider adding the MSI details in the runcmd if implementing Azure resources from this VM

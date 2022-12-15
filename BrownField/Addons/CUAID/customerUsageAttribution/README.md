@@ -42,3 +42,6 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | ExpressRoute-to-VNet                       | `174ca090-c796-4183-bc1f-ac6578e81d39` |
 | AVS-PrivateCloud-WithHCX                   | `fe003615-ca8e-412f-8091-43e1e42ebfd8` |
 | AVS-PrivateCloud                           | `99f18c8b-1767-4302-9cee-ecc0d135dd52` |
+| Greenfield-ARM                             | `754599a0-0a6f-424a-b4c5-1b12be198ae8` |
+| Greenfield-PortalUI                        | `1cf4a3e3-529c-4fb2-ba6a-63dff7d71586` |
+| Greenfield-Lite                            | `8a85fe17-c0c9-439c-9d98-1ae024815163` |

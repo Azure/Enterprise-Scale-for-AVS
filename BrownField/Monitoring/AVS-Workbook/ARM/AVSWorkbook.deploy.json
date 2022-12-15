@@ -167,7 +167,7 @@
         {
           "type": 1,
           "content": {
-            "json": "# Change Log\r\n\r\n### Version 1\r\nThis is the origional version of the AVS workbooks and features:\r\n1. A summary of the AVS soltuons deployed\r\n2. Metrics performance view\r\n3. Activity section related to AVS\r\n\r\nVersion 2\r\nAdded VMware resource view\r\n\r\n### Version 3 \r\nAdded VM Information \r\n\r\n### Version 4\r\nAdded Alert information\r\n\r\n### Version 5\r\nAdded help for configuring Alerts"
+            "json": "# Change Log\r\n\r\n### Version 1\r\nThis is the origional version of the AVS workbooks and features:\r\n1. A summary of the AVS soltuons deployed\r\n2. Metrics performance view\r\n3. Activity section related to AVS\r\n\r\nVersion 2\r\nAdded VMware resource view\r\n\r\n### Version 3 \r\nAdded VM Information \r\n\r\n### Version 4\r\nAdded Alert information\r\n\r\n### Version 5\r\nAdded help for configuring Alerts\r\n\r\n### Version 6\r\nAdded Advisor recommendations\r\nAdded impact filter for Advisor recommendations\r\nAdded status VM tools"
           },
           "conditionalVisibility": {
             "parameterName": "ChangeLog",
@@ -177,55 +177,63 @@
           "name": "text - 5"
         },
         {
-          "type": 11,
-          "content": {
-            "version": "LinkItem/1.0",
-            "style": "tabs",
-            "links": [
-              {
-                "id": "ce43bd96-a673-4b26-a580-023b0ff3ba86",
-                "cellValue": "Tab",
-                "linkTarget": "parameter",
-                "linkLabel": "Summary",
-                "subTarget": "Summary",
-                "style": "link"
-              },
-              {
-                "id": "22d35b15-a48c-4b5f-b450-af89b26ae824",
-                "cellValue": "Tab",
-                "linkTarget": "parameter",
-                "linkLabel": "Resources",
-                "subTarget": "Resources",
-                "style": "link"
-              },
-              {
-                "id": "1ee7d9cd-7d81-4425-baf5-c5d41492b2b7",
-                "cellValue": "Tab",
-                "linkTarget": "parameter",
-                "linkLabel": "Virtual Machines",
-                "subTarget": "VM",
-                "style": "link"
-              },
-              {
-                "id": "0a60794e-c6ef-4cbc-91db-cb2dca983938",
-                "cellValue": "Tab",
-                "linkTarget": "parameter",
-                "linkLabel": "Alerts",
-                "subTarget": "Alerts",
-                "style": "link"
-              },
-              {
-                "id": "a33b5afe-5513-447e-98a5-3f67a3704ee1",
-                "cellValue": "Tab",
-                "linkTarget": "parameter",
-                "linkLabel": "Activity",
-                "subTarget": "Activity",
-                "style": "link"
-              }
-            ]
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "id": "ce43bd96-a673-4b26-a580-023b0ff3ba86",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Summary",
+            "subTarget": "Summary",
+            "style": "link"
           },
-          "name": "links - 3"
-        },
+          {
+            "id": "22d35b15-a48c-4b5f-b450-af89b26ae824",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Resources",
+            "subTarget": "Resources",
+            "style": "link"
+          },
+          {
+            "id": "1ee7d9cd-7d81-4425-baf5-c5d41492b2b7",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Virtual Machines",
+            "subTarget": "VM",
+            "style": "link"
+          },
+          {
+            "id": "0a60794e-c6ef-4cbc-91db-cb2dca983938",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Alerts",
+            "subTarget": "Alerts",
+            "style": "link"
+          },
+          {
+            "id": "6fbc03e5-8cc5-45e9-bd24-c3126b51c1e4",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Advisor Recommendations",
+            "subTarget": "Advisor",
+            "style": "link"
+          },
+          {
+            "id": "a33b5afe-5513-447e-98a5-3f67a3704ee1",
+            "cellValue": "Tab",
+            "linkTarget": "parameter",
+            "linkLabel": "Activity",
+            "subTarget": "Activity",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "links - 3"
+    },
         {
           "type": 12,
           "content": {
@@ -471,7 +479,7 @@
             "comparison": "isEqualTo",
             "value": "Summary"
           },
-          "name": "Summary"
+          "name": "Group - Summary"
         },
         {
           "type": 12,
@@ -609,207 +617,242 @@
             "comparison": "isEqualTo",
             "value": "Resources"
           },
-          "name": "AVS Resources"
+          "name": "Group - AVS Resources"
         },
         {
-          "type": 12,
-          "content": {
-            "version": "NotebookGroup/1.0",
-            "groupType": "editable",
-            "items": [
-              {
-                "type": 3,
-                "content": {
-                  "version": "KqlItem/1.0",
-                  "query": "resources\r\n| where type ==  \"microsoft.connectedvmwarevsphere/virtualmachines\" \r\n| extend VSID = tolower(tostring(split(properties.vCenterId, \"/\")[8]))\r\n| extend OS = properties.osProfile\r\n| extend computerName = properties.osProfile.computerName\r\n| extend osType = properties.osProfile.osType\r\n| extend osName = properties.osProfile.osName\r\n| extend toolsRunningStatus = properties.osProfile.toolsRunningStatus\r\n| extend toolsVersion = properties.osProfile.toolsVersion\r\n//| extend HDD = properties.storageProfile.disks\r\n| extend cores = properties.hardwareProfile.numCoresPerSocket\r\n| extend mem = properties.hardwareProfile.memorySizeMB\r\n| extend CPUs = properties.hardwareProfile.numCPUs\r\n| extend Power =  properties.powerState\r\n| project id, VSID, osType, osName,CPUs, cores, mem, Power,toolsRunningStatus, toolsVersion",
-                  "size": 0,
-                  "showRefreshButton": true,
-                  "showExportToExcel": true,
-                  "queryType": 1,
-                  "resourceType": "microsoft.resourcegraph/resources",
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "parameters": [
+                {
+                  "id": "0d65bc28-3879-4da7-a1f7-792b5e882fd9",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LatestToolsVer",
+                  "type": 2,
+                  "isRequired": true,
+                  "query": "resources\r\n| where type ==  \"microsoft.connectedvmwarevsphere/virtualmachines\" \r\n| extend toolsVersion = toint(properties.osProfile.toolsVersion)\r\n| project toolsVersion\r\n| order by toolsVersion desc\r\n| top 1 by toolsVersion",
                   "crossComponentResources": [
                     "{Subscription}"
                   ],
-                  "visualization": "table",
-                  "gridSettings": {
-                    "formatters": [
-                      {
-                        "columnMatch": "VSID",
-                        "formatter": 0,
-                        "formatOptions": {
-                          "customColumnWidthSetting": "20.2857ch"
-                        }
-                      },
-                      {
-                        "columnMatch": "osType",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "colors",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Windows",
-                              "representation": "lightBlue",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "==",
-                              "thresholdValue": "Linux",
-                              "representation": "green",
-                              "text": "{0}{1}"
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": "gray",
-                              "text": "Unknown"
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "columnMatch": "osName",
-                        "formatter": 1,
-                        "formatOptions": {
-                          "customColumnWidthSetting": "29.1429ch"
-                        }
-                      },
-                      {
-                        "columnMatch": "CPUs",
-                        "formatter": 1
-                      },
-                      {
-                        "columnMatch": "cores",
-                        "formatter": 1
-                      },
-                      {
-                        "columnMatch": "mem",
-                        "formatter": 1
-                      },
-                      {
-                        "columnMatch": "Power",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "icons",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "poweredOn",
-                              "representation": "success",
-                              "text": ""
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": "Unavailable",
-                              "text": ""
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "columnMatch": "toolsRunningStatus",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "icons",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "guestToolsRunning",
-                              "representation": "success",
-                              "text": ""
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": "4",
-                              "text": ""
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        "columnMatch": "toolsVersion",
-                        "formatter": 1
-                      },
-                      {
-                        "columnMatch": "Powered On",
-                        "formatter": 18,
-                        "formatOptions": {
-                          "thresholdsOptions": "icons",
-                          "thresholdsGrid": [
-                            {
-                              "operator": "==",
-                              "thresholdValue": "poweredOn",
-                              "representation": "success",
-                              "text": ""
-                            },
-                            {
-                              "operator": "Default",
-                              "thresholdValue": null,
-                              "representation": "info",
-                              "text": ""
-                            }
-                          ]
-                        }
-                      }
+                  "isHiddenWhenLocked": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::1"
                     ],
-                    "filter": true,
-                    "labelSettings": [
-                      {
-                        "columnId": "id",
-                        "label": "VM"
-                      },
-                      {
-                        "columnId": "VSID",
-                        "label": "vCenter"
-                      },
-                      {
-                        "columnId": "osType",
-                        "label": "OS"
-                      },
-                      {
-                        "columnId": "osName",
-                        "label": "OS Version"
-                      },
-                      {
-                        "columnId": "CPUs",
-                        "label": "CPUs"
-                      },
-                      {
-                        "columnId": "cores",
-                        "label": "Cores"
-                      },
-                      {
-                        "columnId": "mem",
-                        "label": "Memory"
-                      },
-                      {
-                        "columnId": "Power",
-                        "label": "Powered On"
-                      },
-                      {
-                        "columnId": "toolsRunningStatus",
-                        "label": "Guest Managed"
-                      },
-                      {
-                        "columnId": "toolsVersion",
-                        "label": "Tools Version"
-                      }
-                    ]
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": "value::1"
+                }
+              ],
+              "style": "pills",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "name": "parameters - 1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "resources\r\n| where type ==  \"microsoft.connectedvmwarevsphere/virtualmachines\" \r\n| extend VSID = tolower(tostring(split(properties.vCenterId, \"/\")[8]))\r\n| extend OS = properties.osProfile\r\n| extend computerName = properties.osProfile.computerName\r\n| extend osType = properties.osProfile.osType\r\n| extend osName = properties.osProfile.osName\r\n| extend toolsRunningStatus = properties.osProfile.toolsRunningStatus\r\n| extend toolsVersion = toint(properties.osProfile.toolsVersion)\r\n| extend cores = properties.hardwareProfile.numCoresPerSocket\r\n| extend mem = properties.hardwareProfile.memorySizeMB\r\n| extend CPUs = properties.hardwareProfile.numCPUs\r\n| extend Power =  properties.powerState\r\n| project id, VSID, osType, osName,CPUs, cores, mem, Power,toolsRunningStatus, toolsVersion",
+              "size": 0,
+              "showRefreshButton": true,
+              "showExportToExcel": true,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "VSID",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "20.2857ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "osType",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Windows",
+                          "representation": "lightBlue",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Linux",
+                          "representation": "green",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "gray",
+                          "text": "Unknown"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "osName",
+                    "formatter": 1,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "29.1429ch"
+                    }
+                  },
+                  {
+                    "columnMatch": "CPUs",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "cores",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "mem",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "Power",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "poweredOn",
+                          "representation": "success",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "Unavailable",
+                          "text": ""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "toolsRunningStatus",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "guestToolsRunning",
+                          "representation": "success",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "4",
+                          "text": ""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "Powered On",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "poweredOn",
+                          "representation": "success",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "info",
+                          "text": ""
+                        }
+                      ]
+                    }
                   }
-                },
-                "name": "query - 0"
+                ],
+                "filter": true,
+                "labelSettings": [
+                  {
+                    "columnId": "id",
+                    "label": "VM"
+                  },
+                  {
+                    "columnId": "VSID",
+                    "label": "vCenter"
+                  },
+                  {
+                    "columnId": "osType",
+                    "label": "OS"
+                  },
+                  {
+                    "columnId": "osName",
+                    "label": "OS Version"
+                  },
+                  {
+                    "columnId": "CPUs",
+                    "label": "CPUs"
+                  },
+                  {
+                    "columnId": "cores",
+                    "label": "Cores"
+                  },
+                  {
+                    "columnId": "mem",
+                    "label": "Memory"
+                  },
+                  {
+                    "columnId": "Power",
+                    "label": "Powered On"
+                  },
+                  {
+                    "columnId": "toolsRunningStatus",
+                    "label": "Guest Managed"
+                  },
+                  {
+                    "columnId": "toolsVersion",
+                    "label": "Tools Version"
+                  }
+                ]
               }
-            ]
-          },
-          "conditionalVisibility": {
-            "parameterName": "Tab",
-            "comparison": "isEqualTo",
-            "value": "VM"
-          },
-          "name": "AVS Virtual Machines"
-        },
+            },
+            "name": "query - 0"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "VM"
+      },
+      "name": "Group - AVS Virtual Machines"
+    },
         {
           "type": 12,
           "content": {
@@ -1072,35 +1115,207 @@
             "comparison": "isEqualTo",
             "value": "Alerts"
           },
-          "name": "Alerts"
+          "name": "Group - Alerts"
         },
+{
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "### Azure Advisor recommendations for Azure VMware Solution"
+            },
+            "name": "text - 1"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "parameters": [
+                {
+                  "id": "88c663d7-da13-44da-a53f-15f8fdb1ca57",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "Impact",
+                  "type": 2,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "AdvisorResources\r\n| where type == 'microsoft.advisor/recommendations'\r\n| where properties.resourceMetadata.source contains \"AVS\" or properties.resourceMetadata.source contains \"vmware\"\r\n| extend imp = tostring(properties.impact)\r\n| distinct imp",
+                  "crossComponentResources": [
+                    "{Subscription}"
+                  ],
+                  "value": [
+                    "value::all"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ]
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources"
+                }
+              ],
+              "style": "pills",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "name": "parameters - 2"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AdvisorResources\r\n| where type == 'microsoft.advisor/recommendations'\r\n| where properties.resourceMetadata.source contains \"AVS\" or properties.resourceMetadata.source contains \"vmware\"\r\n| extend SD = tostring(properties.shortDescription.solution)\r\n| extend cat = tostring(properties.category)\r\n| extend imp = tostring(properties.impact)\r\n| extend LU = tostring(properties.lastUpdated)\r\n| extend IR = tostring(properties.impactedValue)\r\n| where imp in ({Impact})\r\n| project IR, resourceGroup, SD, cat, imp, LU,subscriptionId",
+              "size": 0,
+              "showRefreshButton": true,
+              "showExportToExcel": true,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "IR",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "GenericDetails",
+                      "linkIsContextBlade": true,
+                      "showIcon": true
+                    }
+                  },
+                  {
+                    "columnMatch": "imp",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "colors",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "High",
+                          "representation": "redBright",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Medium",
+                          "representation": "yellow",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Low",
+                          "representation": "blue",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "blue",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "LU",
+                    "formatter": 6
+                  }
+                ],
+                "filter": true,
+                "labelSettings": [
+                  {
+                    "columnId": "IR",
+                    "label": "Resource"
+                  },
+                  {
+                    "columnId": "resourceGroup",
+                    "label": "RG"
+                  },
+                  {
+                    "columnId": "SD",
+                    "label": "Description"
+                  },
+                  {
+                    "columnId": "cat",
+                    "label": "Category"
+                  },
+                  {
+                    "columnId": "imp",
+                    "label": "Impact"
+                  },
+                  {
+                    "columnId": "LU",
+                    "label": "Last Updated"
+                  },
+                  {
+                    "columnId": "subscriptionId",
+                    "label": "Subscription"
+                  }
+                ]
+              }
+            },
+            "name": "query - 0"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Advisor"
+      },
+      "name": "group - Advisor"
+    },
         {
-          "type": 3,
-          "content": {
-            "version": "KqlItem/1.0",
-            "query": "AzureActivity \r\n| where ResourceProviderValue ==\"MICROSOFT.AVS\"\r\n| extend prop = parse_json(Properties)\r\n| evaluate bag_unpack(prop)\r\n| project TimeGenerated, message, Level, ActivityStatusValue, Caller",
-            "size": 0,
-            "showAnalytics": true,
-            "title": "AVS Activity",
-            "timeContextFromParameter": "TimeRange",
-            "showExportToExcel": true,
-            "queryType": 0,
-            "resourceType": "microsoft.operationalinsights/workspaces",
-            "crossComponentResources": [
-              "{Workspace}"
-            ],
-            "visualization": "table",
-            "gridSettings": {
-              "filter": true
-            }
-          },
-          "conditionalVisibility": {
-            "parameterName": "Tab",
-            "comparison": "isEqualTo",
-            "value": "Activity"
-          },
-          "name": "query - 4"
-        }
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AzureActivity \r\n| where ResourceProviderValue ==\"MICROSOFT.AVS\"\r\n| extend prop = parse_json(Properties)\r\n| evaluate bag_unpack(prop)\r\n| project TimeGenerated, message, Level, ActivityStatusValue, Caller",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "AVS Activity",
+              "timeContextFromParameter": "TimeRange",
+              "showExportToExcel": true,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{Workspace}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "filter": true
+              }
+            },
+            "name": "query - 4"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "Tab",
+        "comparison": "isEqualTo",
+        "value": "Activity"
+      },
+      "name": "group - Activity"
+    }
       ],
       "isLocked": false,
       "fallbackResourceIds": [

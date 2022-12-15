@@ -9,9 +9,12 @@ is_secure_hub                           = false
 sddc_sku                                = "av36t"
 management_cluster_size                 = 3
 avs_network_cidr                        = "10.0.0.0/22"
+hcx_enabled                             = true
+hcx_key_names                           = ["keyname1", "keyname2"]
 express_route_gateway_id                = "/subscriptions/00000000-0000-0000-0000-0000000000000/resourceGroups/hub_resource_group/providers/Microsoft.Network/expressRouteGateways/hub_expressroute_gw"
 email_addresses                         = ["sample@sample.com"]
 tags = {
 environment = "Dev"
 CreatedBy   = "Terraform"
 }
+telemetry_enabled = true

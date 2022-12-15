@@ -5,7 +5,6 @@ param Prefix string
 param PrivateCloudAddressSpace string
 param PrivateCloudSKU string
 param PrivateCloudHostCount int
-param TelemetryOptOut bool
 param DeployPrivateCloud bool
 param ExistingPrivateCloudResourceId string
 
@@ -25,7 +24,6 @@ module PrivateCloud 'AVSCore/PrivateCloud.bicep' = if (DeployPrivateCloud) {
     NetworkBlock: PrivateCloudAddressSpace
     SKUName: PrivateCloudSKU
     ManagementClusterSize: PrivateCloudHostCount
-    TelemetryOptOut: TelemetryOptOut
   }
 }
 

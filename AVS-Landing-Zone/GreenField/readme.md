@@ -2,8 +2,8 @@
 |Greenfield deployment options:          |                           |
 |:-------------------------------------|:------------------------: |
 |Azure portal UI          |[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2FPortalUI%2FARM%2FESLZDeploy.deploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2FPortalUI%2FARM%2FESLZdeploy.PortalUI.json)      |
-|Command line (Bicep/ARM)              |[![Powershell/Azure CLI](./docs/images/powershell.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Bicep)          |
-|Terraform                             |[![Terraform](./docs/images/terraform.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Terraform)                  |
+|Command line (Bicep/ARM)              |[![Powershell/Azure CLI](/docs/images/powershell.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Bicep)          |
+|Terraform                             |[![Terraform](/docs/images/terraform.png)](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField/Terraform)                  |
 
 
 # AVS Landing Zone: Greenfield Deployment
@@ -58,7 +58,7 @@ Azure Bastion provides secure access to AVS Private Cloud's vCenter, NSX-T and o
 
 ### Jumpbox VM
 
-Jumpbox VM provides an easy way to validate and interact with AVS Private Cloud services such as vCenter & NSX-T UI portals. Jumpbox VM username, password, subnet address space and SKU should be provided at the time of deployment.
+Jumpbox VM provides an easy way to validate and interact with AVS Private Cloud services such as vCenter & NSX-T UI portals. Jumpbox VM username, password, subnet address space and SKU should be provided at the time of deployment. In addition, a bootstrap script can be enabled to preload the Jumpbox VM with necessary applications such as Powershell Core, 7zip, VMware Remote Console (VMRC), etc...
 
 ### Monitoring
 

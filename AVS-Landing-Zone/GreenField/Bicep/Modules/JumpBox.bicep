@@ -10,6 +10,10 @@ param VNetResourceGroup string
 param VNetName string
 param JumpboxSubnet string
 param JumpboxSku string
+param OSVersion string
+param BootstrapJumpboxVM bool = false
+param BootstrapPath string
+param BootstrapCommand string
 param BastionSubnet string
 
 
@@ -48,6 +52,10 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     Username: Username
     Password: Password
     VMSize: JumpboxSku
+    OSVersion: OSVersion
+    BootstrapVM: BootstrapJumpboxVM
+    BootstrapPath: BootstrapPath
+    BootstrapCommand: BootstrapCommand
   }
 }
 

@@ -3,30 +3,22 @@ param NetworkBlock string
 param ManagementClusterSize int
 param SKUName string
 param Location string
-param TelemetryOptOut bool
+param Internet string
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
   name: '${Prefix}-SDDC'
   sku: {
     name: SKUName
   }
+  identity: {
+    type: 'SystemAssigned'
+  }
   location: Location
   properties: {
     networkBlock: NetworkBlock
+    internet: Internet
     managementCluster: {
       clusterSize: ManagementClusterSize
-    }
-  }
-}
-
-resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
-  name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8'
-  properties: {
-    mode: 'Incremental'
-    template: {
-      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
-      contentVersion: '1.0.0.0'
-      resources: []
     }
   }
 }

@@ -9,6 +9,7 @@ region = "northeurope"
 avs-networkblock = "10.1.0.0/22"
 avs-sku          = "AV36"
 avs-hostcount    = 3
+hcx_key_names    = ["hcxsite1", "hcxsite2"]
 
 #Input the Jumpbox local username, password and SKU of your choice
 adminusername = "replace me"
@@ -20,3 +21,6 @@ vnetaddressspace   = "192.168.1.0/24"
 gatewaysubnet      = "192.168.1.0/27"
 azurebastionsubnet = "192.168.1.32/27"
 jumpboxsubnet      = "192.168.1.128/25"
+
+#Enable or Disable telemetry
+telemetry_enabled = true
