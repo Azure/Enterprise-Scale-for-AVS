@@ -81,10 +81,8 @@ Now you're existing vnets in Azure can not peer directly. So, if you need to com
 
 ![vwanarch.png](./images/vwanarch.png)
 
-In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out the internet, you will need to do two things
-
-	1) Enable WAF/App GW
-	2) Enable an NVA
+In this scenario, if you want HTTP/HTTPS traffic inbound, you will need to do  Enable WAF/App GW
+	
 
 ![vwanandwaf.png](./images/vwanandwaf.png)
 
