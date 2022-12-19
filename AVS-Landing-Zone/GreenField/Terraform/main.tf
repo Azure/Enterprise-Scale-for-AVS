@@ -70,6 +70,7 @@ resource "azurerm_subscription_template_deployment" "telemetry_core" {
   count = var.telemetry_enabled ? 1 : 0
 
   name             = local.telem_arm_deployment_name
+  provider         = azurerm
   location         = azurerm_vmware_private_cloud.privatecloud.location
   template_content = local.telem_arm_subscription_template_content
 }
