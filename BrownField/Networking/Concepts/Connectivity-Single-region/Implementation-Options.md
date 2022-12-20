@@ -1,4 +1,6 @@
+
 # Connectivity Options for AVS
+
 
 Enterprise-scale for Azure VMware Solution (AVS) is a consistent set of design considerations for establishing connectivity to, from, and within the software design center. This page covers reference architectures based on the most common scenarios to consider when designing for network-at-scale. While this is not an exhaustive list of design patterns, the diagrams are examples on how to achieve commonly used traffic patterns. Take advantage of the best practices described in landing zone connectivity design area to build a strong topology. You can then extend the foundation by implementing processes related to network security, and traffic monitoring.
 
