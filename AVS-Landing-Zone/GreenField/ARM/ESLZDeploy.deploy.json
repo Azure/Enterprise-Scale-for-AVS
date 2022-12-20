@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.11.1.770",
-      "templateHash": "16252221738617703439"
+      "version": "0.10.61.36676",
+      "templateHash": "10678651943679665278"
     }
   },
   "parameters": {
@@ -40,17 +40,6 @@
       ],
       "metadata": {
         "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
-      }
-    },
-    "Internet": {
-      "type": "string",
-      "defaultValue": "Disabled",
-      "allowedValues": [
-        "Disabled",
-        "Enabled"
-      ],
-      "metadata": {
-        "description": "Optional: Connectivity to Internet through Managed SNAT Service"
       }
     },
     "PrivateCloudHostCount": {
@@ -119,27 +108,6 @@
       "defaultValue": "Standard_D2s_v3",
       "metadata": {
         "description": "The sku to use for the Jumpbox VM, must have quota for this within the target region"
-      }
-    },
-    "BootstrapJumpboxVM": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Should run a bootstrap PowerShell script on the Jumpbox VM or not"
-      }
-    },
-    "BootstrapPath": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/husamhilal/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1",
-      "metadata": {
-        "description": "The path for Jumpbox VM bootstrap PowerShell script file (expecting \"bootstrap.ps1\" file)"
-      }
-    },
-    "BootstrapCommand": {
-      "type": "string",
-      "defaultValue": "powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1",
-      "metadata": {
-        "description": "The command to trigger running the bootstrap script. If was not provided, then the expected script file name must be \"bootstrap.ps1\")"
       }
     },
     "BastionSubnet": {
@@ -217,9 +185,6 @@
           },
           "PrivateCloudSKU": {
             "value": "[parameters('PrivateCloudSKU')]"
-          },
-          "Internet": {
-            "value": "[parameters('Internet')]"
           }
         },
         "template": {
@@ -228,8 +193,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "7963207558726733320"
+              "version": "0.10.61.36676",
+              "templateHash": "8536903555123647642"
             }
           },
           "parameters": {
@@ -247,9 +212,6 @@
             },
             "PrivateCloudHostCount": {
               "type": "int"
-            },
-            "Internet": {
-              "type": "string"
             }
           },
           "resources": [
@@ -284,9 +246,6 @@
                   },
                   "ManagementClusterSize": {
                     "value": "[parameters('PrivateCloudHostCount')]"
-                  },
-                  "Internet": {
-                    "value": "[parameters('Internet')]"
                   }
                 },
                 "template": {
@@ -295,8 +254,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "4668649072318594386"
+                      "version": "0.10.61.36676",
+                      "templateHash": "13714281109908522838"
                     }
                   },
                   "parameters": {
@@ -314,26 +273,19 @@
                     },
                     "Location": {
                       "type": "string"
-                    },
-                    "Internet": {
-                      "type": "string"
                     }
                   },
                   "resources": [
                     {
                       "type": "Microsoft.AVS/privateClouds",
-                      "apiVersion": "2021-12-01",
+                      "apiVersion": "2021-06-01",
                       "name": "[format('{0}-SDDC', parameters('Prefix'))]",
                       "sku": {
                         "name": "[parameters('SKUName')]"
                       },
-                      "identity": {
-                        "type": "SystemAssigned"
-                      },
                       "location": "[parameters('Location')]",
                       "properties": {
                         "networkBlock": "[parameters('NetworkBlock')]",
-                        "internet": "[parameters('Internet')]",
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
                         }
@@ -407,8 +359,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "6416639889953557764"
+              "version": "0.10.61.36676",
+              "templateHash": "16212823834342090941"
             }
           },
           "parameters": {
@@ -468,8 +420,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "7880606889209819892"
+                      "version": "0.10.61.36676",
+                      "templateHash": "8245107422755410726"
                     }
                   },
                   "parameters": {
@@ -649,8 +601,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "5404411560716185335"
+              "version": "0.10.61.36676",
+              "templateHash": "18167728487499677759"
             }
           },
           "parameters": {
@@ -702,8 +654,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "16230890954012761699"
+                      "version": "0.10.61.36676",
+                      "templateHash": "9741075494170520716"
                     }
                   },
                   "parameters": {
@@ -767,8 +719,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "16369943489352089758"
+                      "version": "0.10.61.36676",
+                      "templateHash": "16218024248131984712"
                     }
                   },
                   "parameters": {
@@ -870,8 +822,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "3730631524811729312"
+              "version": "0.10.61.36676",
+              "templateHash": "6626996358566905329"
             }
           },
           "parameters": {
@@ -919,8 +871,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "18265616104816421007"
+                      "version": "0.10.61.36676",
+                      "templateHash": "15356131653046229861"
                     }
                   },
                   "parameters": {
@@ -970,8 +922,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "9743615409633261454"
+                      "version": "0.10.61.36676",
+                      "templateHash": "831976049120413366"
                     }
                   },
                   "parameters": {
@@ -1058,15 +1010,6 @@
           },
           "JumpboxSku": {
             "value": "[parameters('JumpboxSku')]"
-          },
-          "BootstrapJumpboxVM": {
-            "value": "[parameters('BootstrapJumpboxVM')]"
-          },
-          "BootstrapPath": {
-            "value": "[parameters('BootstrapPath')]"
-          },
-          "BootstrapCommand": {
-            "value": "[parameters('BootstrapCommand')]"
           }
         },
         "template": {
@@ -1075,8 +1018,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "342319162266186431"
+              "version": "0.10.61.36676",
+              "templateHash": "1545008297839157519"
             }
           },
           "parameters": {
@@ -1102,16 +1045,6 @@
               "type": "string"
             },
             "JumpboxSku": {
-              "type": "string"
-            },
-            "BootstrapJumpboxVM": {
-              "type": "bool",
-              "defaultValue": false
-            },
-            "BootstrapPath": {
-              "type": "string"
-            },
-            "BootstrapCommand": {
               "type": "string"
             },
             "BastionSubnet": {
@@ -1152,8 +1085,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "7031261532640388366"
+                      "version": "0.10.61.36676",
+                      "templateHash": "3526514837063376121"
                     }
                   },
                   "parameters": {
@@ -1228,8 +1161,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "2315724903093388080"
+                      "version": "0.10.61.36676",
+                      "templateHash": "3091448724052945261"
                     }
                   },
                   "parameters": {
@@ -1316,15 +1249,6 @@
                   },
                   "VMSize": {
                     "value": "[parameters('JumpboxSku')]"
-                  },
-                  "BootstrapVM": {
-                    "value": "[parameters('BootstrapJumpboxVM')]"
-                  },
-                  "BootstrapPath": {
-                    "value": "[parameters('BootstrapPath')]"
-                  },
-                  "BootstrapCommand": {
-                    "value": "[parameters('BootstrapCommand')]"
                   }
                 },
                 "template": {
@@ -1333,8 +1257,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "18137590009420842615"
+                      "version": "0.10.61.36676",
+                      "templateHash": "16289752300662783142"
                     }
                   },
                   "parameters": {
@@ -1358,19 +1282,7 @@
                     },
                     "OSVersion": {
                       "type": "string",
-                      "defaultValue": "2022-datacenter-azure-edition-smalldisk"
-                    },
-                    "BootstrapVM": {
-                      "type": "bool",
-                      "defaultValue": false
-                    },
-                    "BootstrapPath": {
-                      "type": "string",
-                      "defaultValue": ""
-                    },
-                    "BootstrapCommand": {
-                      "type": "string",
-                      "defaultValue": ""
+                      "defaultValue": "2019-Datacenter-smalldisk"
                     }
                   },
                   "variables": {
@@ -1402,9 +1314,6 @@
                       "apiVersion": "2021-03-01",
                       "name": "[variables('Name')]",
                       "location": "[parameters('Location')]",
-                      "identity": {
-                        "type": "SystemAssigned"
-                      },
                       "properties": {
                         "hardwareProfile": {
                           "vmSize": "[parameters('VMSize')]"
@@ -1438,28 +1347,6 @@
                       },
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/networkInterfaces', variables('Name'))]"
-                      ]
-                    },
-                    {
-                      "condition": "[parameters('BootstrapVM')]",
-                      "type": "Microsoft.Compute/virtualMachines/extensions",
-                      "apiVersion": "2015-06-15",
-                      "name": "[format('{0}/CustomScriptExtension', variables('Name'))]",
-                      "location": "[parameters('Location')]",
-                      "properties": {
-                        "publisher": "Microsoft.Compute",
-                        "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.9",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {
-                          "fileUris": [
-                            "[parameters('BootstrapPath')]"
-                          ],
-                          "commandToExecute": "[parameters('BootstrapCommand')]"
-                        }
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Compute/virtualMachines', variables('Name'))]"
                       ]
                     }
                   ],
@@ -1531,8 +1418,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "15539541577948441768"
+              "version": "0.10.61.36676",
+              "templateHash": "2302981668667203195"
             }
           },
           "parameters": {
@@ -1592,8 +1479,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "11048093151453059371"
+                      "version": "0.10.61.36676",
+                      "templateHash": "53065697264026865"
                     }
                   },
                   "parameters": {
@@ -1667,8 +1554,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "4934483348062533657"
+                      "version": "0.10.61.36676",
+                      "templateHash": "11019117668993539825"
                     }
                   },
                   "parameters": {
@@ -1802,8 +1689,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "14397663925538479246"
+                      "version": "0.10.61.36676",
+                      "templateHash": "3761289678665226897"
                     }
                   },
                   "parameters": {
@@ -1903,8 +1790,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.11.1.770",
-                      "templateHash": "15512244805698858035"
+                      "version": "0.10.61.36676",
+                      "templateHash": "15845571132788870069"
                     }
                   },
                   "parameters": {
@@ -2338,8 +2225,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.11.1.770",
-              "templateHash": "4628845485719892056"
+              "version": "0.10.61.36676",
+              "templateHash": "8692195644938117442"
             }
           },
           "resources": []
