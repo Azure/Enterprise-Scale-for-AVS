@@ -35,7 +35,7 @@ In this design, there are several hops required before reaching the internet. To
 This however still is not the most direct, low latent option. 
 
 ## Managed SNAT
-If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet
+If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
 ![managedsnat.png](./images/snat.png)
 See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
@@ -84,10 +84,12 @@ Existing vnets in Azure will not be able to peer directly to the VWAN hub, so in
 
 ![vwanarch.png](./images/vwanarch.png)
 
+
 In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out the internet, you will need to do two things
 
 	1) Enable WAF/App GW in the hub vnet
 	2) Enable a Network virtual appliance 
+
 
 ![vwanandwaf.png](./images/vwanandwaf.png)
 
