@@ -45,7 +45,7 @@ If traversing back to on-prem is not a requirement, consider using Managed SNAT 
 
 See: https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
-# Limitations
+### Limitations
 
 Please note that this service is for outbound, egress traffic only. Here are some of the additional limitations:
 
