@@ -13,7 +13,7 @@ ms.custom: internal
 
 AVS has many options for connectivity. This includes AVS native services like Managed SNAT, Public IP, and Azure native services such as Azure VWAN Hub and Azure Firewall for default route advertisement. Traversing back to on-prem is also an option for establishing internet connectivity from AVS. 
 
-This article will discuss the different tools and servies available to implement internet traffic from AVS in a hybrid environment. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
+This article will discuss the different tools and servies available to implement internet traffic from AVS in a hybrid environment consisting of the AVS SDDC, Azure, and an On-premises datacenter. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
 
 ## Default Route from On-Premises
 Lets first look at a basic setup. In AVS, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
@@ -24,46 +24,48 @@ Your segments are attached to the default tier 1 router which as a direct path o
 
 In order to access the internet, default route, 0.0.0.0/0 must be configured.
 
-The AVS Portal shows that you have 3 options. 
+The AVS Portal shows that you have 3 options:
+
 ![internet_ops.png](./images/internet_ops.png)
 
-One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, you enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/expressroute-vpn-support
+One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/expressroute-vpn-support
+
 ![transit.png](./images/vpn.png)
 
-In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider Expressroute. The Expressroute circuit peers with AVS's Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
+In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure Expressroute circuit. The Expressroute circuit peers with the AVS Managed Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
 ![globalreach.png](./images/gr.png)
 
 This however still is not the most direct, low latent option. 
 
 ## Managed SNAT
-If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
+If traversing back to on-prem is not a requirement, consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
 ![managedsnat.png](./images/managed_snat.png)
 
-See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
+See: https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
-## Limitations
+# Limitations
 
 Please note that this service is for outbound, egress traffic only. Here are some of the additional limitations:
 
-1.) No DNAT: You may have services that require DNAT - For example, if there is a service in Azure that needs to access  AVS as it's destination, it won't know how to receive that address
+1.) **No DNAT**: You may have services that require DNAT - For example, if there is a service in Azure that needs to access  AVS as it's destination, it won't know how to receive that address
 
-2.) Can't natively handle L7: The Managed SNAT has no concepts of HTTP/HTTPS. In order to have this functionality, you will need use a load balancer
+2.) **Can't natively handle L7**: The Managed SNAT has no concepts of HTTP/HTTPS. In order to have this functionality, you will need use a load balancer
 
-3.) Logging: The connection has no concept of logging. No way to see malicious activity, bad actors, or network congestion. 
+3.) **Logging**: The connection has no concept of logging. No way to see malicious activity, bad actors, or network congestion. 
 
-4.) No Firewall: You can't secure the traffic with Managed SNAT. You can't control TCP/UDP without rules to configure
+4.) **No Firewall**: You can't secure the traffic with Managed SNAT. You can't control TCP/UDP without rules to configure
 
-Consideration: Use Managed SNAT for POC or workloads that don't have these requirements. 
+**Consideration**: Use Managed SNAT for POC or workloads that don't have these requirements. 
 Recommendation: Use Public IP at the NSX edge for a native, scalable, secure solution 
 
 ## Public IP at the NSX Edge 
 
 This option gives you more flexibility as it can scale up to over thousands of public IP's and can be used down to the tier 1. This means the public IP can sit
-	- At the Virtual Machine
-	- At the Load Balancer 
-	- At a Network Virtual appliance at the NSX Edge
+- At the Virtual Machine
+- At the Load Balancer 
+- At a Network Virtual appliance at the NSX Edge
 
 Which gives you flexibility in your design patterns.
 
@@ -114,7 +116,7 @@ Use ARS to dynamically populate segments from AVS to the Hub network and spokes 
 
 https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha?tabs=cli
 
-### DDOS Protection
+### DDOS Protection (In Progress)
 Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection for the hub and spoke networks
 
 ![wafappgw.png](./images/wafappgw.png)
