@@ -120,3 +120,7 @@ https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/dmz
 Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection for the hub and spoke networks
 
 ![wafappgw.png](./images/wafappgw.png)
+
+## Next Steps
+
+For next steps on how to implement an end-to-end AVS Landing Zone network architecture, head to [Implementation Options](Implementation-Options.md) to review prerequisites and deployment options.
