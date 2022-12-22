@@ -59,9 +59,10 @@ For traffic filtering between on-premises and AVS, consider advertising the defa
 - AVS workloads on the same segment can talk natively to each other
 - AVS workloads across segments communicate by configuring NSX
 - Workloads in different SDDC's can talk using AnyConnect
-- For workload cross-region communication, use Global Reach. See [Multi-Region Connectivity]() 
+- For workload cross-region communication, use Global Reach. 
 
- 
+ For next steps on how to implement multi-regional connectivity, see [Multi-Region Connectivity](../Connectivity-Multi-region/dual-region-hub-spoke.md).
+
 
 
 
