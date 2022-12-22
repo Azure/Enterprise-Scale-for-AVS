@@ -19,7 +19,9 @@ This article will discuss the different tools and servies available to implement
 Lets first look at a basic setup. In AVS, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
 
 Your segments are attached to the default tier 1 router which as a direct path out to the tier-0 edge router. 
+
 ![image.png](./images/vm_segment.png)
+
 In order to access the internet, default route, 0.0.0.0/0 must be configured.
 
 The AVS Portal shows that you have 3 options. 
