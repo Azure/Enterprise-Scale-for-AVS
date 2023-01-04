@@ -12,7 +12,7 @@ The following decision tree shows the various options for landing on a network t
 **Start with the AVS Azure landing zone accelerator:** If your business requirements call for a rich initial implementation of landing zones with fully integrated governance, security, and operations from the start. If you need to, you can modify using Infrastructure-as-Code (IaC) to set up and configure an environment per your requirements. For IaC, your organization will require skills in Azure Resource Manager templates and GitHub.
 
 [!CAUTION]
-> The best practices used for customization will ultimately be aligned with the [Azure landing zone](./index.md). However, there's added investment in time and effort which might be justified to fit specific business requirements.
+The best practices used for customizing will ultimately be aligned with the [Azure landing zone](./index.md). However, there's added investment in time and effort which might be justified to fit specific business requirements.
 
 # Implementation Options 
 
@@ -27,10 +27,7 @@ Below is an automated ways to establish connectivity
 
 For additional options to connect to an existing Azure environment, see the full list of implementation options [here](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/readme.md)
 
-
-
 ## Reference Architectures (Non-functional - Links In Progress) ### 
-
 | Deploy                                                       | Description                                                  | Deploy                                                       | More Info                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | AVS Landing Zone - Hub & Spoke in Azure with Global Reach                          | This example connects AVS to on-premises with Global Reach, and creates a Hub network with  a VNET Gateway and Azure Bastion. Default Route advertisement from AVS .  |[![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-VNet-NewVNet%2FARM%2FVNetWithExR.deploy.json) | [Link](Networking/AVS-to-VNet-NewVNet/readme.md) 
@@ -61,12 +58,10 @@ For traffic filtering between on-premises and AVS, consider advertising the defa
 - AVS workloads on the same segment can talk natively to each other
 - AVS workloads across segments communicate by configuring NSX
 - Workloads in different SDDC's can talk using AnyConnect
-
- 
-
 - For workload cross-region communication, use Global Reach. 
-
+ 
  For next steps on how to implement multi-regional connectivity, see [Multi-Region Connectivity](../Connectivity-Multi-region/dual-region-hub-spoke.md).
+
 
 
 
