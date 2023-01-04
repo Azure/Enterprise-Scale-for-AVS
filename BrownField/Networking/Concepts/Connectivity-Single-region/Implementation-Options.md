@@ -12,7 +12,7 @@ The following decision tree shows the various options for landing on a network t
 **Start with the AVS Azure landing zone accelerator:** If your business requirements call for a rich initial implementation of landing zones with fully integrated governance, security, and operations from the start. If you need to, you can modify using Infrastructure-as-Code (IaC) to set up and configure an environment per your requirements. For IaC, your organization will require skills in Azure Resource Manager templates and GitHub.
 
 [!CAUTION]
-> The best practices used for customization will ultimately be aligned with the [Azure landing zone](./index.md). However, there's added investment in time and effort which might be justified to fit specific business requirements.
+> The best practices used for customizing will ultimately be aligned with the [Azure landing zone](./index.md). However, there's added investment in time and effort which might be justified to fit specific business requirements.
 
 # Implementation Options 
 
@@ -62,6 +62,7 @@ For traffic filtering between on-premises and AVS, consider advertising the defa
 - For workload cross-region communication, use Global Reach. 
 
  For next steps on how to implement multi-regional connectivity, see [Multi-Region Connectivity](../Connectivity-Multi-region/dual-region-hub-spoke.md).
+
 
 
 
