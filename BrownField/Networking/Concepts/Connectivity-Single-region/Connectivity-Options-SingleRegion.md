@@ -23,7 +23,7 @@ One option is to enable the default route from on-premises over a VPN connection
 
 ![transit.png](./images/vpn.png)
 
-Note: Please see VPN bandwidth requirements for Azure VMware Services: https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html
+Note: Please see VPN bandwidth requirements for Azure VMware Services [here] (https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html)
 
 In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure Expressroute circuit. The Expressroute circuit peers with the AVS Managed Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
@@ -36,7 +36,7 @@ This however still is not the most direct, low latent option. The next section e
 If traversing back to on-prem is not a requirement, consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
 ![managedsnat.png](./images/snat.png)
-See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
+See: https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
 ## Limitations
 
@@ -56,7 +56,7 @@ If traversing back to on-prem is not a requirement, consider using Managed SNAT 
 
 ![managedsnat.png](./images/managed_snat.png)
 
-See: https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
+See:  https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
 ### Limitations
 
@@ -141,3 +141,8 @@ Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection 
 ## Next Steps
 
 For next steps on how to implement an end-to-end AVS Landing Zone network architecture, head to [Implementation Options](Implementation-Options.md) to review prerequisites and deployment options.
+
+
+## Additional Documentation
+Design for [Public Internet Access] (https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-design-public-internet-access)
+Azure Landing Zone for VMware [Best Practices] (https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity)
