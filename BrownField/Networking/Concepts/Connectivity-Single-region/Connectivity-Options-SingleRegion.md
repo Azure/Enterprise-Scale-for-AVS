@@ -96,6 +96,8 @@ Enable DDOS protoection
 
 ## Secured VWAN HUB
 
+
+
 Now that simpler use cases for integrating AVS with Azure and enabling workloads to have internet connectivity are covered, here are some ways to integrate WAN and Hub & Spoke topologies. First, lets take the example of a WAN topology. 
 
 ![vwan.png](./images/vwan.png)
@@ -123,6 +125,8 @@ Use VWAN for existing workloads, Hub/Spoke VNET's for Azure traffic, and deploy 
 
 If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecture. If you want all connectivity going through Secured Hub, advertising the default route from Azure Firewall is also an option. 
 
+
+
 ## Hub & Spoke with Next-Gen Firewall 
 
 This architecture uses a centralized hub virtual network in Azure with a network virtual appliance. Consider using this architecture  when an existing internet edge device is already configured in Azure which can extend to provide outbound internet to AVS workloads. 
@@ -144,5 +148,5 @@ For next steps on how to implement an end-to-end AVS Landing Zone network archit
 
 
 ## Additional Documentation
-Design for [Public Internet Access](https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-design-public-internet-access)
-Azure Landing Zone for VMware [Best Practices](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity)
+- Design for [Public Internet Access](https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-design-public-internet-access)
+- Azure Landing Zone for VMware [Best Practices](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity)
