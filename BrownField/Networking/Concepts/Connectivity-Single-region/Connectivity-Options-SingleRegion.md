@@ -23,7 +23,7 @@ One option is to enable the default route from on-premises over a VPN connection
 
 ![transit.png](./images/vpn.png)
 
-Note: Please see VPN bandwidth requirements for Azure VMware Services: ![here](https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html)
+Note: Please see VPN bandwidth requirements for Azure VMware Services: https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html
 
 In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure Expressroute circuit. The Expressroute circuit peers with the AVS Managed Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
@@ -77,10 +77,6 @@ Recommendation: Use Public IP at the NSX edge for a native, scalable, secure sol
 ## Public IP at the NSX Edge 
 
 This option gives you more flexibility as it can scale up to over thousands of public IP's and can be used down to the tier 1. This means the public IP can sit
-
-	- At the Virtual Machine
-	- At the Load Balancer 
-	- At a Network Virtual appliance at the NSX Edge
 
 - At the Virtual Machine
 - At the Load Balancer 
