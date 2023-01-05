@@ -10,18 +10,6 @@ Lets first look at a basic setup. In AVS, you create a segment(s) and under that
 
 Your segments are attached to the default tier 1 router which as a direct path out to the tier-0 edge router. 
 
-![image.png](./images/vm_segment.png)
-
-In order to access the internet, default route, 0.0.0.0/0 must be configured.
-
-The AVS Portal shows that you have 3 options:
-
-![internet_ops.png](./images/internet_ops.png)
-
-One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/expressroute-vpn-support
-
-![transit.png](./images/vpn.png)
-
 
 ![image.png](./images/vm_segment.png)
 
@@ -34,16 +22,18 @@ The AVS Portal shows that you have 3 options:
 One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/expressroute-vpn-support
 
 ![transit.png](./images/vpn.png)
+
+Note: Please see VPN bandwidth requirements for Azure VMware Services: ![here](https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html)
 
 In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure Expressroute circuit. The Expressroute circuit peers with the AVS Managed Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
 ![globalreach.png](./images/gr.png)
 
-This however still is not the most direct, low latent option. 
+This however still is not the most direct, low latent option. The next section explores default route advertisment directly from AVS native services. 
 
 ## Managed SNAT
 
-If traversing back to on-prem is not a requirement. Consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
+If traversing back to on-prem is not a requirement, consider using Managed SNAT directly from AVS itself. As the name suggest, this is an AVS managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
 ![managedsnat.png](./images/snat.png)
 See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
@@ -146,11 +136,6 @@ Use ARS to dynamically populate segments from AVS to the Hub network and spokes 
 
 https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha?tabs=cli
 
-
-### DDOS Protection
-Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection for the hub and spoke networks
-
-![wafappgw.png](./images/wafappgw.png)
 
 ### DDOS Protection (In Progress)
 Consider using WAF w/ App Gateway for Layer 7 communication and DDOS protection for the hub and spoke networks
