@@ -1,27 +1,35 @@
 # Deployment Steps (AZ PowerShell)
 
-1. Clone this repository onto either the Azure Cloud Shell or local machine
-2. Modify the `deploys.ps1` files in each section to define desired parameters, networking, and alert emails
+This code can be deployed in 2 different manners. You can use each folder to deploy each component [individually](#individual-deployment) or you can use a [master](#master-script) `deploys.ps1` to deploy all aspects in one session.
 
-This section is broken down into folders and sections so that you can deploy each piece as needed
+1. Clone this repository onto either the Azure Cloud Shell or local machine  ```git clone git clone <repository-url>```
+2. Update the [variables file](variables/variables.json) to meet you need.
+3. Choose your deployment method, please pick one or the other.
+   1. [Individual component deployment](#individual-deployment) _**OR**_ 
+   2. [Master Script deployment](#master-script)
+4. Run required deploy.ps1 files
 
-1. [Resource Groups](1.resource_group_design)
-2. [Azure VMware Private Cloud](2.private_cloud)
-3. [Networking](3.network-design)
-4. [Jump box](4.jumpbox-design)
-5. [Reporting](05.reporting)
-6. [Addons](06.add-ons)
+## Individual Deployment
 
-Each section is designed to be run as a module with a dependency on the previous module. As a result, variables are several times allowing you close the browser or terminal and find your place again. Each folder has a ***"deploy.ps1"*** file which is the file used to deploy the required code.
+Each folder [Resource Groups](1.resource-group), [Azure VMware Private Cloud](2.private-cloud), [Networking](3.network), [Jumpbox](4.jumpbox), [Reporting](05.reporting), [Addons](06.add-ons) represents a different component that can be deployed. To deploy a component, navigate to the required folder and run the ``deploy.ps1`` file.
 
-[Folder 2 (2.priavte_cloud)](/AVS-Landing-Zone/GreenField/PowerShell/2.private_cloud/) also has a [deployment check.ps1](2.private_cloud/deploymentcheck.ps1) file to help you keep an eye on this deployment as this takes some time.
+Each section is designed to be run as a module with a dependency on the previous module. As a result, variables are several times allowing you close the browser or terminal and find your place again. Each folder has a **``deploy.ps1``** file which is the file used to deploy the required code.
 
-If you know where your Subscription ID and Tenant ID, you can use [this script](login.ps1)
+1. [Resource Group deployment](1.resource-group/deploy.ps1)
+2. [Private Cloud deployment](2.private-cloud/deploy-withjson.ps1)
+3. [Networking deployment](3.network/deploy-withjson.ps1)
+4. [Jumpbox deployment](4.jumpbox/deploy-withjson.ps1)
+
+The [Private Cloud deployment](2.private-cloud/deploy-withjson.ps1) takes some time to complete. A [deployment check.ps1](2.private-cloud/deploymentcheck.ps1) has been included to help you monitor this, the average deployment time for a 3/4 node environment takes between 3 and 4 hours.
+
+## Master Script
+
+### How to get subscription IDs
+
+If you know where your Subscription ID and Tenant ID, you can use this [script](login.ps1)
 If you have multiple subscription(s) or do not know all your IDs, you can use [this script](list_and_connect_to_subscription.ps1)
 
-## File Variables for advanced options
-
-Most, if not all optional elements will have a variable like *$deploy*Technology, for example *$deployVpn*. These are set of **$false** by default and this is by design for cost optimization and deploying only what is actually needed. Please look for these and change as needed.  
+Once you have logged in and are now in the correct Azure Context, use this [script](deploy.ps1) to deploy all aspects.
 
 ## Telemetry Tracking Using Customer Usage Attribution (PID)
 

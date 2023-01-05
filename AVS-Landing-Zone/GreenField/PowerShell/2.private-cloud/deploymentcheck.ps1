@@ -1,8 +1,12 @@
-## TODO hard coded variables for now - need to be removed
+# get variables
+Write-Output "Reading variables"
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
+
+
 ## private cloud variables
-$technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
-$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
+$privateCloud = $variables.PrivateCloud
+$privateCloudRgName = $privateCloud.resourcegroupname
+$privateCloudLocation = $privateCloud.location
 
 ## check for Resource Group and only continue if valid
 $rgCheck = Get-AzResourcegroup -Name $privateCloudRgName -ErrorAction SilentlyContinue
@@ -11,7 +15,7 @@ $rgCheck = Get-AzResourcegroup -Name $privateCloudRgName -ErrorAction SilentlyCo
 if ($null -ne $rgCheck) {
 
     ## private cloud variables
-    $cloudName = "azps_test_cloud"
+    $cloudName = $privateCloud.privatecloudname
 
     ## get private cloud
     $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -Name $cloudName -erroraction silentlycontinue
@@ -37,7 +41,6 @@ if ($null -ne $rgCheck) {
                 $statusMessage = "Provisioning status for $cloudName is : " + $provisioningStatus + " ($timestamp)"
                 Write-Output $statusMessage
                 Start-Sleep -Seconds 300
-                ## TODO add time stamp to output
             }
             "Succeeded"
             {

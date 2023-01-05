@@ -1,0 +1,25 @@
+{
+    "Users": [
+    {
+        "Name": "John Smith",
+        "Age":"35",
+        "City":"San Francisco",
+        "Country":"USA",
+        "UserId":"52917"
+    },
+    {
+        "Name":"Jane Wellington",
+        "Age":"28",
+        "City":"Seattle",
+        "Country":"USA",
+        "UserId":"25589"
+    },
+    {
+        "Name":"Samantha Scott",
+        "Age":"33",
+        "City":"Los Angeles",
+        "Country":"USA",
+        "UserId":"11564"
+    }
+    ]
+}

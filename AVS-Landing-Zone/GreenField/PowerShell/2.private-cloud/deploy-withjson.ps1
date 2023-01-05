@@ -9,6 +9,8 @@
 #                                             #
 ###############################################
 
+## Variables are based upon varibales.json
+#$variables = Get-Content .\AVS-Landing-Zone\GreenField\PowerShell\variables\variables.json | ConvertFrom-Json
 
 ## Do yo have AVS Module installed?
 if (Get-Module -ListAvailable -Name Az.VMware)
@@ -21,17 +23,14 @@ if (Get-Module -ListAvailable -Name Az.VMware)
 
 ## deploying new private cloud
 
-## TODO hard coded variables for now - need to be removed
-$technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
-$privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
-
 ## private cloud variables
-$sku = "av36"
-$networkBlock = "192.168.48.0/22"
-$managementClusterSize = "3"
-$cloudName = "azps_test_cloud"
-$privateCloudLocation = "germanywestcentral"
+$privateCloud = $variables.PrivateCloud
+$sku = $privateCloud.sku
+$networkBlock = $privateCloud.privatecloudnetworkcidr
+$managementClusterSize = $privateCloud.clusternodecount
+$cloudName = $privateCloud.privatecloudname
+$privateCloudLocation = $privateCloud.location
+$privateCloudRgName = $privateCloud.resourcegroupname
 
 $cluster = @{
     Name = $cloudName
@@ -42,13 +41,23 @@ $cluster = @{
     Location = $privateCloudLocation
 }
 
-## Azure private Cloud deployment deployment
-$cluster = New-AzVMwarePrivateCloud @cluster
+## check to see if private cloud exists, if it does - STOP!!!
+$check = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName -PrivateCloudName $cloudName -errorAction SilentlyContinue
 
-$deploySRM = $true
-if ($deploySRM) {
+## Azure private Cloud deployment deployment
+if ($null -eq $check){
+    $cluster = New-AzVMwarePrivateCloud @cluster
+}else { 
+    $message = "Private Cloud: " + $cloudName + " already exists - exiting to prevent overwriting / damaging existing deployment"
+    write-output $message
+    break }
+
+$srmSettings = $variables.PrivateCloud.addons.addon | Where-Object {$_.id -eq "SRM"}
+
+$deploySRM = $srmSettings.enable
+if ($deploySRM -eq "true") {
     ## update SRM Key
-    $srmKey = ""
+    $srmKey = $srmSettings.key
 
     ## Checking if key is set
     if ($srmKey -eq "")
@@ -68,8 +77,8 @@ if ($deploySRM) {
     New-AzVMwareAddon -PrivateCloudName $cloudName -ResourceGroupName $privateCloudRgName -Property $vrsProperties
 }
 
-$deployHCX = $true
-if ($deployHCX) {
-    ## TODO - try find equivalent PS code
+$hcxSettings = $variables.PrivateCloud.addons.addon | Where-Object {$_.id -eq "HCX"}
+$deployHCX = $hcxSettings.enable
+if ($deployHCX -eq "true") {
     az vmware addon hcx create --resource-group $privateCloudRgName --private-cloud $cloudName --offer "VMware MaaS Cloud Provider"
 }

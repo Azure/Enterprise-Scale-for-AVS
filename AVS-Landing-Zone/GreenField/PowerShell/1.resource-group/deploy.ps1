@@ -9,6 +9,32 @@
 #                                                #
 ##################################################
 
+
+
+## resource group variables
+## Define location for resource groups
+$technology = "avs"
+$resourceGroupLocation = "germanywestcentral"
+
+## Define resource groups
+$resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$technology-$resourceGroupLocation-networking_rg","$technology-$resourceGroupLocation-operational_rg","$technology-$resourceGroupLocation-jumpbox_rg"
+
+## Define tags to be used if needed
+## other examples - to add technology, simply add $owner to the tags
+# $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"; "Onwer"="flkelly"}
+## tags can be modified to suit your needs, another example below.
+$tags = @{"Environment"="Development";"Owner"="Fletcher Kelly";"CanBeDeleted"="True";"DeploymentMethod"="PowerShell"}
+
+## create a loop to create resource groups
+foreach ($resourceGroup in $resourceGroups) {
+  ## Create resource group
+  $resourceGroupName = $resourceGroup
+  $rg = New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
+  $resourceGropupMessage = "Resource group " + $resourceGroupName + " created successfully"
+  Write-Output $resourceGropupMessage
+}
+
+
 ## Important link around azure-partner-customer-usage-attribution
 ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
 
@@ -27,31 +53,4 @@ if ($telemetry) {
     [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent($telemetryId)
 } else {
     Write-Host "Telemetry disabled"
-}
-
-## resource group variables
-## Define location for resource groups
-$technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
-
-## Define resource groups
-$resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$technology-$resourceGroupLocation-networking_rg","$technology-$resourceGroupLocation-operational_rg","$technology-$resourceGroupLocation-jumpbox_rg"
-
-## Define tags to be used if needed
-<<<<<<< HEAD
-## other examples - to add technology, simply add $owner to the tags
-# $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"; "Onwer"="flkelly"}
-=======
-## tags can be modified to suit your needs, another example below.
-#$tags = @{"Environment"="Development";"Owner"="Fletcher Kelly";"CostCenter"="123456"}
->>>>>>> 3fa3b89ea39bf5a7241e6ff266396191f8e92257
-$tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"}
-
-## create a loop to create resource groups
-foreach ($resourceGroup in $resourceGroups) {
-  ## Create resource group
-  $resourceGroupName = $resourceGroup
-  $rg = New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation -Tag $tags
-  $resourceGropupMessage = "Resource group " + $resourceGroupName + " created successfully"
-  Write-Output $resourceGropupMessage
 }
