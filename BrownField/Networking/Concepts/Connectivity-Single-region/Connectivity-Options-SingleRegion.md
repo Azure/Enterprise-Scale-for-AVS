@@ -18,7 +18,7 @@ The AVS Portal shows that you have 3 options:
 
 ![internet_ops.png](./images/internet_ops.png)
 
-One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to Expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/Expressroute-vpn-support
+One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS ExpressRoute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to ExpressRoute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/Expressroute-vpn-support
 
 ![transit.png](./images/vpn.png)
 
@@ -31,11 +31,11 @@ The AVS Portal shows that you have 3 options:
 
 ![internet_ops.png](./images/internet_ops.png)
 
-One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS Expressroute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to Expressroute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/Expressroute-vpn-support
+One option is to enable the default route from on-premises over a VPN connection. In this scenario, you enable the first option to configure your own default route from on-premises, and have the vpn gateway terminate in an Azure vnet. That same vnet will also have the AVS ExpressRoute circuit gateway as seen below. From there, enable Azure Route Server to dynamically transit from the vpn to ExpressRoute. This is done by enabling Branch to Branch. See: https://learn.microsoft.com/en-us/azure/route-server/Expressroute-vpn-support
 
 ![transit.png](./images/vpn.png)
 
-In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure Expressroute circuit. The Expressroute circuit peers with the AVS Managed Expressroute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
+In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure ExpressRoute circuit. The ExpressRoute circuit peers with the AVS Managed ExpressRoute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
 ![globalreach.png](./images/gr.png)
 
