@@ -79,7 +79,8 @@ _For this example, we have pushed straight to the main branch, but you do have t
 
 - Choose "Existing Azure Pipelines YAML file", and from the drop down select the `/avs-pipeline.yml` file. Click continue.
 
-- Before running the pipeline we need to add a secret variable for the jumpbox password. Select the Variables button in the top right, click "add a new variable", and add a new variable named `JumpboxPassword`. Select the "Keep this value secret" option before clicking ok. Click Save.
+- Before running the pipeline we need to add a secret variable for the jumpbox password. Select the Variables button in the top right, click "add a new variable", and add a new variable named `JumpboxPassword`. Select the "Keep this value secret" option before clicking ok. Click Save.  
+__Important: You will need ensure this password meets the [minimum requirements for VM passwords](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/faq#what-are-the-password-requirements-when-creating-a-vm-)__  
 _If you are not deploying a jumpbox as part of this process, you can either skip this step and remove the jumpboxPassword parameter from the pipeline yml file or configure it with a blank value._
 
 - In the top right corner, select click "Run" to create the pipeline and kick off execution. If you want to save the pipeline but not run it, use the drop-down next to Run and select Save.
