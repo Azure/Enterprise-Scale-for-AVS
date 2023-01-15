@@ -54,7 +54,7 @@ _The JumpboxPassword can be removed from this file, as we will be passing it in 
 - Create a file named `avs-pipeline.yml` in the root of your and copy in the contents of the [avs-pipeline.yml](./avs-pipeline.yml) found with this guide. This will be used for our pipeline definition, providing a simple starting point. You can modify this pipeline for multiple environments and staged deployments as required.
 
 - Within the `avs-pipeline.yml` file, modify the following values:
-  - `azurServiceConnectionName` - This should be set to match the name of service connection setup as part of the prerequisites.
+  - `azureServiceConnectionName` - This should be set to match the name of service connection setup as part of the prerequisites.
   - `location` - This should be modified to match the region you wish to deploy to.
   - `pool: name` - This should be modified to match the build agent pool you wish to use for deployment.
   - `environment` - This should be modified to represent the name of the enviroment you are deploying to, this will be used to add a deployment gate.

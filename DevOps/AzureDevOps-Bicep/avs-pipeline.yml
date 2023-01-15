@@ -8,7 +8,7 @@ variables:
   environment: 'AVS-Production'
   paramFile: 'ESLZDeploy.parameters.json'
   location: 'SoutheastAsia'
-  azurServiceConnectionName: 'Service Name(0000-0000-0000-0000-0000)'
+  azureServiceConnectionName: 'Service Name(0000-0000-0000-0000-0000)'
   artifactName: 'ESLZDeploy'
 
 stages:
@@ -18,7 +18,7 @@ stages:
     steps:
     - task: AzureCLI@2
       inputs:
-        azureSubscription: $(azurServiceConnectionName)
+        azureSubscription: $(azureServiceConnectionName)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az bicep build -f ./ESLZDeploy.bicep --outfile $(Build.ArtifactStagingDirectory)/ESLZDeploy.json'
@@ -48,7 +48,7 @@ stages:
             artifact: $(artifactName)
           - task: AzureCLI@2
             inputs:
-              azureSubscription: $(azurServiceConnectionName)
+              azureSubscription: $(azureServiceConnectionName)
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: 'az deployment sub create -n ${{ variables.deploymentName }} -l $(location) -f ${{ variables.templateFilePath }} -p "${{ variables.paramFilePath }}" ${{ variables.parameterOverride }}'
