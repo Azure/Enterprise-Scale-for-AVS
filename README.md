@@ -13,6 +13,10 @@
 
 Welcome to the Enterprise Scale for Azure VMware Solution (AVS) repository
 
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Average time to resolve an issue")
+
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Percentage of issues still open")
+
 Enterprise-scale is an architectural approach and a reference implementation that enables effective construction and operationalization of landing zones on Azure, at scale. This approach aligns with the Azure roadmap and the Cloud Adoption Framework for Azure.
 
 Enterprise-scale for AVS represents the strategic design path and target technical state for an Azure VMware Solution (AVS) deployment. This solution provides an architectural approach and reference implementation to prepare landing zone subscriptions for a scalable Azure VMware Solution (AVS) cluster. For the architectural guidance, check out [Enterprise-scale for AVS in Microsoft Docs](https://docs.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/enterprise-scale-landing-zone).
