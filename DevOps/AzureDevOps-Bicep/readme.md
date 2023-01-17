@@ -41,7 +41,7 @@ Before you begin, you'll require:
 - Using the same process as above, clone the Enterprise Scale for AVS repository to your local computer.  
 _For this process we will be using the Greenfield Bicep templates that come as part of Enterprise Scale for AVS, but this same process can also be applied to the Terraform or ARM template folder if desired._  
 
-- Navigate to the [AVS-LandingZone/GreenField/Bicep](../../AVS-Landing-Zone/GreenField/Bicep/) folder and copy all of the files within into the repository you cloned in Step 1. These files should be at the root of the Repo. _(Note: if you change the path of these files, you will need to update the pipeline.)_  
+- Navigate to the [AVS-LandingZone/GreenField/Bicep](../../AVS-Landing-Zone/GreenField/Bicep/) folder and copy all of the files within into the repository you cloned in Step 1. These files should be at the root of the repository. _(Note: if you change the path of these files, you will need to update the pipeline.)_  
 _By default, the template comes with an example parameters file. You have the option to either pass in the configuration within the Pipeline YAML file or check in the parameters as a separate file. For this guide we will be creating a development parameters file, but this process can be repeated for test and production, or alternative regions, allowing a single template to be deployed to multiple environments or regions._
 
 - Fill in the parameters file (`ESLZDeploy.parameters.json`) to match your desired configuration, making sure that the address space you define for the Private Cloud and other networks does not overlap with existing networks in Azure or on-premises.
@@ -51,7 +51,7 @@ _The JumpboxPassword can be removed from this file, as we will be passing it in 
 
 ## Step 3 – Building the pipeline
 
-- Create a file named `avs-pipeline.yml` in the root of your and copy in the contents of the [avs-pipeline.yml](./avs-pipeline.yml) found with this guide. This will be used for our pipeline definition, providing a simple starting point. You can modify this pipeline for multiple environments and staged deployments as required.
+- Create a file named `avs-pipeline.yml` within your repository and copy in the contents of the [avs-pipeline.yml](./avs-pipeline.yml) found with this guide. This will be used for our pipeline definition, providing a simple starting point. You can modify this pipeline for multiple environments and staged deployments as required.
 
 - Within the `avs-pipeline.yml` file, modify the following values:
   - `azureServiceConnectionName` - This should be set to match the name of service connection setup as part of the prerequisites.
@@ -62,7 +62,7 @@ _The JumpboxPassword can be removed from this file, as we will be passing it in 
 - Once completed, ensure the files are saved and push all changes via your Git client. It is recommended to check within Azure DevOps to ensure the files have successfully been pushed.
 _For this example, we have pushed straight to the main branch, but you do have the option to push to a feature branch and then merge changes in via Pull Requests._
 
-## Step 5 – Creating the environment
+## Step4 – Creating the environment
 
 - Navigate to the "Environments" section under "Pipelines" within Azure DevOps
 
@@ -72,7 +72,7 @@ _For this example, we have pushed straight to the main branch, but you do have t
   - Click the 3 dots in the top right corner and select "Approvals and checks". 
   - From this menu you can add an "Approvals" gate, allowing you to define who should control if a deployment should be released to this environments.
 
-## Step 6 – Creating the pipeline
+## Step 5 – Creating the pipeline
 - Navigate to the "Pipelines" section within Azure DevOps and select "New pipeline"
 
 - Select "Azure Repos Git" as the code source, select the repository you created in Step 1.
