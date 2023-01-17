@@ -76,19 +76,19 @@ Which gives you flexibility in your design patterns.
 
 Now that simpler use cases for integrating Azure VMware Solution with Azure and enabling workloads to have internet connectivity are covered, here are some ways to integrate WAN and Hub & Spoke topologies. First, lets take the example of a WAN topology. 
 
-![vWAN.png](./images/vWAN.png)
+![vWAN.png](./images/vwan.png)
 
 A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution then becomes another spoke off that design and will integrate with the Secure vWAN Hub because it speaks BGP. 
 Existing vnets in Azure will not be able to peer directly to the vWAN hub, so in order to communicate securely between Azure VMware Solution and workloads, create a Hub vNet where you can deploy the Azure Firewall. 
 
-![vWANarch.png](./images/vWANarch.png)
+![vWANarch.png](./images/vwanarch.png)
 
 In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out the internet, you will need to do two things:
 
 	1) Enable WAF/App GW in the hub vnet
 	2) Enable a Network virtual appliance 
 
-![vWANandwaf.png](./images/vWANandwaf.png)
+![vWANandwaf.png](./images/vwanandwaf.png)
 
 In the diagram above, Layer 7 can occur either with the NSX-T Data Center loadbalancer or using the WAF/App Gateway in Azure.
 
