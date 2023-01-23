@@ -14,6 +14,8 @@ Your segments are attached to the default tier-1 gateway which as a direct path 
 
 In order to access the internet, a default route, 0.0.0.0/0 must be configured.
 
+test
+
 The Azure VMware Solution Portal shows that you have 3 options:
 
 ![internet_ops.png](./images/internet_ops.png)
