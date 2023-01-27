@@ -1,14 +1,14 @@
 # Single Region Connectivity Guidance
 
 * [Overview](Connectivity-Options-SingleRegion.md#overview)
-* [Internet Breakout from On-Premises]([./Community-Calls](https://github.com/sblair01/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Concepts/Connectivity-Single-region/Connectivity-Options-SingleRegion.md#default-route-advertisement-from-on-premises))
-* [Internet Breakout - AVS Native ](./FAQ)
- * [Managed SNAT](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Concepts/Connectivity-Single-region/Connectivity-Options-SingleRegion.md#managed-snat)
- * [Public IP](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Concepts/Connectivity-Single-region/Connectivity-Options-SingleRegion.md#managed-snat))
-* [Internet Breakout - Azure Native ](./ALZ-Architecture)
-  * [Secured VWAN Hub](./ALZ-Policies)
-  * [Hub & Spoke VNET's](./What-is-Enterprise-Scale#what-is-enterprise-scale-reference-implementation)
-  * [Pricing](./What-is-Enterprise-Scale#pricing)
+* [Internet Breakout - On-Premises](Connectivity-Options-SingleRegion.md#default-route-advertisement-from-on-premises)
+* [Internet Breakout - AVS Native ]()
+  * [Managed SNAT](Connectivity-Options-SingleRegion.md#managed-snat)
+  * [Public IP](Connectivity-Options-SingleRegion.md#public-ip-at-the-nsx-t-data-center-edge)
+* [Internet Breakout - Azure Native ]()
+  * [Secured VWAN Hub](onnectivity-Options-SingleRegion.md#secured-vwan-hub)
+  * [Hub & Spoke VNET's](Connectivity-Options-SingleRegion.md#hub--spoke-with-next-gen-firewall)
+
 
 ## Overview 
 
@@ -16,7 +16,7 @@ Azure VMware Solution has many options for connectivity. This includes Azure VMw
 
 This article will discuss the different tools and servies available to implement internet traffic from Azure VMware Solution in a hybrid environment consisting of the Azure VMware Solution private cloud, Azure, and an On-premises data center. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
 
-## Default Route Advertisement from On-Premises 
+## Internet Breakout -  On-Premises 
 
 
 Lets first look at a basic setup. In Azure VMware Solution, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
