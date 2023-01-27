@@ -6,7 +6,7 @@
   * [Managed SNAT](Connectivity-Options-SingleRegion.md#managed-snat)
   * [Public IP](Connectivity-Options-SingleRegion.md#public-ip-at-the-nsx-t-data-center-edge)
 * [Internet Breakout - Azure Native ]()
-  * [Secured VWAN Hub](onnectivity-Options-SingleRegion.md#secured-vwan-hub)
+  * [Secured VWAN Hub](Connectivity-Options-SingleRegion.md#secured-vwan-hub)
   * [Hub & Spoke VNET's](Connectivity-Options-SingleRegion.md#hub--spoke-with-next-gen-firewall)
 
 
