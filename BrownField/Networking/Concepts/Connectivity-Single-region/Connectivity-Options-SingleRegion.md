@@ -1,11 +1,22 @@
-# Introduction
+# Single Region Connectivity Guidance
+
+* [What's New?](./Whats-new)
+* [Community Calls](./Community-Calls)
+* [Frequently Asked Questions (FAQ)](./FAQ)
+* [Known issues](./ALZ-Known-Issues)
+* [What is Enterprise-Scale](./What-is-Enterprise-Scale)
+  * [Architecture](./ALZ-Architecture)
+  * [Policies](./ALZ-Policies)
+  * [What is the reference implementation?](./What-is-Enterprise-Scale#what-is-enterprise-scale-reference-implementation)
+  * [Pricing](./What-is-Enterprise-Scale#pricing)
 
 Azure VMware Solution has many options for connectivity. This includes Azure VMware Solution native services like Managed SNAT, Public IP, and Azure native services such as Azure vWAN Hub and Azure Firewall for default route advertisement. Traversing back to on-premises is also an option for establishing internet connectivity from the Azure VMware Solution. 
 
 This article will discuss the different tools and servies available to implement internet traffic from Azure VMware Solution in a hybrid environment consisting of the Azure VMware Solution private cloud, Azure, and an On-premises data center. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
 
+## Default Route Advertisement from On-Premises 
 
-## Default Route from On-Premises
+
 Lets first look at a basic setup. In Azure VMware Solution, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
 
 Your segments are attached to the default tier-1 gateway which as a direct path out to the tier-0 edge gateway. 
