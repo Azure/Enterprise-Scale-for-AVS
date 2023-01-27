@@ -112,6 +112,10 @@ Use vWAN for existing workloads, Hub/Spoke vNets for Azure traffic, and deploy P
 
 If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecture. If you want all connectivity going through a Secured Hub, advertising the default route from Azure Firewall is also an option. 
 
+### Deploy Azure VWAN
+
+Get started with deploying Azure vWAN [here](Implementation-Options.md#reference-architectures-non-functional---links-in-progress)
+
 ## Hub & Spoke with Next-Gen Firewall 
 
 This architecture uses a centralized hub virtual network in Azure with a network virtual appliance. Consider using this architecture  when an existing internet edge device is already configured in Azure which can extend to provide outbound internet to Azure VMware Solution workloads. 
