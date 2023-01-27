@@ -1,6 +1,6 @@
 # Single Region Connectivity Guidance
 
-* [Overview](./Whats-new)
+* [Overview](#Overview]
 * [Internet Breakout from On-Premises]([./Community-Calls](https://github.com/sblair01/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Concepts/Connectivity-Single-region/Connectivity-Options-SingleRegion.md#default-route-advertisement-from-on-premises))
 * [Internet Breakout - AVS Native ](./FAQ)
  * [Managed SNAT](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/Networking/Concepts/Connectivity-Single-region/Connectivity-Options-SingleRegion.md#managed-snat)
@@ -9,6 +9,8 @@
   * [Secured VWAN Hub](./ALZ-Policies)
   * [Hub & Spoke VNET's](./What-is-Enterprise-Scale#what-is-enterprise-scale-reference-implementation)
   * [Pricing](./What-is-Enterprise-Scale#pricing)
+
+## Overview 
 
 Azure VMware Solution has many options for connectivity. This includes Azure VMware Solution native services like Managed SNAT, Public IP, and Azure native services such as Azure vWAN Hub and Azure Firewall for default route advertisement. Traversing back to on-premises is also an option for establishing internet connectivity from the Azure VMware Solution. 
 
