@@ -1,5 +1,5 @@
 # Azure VMWare Solution: VPN GW to ExpressRoute GW Transitivity
-![image](./images/vpn-er-gw-hub.png.png)
+![image](./images/vpn-er-gw-hub.png)
 
 ## Description
 This design scenario is only intended for customers who do not have ExpressRoute and only use a Site to Site VPN connection back to Azure. AVS only uses an Azure managed ExpressRoute to connect back to Azure. This is a step-by-step guide on how to connect On-Premise to the AVS private cloud transiting a Site to Site VPN to an AVS managed ExpressRoute and vice versa.
@@ -20,7 +20,7 @@ https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gate
 - Please create a new Second Public IP address that will be assigned to the secondary VPN GW.	
 - Click Save 
 - Do not move onto the next step until Active-Active mode configuration has completed. This change can take up to 45 minutes to complete. 
-![image](./images/vpn-er-gw-hub.png)
+![image](./images/vnet-gw-config.png)
 		
 ## Step 3: Create RouteServerSubnet for Azure Route Server
 Create a subnet with the exact name of RouteServerSubnet. The minimum size of this subnet needs to be a /27. 
@@ -48,7 +48,7 @@ https://learn.microsoft.com/en-us/azure/route-server/quickstart-configure-route-
 - Click "Configure BGP"
 - Do not change the default VPN GW BGP AS 65515
 - Click Save
-![image](./images/bgp_config.png)
+![image](./images/bgp_vpn.png)
 
 ## Step 7: Configure BGP on Local Network Gateway
 - Local Network Gateway and click Yes "Configure BGP Settings"
