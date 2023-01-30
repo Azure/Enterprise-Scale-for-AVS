@@ -1,12 +1,9 @@
 # Network considerations for AVS dual-region deployments
 
 ## Introduction
-This article describes how to configure network connectivity when AVS (Azure VMware Solution) private clouds are deployed in two Azure regions, for disaster resilience purposes. In case of partial or complete regional outages, the network topology presented here allows the surviving components (AVS private clouds, Azure-native resources, on-prem sites) to maintain connectivity with each other and with the internet.
+This article describes how to configure network connectivity when AVS (Azure VMware Solution) private clouds are deployed in two Azure regions, for disaster resilience purposes. In case of partial or complete regional outages, the network topology presented here allows the surviving components (AVS private clouds, Azure-native resources, on-prem sites) to maintain connectivity with each other and with the internet. 
 
-The dual-region setup to which this article applies is described in the section “Dual-region reference architecture”, which sets the context for the following sections. The section “AVS cross-region connectivity” covers how to enable the two AVS private clouds to route traffic to each other. The section “Hybrid connectivity” covers how to connect the AVS private clouds to on-prem sites, using Expressroute circuits. The section “Azure Virtual Networks connectivity” covers how to connect AVS private clouds and Virtual Networks across the two regions. The section “Internet connectivity” covers resilient internet access for AVS private clouds and how to control cross-region propagation of default routes announced to AVS by NVAs in Azure VNets.
-
-## Dual-region reference architecture
-This article focuses on a typical dual-region scenario, shown in Figure 1 below. It assumes that:
+This article focuses on a typical dual-region scenario, shown in Figure 1 below:
 - An Azure hub and spoke network exists in each region.
 - A disaster-resilient configuration for Expressroute (two circuits in two different peering locations, with each circuit connected to hub VNets in both regions) has been deployed. The guidance provided in the following sections stays the same in case [fall-back VPN connectivity](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-coexist-resource-manager#configure-a-site-to-site-vpn-as-a-failover-path-for-expressroute) is configured.
 - An AVS private cloud has been deployed in each region.
@@ -14,8 +11,14 @@ This article focuses on a typical dual-region scenario, shown in Figure 1 below.
 ![figure1](media/dual-region-fig1.png) 
 *Figure 1. Dual-region scenario. This article discusses options for connecting AVS private clouds to Azure VNets, on-prem sites and the internet in such a way that, in case of partial or complete regional disasters, the surviving components (AVS private clouds, Azure-native resources, on-prem sites) to maintain connectivity with each other and the internet.*
 
-In the scenario of Figure 1, a global VNet peering connection between the two regional hubs is shown. While not strictly required (traffic between Azure VNets in the two regions could be routed over Expressroute connections), this configuration is strongly recommended. Private Peering minimizes latency and maximizes throughput, as it removes the need to hairpin traffic through the Expressroute meet-me edge routers. 
-It should be noted that many of concepts discussed in the context of the dual-region scenario can be extrapolated to more complex cases with AVS private clouds deployed in more than two regions.
+> [!NOTE]
+> In the reference scenario of Figure 1, the two regional hub VNets are connected via global VNet peering. While not strictly required (traffic between Azure VNets in the two regions could be routed over Expressroute connections), this configuration is strongly recommended. Private Peering minimizes latency and maximizes throughput, as it removes the need to hairpin traffic through the Expressroute meet-me edge routers. 
+
+The next sections describe the AVS network configuration that is required to enable, in the reference dual-region scenario, the following commuication patterns:
+- AVS to AVS (covered in the section "AVS cross-region connectivity");
+- AVS to on-prem sites connected over ExpressRoute (covered in the section "Hybrid connectivity");
+- AVS to Azure Virtual Networks (covered in the section "Azure Virtual Networks connectivity");
+- AVS to internet (covered in the section "Internet connectivity").
 
 ## AVS cross-region connectivity
 When multiple AVS private clouds exist, layer-3 connectivity among them is often a requirement, for example to support data replication. 
