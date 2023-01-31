@@ -23,11 +23,13 @@ Below is an automated method to establish connectivity
 
 For additional options to connect to an existing Azure environment, see the full list of implementation options [here](https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/BrownField/readme.md)
 
+
 ## Reference Architectures (Links In Progress) ### 
 | Quick Deploy                                                       | Description                                                  | Deploy                                                       | How To Guides                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
  | Azure VMware Solution Landing Zone - Secured vWAN Hub in Azure   | Transitivity from Azure VMware Solution to on-premises via Global Reach. Default route advertisement from Secured vWAN Hub with Azure Firewall | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://github.com/sblair01/Enterprise-Scale-for-AVS/tree/main/terraform/scenarios/avs_greenfield_new_vwan_secure_hub_with_vpn_and_expressroute) | [Link](../../Step-By-Step-Guides/Scenario-1/readme.md) | Azure VMware Solution Landing Zone - Hub & Spoke in Azure with Global Reach                          | This example connects Azure VMware Solution to on-premises with Global Reach, and creates a Hub network with  a VNET Gateway and Azure Bastion. Default Route advertisement from Azure VMware Solution.  |[![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-VNet-NewVNet%2FARM%2FVNetWithExR.deploy.json) | [Link](Networking/AVS-to-VNet-NewVNet/readme.md) 
 | Azure VMware Solution Landing Zone - Hub & Spoke in Azure with VPN transitivity| This example will connect Azure VMware Solution private cloud to on-premises by connecting Azure VMware Solution ExpressRoute Gateway to on-premises VPN with Azure Route Server. Enables connectivity from Azure VMware Solution | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FNetworking%2FAVS-to-OnPremises-ExpressRoute-GlobalReach%2FARM%2FAVSGlobalReach.deploy.json) | [Link](../../Step-By-Step-Guides/Hub%20VNET%20with%20VPN%20to%20ExpressRoute%20Gateway%20transit) |
+
 
 ## Additional Traffic Patterns
 ### Default Route Advertisement in Azure
