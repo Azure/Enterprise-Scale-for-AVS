@@ -21,7 +21,7 @@ This can be achieved by injecting a 3rd party firewall for North-South (and East
 
 The firewall could be any NVA device from any vendor of choice. In this case, we are using Ubuntu Linux based NVA as a firewall appliance to inspect traffic.
 
-_Note: This architecture doesn't cater for inspecting intra isolated Tier-1 gateway traffictgv5._
+_Note: This architecture doesn't cater for inspecting intra isolated Tier-1 gateway traffic._
 
 
 ## Prerequisites
@@ -71,7 +71,7 @@ Source NAT'ting on the following patterns can be performed at different layers. 
 2. Source NAT on NVA/firewall.
    1. In this scenario default Tier-1 gateway has static routes for the source NAT'ted virtual IP of the NVA. This is the scenario we are going to discuss in this document.
 
-###### Security pattern ##1
+##### Security pattern #1
 
 **Description** :
 
@@ -95,7 +95,7 @@ _Figure 1.0: The above figure shows an example of AVS environment with default N
 
 _Figure 1.1: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web, and DB) and transit segment (default Tier-1 gateway). Source NAT'ting is done on the NVA._
 
-###### Security pattern #2
+##### Security pattern #2
 
 **Description:**
 
@@ -373,7 +373,7 @@ In this section you will create static routes from isolated Tier-1 gateways to f
    1. Enter "default01" as the name.
    2. Enter "0.0.0.0/1" as the network.
    3. Click on "Next Hops" to add one. ![t1-static-route06](../nsx-firewall-patterns/assets/t1-static-route07.jpg)
-6. Set Virtual NVA IP Address as the next hop and set the scope to the segments attached to this Tier-1 gateway. ![t1-static-route07](../nsx-firewall-patterns/assets/t1-static-route08.jpg)
+6. Set Virtual NVA IP Address as the next hop. ![t1-static-route07](../nsx-firewall-patterns/assets/t1-static-route08.jpg)
 7. Save the changes.
 8. Create one more default route like above. This time replace name with "default02" and network with "128.0.0.0/1". Save the configuration.
 9. Final static routes should look like below: ![t1-static-route09](../nsx-firewall-patterns/assets/t1-static-route09.jpg)
