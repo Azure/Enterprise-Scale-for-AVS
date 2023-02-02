@@ -16,7 +16,8 @@ $networking = $variables.Networking
 $deployHuabAndSpoke = $networking.hubAndSpoke.deploy
 if ($deployHuabAndSpoke -eq "true") {
     Write-Output "Deploying Hub and Spoke"
-    . .\3.network\hub-and-spoke\deploy-withjson.ps1
+    #. .\3.network\hub-and-spoke\deploy-withjson.ps1
+    .\hub-and-spoke\deploy-withjson.ps1
 } else {
     write-Output "Skipping Hub and Spoke"
 }
@@ -25,7 +26,8 @@ if ($deployHuabAndSpoke -eq "true") {
 $deployVirtualWan = $networking.virtualWan.deploy
 if ($deployVirtualWan -eq "true") {
     Write-Output "Deploying Virtual Wan"
-    . .\3.network\virtual-wan\deploy-withjson.ps1
+    #. .\3.network\virtual-wan\deploy-withjson.ps1
+    .\virtual-wan\deploy-withjson.ps1
 } else {
     write-Output "Skipping Virtual Wan"
 }
