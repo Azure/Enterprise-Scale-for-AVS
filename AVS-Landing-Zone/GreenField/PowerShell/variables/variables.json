@@ -1,0 +1,213 @@
+{
+    "ResourceGroups": [
+    {
+        "id": "NetworkingResourceGroup",
+        "prefix": "fk-avs",
+        "location":"southeastasia",
+        "name": "fk-avs-southeastasia-networking-rg"
+    },
+    {
+        "id": "PrivateCloudResourceGroup",
+        "prefix": "fk-avs",
+        "location":"southeastasia",
+        "name": "fk-avs-southeastasia-private-cloud-rg"
+    },
+    {
+        "id": "OperationalResourceGroup",
+        "prefix": "fk-avs",
+        "location":"southeastasia",
+        "name": "fk-avs-southeastasia-operational-rg"
+    },
+    {
+        "id": "JumpboxResourceGroup",
+        "prefix": "fk-avs",
+        "location":"southeastasia",
+        "name": "fk-avs-southeastasia-jumpbox-rg"
+    }
+    ],
+    "PrivateCloud": 
+    {
+        "id": "PrivateCloud",
+        "prefix": "fk-avs",
+        "location":"southeastasia",
+        "resourcegroupname": "fk-avs-southeastasia-private-cloud-rg",
+        "sku": "av36",
+        "privatecloudnetworkcidr": "192.168.48.0/22",
+        "clusternodecount": "3",
+        "privatecloudname": "fk-avs-fta-sea",
+        "addons" : 
+        {
+            "addon":
+            [
+                {
+                    "id": "SRM",
+                    "enable": "false",  
+                    "key": ""  
+                },
+                {
+                    "id": "HCX",
+                    "enable": "false"
+                }
+            ]
+        },
+        "expressrouteauthorization": 
+        {
+            "id": "expressrouteauthorization",
+            "name": "fk-avs-southeastasia-exr-authorization-1",
+            "connectionname": "fk-avs-southeastasia-exr-connection-1"
+        }
+    },
+    "Networking": 
+    {
+        "hubAndSpoke":{
+            "id": "hubAndSpoke",
+            "deploy": "true",
+            "prefix": "fk-avs",
+            "location":"southeastasia",
+            "resourcegroupname": "fk-avs-southeastasia-networking-rg",
+            "hubvnetname": "fk-avs-hub-vnet",
+            "hubvnetcidr": "10.0.0.0/16",
+            "subnets": {
+                "frontend":
+                    {
+                        "id": "frontend-subnet",
+                        "name": "frontend",
+                        "cidr": "10.0.1.0/26"
+                    },
+                "azurebastion":
+                    {
+                        "id": "azurebastion-subnet",
+                        "name": "AzureBastionSubnet",
+                        "cidr": "10.0.1.64/26"
+                    },
+                "gateway":
+                    {
+                        "id": "gateway-subnet",
+                        "name": "GatewaySubnet",
+                        "cidr": "10.0.1.128/26"
+                    }
+            },
+            "vpndeploy": {
+                "deploy": "true",
+                "vpngateway": {
+                    "id": "vpngateway",
+                    "name": "fk-avs-southeastasia-vpn-gateway",
+                    "gatewaytype": "Vpn",
+                    "vpnType": "RouteBased",
+                    "sku": "VpnGw1Az",
+                    "asn": "65515",
+                    "configname": "fk-avs-southeastasia-vpn-config",
+                    "enablebgp": "$true",
+                    "publicips": {
+                        "pip1": {
+                            "id": "pip1",
+                            "name": "fk-avs-southeastasia-vpn-pip1",
+                            "configname": "fk-avs-southeastasia-vpn-pip1-config",
+                            "sku": "Standard",
+                            "pipallocationmethod": "Static",
+                            "Ipaddressversion": "IPv4"
+                        },
+                        "pip2": {
+                            "id": "pip2",
+                            "name": "fk-avs-southeastasia-vpn-pip12",
+                            "configname": "fk-avs-southeastasia-vpn-pip2-config",
+                            "sku": "Standard",
+                            "pipallocationmethod": "Static",
+                            "Ipaddressversion": "IPv4"
+                        }
+                    },
+                    "subnets": {
+                        "RouteServerSubnet":
+                        {
+                            "id": "RouteServerSubnet",
+                            "name": "RouteServerSubnet",
+                            "cidr": "10.0.2.0/26"
+                        }
+                    },
+                    "azurerouteserver": {
+                        "name" : "fk-avs-southeastasia-azurerouteserver",
+                        "pip" : {
+                            "id": "arspip",
+                            "name": "fk-avs-southeastasia-vpn-ars-pip1",
+                            "sku": "Standard",
+                            "pipallocationmethod": "Static",
+                            "ipaddressversion": "IPv4"
+                        }
+                    }
+                }
+            },
+            "virtualnetworkgateway": 
+            {
+                "id": "virtualnetworkgateway",
+                "name": "fk-avs-hub-exr-gateway",
+                "gatewaytype": "ExpressRoute",
+                "vpnType": "PolicyBased",
+                "sku": "ErGw1AZ",
+                "configname": "fk-avs-southeastasia-exr-config",
+                "pip": {
+                    "id": "pip",
+                    "name": "fk-avs-hub-vnet-vng-pip1",
+                    "sku": "Standard",
+                    "pipallocationmethod": "Static",
+                    "Ipaddressversion": "IPv4"
+                }
+            },
+            "expressrouteauthorization":{
+                "deploy": "true"
+            }
+        },
+        "virtualwan": {
+            "id": "virtualwan",
+            "deploy": "true",
+            "name": "fk-avs-southeastasia-virtualwan",
+            "resourcegroupname": "fk-avs-southeastasia-networking-rg",
+            "location": "southeastasia",
+            "hub": {
+                "id": "hub",
+                "name": "fk-avs-southeastasia-virtualwan-hub",
+                "cidr": "172.16.24.0/24",
+                "exrgateway" :{
+                    "name": "fk-avs-southeastasia-virtualwan-hub-exrgateway"
+                },
+                "vnet": {
+                    "id": "vnet",
+                    "name": "fk-avs-northeurope-virtualwan-hub-vnet"
+                    }
+            },
+            "expressrouteauthorization":{
+                "deploy": "true"
+            },
+            "vwanaddressprefix": ""
+        }
+    },
+    "jumpbox": {
+        "deploy": "true",
+        "location":"southeastasia",
+        "id": "jumpbox",
+        "prefix": "fk-avs",
+        "resourcegroupname": "fk-avs-southeastasia-jumpbox-rg",
+        "name": "jumpbox1",
+        "vnetname": "fk-avs-southeastasia-jumpbox-vnet",
+        "vnetcidr": "",
+        "vmsize" :"Standard_D2s_v3",
+        "username": "fk-avsjump",
+        "vmpublishername": "MicrosoftWindowsServer",
+        "vmoffername": "WindowsServer",
+        "vmosedition": "2019-Datacenter-smalldisk",
+        "vmosversion": "latest",
+        "bastion": {
+            "name": "fk-avs-southeastasia-bastion1",
+            "pip":{
+                "id": "pip",
+                "name": "fk-avs-southeastasia-bastion-pip",
+                "sku": "Standard",
+                "pipallocationmethod": "Static",
+                "ipaddressversion": "IPv4"
+            }
+        },
+        "vmbootdiagnostics": {
+            "deploy":"true",
+            "vmbootdiagnosticsstorageaccountname": "vmbootdiag"
+        }
+    }
+}

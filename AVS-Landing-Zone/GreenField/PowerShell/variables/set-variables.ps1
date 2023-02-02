@@ -1,0 +1,1 @@
+$variables = Get-Content .\variables\variables.json | ConvertFrom-Json
