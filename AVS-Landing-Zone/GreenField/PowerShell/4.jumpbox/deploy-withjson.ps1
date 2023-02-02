@@ -16,7 +16,7 @@
 Notification for SDK or API deployments
 When you deploy <PARTNER> software, Microsoft can identify the installation of <PARTNER> software with the deployed Azure resources. Microsoft can correlate these resources used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The data is collected and governed by Microsoft's privacy policies, located at https://www.microsoft.com/trustcenter. 
 #>
-
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 $jumpbox = $variables.jumpbox
 $networking = $variables.Networking
 

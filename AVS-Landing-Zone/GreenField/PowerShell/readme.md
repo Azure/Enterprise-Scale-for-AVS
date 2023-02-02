@@ -1,4 +1,4 @@
-# Deployment Steps (AZ PowerShell)
+# Deployment Steps (Azure PowerShell)
 
 This code can be deployed in 2 different manners. You can use each folder to deploy each component [individually](#individual-deployment) or you can use a [master](#master-script) `deploys.ps1` to deploy all aspects in one session.
 
@@ -7,7 +7,11 @@ This code can be deployed in 2 different manners. You can use each folder to dep
 3. Choose your deployment method, please pick one or the other.
    1. [Individual component deployment](#individual-deployment) _**OR**_ 
    2. [Master Script deployment](#master-script)
-4. Run required deploy.ps1 files
+
+## Recommendations
+
+1. Make sure your Azure PowerShell is up to date. You can check this by running the following command in PowerShell. ```Update-Module -Name Az```
+2. Due to the length of the overall deployment, it is recommended that you use a local PowerShell session and not Cloud Shell due to potential timeout issues.
 
 ## Individual Deployment
 
@@ -15,7 +19,7 @@ Each folder [Resource Groups](1.resource-group), [Azure VMware Private Cloud](2.
 
 Each section is designed to be run as a module with a dependency on the previous module. As a result, variables are several times allowing you close the browser or terminal and find your place again. Each folder has a **``deploy.ps1``** file which is the file used to deploy the required code.
 
-1. [Resource Group deployment](1.resource-group/deploy.ps1)
+1. [Resource Group deployment](1.resource-group/deploy-withjson.ps1)
 2. [Private Cloud deployment](2.private-cloud/deploy-withjson.ps1)
 3. [Networking deployment](3.network/deploy-withjson.ps1)
 4. [Jumpbox deployment](4.jumpbox/deploy-withjson.ps1)

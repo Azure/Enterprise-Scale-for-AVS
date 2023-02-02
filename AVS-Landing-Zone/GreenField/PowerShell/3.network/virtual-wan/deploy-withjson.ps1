@@ -11,6 +11,7 @@
 
 
 #new-azresourcegroup -name avs-northeurope-networking-rg -location northeurope
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 
 $networking = $variables.Networking
 

@@ -9,6 +9,7 @@
 #                                             #
 ###############################################
 
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 $networking = $variables.Networking
 
 ## hub and spoke

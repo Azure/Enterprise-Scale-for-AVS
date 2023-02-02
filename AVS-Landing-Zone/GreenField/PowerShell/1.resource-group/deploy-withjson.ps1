@@ -11,6 +11,7 @@
 
 ## Variables are based upon varibales.json
 #$variables = Get-Content .\AVS-Landing-Zone\GreenField\PowerShell\variables\variables.json | ConvertFrom-Json
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 
 ## Define resource groups
 $resourceGroups = $variables.ResourceGroups

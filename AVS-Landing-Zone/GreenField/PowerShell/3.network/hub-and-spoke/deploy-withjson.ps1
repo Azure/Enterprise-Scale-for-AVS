@@ -10,6 +10,7 @@
 ###############################################################
 
 ## variables (from variables.json)
+$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 $networking = $variables.Networking
 $vnetName = $networking.hubAndSpoke.hubvnetname
 $vnetLocation = $networking.hubAndSpoke.location

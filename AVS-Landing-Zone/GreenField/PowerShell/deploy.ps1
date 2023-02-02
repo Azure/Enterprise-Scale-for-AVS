@@ -15,7 +15,7 @@ Write-Output "Deploying Priavte Cloud now"
 
 # Deploy Networking
 Write-Output "Deploying Networking now"
-. .\3.network\deploy.ps1
+. .\3.network\deploy-withjson.ps1
 
 # Deploy Jumpbox
 write-Output "Deploying Jumpbox now"
