@@ -32,6 +32,8 @@ This repository contains reference implementation scenarios based on a number of
 
 In this repository, you get access to various customer scenarios that can help accelerate the development and deployment of AVS clusters that conform with Enterprise-Scale for AVS best practices and guidelines. Each scenario aims to represent common customer experiences with the goal of accelerating the process of developing and deploying conforming AVS clusters using IaC as well as providing a step-by-step learning experience.
 
+To find out more about the Azure landing zones reference implementation, please refer to the [documentation on our Wiki](https://github.com/Azure/Enterprise-Scale-for-AVS/wiki)
+
 ## AVS Greenfield Deployment
 
 This deployment is best suited to those looking to provision a new AVS Private Cloud, the automation will let you choose and deploy the following:
