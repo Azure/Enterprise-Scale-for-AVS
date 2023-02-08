@@ -1,11 +1,24 @@
-# Introduction
+# Single Region Connectivity Guidance
+
+* [Overview](Connectivity-Options-SingleRegion.md#overview)
+* [Internet Breakout - On-Premises](Connectivity-Options-SingleRegion.md#default-route-advertisement-from-on-premises)
+* [Internet Breakout - AVS Native ]()
+  * [Managed SNAT](Connectivity-Options-SingleRegion.md#managed-snat)
+  * [Public IP](Connectivity-Options-SingleRegion.md#public-ip-at-the-nsx-t-data-center-edge)
+* [Internet Breakout - Azure Native ]()
+  * [Secured VWAN Hub](Connectivity-Options-SingleRegion.md#secured-vwan-hub)
+  * [Hub & Spoke VNET's](Connectivity-Options-SingleRegion.md#hub--spoke-with-next-gen-firewall)
+
+
+## Overview 
 
 Azure VMware Solution has many options for connectivity. This includes Azure VMware Solution native services like Managed SNAT, Public IP, and Azure native services such as Azure vWAN Hub and Azure Firewall for default route advertisement. Traversing back to on-premises is also an option for establishing internet connectivity from the Azure VMware Solution. 
 
 This article will discuss the different tools and servies available to implement internet traffic from Azure VMware Solution in a hybrid environment consisting of the Azure VMware Solution private cloud, Azure, and an On-premises data center. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
 
+## Internet Breakout -  On-Premises 
 
-## Default Route from On-Premises
+
 Lets first look at a basic setup. In Azure VMware Solution, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
 
 Your segments are attached to the default tier-1 gateway which as a direct path out to the tier-0 edge gateway. 
@@ -74,30 +87,32 @@ Which gives you flexibility in your design patterns.
 
 ## Secured vWAN HUB
 
-Now that simpler use cases for integrating Azure VMware Solution with Azure and enabling workloads to have internet connectivity are covered, here are some ways to integrate WAN and Hub & Spoke topologies. First, lets take the example of a WAN topology. 
+This option is for using Azure VWAN Hub to learn routes from AVS statically or dynamically with BGP.  First, lets take the example of a WAN topology. A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution becomes another spoke off that design and will exchange routes with Secure vWAN Hub dynamically because it speaks BGP. 
 
-![vWAN.png](./images/vWAN.png)
+![vWAN.png](./images/vwan.png)
 
-A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution then becomes another spoke off that design and will integrate with the Secure vWAN Hub because it speaks BGP. 
-Existing vnets in Azure will not be able to peer directly to the vWAN hub, so in order to communicate securely between Azure VMware Solution and workloads, create a Hub vNet where you can deploy the Azure Firewall. 
+Existing vnets in Azure will not be able to peer directly to the vWAN hub, so in order to communicate securely between Azure VMware Solution and workloads, create a Hub vNet where you can deploy an Azure Firewall. 
 
-![vWANarch.png](./images/vWANarch.png)
+![vWANarch.png](./images/vwanarch.png)
 
 In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out the internet, you will need to do two things:
 
-	1) Enable WAF/App GW in the hub vnet
-	2) Enable a Network virtual appliance 
+	1) Enable WAF/App GW + Azure Firewalls in the hub vnet
+	2) Configure rules in Azure Firewall to allow 80/443
+  
 
-![vWANandwaf.png](./images/vWANandwaf.png)
+![vWANandwaf.png](./images/vwanandwaf.png)
 
 In the diagram above, Layer 7 can occur either with the NSX-T Data Center loadbalancer or using the WAF/App Gateway in Azure.
 
 **Note:** Azure Firewall is not a BGP capable device, so you can't route traffic to it through Azure VMware Solution natively. 
 
 ### Design Consideration: 
-Use vWAN for existing workloads, Hub/Spoke vNets for Azure traffic, and deploy Public IP at the NSX-T Data Center Edge for internet traffic for Azure VMware Solution workloads.
+Use vWAN for existing workloads, Hub/Spoke vNets for Azure traffic. You can also deploy Public IP at the NSX-T Data Center Edge for internet traffic for Azure VMware Solution workloads.
 
-If you don't need a WAN and can use a third party, BGP capable device in a central hub network topology, that then brings us to our next architecture. If you want all connectivity going through a Secured Hub, advertising the default route from Azure Firewall is also an option. 
+### Deploy Azure VWAN
+
+Get started with deploying Azure VWAN [here](Implementation-Options.md#reference-architectures-non-functional---links-in-progress)
 
 ## Hub & Spoke with Next-Gen Firewall 
 
