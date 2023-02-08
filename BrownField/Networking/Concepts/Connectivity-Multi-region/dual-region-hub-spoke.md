@@ -39,7 +39,7 @@ Azure VNets can be connected to AVS private clouds through connections between E
 In dual-region scenarios, a full mesh is recommended for the ER connections between the two regional hub VNets and private clouds, as shown in Figure 4 (yellow lines).
 
 ![figure4](media/dual-region-fig4.png) 
-*Figure 4. By connecting each hub VNet’s Expressroute Gateway to each AVS private cloud’s managed Expressroute circuit (yellow lines), Azure native resources in each region have direct L3 connectivity to AVS private clouds.*
+*Figure 4. By connecting each hub VNet’s Expressroute Gateway to each AVS private cloud’s managed Expressroute circuit (yellow lines), Azure native resources in each region have direct L3 connectivity to AVS private clouds (the global VNet peering connection between the two hub VNets, shown in the previous diagrams, has been omitted for clarity).*
 
 ## Internet connectivity
 When deploying AVS private clouds in multiple regions, native options (managed SNAT or Public IPs down to the NSX-T) are recommended. Either option can be configured through the Azure portal (or via PowerShell, CLI or ARM/Bicep templates) at deployment time, as shown in Figure 5 below. 
