@@ -35,7 +35,6 @@ One option is to enable the default route from on-premises over a VPN connection
 
 ![transit.png](./images/vpn.png)
 
-![image.png](./images/vm_segment.png)
 
 In this design, there are several hops required before reaching the internet. To simplify this architecture, rather that a VPN from On-Premises, consider using an Azure ExpressRoute circuit. The ExpressRoute circuit peers with the Azure VMware Solution Managed ExpressRoute circuit using Global Reach https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-networking
 
