@@ -12,7 +12,7 @@ This article focuses on a typical dual-region scenario, shown in Figure 1 below:
 *Figure 1. Dual-region scenario. This article discusses options for connecting AVS private clouds to Azure VNets, on-prem sites and the internet in such a way that, in case of partial or complete regional disasters, the surviving components (AVS private clouds, Azure-native resources, on-prem sites) to maintain connectivity with each other and the internet.*
 
 > [!NOTE]
-> In the reference scenario of Figure 1, the two regional hub VNets are connected via global VNet peering. While not strictly required (traffic between Azure VNets in the two regions could be routed over Expressroute connections), this configuration is strongly recommended. Private Peering minimizes latency and maximizes throughput, as it removes the need to hairpin traffic through the Expressroute meet-me edge routers. 
+> In the reference scenario of Figure 1, the two regional hub VNets are connected via global VNet peering. While not strictly required (traffic between Azure VNets in the two regions could be routed over Expressroute connections), this configuration is strongly recommended. VNet Peering minimizes latency and maximizes throughput, as it removes the need to hairpin traffic through the Expressroute meet-me edge routers. 
 
 The next sections describe the AVS network configuration that is required to enable, in the reference dual-region scenario, the following commuication patterns:
 - AVS to AVS (covered in the section "AVS cross-region connectivity");
