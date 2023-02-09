@@ -46,7 +46,7 @@ This however still is not the most direct, low latency option.
 
 If traversing back to on-premises is not a requirement. Consider using Managed SNAT directly from Azure VMware Solution itself. As the name suggests, this is an Azure VMware Solution managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
-![managedsnat.png](./images/snat.png)
+![managedsnat.png](./images/managed_snat.png)
 See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
 ### Limitations
@@ -75,7 +75,7 @@ This option gives you more flexibility as it can scale up to over thousands of p
 
 Which gives you flexibility in your design patterns.
 
-![pubip.png](./images/pubip.png)
+![pubip.png](./images/publicip.png)
 
 ### Design Considerations:
 
@@ -89,8 +89,6 @@ Which gives you flexibility in your design patterns.
 This option is for using Azure VWAN Hub to learn routes from AVS statically or dynamically with BGP.  First, lets take the example of a WAN topology. A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution becomes another spoke off that design and will exchange routes with Secure vWAN Hub dynamically because it speaks BGP. 
 
 Existing vnets in Azure will not be able to peer directly to the vWAN hub, so in order to communicate securely between Azure VMware Solution and workloads, create a Hub vNet where you can deploy an Azure Firewall. 
-
-![vWANarch.png](./images/vwanarch.png)
 
 In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out the internet, you will need to do two things:
 
@@ -120,11 +118,6 @@ Use ARS to dynamically populate segments from Azure VMware Solution to the Hub n
 
 https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/dmz/nva-ha?tabs=cli
 
-
-### DDoS Protection
-Consider using WAF with App Gateway for Layer 7 communication and DDoS protection for the hub and spoke networks
-
-![wafappgw.png](./images/wafappgw.png)
 
 ### DDoS Protection (In Progress)
 Consider using WAF with App Gateway for Layer 7 communication and DDoS protection for the hub and spoke networks
