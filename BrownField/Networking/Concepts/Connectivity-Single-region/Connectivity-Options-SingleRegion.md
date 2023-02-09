@@ -88,8 +88,6 @@ Which gives you flexibility in your design patterns.
 
 This option is for using Azure VWAN Hub to learn routes from AVS statically or dynamically with BGP.  First, lets take the example of a WAN topology. A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution becomes another spoke off that design and will exchange routes with Secure vWAN Hub dynamically because it speaks BGP. 
 
-![vWAN.png](./images/vwan.png)
-
 Existing vnets in Azure will not be able to peer directly to the vWAN hub, so in order to communicate securely between Azure VMware Solution and workloads, create a Hub vNet where you can deploy an Azure Firewall. 
 
 ![vWANarch.png](./images/vwanarch.png)
