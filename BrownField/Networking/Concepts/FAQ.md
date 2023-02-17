@@ -4,15 +4,15 @@
 
 Yes. Traffic can traverse directly from On-Premise directly to the AVS NSX Edge. Consider using Public IP down to the NSX Edge for default route advertisement. 
 
-### Q: Can traffic traverse from On-Prem to Azure without Global Reach? 
+### Can traffic traverse from On-Prem to Azure without Global Reach? 
 
 Yes, if natively routing traffic from on-prem to AVS is desired, this is possible either with a managed Secured VWAN Hub or an Azure Native VNET Hub + Azure Route Server. If default route advertisement occurs either from On-Prem or AVS, both of these solutions are possible.  
 
-### Q: Can traffic traverse from On-Prem to Azure without Global Reach and default route advertisement positioned in Azure? 
+### Can traffic traverse from On-Prem to Azure without Global Reach and default route advertisement positioned in Azure? 
 
 Secured VWAN Hub with Azure Firewall or Third-Party NVA will work.  If the default route advertisement needs to happen within a Hub VNET, Azure Firewall will not work because it does not speak BGP. Customer must purchase a Third Party BGP-capable NVA.    
 
-### Q: Can the Secured VWAN Hub provide the transit and also filter traffic end-to-end from On-Prem to AVS?  
+### Can the Secured VWAN Hub provide the transit and also filter traffic end-to-end from On-Prem to AVS?  
 
 Technically, yes. This is only possible with Route Intent which is in public preview. It's scale limits, multi-regional deployment and integration with Azure PAAS services are still under review. Deployment is at user discretion without SLA from Microsoft.  
 
@@ -22,7 +22,7 @@ Consider using two Hub and Spoke networks, each with a BGP-capable NVA and tunne
 
 Add a route filter to the on-premises firewall. Microsoft doesn't not block default routes at it's edge devices.   
 
-### Q: Can I encrypt traffic over Global Reach?
+### Can I encrypt traffic over Global Reach?
 
 You can encrypt traffic with IPsec over Global Reach. You can however encrypt traffic at the physical layer with Macsec. 
 
