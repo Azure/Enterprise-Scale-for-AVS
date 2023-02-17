@@ -24,7 +24,7 @@ Add a route filter to the on-premises firewall. Microsoft doesn't not block defa
 
 ### Can I encrypt traffic over Global Reach?
 
-You can encrypt traffic with IPsec over Global Reach. You can however encrypt traffic at the physical layer with Macsec. 
+You can not encrypt traffic with IPsec over Global Reach. You can however encrypt traffic at the physical layer with Macsec. 
 
 ### Can I access vCenter when using advertising a default route from on-premises?
 
