@@ -16,7 +16,7 @@ Secured VWAN Hub with Azure Firewall or Third-Party NVA will work.  If the def
 
 Technically, yes. This is only possible with Route Intent which is in public preview. It's scale limits, multi-regional deployment and integration with Azure PAAS services are still under review. Deployment is at user discretion without SLA from Microsoft.  
 
-Consider using two Hub and Spoke networks, each with a BGP-capable NVA and tunnel the traffic through the two appliances's in each hub. This is the option has the most complexity, but comes with the most flexibility and scale. 
+Consider using two Hub and Spoke networks, each with a BGP-capable NVA and tunnel the traffic through the two appliances's in each hub. This is option has the most complexity, but comes with the most flexibility and scale. 
 
 ### Q: Can I encrypt traffic over Global Reach?
 
