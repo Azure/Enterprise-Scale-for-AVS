@@ -18,13 +18,13 @@ Technically, yes. This is only possible with Route Intent which is in public pre
 
 Consider using two Hub and Spoke networks, each with a BGP-capable NVA and tunnel the traffic through the two appliances's in each hub. This is option has the most complexity, but comes with the most flexibility and scale. 
 
-### Q: Can I encrypt traffic over Global Reach?
-
-You can encrypt traffic with IPsec over Global Reach. You can however encrypt traffic at the physical layer with Macsec. 
-
 ### How to I prevent workloads on-premises from learning a default route from Azure?
 
 Add a route filter to the on-premises firewall. Microsoft doesn't not block default routes at it's edge devices.   
+
+### Q: Can I encrypt traffic over Global Reach?
+
+You can encrypt traffic with IPsec over Global Reach. You can however encrypt traffic at the physical layer with Macsec. 
 
 ### Can I access vCenter when using advertising a default route from on-premises?
 
