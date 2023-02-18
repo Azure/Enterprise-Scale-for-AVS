@@ -1,5 +1,13 @@
+terraform {
+  required_providers {
+    azapi = {
+      source = "azure/azapi"
+    }
+  }
+}
+
 data "azurerm_resource_group" "avs" {
-    name = var.rg_name
+  name = var.rg_name
 }
 
 #generate a random password to use for the initial NSXT admin account password
@@ -28,11 +36,11 @@ resource "random_password" "vcenter" {
 
 #create the private cloud using the azapi resource provider
 resource "azapi_resource" "stretch_cluster" {
-  type = "Microsoft.AVS/privateClouds@2022-05-01"
-  name                = var.sddc_name
-  parent_id           = data.azurerm_resource_group.avs.id
-  location            = var.rg_location  
-  tags                = var.tags
+  type      = "Microsoft.AVS/privateClouds@2022-05-01"
+  name      = var.sddc_name
+  parent_id = data.azurerm_resource_group.avs.id
+  location  = var.rg_location
+  tags      = var.tags
 
 
   body = jsonencode({
@@ -40,14 +48,14 @@ resource "azapi_resource" "stretch_cluster" {
       availability = {
         strategy = "DualZone"
       }
-      
-      internet = var.internet_enabled
+
+      internet = var.internet_enabled ? "Enabled" : "Disabled"
       managementCluster = {
         clusterSize = var.management_cluster_size
       }
 
-      networkBlock = var.avs_network_cidr
-      nsxtPassword = random_password.nsxt.result
+      networkBlock    = var.avs_network_cidr
+      nsxtPassword    = random_password.nsxt.result
       vcenterPassword = random_password.vcenter.result
     }
     sku = {
@@ -60,51 +68,55 @@ resource "azapi_resource" "stretch_cluster" {
 
 #get the private cloud data for use in creating the auth keys
 data "azurerm_vmware_private_cloud" "stretch_cluster" {
-    name = var.sddc_name
-    resource_group_name = data.azurerm_resource_group.avs.name
+  name                = var.sddc_name
+  resource_group_name = data.azurerm_resource_group.avs.name
 
-    depends_on = [
-      azapi_resource.stretch_cluster
-    ]
+  depends_on = [
+    azapi_resource.stretch_cluster
+  ]
 }
 
 #get the private cloud data using the azapi provider to get the primary and secondary expressROute ID's
 data "azapi_resource" "stretch_cluster" {
-    name = "teststretch"
-    parent_id = data.azurerm_resource_group.private_cloud.id
-    type = "Microsoft.AVS/privateClouds@2021-12-01"
-    response_export_values = [
-        "properties.circuit.expressRouteID", 
-        "properties.circuit.expressRoutePrivatePeeringID", 
-        "properties.secondaryCircuit.expressRouteID", 
-        "properties.secondaryCircuit.expressRoutePrivatePeeringID"]
+  name      = "teststretch"
+  parent_id = data.azurerm_resource_group.avs.id
+  type      = "Microsoft.AVS/privateClouds@2021-12-01"
+  response_export_values = [
+    "properties.circuit.expressRouteID",
+    "properties.circuit.expressRoutePrivatePeeringID",
+    "properties.secondaryCircuit.expressRouteID",
+    "properties.secondaryCircuit.expressRoutePrivatePeeringID"]
+
+  depends_on = [
+    azapi_resource.stretch_cluster
+  ]
 }
 
 #create the primary zone expressroute auth key
 resource "azapi_resource" "authkey_circuit1" {
-    type = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
-    name = var.expressroute_authorization_key_name_1
-    parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
-    body = jsonencode({
-        properties = {           
-            expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.circuit.expressRouteID
-        }
-    })
-    response_export_values = ["properties.expressRouteAuthorizationKey"]
-    schema_validation_enabled = false
+  type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
+  name      = var.expressroute_authorization_key_name_1
+  parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
+  body = jsonencode({
+    properties = {
+      expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.circuit.expressRouteID
+    }
+  })
+  response_export_values    = ["properties.expressRouteAuthorizationKey"]
+  schema_validation_enabled = false
 }
 #Create the secondary zone expressroute auth key
 resource "azapi_resource" "authkey_circuit2" {
-    type = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
-    name = var.expressroute_authorization_key_name_2
-    parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
-    body = jsonencode({
-        properties = {           
-            expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRouteID
-        }
-    })
-    response_export_values = ["properties.expressRouteAuthorizationKey"]
-    schema_validation_enabled = false
+  type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
+  name      = var.expressroute_authorization_key_name_2
+  parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
+  body = jsonencode({
+    properties = {
+      expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRouteID
+    }
+  })
+  response_export_values    = ["properties.expressRouteAuthorizationKey"]
+  schema_validation_enabled = false
 }
 
 #deploy the hcx addon if the hcx_enabled variable is set to true
@@ -161,6 +173,6 @@ resource "azurerm_subscription_template_deployment" "telemetry_core" {
   count = var.module_telemetry_enabled ? 1 : 0
 
   name             = local.telem_arm_deployment_name
-  location         = azurerm_vmware_private_cloud.privatecloud.location
+  location         = var.rg_location
   template_content = local.telem_arm_subscription_template_content
 }
