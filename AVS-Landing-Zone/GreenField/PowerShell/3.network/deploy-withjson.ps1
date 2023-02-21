@@ -13,8 +13,8 @@ $variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 $networking = $variables.Networking
 
 ## hub and spoke
-$deployHuabAndSpoke = $networking.hubAndSpoke.deploy
-if ($deployHuabAndSpoke -eq "true") {
+$deployHubAndSpoke = $networking.hubAndSpoke.deploy
+if ($deployHubAndSpoke -eq "true") {
     Write-Output "Deploying Hub and Spoke"
     #. .\3.network\hub-and-spoke\deploy-withjson.ps1
     .\hub-and-spoke\deploy-withjson.ps1
