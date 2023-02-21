@@ -197,6 +197,8 @@
         "vmosversion": "latest",
         "bastion": {
             "name": "avs-contoso-bastion1",
+            "vnetname": "avs-hub-vnet",
+            "location": "eastus",
             "pip":{
                 "id": "pip",
                 "name": "avs-contoso-bastion-pip",
