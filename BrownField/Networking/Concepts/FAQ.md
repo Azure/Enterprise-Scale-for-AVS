@@ -1,4 +1,6 @@
-# Connectivity Options FAQ
+# AVS LANDING ZONE FAQ
+
+## Connectivity from On-Premises to AVS
 
 ### Can traffic traverse from On-Prem to Azure end to end with an IPSec tunnel?
 
@@ -31,3 +33,5 @@ You can not encrypt traffic with IPsec over Global Reach. You can however encryp
 AVS Management plane operations such (e.g vmotion, nsx-t, hcx, etc) receive traffic via default route, will not send a response back to on-premises. Accessing vCenter from on-premises requires well-known, specific routes. 
 
 Consider using Azure Bastion to access vCenter securely. 
+
+## Connectivity from AVS to Azure
