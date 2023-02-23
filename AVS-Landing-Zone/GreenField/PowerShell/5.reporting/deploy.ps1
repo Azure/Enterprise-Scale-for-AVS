@@ -9,6 +9,8 @@
 #                                             #
 ###############################################
 
+#### WORK IN PROGRESS ####
+
 ## Important link around azure-partner-customer-usage-attribution
 ## https://docs.microsoft.com/en-gb/azure/marketplace/azure-partner-customer-usage-attribution#notify-your-customers
 
