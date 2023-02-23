@@ -63,29 +63,27 @@ resource "azapi_resource" "stretch_cluster" {
     }
   })
 
-  response_export_values = ["properties.circuit.expressRouteID", "properties.secondaryCircuit.expressRouteID"]
-}
-
-#get the private cloud data for use in creating the auth keys
-data "azurerm_vmware_private_cloud" "stretch_cluster" {
-  name                = var.sddc_name
-  resource_group_name = data.azurerm_resource_group.avs.name
-
-  depends_on = [
-    azapi_resource.stretch_cluster
-  ]
-}
-
-#get the private cloud data using the azapi provider to get the primary and secondary expressROute ID's
-data "azapi_resource" "stretch_cluster" {
-  name      = "teststretch"
-  parent_id = data.azurerm_resource_group.avs.id
-  type      = "Microsoft.AVS/privateClouds@2021-12-01"
   response_export_values = [
     "properties.circuit.expressRouteID",
     "properties.circuit.expressRoutePrivatePeeringID",
     "properties.secondaryCircuit.expressRouteID",
-    "properties.secondaryCircuit.expressRoutePrivatePeeringID"]
+  "properties.secondaryCircuit.expressRoutePrivatePeeringID"]
+
+  timeouts {
+    create = "15h"
+  }
+}
+
+#get the private cloud data using the azapi provider to get the primary and secondary expressROute ID's
+#TODO we should be able to export all of these data values directly from the private cloud resource going forward
+#Update the data references in networking resources to point to the cluster resource output
+data "azapi_resource" "stretch_cluster" {
+  name      = var.sddc_name
+  parent_id = data.azurerm_resource_group.avs.id
+  type      = "Microsoft.AVS/privateClouds@2021-12-01"
+  response_export_values = [
+    "*"
+  ]
 
   depends_on = [
     azapi_resource.stretch_cluster
@@ -96,7 +94,7 @@ data "azapi_resource" "stretch_cluster" {
 resource "azapi_resource" "authkey_circuit1" {
   type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
   name      = var.expressroute_authorization_key_name_1
-  parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
+  parent_id = data.azapi_resource.stretch_cluster.id
   body = jsonencode({
     properties = {
       expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.circuit.expressRouteID
@@ -109,7 +107,7 @@ resource "azapi_resource" "authkey_circuit1" {
 resource "azapi_resource" "authkey_circuit2" {
   type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
   name      = var.expressroute_authorization_key_name_2
-  parent_id = data.azurerm_vmware_private_cloud.stretch_cluster.id
+  parent_id = data.azapi_resource.stretch_cluster.id
   body = jsonencode({
     properties = {
       expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRouteID
@@ -118,13 +116,15 @@ resource "azapi_resource" "authkey_circuit2" {
   response_export_values    = ["properties.expressRouteAuthorizationKey"]
   schema_validation_enabled = false
 }
-
+/*
+#removing HCX output for now as pre-GA stretch clusters require a support case to activate HCX. 
+#UnComment this section after the GA date
 #deploy the hcx addon if the hcx_enabled variable is set to true
 module "hcx_addon" {
   count  = var.hcx_enabled ? 1 : 0
   source = "../avs_addon_hcx"
 
-  private_cloud_name           = data.azurerm_vmware_private_cloud.stretch_cluster.name
+  private_cloud_name           = data.azapi_resource.stretch_cluster.name
   private_cloud_resource_group = data.azurerm_resource_group.avs.name
   hcx_key_names                = var.hcx_key_names
   module_telemetry_enabled     = false
@@ -133,7 +133,7 @@ module "hcx_addon" {
     azapi_resource.stretch_cluster
   ]
 }
-
+*/
 
 #############################################################################################
 # Telemetry Section - Toggled on and off with the telemetry variable

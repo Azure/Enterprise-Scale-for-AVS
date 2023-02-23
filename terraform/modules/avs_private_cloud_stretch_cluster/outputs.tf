@@ -1,5 +1,5 @@
 output "sddc_id" {
-  value = data.azurerm_vmware_private_cloud.stretch_cluster.id
+  value = data.azapi_resource.stretch_cluster.id
 }
 
 output "sddc_express_route_id" {
@@ -23,24 +23,30 @@ output "sddc_express_route_private_peering_id" {
   ]
 }
 
+
 output "sddc_vcsa_endpoint" {
-  value = data.azurerm_vmware_private_cloud.stretch_cluster.vcsa_endpoint
+  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.vcsa
 }
 
 output "sddc_nsxt_manager_endpoint" {
-  value = data.azurerm_vmware_private_cloud.stretch_cluster.nsxt_manager_endpoint
+  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.nsxtManager
 }
 
 output "sddc_hcx_cloud_manager_endpoint" {
-  value = data.azurerm_vmware_private_cloud.stretch_cluster.hcx_cloud_manager_endpoint
+  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.hcxCloudManager
 }
 
 output "sddc_provisioning_subnet_cidr" {
-  value = data.azurerm_vmware_private_cloud.stretch_cluster.provisioning_subnet_cidr
+  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.provisioningNetwork
 }
 
+/*
 #return the hcx keys if hcx is enabled, empty map if not.  
 #output will referenced using an index due to count on module.
 output "hcx_keys" {
   value = module.hcx_addon[*].keys
+}
+*/
+output "full_cluster_details" {
+  value = data.azapi_resource.stretch_cluster
 }
