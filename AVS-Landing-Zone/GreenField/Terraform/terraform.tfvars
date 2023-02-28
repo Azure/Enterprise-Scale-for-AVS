@@ -19,7 +19,7 @@ jumpboxsku    = "Standard_D2as_v4"
 #Virtual network address space and required subnets, can be any CIDR range
 vnetaddressspace   = "192.168.1.0/24"
 gatewaysubnet      = "192.168.1.0/27"
-azurebastionsubnet = "192.168.1.32/27"
+azurebastionsubnet = "192.168.1.64/26"
 jumpboxsubnet      = "192.168.1.128/25"
 
 #Enable or Disable telemetry

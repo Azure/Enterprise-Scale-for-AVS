@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.10.61.36676",
-      "templateHash": "15429449477193985055"
+      "version": "0.14.85.62628",
+      "templateHash": "9184760055961509998"
     }
   },
   "parameters": {
@@ -51,6 +51,7 @@
         "AV36",
         "AV36T",
         "AV36P",
+        "AV36PT",
         "AV52"
       ],
       "metadata": {
@@ -191,8 +192,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "9399399834964455064"
+              "version": "0.14.85.62628",
+              "templateHash": "17709862357340813915"
             }
           },
           "parameters": {
@@ -263,8 +264,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "8763346094878543377"
+                      "version": "0.14.85.62628",
+                      "templateHash": "6251929011638151906"
                     }
                   },
                   "parameters": {
@@ -346,11 +347,9 @@
         },
         "mode": "Incremental",
         "parameters": {
-          "PrivateCloudName": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
-          },
+          "PrivateCloudName": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudName.value), createObject('value', parameters('ExistingPrivateCloudName')))]",
           "PrivateCloudResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceGroupName.value]"
           },
           "DeployHCX": {
             "value": "[parameters('DeployHCX')]"
@@ -371,8 +370,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "6626996358566905329"
+              "version": "0.14.85.62628",
+              "templateHash": "15553313100520233692"
             }
           },
           "parameters": {
@@ -420,8 +419,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "15356131653046229861"
+                      "version": "0.14.85.62628",
+                      "templateHash": "17012309816488735722"
                     }
                   },
                   "parameters": {
@@ -471,8 +470,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "831976049120413366"
+                      "version": "0.14.85.62628",
+                      "templateHash": "16118543318499396991"
                     }
                   },
                   "parameters": {
@@ -548,14 +547,10 @@
             "value": "[parameters('DeployDashboard')]"
           },
           "PrivateCloudResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceGroupName.value]"
           },
-          "PrivateCloudName": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
-          },
-          "PrivateCloudResourceId": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceId.value, parameters('ExistingPrivateCloudResourceId'))]"
-          }
+          "PrivateCloudName": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudName.value), createObject('value', parameters('ExistingPrivateCloudName')))]",
+          "PrivateCloudResourceId": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceId.value), createObject('value', parameters('ExistingPrivateCloudResourceId')))]"
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
@@ -563,8 +558,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "5727880779006699791"
+              "version": "0.14.85.62628",
+              "templateHash": "14068822362092244419"
             }
           },
           "parameters": {
@@ -619,8 +614,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "10663965472421485935"
+                      "version": "0.14.85.62628",
+                      "templateHash": "11376081451978257860"
                     }
                   },
                   "parameters": {
@@ -687,8 +682,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "11019117668993539825"
+                      "version": "0.14.85.62628",
+                      "templateHash": "899129986861424208"
                     }
                   },
                   "parameters": {
@@ -822,8 +817,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "3761289678665226897"
+                      "version": "0.14.85.62628",
+                      "templateHash": "14052169728265718712"
                     }
                   },
                   "parameters": {
@@ -914,8 +909,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.10.61.36676",
-                      "templateHash": "18429645288237823884"
+                      "version": "0.14.85.62628",
+                      "templateHash": "18425005649426931855"
                     }
                   },
                   "parameters": {
@@ -1200,8 +1195,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "8692195644938117442"
+              "version": "0.14.85.62628",
+              "templateHash": "329739458929633377"
             }
           },
           "resources": []
