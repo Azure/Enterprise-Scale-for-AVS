@@ -15,13 +15,13 @@ This folder contains subfolders for each building block module.  A summary of th
 | [avs_expressroute_gateway](./avs_expressroute_gateway/) | This module deploys an expressroute gateway in a hub vnet and configures an expressroute connection to an AVS private cloud. |
 | [avs_jumpbox](./avs_jumpbox/) | This module deploys a jump vm for testing.  It generates a random password and stores it in the deployment keyvault for login purposes. |
 | [avs_key_vault](./avs_key_vault/) | This modules deploys a key vault for storage of any secrets in the deployment.  It also creates an access policy for the deployment principal. |
-| [avs_nva_cisco_1000v_vpn_config_one_node](./avs_nva_cisco_1000v_vpn_config_one_node/) | This is a test module which deploys an unlicensed Cisco CSR with a VPN config for VPN testing. |
+| [avs_nva_cisco_1000v_vpn_config_one_node](./avs_nva_cisco_1000v_vpn_config_one_node/) | This is a test module which deploys an unlicensed Cisco CSR with a VPN configuration for VPN testing. |
 | [avs_private_cloud_single_management_cluster_no_internet_conn](./avs_private_cloud_single_management_cluster_no_internet_conn/) | This module deploys an AVS private cloud and an expressroute authorization key. It does not include the internet connectivity option|
 | [avs_routeserver](./avs_routeserver/) | This module deploys an Azure Route Server resource and configures Branch-to-Branch connectivity to be enabled. | 
 | [avs_service_health](./avs_service_health/) | This module deploys the default service health alerts and dashboards for AVS. |
 | [avs_test_quad_0_nva_frr](./avs_test_quad_0_nva_frr/) | This module deploys a CentOS linux VM and configures it to run Free Range Routing configured to advertise a 0.0.0.0/0 route via BGP using the provided ASN number redirecting traffic to a target IP.  This can be used in combination with Azure firewall to mimic deploy a BGP enabled security appliance in a Vnet Hub. |
 | [avs_test_spoke_with_jump_vm](./avs_test_spoke_with_jump_vm/) | This module is a composite module that combines bastion and jumpbox modules from this folder, deploys them into a new spoke vnet and creates a peering relationship between the spoke and a hub. |
-| [avs_test_vpn_nva_one_node](./avs_test_vpn_nva_one_node/) | This module is a composite module that combines the Cisco CSR, bastion, keyvault, and jumpbox modules as well as creating new route table and route resources in a new VNet for mimicing an on-prem implementation. |
+| [avs_test_vpn_nva_one_node](./avs_test_vpn_nva_one_node/) | This module is a composite module that combines the Cisco CSR, bastion, keyvault, and jumpbox modules as well as creating new route table and route resources in a new VNet for mimicking an on-prem implementation. |
 | [avs_vnet_variable_subnets](./avs_vnet_variable_subnets/) | This module creates a new Vnet resource with a subnets configured from an input map. |
 | [avs_vmware_composite_create_vm_and_network_segment](./avs_vmware_composite_create_vm_and_network_segment/) | This module creates a new DHCP enabled T1 Gateway and network Segment in NSX and then deploys a new content library, downloads the photon image, and deploys a VM using that image. It calls several of the VMware modules below. |
 | [avs_vmware_create_new_segment_w_dhcp](./avs_vmware_create_new_segment_w_dhcp/) | This module creates a new DHCP enabled Network segment in NSX and attaches it to a T1 gateway. |
@@ -49,7 +49,7 @@ Individual modules within this directory can be used to create elements of an AV
 az account show
 ```
 
-5. Change directory to the root Terraform module folder for your deployement
+5. Change directory to the root Terraform module folder for your deployment
 
 
 1. Run `terraform init` to initialize this directory

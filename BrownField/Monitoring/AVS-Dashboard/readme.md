@@ -6,7 +6,7 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 * AVS Private Cloud up and running.
 
-* (Optional) An Express Route Gateway - please collect the resourceid from the Express Route GW connection  <https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager> from your hub vNet. 
+* (Optional) An Express Route Gateway - please collect the `resourceid` from the Express Route GW connection  <https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager> from your hub vNet. 
 
 ## Deployment Steps
 

@@ -12,7 +12,7 @@ How its all connected: ExpressRoute & Global Reach </br>
 1. A virtual network with 3 subnets containing a jumpbox and application gateway and (optional) a virtual network gateway.
 2. A secured vWAN hub
 
-3. An AVS environment with 2 servers running a web site (We will walkthrough 
+3. An AVS environment with 2 servers running a web site (We will walk through 
    how to create a vNet and add two servers running IIS).
 
 4. A connection to on-premises network via ExpressRoute, otherwise you can
@@ -165,8 +165,7 @@ subnet created in part 1 and another vNet with two IIS (or other web
 servers) attached. See the appendix for a high level overview of the
 process.
 
-There is a video on configuring AVS located here:
-<https://youtu.be/F6ZMsZHDTtE>.
+There is a video on configuring AVS located on [YouTube](https://youtu.be/F6ZMsZHDTtE).
 
 1.  Connect the Scenario-1-Jumpbox-vNet to the vWAN Hub.
 

@@ -22,7 +22,7 @@ This scenario also deploys a temporary spoke Vnet with a bastion and jump host. 
 Resource naming is configured by using local variables at the top of the root module.  Each name is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with their unique corporate naming conventions, so all the names are maintained in the locals for simplicity in modifying the naming during deployment. 
 
 ### Internet Ingress/Egress
-Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the Azure Firewall in the secure hub. On-premises ingress/egress is expected to use existing routing configurations and not migrate to the VWAN hub.  
+Internet ingress and egress to AVS and Azure VMs will be enabled through one or more public IPs attached to the Azure Firewall in the secure hub. On-premises ingress/egress is expected to use existing routing configurations and not migrate to the VWAN hub.  
 
 ### Network Inspection
 The solution configures network inspection with the Azure Firewall on the following flows:
@@ -62,7 +62,7 @@ These steps represent deploying a configuration using the portal and vcenter.
     - Create the Azure Firewall to use **Azure Firewall Policies**
     - The standard sku can be used unless premium features are required in the environment
     - Enable the **DNS proxy** to allow for future DNS configurations
-    - Configure the firewall Diags to go the log analytics workspace
+    - Configure the firewall diagnostics to go the log analytics workspace
 - Create an initial **Firewall Policy** for internet access
     - Create new **network rule collection** for testing
     - Create a new **network rule** in the rule collection 
@@ -126,7 +126,7 @@ These steps represent deploying a configuration using the portal and vcenter.
 - Test the connectivity
     - Validate the VPN is showing connected on each side of the tunnel
     - From an On-prem system ensure that it can connect to the AVS VM and Jump VM
-    - Ensure the AVS and Jump VM's can reach the on-premises VM's
+    - Ensure the AVS and Jump VMs can reach the on-premises VMs
     - Check the firewall logs to ensure traffic is seen on the firewall for each test
 
 [(Back to top)](#table-of-contents)

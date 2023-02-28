@@ -40,7 +40,7 @@ If you have an existing firewall in Azure, this can be used to advertise the def
 
 In this configuration, user is responsible for configuring high availability and resiliency around the device. For more information on this use case see [here](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-5-a-third-party-nva-in-the-hub-vnet-inspects-traffic-between-avs-and-the-internet-and-between-avs-and-azure-vnets)
 
-Note: If you are in a region where Global Reach is unavailable, consider using a multi-vnet hub and transit implmenentation https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-network-design-considerations#use-a-default-route-to-azure-vmware-solution-for-internet-traffic-inspection or [Route Intent](https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies)(Preview) policies in Azure VWAN
+Note: If you are in a region where Global Reach is unavailable, consider using a multi-vnet hub and transit implementation https://learn.microsoft.com/en-us/azure/azure-vmware/concepts-network-design-considerations#use-a-default-route-to-azure-vmware-solution-for-internet-traffic-inspection or [Route Intent](https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies)(Preview) policies in Azure VWAN
 
 ### Default Route Advertisement in Azure VMware Solution using 3rd party firewall (Not supported)
 Third party firewall usage is possible in Azure VMware Solution, must be used with discretion:
@@ -54,7 +54,7 @@ For traffic filtering between on-premises and AVS, consider advertising the defa
 ### Azure VMware Solution to Azure VMware Solution communication
 - Azure VMware Solution workloads on the same segment can talk natively to each other.
 - Azure VMware Solution workloads across segments communicate by configuring NSX-T Data Center.
-- Workloads in different SDDC's can talk using AnyConnect.
+- Workloads in different SDDCs can talk using AnyConnect.
 - For workload cross-region communication, use Global Reach. 
  
  For next steps on how to implement multi-regional connectivity, see [Multi-Region Connectivity](../Connectivity-Multi-region/dual-region-hub-spoke.md).
