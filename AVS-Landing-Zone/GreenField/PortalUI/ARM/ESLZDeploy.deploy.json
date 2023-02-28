@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.8.9.13224",
-      "templateHash": "8867038297604102104"
+      "version": "0.14.85.62628",
+      "templateHash": "9600131760821834387"
     }
   },
   "parameters": {
@@ -45,7 +45,9 @@
       "allowedValues": [
         "AV36",
         "AV36T",
-        "AV36P"
+        "AV36P",
+        "AV36PT",
+        "AV52"
       ],
       "metadata": {
         "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
@@ -157,7 +159,7 @@
       }
     },
     "JumpboxPassword": {
-      "type": "secureString",
+      "type": "securestring",
       "defaultValue": "",
       "metadata": {
         "description": "Password for the Jumpbox VM, can be changed later"
@@ -286,7 +288,8 @@
     }
   },
   "variables": {
-    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]",
+    "varCuaid": "1cf4a3e3-529c-4fb2-ba6a-63dff7d71586"
   },
   "resources": [
     {
@@ -315,9 +318,6 @@
           "PrivateCloudSKU": {
             "value": "[parameters('PrivateCloudSKU')]"
           },
-          "TelemetryOptOut": {
-            "value": "[parameters('TelemetryOptOut')]"
-          },
           "DeployPrivateCloud": {
             "value": "[parameters('DeployPrivateCloud')]"
           },
@@ -331,8 +331,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "5834528418593570147"
+              "version": "0.14.85.62628",
+              "templateHash": "9192599228792063063"
             }
           },
           "parameters": {
@@ -350,9 +350,6 @@
             },
             "PrivateCloudHostCount": {
               "type": "int"
-            },
-            "TelemetryOptOut": {
-              "type": "bool"
             },
             "DeployPrivateCloud": {
               "type": "bool"
@@ -395,9 +392,6 @@
                   },
                   "ManagementClusterSize": {
                     "value": "[parameters('PrivateCloudHostCount')]"
-                  },
-                  "TelemetryOptOut": {
-                    "value": "[parameters('TelemetryOptOut')]"
                   }
                 },
                 "template": {
@@ -406,8 +400,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "8896949074412948394"
+                      "version": "0.14.85.62628",
+                      "templateHash": "12303033939515180064"
                     }
                   },
                   "parameters": {
@@ -425,9 +419,6 @@
                     },
                     "Location": {
                       "type": "string"
-                    },
-                    "TelemetryOptOut": {
-                      "type": "bool"
                     }
                   },
                   "resources": [
@@ -444,20 +435,6 @@
                         "internet": "Disabled",
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
-                        }
-                      }
-                    },
-                    {
-                      "condition": "[not(parameters('TelemetryOptOut'))]",
-                      "type": "Microsoft.Resources/deployments",
-                      "apiVersion": "2021-04-01",
-                      "name": "pid-1cf4a3e3-529c-4fb2-ba6a-63dff7d71586",
-                      "properties": {
-                        "mode": "Incremental",
-                        "template": {
-                          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                          "contentVersion": "1.0.0.0",
-                          "resources": []
                         }
                       }
                     }
@@ -548,8 +525,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "10245303427895349085"
+              "version": "0.14.85.62628",
+              "templateHash": "16545785623685970114"
             }
           },
           "parameters": {
@@ -625,8 +602,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "3196098191154039424"
+                      "version": "0.14.85.62628",
+                      "templateHash": "26179136353186498"
                     }
                   },
                   "parameters": {
@@ -703,7 +680,7 @@
                             "properties": {
                               "privateIPAllocationMethod": "Dynamic",
                               "subnet": {
-                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))).subnets[0].id]"
+                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName')), '2021-02-01').subnets[0].id]"
                               },
                               "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
@@ -781,8 +758,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "2093150853957873838"
+                      "version": "0.14.85.62628",
+                      "templateHash": "10636297040827343273"
                     }
                   },
                   "parameters": {
@@ -933,20 +910,14 @@
         },
         "mode": "Incremental",
         "parameters": {
-          "GatewayName": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.GatewayName.value, 'none')]"
-          },
-          "NetworkResourceGroup": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value, 'none')]"
-          },
+          "GatewayName": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.GatewayName.value), createObject('value', 'none'))]",
+          "NetworkResourceGroup": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value), createObject('value', 'none'))]",
           "VNetPrefix": {
             "value": "[parameters('Prefix')]"
           },
-          "PrivateCloudName": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
-          },
+          "PrivateCloudName": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudName.value), createObject('value', parameters('ExistingPrivateCloudName')))]",
           "PrivateCloudResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceGroupName.value]"
           },
           "Location": {
             "value": "[parameters('Location')]"
@@ -958,8 +929,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "16420393180155695568"
+              "version": "0.14.85.62628",
+              "templateHash": "7087287819972602872"
             }
           },
           "parameters": {
@@ -1011,8 +982,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "1515537628270861084"
+                      "version": "0.14.85.62628",
+                      "templateHash": "12911391985312151182"
                     }
                   },
                   "parameters": {
@@ -1033,7 +1004,7 @@
                   "outputs": {
                     "ExpressRouteAuthorizationKey": {
                       "type": "string",
-                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName')), '2021-06-01').expressRouteAuthorizationKey]"
                     },
                     "ExpressRouteId": {
                       "type": "string",
@@ -1061,10 +1032,10 @@
                     "value": "[parameters('GatewayName')]"
                   },
                   "ExpressRouteAuthorizationKey": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteAuthorizationKey.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name)), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
                   },
                   "ExpressRouteId": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteId.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name)), '2020-10-01').outputs.ExpressRouteId.value]"
                   },
                   "Location": {
                     "value": "[parameters('Location')]"
@@ -1076,8 +1047,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "6025036195034280107"
+                      "version": "0.14.85.62628",
+                      "templateHash": "5695281374541228789"
                     }
                   },
                   "parameters": {
@@ -1091,10 +1062,10 @@
                       "type": "string"
                     },
                     "ExpressRouteAuthorizationKey": {
-                      "type": "secureString"
+                      "type": "securestring"
                     },
                     "ExpressRouteId": {
-                      "type": "secureString"
+                      "type": "securestring"
                     }
                   },
                   "resources": [
@@ -1133,7 +1104,7 @@
           "outputs": {
             "ExRConnectionResourceId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExR', deployment().name))).outputs.ExRConnectionResourceId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExR', deployment().name)), '2020-10-01').outputs.ExRConnectionResourceId.value]"
             }
           }
         }
@@ -1161,9 +1132,7 @@
           "Location": {
             "value": "[parameters('Location')]"
           },
-          "VNetName": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value, parameters('RouteServerVNetName'))]"
-          },
+          "VNetName": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value), createObject('value', parameters('RouteServerVNetName')))]",
           "RouteServerSubnetPrefix": {
             "value": "[parameters('RouteServerSubnetPrefix')]"
           },
@@ -1177,8 +1146,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "7690545718361773025"
+              "version": "0.14.85.62628",
+              "templateHash": "6793388622990818943"
             }
           },
           "parameters": {
@@ -1238,8 +1207,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "8595763680656051483"
+                      "version": "0.14.85.62628",
+                      "templateHash": "1120321204659731998"
                     }
                   },
                   "parameters": {
@@ -1338,15 +1307,15 @@
           "outputs": {
             "RouteServer": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.RouteServer.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.RouteServer.value]"
             },
             "RouteServerSubnetId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.NewRouteServerSubnetId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.NewRouteServerSubnetId.value]"
             },
             "ExistingRouteServerSubnetId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.ExistingRouteServerSubnetId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.ExistingRouteServerSubnetId.value]"
             },
             "NetworkResourceGroup": {
               "type": "string",
@@ -1383,12 +1352,8 @@
           "Password": {
             "value": "[parameters('JumpboxPassword')]"
           },
-          "VNetName": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value, '')]"
-          },
-          "VNetResourceGroup": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value, '')]"
-          },
+          "VNetName": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.VNetName.value), createObject('value', ''))]",
+          "VNetResourceGroup": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AzureNetworking', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value), createObject('value', ''))]",
           "BastionSubnet": {
             "value": "[parameters('BastionSubnet')]"
           },
@@ -1405,8 +1370,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "3555190416939922270"
+              "version": "0.14.85.62628",
+              "templateHash": "17645155211514160595"
             }
           },
           "parameters": {
@@ -1417,10 +1382,10 @@
               "type": "string"
             },
             "Username": {
-              "type": "secureString"
+              "type": "securestring"
             },
             "Password": {
-              "type": "secureString"
+              "type": "securestring"
             },
             "VNetResourceGroup": {
               "type": "string"
@@ -1472,8 +1437,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "14524662931660786226"
+                      "version": "0.14.85.62628",
+                      "templateHash": "8630186300382526333"
                     }
                   },
                   "parameters": {
@@ -1536,7 +1501,7 @@
                     "value": "[parameters('Prefix')]"
                   },
                   "SubnetId": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')).outputs.BastionSubnetId.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet'), '2020-10-01').outputs.BastionSubnetId.value]"
                   },
                   "Location": {
                     "value": "[parameters('Location')]"
@@ -1548,8 +1513,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "3494574494094398857"
+                      "version": "0.14.85.62628",
+                      "templateHash": "3154972507942581863"
                     }
                   },
                   "parameters": {
@@ -1623,7 +1588,7 @@
                     "value": "[parameters('Prefix')]"
                   },
                   "SubnetId": {
-                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet')).outputs.JumpBoxSubnetId.value]"
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VNetResourceGroup')), 'Microsoft.Resources/deployments', 'Jumpbox-Subnet'), '2020-10-01').outputs.JumpBoxSubnetId.value]"
                   },
                   "Location": {
                     "value": "[parameters('Location')]"
@@ -1644,8 +1609,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "12572035402376807226"
+                      "version": "0.14.85.62628",
+                      "templateHash": "13265048291285018971"
                     }
                   },
                   "parameters": {
@@ -1662,7 +1627,7 @@
                       "type": "string"
                     },
                     "Password": {
-                      "type": "secureString"
+                      "type": "securestring"
                     },
                     "VMSize": {
                       "type": "string"
@@ -1754,7 +1719,7 @@
           "outputs": {
             "JumpboxResourceId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Jumpbox', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-VM', deployment().name))).outputs.JumpboxResourceId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Jumpbox', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-VM', deployment().name)), '2020-10-01').outputs.JumpboxResourceId.value]"
             }
           }
         }
@@ -1793,15 +1758,9 @@
           "DeployDashboard": {
             "value": "[parameters('DeployDashboard')]"
           },
-          "PrimaryPrivateCloudName": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
-          },
-          "PrimaryPrivateCloudResourceId": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceId.value, parameters('ExistingPrivateCloudResourceId'))]"
-          },
-          "ExRConnectionResourceId": {
-            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNetConnection', variables('deploymentPrefix'))), '2020-10-01').outputs.ExRConnectionResourceId.value, '')]"
-          }
+          "PrimaryPrivateCloudName": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudName.value), createObject('value', parameters('ExistingPrivateCloudName')))]",
+          "PrimaryPrivateCloudResourceId": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceId.value), createObject('value', parameters('ExistingPrivateCloudResourceId')))]",
+          "ExRConnectionResourceId": "[if(parameters('DeployNetworking'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNetConnection', variables('deploymentPrefix'))), '2020-10-01').outputs.ExRConnectionResourceId.value), createObject('value', ''))]"
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
@@ -1809,8 +1768,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "10940611846724206879"
+              "version": "0.14.85.62628",
+              "templateHash": "10844539745282455329"
             }
           },
           "parameters": {
@@ -1880,8 +1839,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "14051640298139847680"
+                      "version": "0.14.85.62628",
+                      "templateHash": "13576861695484416503"
                     }
                   },
                   "parameters": {
@@ -2242,8 +2201,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "2776308478473413108"
+                      "version": "0.14.85.62628",
+                      "templateHash": "11376081451978257860"
                     }
                   },
                   "parameters": {
@@ -2297,9 +2256,7 @@
                 },
                 "mode": "Incremental",
                 "parameters": {
-                  "ActionGroupResourceId": {
-                    "value": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value, '')]"
-                  },
+                  "ActionGroupResourceId": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), createObject('value', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value), createObject('value', ''))]",
                   "AlertPrefix": {
                     "value": "[parameters('PrimaryPrivateCloudName')]"
                   },
@@ -2313,8 +2270,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "18248580094637330618"
+                      "version": "0.14.85.62628",
+                      "templateHash": "899129986861424208"
                     }
                   },
                   "parameters": {
@@ -2433,9 +2390,7 @@
                 },
                 "mode": "Incremental",
                 "parameters": {
-                  "ActionGroupResourceId": {
-                    "value": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value, '')]"
-                  },
+                  "ActionGroupResourceId": "[if(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), createObject('value', reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value), createObject('value', ''))]",
                   "AlertPrefix": {
                     "value": "[parameters('PrimaryPrivateCloudName')]"
                   },
@@ -2449,8 +2404,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "4726979985646009935"
+                      "version": "0.14.85.62628",
+                      "templateHash": "14052169728265718712"
                     }
                   },
                   "parameters": {
@@ -2534,11 +2489,9 @@
         },
         "mode": "Incremental",
         "parameters": {
-          "PrivateCloudName": {
-            "value": "[if(parameters('DeployPrivateCloud'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudName.value, parameters('ExistingPrivateCloudName'))]"
-          },
+          "PrivateCloudName": "[if(parameters('DeployPrivateCloud'), createObject('value', reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudName.value), createObject('value', parameters('ExistingPrivateCloudName')))]",
           "PrivateCloudResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))).outputs.PrivateCloudResourceGroupName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix'))), '2020-10-01').outputs.PrivateCloudResourceGroupName.value]"
           },
           "DeployHCX": {
             "value": "[parameters('DeployHCX')]"
@@ -2559,8 +2512,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.8.9.13224",
-              "templateHash": "6881436580612479626"
+              "version": "0.14.85.62628",
+              "templateHash": "15553313100520233692"
             }
           },
           "parameters": {
@@ -2608,8 +2561,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "9134327683351865553"
+                      "version": "0.14.85.62628",
+                      "templateHash": "17012309816488735722"
                     }
                   },
                   "parameters": {
@@ -2659,8 +2612,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.8.9.13224",
-                      "templateHash": "2406418508034114002"
+                      "version": "0.14.85.62628",
+                      "templateHash": "16118543318499396991"
                     }
                   },
                   "parameters": {
@@ -2708,6 +2661,32 @@
       "dependsOn": [
         "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-AVS', variables('deploymentPrefix')))]"
       ]
+    },
+    {
+      "condition": "[not(parameters('TelemetryOptOut'))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(deployment().name, parameters('Location')))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.14.85.62628",
+              "templateHash": "329739458929633377"
+            }
+          },
+          "resources": []
+        }
+      }
     }
   ]
 }

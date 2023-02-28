@@ -2,6 +2,11 @@
 
 This section contains templates to deploy specific components and add-ins for AVS. These templates can be used individually as required.
 
+## AVS Portal UI Accelerators (All-in-one Portal Experience)
+| Deploy                     | Description                                                  | Deploy                                                       |
+| -------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| AVS Monitoring and Logging | This is an all in one portal experience to deploy AVS Monitoring components and enable logging for your Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Monitoring-PortalUI%2FARM%2FESLZDeploy.deploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Monitoring-PortalUI%2FARM%2FESLZdeploy.Monitoring.PortalUI.json) |
+
 ## AVS Private Cloud + Add-ons
 
 | Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
@@ -13,13 +18,25 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
-## AVS Monitoring
+## AVS Storage
+
+| Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ANF datastore                     | This example will create an [Azure NetApp Files datastore](https://learn.microsoft.com/azure/azure-vmware/attach-azure-netapp-files-to-azure-vmware-solution-hosts), dedicated virtual network, and virtual network gateway | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FStorage%2FAVS-to-ANFdatastore-NewVNet%2FARM%2FANFdatastoreWithNewVNet.deploy.json) | [Link](Storage/AVS-to-ANFdatastore-NewVNet/readme.md) |
+
+
+###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
+
+
+## AVS Monitoring (Resource Group Scope)
+The examples below are all scoped at the resource group level. These will be useful in cases where you have not been given subscription rights and can therefore only perform actions at a resource group level
 
 | Deploy                                    | Description                                                  | Deploy                                                       | More Info                                                    |
 | ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Enable AVS Monitoring                     | This example will create an action group and example metric alerts for monitoring AVS Private Cloud | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Utilization-Alerts%2FARM%2FAVSMonitor.deploy.json) | [Link](Monitoring/AVS-Utilization-Alerts/readme.md) |
 | Service Health Alerts              | This example will create an action group & set up Service Health alerting for AVS in a specified region | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Service-Health%2FARM%2FAVSServiceHealth.deploy.json) | [Link](Monitoring/AVS-Service-Health/readme.md) |
 | AVS Dashboard                     | This example will create an Azure Dashboard showing the Private Cloud metrics, and optionally ExpressRoute connection metrics | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Dashboard%2FARM%2FAVSDashboard.deploy.json) | [Link](Monitoring/AVS-Dashboard/readme.md) |
+| AVS Workbook                     | This example is an Azure Monitor workbook highlighting information about the Private Clouds, including overview, performance, VMs, alerts and activity. | [![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FMonitoring%2FAVS-Workbook%2FARM%2FAVSWorkbook.deploy.json) | [Link](Monitoring/AVS-Workbook/readme.md) |
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
@@ -36,8 +53,12 @@ This section contains templates to deploy specific components and add-ins for AV
 
 ###### *Note: Navigate to the more info link to view detailed information and other IaC languages such as Bicep*
 
-## Run Commands
+## AVS Networking Step-by-Step Guides
 
-| Deploy                                                       | Description                                                  | More Info                                                    |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Apply storage policy to a set of AVS virtual machines      | Run this PS script to apply a storage policy to a set of AVS virtual machines | [Link](RunCommands/StoragePolicy/readme.md) |
+| Scenario                                                 | Description                                                          | More Info |
+| -------------------------------------------------------- | -------------------------------------------------------------------- | --------- |
+| Expressroute connectivity for AVS without Global Reach                                               | Connect an AVS Private Cloud to an on-prem network over ExpressRoute, leveraging an existing firewalling solution in Azure (without Global Reach)       | [Link](Networking/Step-By-Step-Guides/Expressroute%20connectivity%20for%20AVS%20without%20Global%20Reach/readme.md) |
+| Implementing internet connectivity for AVS with Azure NVAs | Internet outbound access for AVS via Azure NVAs running in an Azure VNet | [Link](Networking/Step-By-Step-Guides/Implementing%20internet%20connectivity%20for%20AVS%20with%20Azure%20NVAs) |
+
+
+

@@ -1,0 +1,8 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  rg_name                = "AVS_Sample_RG_Name"
+  rg_location            = "Southeast Asia"
+  virtual_hub_name       = "AVS_Route_Server_Hub"
+  virtual_hub_pip_name   = "AVS_Route_Server_Hub_IP"
+  route_server_name      = "AVS_Route_Server"
+  route_server_subnet_id = "<Route_Server_Subnet_ID>"

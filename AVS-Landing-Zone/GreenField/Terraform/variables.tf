@@ -4,15 +4,15 @@
 #-----------------------------------------------------------------
 
 variable "prefix" {
-  type    = string
+  type = string
 }
 
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "avs-networkblock" {
-  type    = string
+  type = string
 }
 
 variable "avs-sku" {
@@ -26,11 +26,11 @@ variable "avs-hostcount" {
 }
 
 variable "adminusername" {
-  type    = string
+  type = string
 }
 
 variable "adminpassword" {
-  type    = string
+  type = string
 }
 
 variable "jumpboxsku" {
@@ -39,19 +39,29 @@ variable "jumpboxsku" {
 }
 
 variable "vnetaddressspace" {
-  type    = string
+  type = string
 }
 
 variable "gatewaysubnet" {
-  type    = string
+  type = string
 }
 
 variable "azurebastionsubnet" {
-  type    = string
+  type = string
 }
 
 variable "jumpboxsubnet" {
-  type    = string
+  type = string
 }
 
+variable "hcx_key_names" {
+  type        = list(string)
+  description = "list of key names to use when generating hcx site activation keys."
+  default     = []
+}
 
+variable "telemetry_enabled" {
+  type        = bool
+  description = "toggle the telemetry on/off for this module"
+  default     = true
+}

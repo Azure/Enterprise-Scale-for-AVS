@@ -6,7 +6,7 @@ It is crucial to monitor the resource utilization in order to understand what is
 
 * AVS Private Cloud up and running.
 
-* (Optional) An Express Route Gateway
+* (Optional) An Express Route Gateway - please collect the resourceid from the Express Route GW connection  <https://docs.microsoft.com/en-us/azure/expressroute/expressroute-howto-add-gateway-portal-resource-manager> from your hub vNet. 
 
 ## Deployment Steps
 
@@ -28,6 +28,15 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Dashboard -c
 cd ARM
 
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Dashboard -c -f "AVSDashboard.deploy.json" -p "@AVSDashboard.parameters.json"
+```
+
+### Terraform
+
+Edit `terraform.tfvars` file with appropriate settings, then:
+
+```bash
+terraform plan
+terraform apply
 ```
 
 ## Post-deployment Steps

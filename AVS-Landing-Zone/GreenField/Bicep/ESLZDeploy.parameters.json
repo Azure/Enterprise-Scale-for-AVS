@@ -11,6 +11,9 @@
         "PrivateCloudSKU": {
             "value": "AV36"
         },
+        "Internet": {
+            "value": "Disabled"
+        },
         "PrivateCloudHostCount": {
             "value": 3
         },
@@ -36,6 +39,15 @@
         },
         "JumpboxSubnet": {
             "value": "10.1.1.0/25"
+        },
+        "OSVersion": {
+            "value": "2022-datacenter-azure-edition-smalldisk"
+        },
+        "BootstrapJumpboxVM": {
+            "value": false
+        },
+        "BootstrapPath": {
+            "value": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/AVS-Landing-Zone/GreenField/Scripts/bootstrap.ps1"
         },
         "BastionSubnet": {
             "value": "10.1.1.128/25"

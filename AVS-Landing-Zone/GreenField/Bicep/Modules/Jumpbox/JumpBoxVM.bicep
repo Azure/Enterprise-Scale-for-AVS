@@ -5,7 +5,10 @@ param Username string
 @secure()
 param Password string
 param VMSize string
-param OSVersion string = '2019-Datacenter-smalldisk'
+param OSVersion string
+param BootstrapVM bool = false
+param BootstrapPath string = ''
+param BootstrapCommand string = ''
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'
@@ -31,6 +34,9 @@ resource Nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
 resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
   name: Name
   location: Location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     hardwareProfile: {
       vmSize: VMSize
@@ -60,6 +66,23 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
           id: Nic.id
         }
       ]
+    }
+  }
+}
+
+resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = if(BootstrapVM) {
+  name: '${VM.name}/CustomScriptExtension'
+  location: Location
+  properties: {
+    publisher: 'Microsoft.Compute'
+    type: 'CustomScriptExtension'
+    typeHandlerVersion: '1.9'
+    autoUpgradeMinorVersion: true
+    settings: {
+      fileUris: [
+        BootstrapPath
+      ]
+      commandToExecute: BootstrapCommand
     }
   }
 }

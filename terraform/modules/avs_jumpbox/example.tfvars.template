@@ -1,0 +1,9 @@
+  jumpbox_nic_name  = "testvm-nic"
+  jumpbox_name      = "testvm"
+  jumpbox_sku       = "Standard_D2as_v4"
+  rg_name           = "test_resource_group_name"
+  rg_location       = "Southeast Asia"
+  jumpbox_subnet_id = "<full_subnet_resource_id>"
+  admin_username    = "azureuser"
+  key_vault_id      = "<full_key_vault_resource_id>"
+  tags              = {"Environment":"Demo"}
