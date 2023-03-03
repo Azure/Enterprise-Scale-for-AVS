@@ -4,16 +4,7 @@
 
 ### Virtual Hardware Requirements for HCX Appliances
 
-|Appliance |vCPU |Memory |Disk Space/IOPS |
-|------|-----|-----|-----|
-|HCX Manager & Connector |4 |12 GB |60 GB|
-|HCX Interconnect (HCX-IX) |8 |3 GB |2 GB|
-|HCX Network Extension (HCX-NE) |8 |3 GB |2 GB|
-|HCX WAN Optimization (HCX-WO) |8 |14 GB |100 GB/5,000 IOPS|
-|HCX Sentinel Gateway (HCX-SGW) *Source only* |8 |8 GB |21 GB (Disks: 2 GB, 6 GB, 4 GB, and 9 GB)|
-|HCX Sentinel Data Receiver (HCX-SDR) *Destination only* |8 |8 GB |21 GB (Disks: 2 GB, 6 GB, 4 GB, and 9 GB)|
-
-For a complete list of System Requirements for HCX, please visit [VMware Official Documentation](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-D64901F4-6AB4-4820-9303-27927648A34D.html).
+Please visit [Virtual Hardware Requirements for HCX Appliances](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-D64901F4-6AB4-4820-9303-27927648A34D.html).
 
 ### Software Version Requirements
 
@@ -27,7 +18,7 @@ For a complete list of network port and protocol requirements, see [VMware Ports
 
 ### Network Underlay Minimum Requirements
 
-For a complete list of Network Underlay Minimum Requirements for HCX, please visit [VMware Official Documentation](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html).
+Please visit [Network Underlay Minimum Requirements](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html).
 
 HCX has network underlay minimums for HCX Migration and disaster recovery operations. HCX operations with lesser than the minimum values are not officially supported.
 
@@ -35,13 +26,6 @@ The values provided are the minimums for individual operations at minimum perfor
 
 - Minimizing latency, loss, jitter results in improved migration performance outcomes.
 - Parallel HCX operations (migration and extension) result in increased bandwidth requirements.
-
-|Network Parameter|HCX vMotion|Replication Assisted vMotion (RAV)|Bulk Migration & DR (Protection)|OS Assisted Migration (OSAM)|
-|-----|-----|-----|------|-----|
-|Min Bandwidth (Mbps)|100|150|50|50|
-|Min MTU (bytes) (1350 if version < HCX4.2)|1150|1150|1150|1150|
-|Max Packet Loss (%)|0.1|0.1|1.0|1.0|
-|Max Latency|150|150|150|150|
 
 ### User Account and Role Requirements
 

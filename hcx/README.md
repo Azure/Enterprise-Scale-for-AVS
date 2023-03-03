@@ -1,6 +1,10 @@
-# HCX-ESLZ
+# VMware HCX For Azure VMware Solution (AVS)
 
-[What is HCX](whatishcx.md)
+HCX is a migration tool from VMware that helps transparently migrate workloads between vSphere environments, simplifying application migrations, rebalancing of workloads, and optimizing disaster recovery across vSphere platforms like Azure VMware Solution (AVS).
+
+You can find official VMware HCX documentation in VMware documentation page: [VMware HCX Documentation](https://docs.vmware.com/en/VMware-HCX/index.html).
+
+[Azure VMware Solution HCX Documentation](https://learn.microsoft.com/en-us/azure/azure-vmware/install-vmware-hcx)
 
 [HCX Licensing Options for AVS](hcxlicensingoptions.md)
 
@@ -12,21 +16,21 @@
 
 [HCX Deployment Scenarios](hcx-deployment.md)
 
-[Troubleshooting HCX - Empty](troubleshootinghcx.md)
+[Troubleshooting HCX - TBD](troubleshootinghcx.md)
 
-[Updating HCX - Empty](updatinghcx.md)
+[Updating HCX - TBD](updatinghcx.md)
 
-[Network Extension Considerations (including MON) - Empty](netextconsiderations.md)
+[Network Extension Considerations (including MON) - TBD](netextconsiderations.md)
 
-[HCX Architecture Scenario 1 - Empty](scenario1.md)
+[HCX Architecture Scenario 1 - TBD](hcx-scenario1.md)
 
-[HCX Architecture Scenario 2 - Empty](scenario2.md)
+[HCX Architecture Scenario 2 - TBD](hcx-scenario2.md)
 
-[HCX Architecture Scenario 3 - Empty](scenario3.md)
+[HCX Architecture Scenario 3 - TBD](hcx-scenario3.md)
 
-[HCX Architecture Scenario 4 - Empty](scenario4.md)
+[HCX Architecture Scenario 4 - TBD](hcx-scenario4.md)
 
-[HCX Architecture Scenario 5 - Empty](scenario5.md)
+[HCX Architecture Scenario 5 - TBD](hcx-scenario5.md)
 
-[Automating HCX - Empty](automatinghcx.md)
+[Automating HCX - TBD](automatinghcx.md)
 
