@@ -16,7 +16,7 @@ Write-Output "Deploying Resource Groups now"
 
 # Deploy Private Cloud
 Write-Output "Deploying Private Cloud now"
-#& "$rootFolder\2.private-cloud\deploy-withjson.ps1"
+& "$rootFolder\2.private-cloud\deploy-withjson.ps1"
 #. .\2.private-cloud\deploy-withjson.ps1
 
 # Deploy Networking
@@ -26,4 +26,5 @@ Write-Output "Deploying Networking now"
 
 # Deploy Jumpbox
 write-Output "Deploying Jumpbox now"
+& "$rootFolder\4.jumpbox\deploy-withjson.ps1"
 #. .\4.jumpbox\deploy-withjson.ps1
