@@ -6,7 +6,7 @@ This section will show some examples on how to manipulate vCenter objects throug
 
 This example uses VMware PowerCLI script that reads a CSV file with four columns ("VMName", "Cores", "MemoryGB", and "StoragePolicy") and reconfigures the matching VMs in vCenter with the new CPU, Memory, and Storage Policy settings:
 
-See example here: [Link](/BrownField/Scripts/Update-Existing-VMs-CPU-Memory-StoragePolicy.ps1)
+See example here: [Link](/BrownField/Scripts/Reconfigure-VMs.ps1)
 
 **Instructions**:
 
