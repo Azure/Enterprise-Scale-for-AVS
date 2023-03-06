@@ -10,8 +10,8 @@
 ###############################################################
 
 
-#new-azresourcegroup -name avs-northeurope-networking-rg -location northeurope
-$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
+$variablesPath = $rootFolder + "\variables\variables.json"
+$variables = Get-Content -path $variablesPath | ConvertFrom-Json
 
 $networking = $variables.Networking
 

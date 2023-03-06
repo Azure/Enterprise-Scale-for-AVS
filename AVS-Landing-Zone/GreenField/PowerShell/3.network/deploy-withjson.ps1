@@ -9,7 +9,12 @@
 #                                             #
 ###############################################
 
-$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
+#$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
+#$networking = $variables.Networking
+
+$variablesPath = $rootFolder + "\variables\variables.json"
+$variables = Get-Content -path $variablesPath | ConvertFrom-Json
+
 $networking = $variables.Networking
 
 ## hub and spoke
@@ -17,8 +22,7 @@ $networking = $variables.Networking
 $deployHubAndSpoke = $networking.hubAndSpoke.deploy
 if ($deployHubAndSpoke -eq "true") {
     Write-Output "Deploying Hub and Spoke"
-    #. .\3.network\hub-and-spoke\deploy-withjson.ps1
-    .\hub-and-spoke\deploy-withjson.ps1
+    & "$rootFolder\3.network\hub-and-spoke\deploy-withjson.ps1"
 
 } else {
     write-Output "Skipping Hub and Spoke"
@@ -28,9 +32,8 @@ if ($deployHubAndSpoke -eq "true") {
 $deployVirtualWan = $networking.virtualWan.deploy
 if ($deployVirtualWan -eq "true") {
     Write-Output "Deploying Virtual Wan"
-    #. .\3.network\virtual-wan\deploy-withjson.ps1
+    & "$rootFolder\3.network\virtual-wan\deploy-withjson.ps1"
 
-    . .\3.network\virtual-wan\deploy-withjson.ps1
 } else {
     write-Output "Skipping Virtual Wan"
 }
