@@ -63,7 +63,7 @@ Please note that this service is for outbound, egress traffic only. Here are som
 
 Consideration: Use Managed SNAT for proof of concept evaluations or workloads that don't have these requirements. 
 
-Recommendation: Use Public IP at the NSX edge for a native, scalable, secure solution 
+Recommendation: Use Public IP at the NSX-T DC Edge for a native, scalable, secure solution 
 
 ## Public IP at the NSX-T Data Center Edge 
 
@@ -86,7 +86,7 @@ Which gives you flexibility in your design patterns.
 
 ## Secured vWAN HUB
 
-This option is for using Azure VWAN Hub to learn routes from AVS statically or dynamically with BGP.  First, lets take the example of a WAN topology. A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution becomes another spoke off that design and will exchange routes with Secure vWAN Hub dynamically because it speaks BGP. 
+This option is for using Azure vWAN Hub to learn routes from AVS statically or dynamically with BGP.  First, lets take the example of a WAN topology. A WAN creates connections between P2P/S2S VPN, ER circuits, mobile devices, amongst other spokes to a centralized location. Azure VMware Solution becomes another spoke off that design and will exchange routes with Secure vWAN Hub dynamically because it speaks BGP. 
 
 ![vWANarch.png](./images/vwanarch.png)
 
