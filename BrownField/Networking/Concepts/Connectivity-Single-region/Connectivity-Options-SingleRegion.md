@@ -46,7 +46,7 @@ This however still is not the most direct, low latency option.
 
 If traversing back to on-premises is not a requirement. Consider using Managed SNAT directly from Azure VMware Solution itself. As the name suggests, this is an Azure VMware Solution managed mechanism to give your Private workloads a Public IP to access the internet for outbound traffic. 
 
-![managedsnat.png](./images/snat.png)
+![managedsnat.png](./images/managed_snat.png)
 See:https://learn.microsoft.com/en-us/azure/azure-vmware/enable-managed-snat-for-workloads
 
 ### Limitations
