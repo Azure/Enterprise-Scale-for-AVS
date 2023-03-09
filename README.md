@@ -71,6 +71,13 @@ This deployment is a lite version of the full AVS Greenfield Deployment and will
 
 We've created a number of additional Terraform modules for AVS related deployment activities. Details on these modules can be found in the [Terraform readme.](./terraform/readme.md) 
 
+
+## Converting Bicep templates to ARM templates
+
+Azure deployment templates are being developed in [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep). Thus, a script file _Build-ARM.ps1_ is used to compile the .bicep files to .json so templates can be executed as ARM templates instead of Bicep. This is necessary in any deployment mechanism that communicates with Azure Resource Manager REST API directly.
+
+Once you execute _Build-ARM.ps1_ in its current location, it will recursively perform 'az bicep build' to all .bicep files to .json files (ARM templates).
+
 ## Next Steps
 
 Next steps, head to [Getting Started](GettingStarted.md) to review prerequisites and deployment options

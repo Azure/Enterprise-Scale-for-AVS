@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.10.61.36676",
-      "templateHash": "7659281450451742130"
+      "version": "0.14.46.61228",
+      "templateHash": "11333918257564301826"
     }
   },
   "parameters": {
@@ -60,9 +60,9 @@
           "properties": {}
         },
         "peer": {
-          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')).outputs.ExpressRouteId.value]"
+          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteId.value]"
         },
-        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')).outputs.ExpressRouteAuthorizationKey.value]"
+        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
       },
       "dependsOn": [
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')]"
@@ -93,8 +93,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "8159639343621508614"
+              "version": "0.14.46.61228",
+              "templateHash": "9475837945359188808"
             }
           },
           "parameters": {
@@ -121,7 +121,7 @@
           "outputs": {
             "ExpressRouteAuthorizationKey": {
               "type": "string",
-              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('AuthKeyName'))).expressRouteAuthorizationKey]"
+              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('AuthKeyName')), '2021-06-01').expressRouteAuthorizationKey]"
             },
             "ExpressRouteId": {
               "type": "string",
@@ -147,8 +147,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.10.61.36676",
-              "templateHash": "4193470495622901480"
+              "version": "0.14.46.61228",
+              "templateHash": "8359988288953583068"
             }
           },
           "resources": []

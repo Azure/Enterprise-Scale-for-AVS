@@ -17,6 +17,7 @@ param PrivateCloudAddressSpace string = ''
   'AV36'
   'AV36T'
   'AV36P'
+  'AV36PT'
   'AV52'
 ])
 param PrivateCloudSKU string = 'AV36'

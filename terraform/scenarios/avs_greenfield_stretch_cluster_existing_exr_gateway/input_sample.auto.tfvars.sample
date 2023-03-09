@@ -1,0 +1,21 @@
+#This file is a sample tfvars input for this module. 
+#Copy this file to your root module, populate the file with the target deployment values and remove the .sample extension.
+
+
+prefix                  = "SDDC1"
+region                  = "Southeast Asia"
+sddc_sku                = "av36"
+#the cluster size should be a minimum of 6 for the two 3 node clusters to build
+management_cluster_size = 6
+avs_network_cidr        = "192.168.0.0/22"
+hcx_enabled             = true
+hcx_key_names           = ["keyname1", "keyname2"]
+email_addresses         = ["test1@test.com","test2@test.com"]
+expressroute_gateway_id = "<full resource id of the expressroute gateway the private clouds will be connected to>"
+internet_enabled        = false
+tags = {
+  environment = "Dev"
+  CreatedBy   = "Terraform"
+}
+
+telemetry_enabled = true
