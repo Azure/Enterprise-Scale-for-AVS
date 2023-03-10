@@ -100,3 +100,14 @@ vSphere
 WithinRegion
 WithHCX
 XR
+Microhack
+ANF
+NetApp
+datastore
+VMs
+Expressroute
+NVAs
+firewalling
+prem
+PortalUI
+prem
