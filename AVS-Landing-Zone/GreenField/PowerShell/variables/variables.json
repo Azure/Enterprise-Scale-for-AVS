@@ -4,25 +4,25 @@
         "id": "NetworkingResourceGroup",
 
         "prefix": "avs",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "name": "avs-contoso-networking-rg"
     },
     {
         "id": "PrivateCloudResourceGroup",
         "prefix": "avs",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "name": "avs-contoso-private-cloud-rg"
     },
     {
         "id": "OperationalResourceGroup",
         "prefix": "avs",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "name": "avs-contoso-operational-rg"
     },
     {
         "id": "JumpboxResourceGroup",
         "prefix": "avs",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "name": "avs-contoso-jumpbox-rg"
     }
     ],
@@ -30,7 +30,7 @@
     {
         "id": "PrivateCloud",
         "prefix": "avs",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "resourcegroupname": "avs-contoso-private-cloud-rg",
         "sku": "av36",
         "privatecloudnetworkcidr": "192.168.48.0/22",
@@ -65,7 +65,7 @@
             "id": "hubAndSpoke",
             "deploy": "true",
             "prefix": "avs",
-            "location":"eastus",
+            "location":"germanywestcentral",
             "resourcegroupname": "avs-contoso-networking-rg",
             "hubvnetname": "avs-hub-vnet",
             "hubvnetcidr": "10.0.0.0/16",
@@ -161,7 +161,7 @@
         },
         "virtualwan": {
             "id": "virtualwan",
-            "deploy": "true",
+            "deploy": "false",
             "name": "avs-contoso-virtualwan",
             "resourcegroupname": "avs-contoso-networking-rg",
             "location": "contoso",
@@ -185,7 +185,7 @@
     },
     "jumpbox": {
         "deploy": "true",
-        "location":"eastus",
+        "location":"germanywestcentral",
         "id": "jumpbox",
         "prefix": "avs",
         "resourcegroupname": "avs-contoso-jumpbox-rg",
