@@ -15,7 +15,7 @@ This guide will give you the required information to configure LDAPS for your Az
 1. Download and install the required tools
     - [OpenSSL](https://www.openssl.org/)
     - [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
-1. Run required OpenSSL against the required domain controllers
+1. Run required OpenSSL commands against the required domain controllers
 1. Export the certificate from the domain controller into the configured extraction folder.
 1. Create the Storage Account in Azure based upon configuration settings.
 1. Uploads the certificates as blobs into the Azure Storage Account.
