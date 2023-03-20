@@ -12,6 +12,8 @@ $vcredistx64installerfilename = "vc_redist.x64.exe"
 ## Pre-reqs script
 ## Script
 
+## SNIPPET 1 - Install VCRedist and OpenSSL
+
 if (!(Test-Path $tempFolder))
 {
     New-Item -ItemType Directory -Path $tempFolder
@@ -43,6 +45,8 @@ if (Test-Path $openSSLFilePath)
     write-output "Please wait for the installation to complete before continuning"
 }
 
+## SNIPPET 2 - Get Certs from DCs
+
 $remoteComputers = "dc1","dc2"
 foreach ($computer in $remoteComputers)
 {
@@ -57,6 +61,8 @@ foreach ($computer in $remoteComputers)
     $certExportFile = $tempFolder+"\"+($computer.split(".")[0])+".cer"
     $cert.Value | Out-File $certExportFile -Encoding ascii
 }
+
+## SNIPPET 3 - Create Storage Account
 
 ## Do you have Azure Module installed?
 if (Get-Module -ListAvailable -Name Az.Storage)
@@ -83,6 +89,8 @@ if ($null -eq $saCheck)
     write-output "Storage Account already exists"
 }
 
+
+## SNIPPET 4 - Create Container and upload certs
 ## create container
 $containerName = "" # Name of the container
 
@@ -94,6 +102,8 @@ foreach ($item in $certs)
     $azureFileName = $localFilePath.Split('\')[$localFilePath.Split('\').count-1]
     Get-AzStorageAccount -Name $storageAccountName -ResourceGroupName $storageAccountRgName | Get-AzStorageContainer -Name $containerName | Set-AzStorageBlobContent -File $localFilePath -Blob $azureFileName
 }
+
+## SNIPPET 5 - Create SAS Token
 
 ## create SAS token
 $containerName = $storageAccounts.ldaps.containername
