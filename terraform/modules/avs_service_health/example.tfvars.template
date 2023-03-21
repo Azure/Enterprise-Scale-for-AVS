@@ -1,0 +1,7 @@
+  rg_name                       = "Sample_resource_group_name"
+  action_group_name             = "Sample_action_group_name"
+  action_group_shortname        = "Sample_action_group_alias"
+  email_addresses               = ["email_address_1", "email_address_2"]
+  service_health_alert_name     = "Sample_health_alert_name"
+  service_health_alert_scope_id = "sample_health_alert_scope_resource_id"
+  private_cloud_id              = "/subscriptions/subscription_guid/resourceGroups/Test_resource_group/providers/Microsoft.AVS/privateClouds/Test-SDDC"

@@ -1,1 +1,15 @@
+# Editor settings
 .vscode/settings.json
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# terraform lock files
+*.terraform.lock.hcl
+
+# Dev tfvars files
+dev.tfvars

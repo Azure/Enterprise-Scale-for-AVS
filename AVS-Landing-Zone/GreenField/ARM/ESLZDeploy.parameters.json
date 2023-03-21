@@ -8,6 +8,12 @@
         "PrivateCloudAddressSpace": {
             "value": "10.0.0.0/22"
         },
+        "PrivateCloudSKU": {
+            "value": "AV36"
+        },
+        "PrivateCloudHostCount": {
+            "value": 3
+        },
         "VNetAddressSpace": {
             "value": "10.1.0.0/16"
         },

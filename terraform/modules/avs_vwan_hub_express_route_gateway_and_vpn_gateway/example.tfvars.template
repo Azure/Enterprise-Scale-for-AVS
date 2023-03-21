@@ -1,0 +1,19 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  rg_name                             = "AVS_Sample_RG_Name"
+  rg_location                         = "Southeast Asia"
+  vwan_id                             = "<resource id of the VWAN>"
+  vwan_hub_name                       = "AVS_Sample_VWAN_Hub"
+  vwan_hub_address_prefix             = "10.0.0.0/20"
+  express_route_gateway_name          = "AVS_VWAN_EXR_GW"
+  express_route_connection_name       = "AVS_VWAN_EXR_Conn"
+  express_route_circuit_peering_id    = "<Resource ID of the AVS peer circuit>"
+  express_route_authorization_key     = "<AVS ExpressRoute authorization Key>"
+  express_route_scale_units           = 1
+  azure_firewall_id                   = "<Resource ID of the Azure firewall if the secure hub flag is true>"
+  all_branch_traffic_through_firewall = true #This is the flag to create a secure hub
+  vpn_gateway_name                    = "AVS_VWAN_VPN_GW"
+  vpn_scale_units                     = 1
+  tags                                = {Sample_key = "Sample_value"}
+  private_range_prefixes              = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+  

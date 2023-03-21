@@ -1,0 +1,55 @@
+trigger:
+- main
+    
+pool:
+  name: 'Azure Pipelines'
+
+variables:
+  environment: 'AVS-Production'
+  paramFile: 'ESLZDeploy.parameters.json'
+  location: 'SoutheastAsia'
+  azureServiceConnectionName: 'Service Name(0000-0000-0000-0000-0000)'
+  artifactName: 'ESLZDeploy'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: $(azureServiceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az bicep build -f ./ESLZDeploy.bicep --outfile $(Build.ArtifactStagingDirectory)/ESLZDeploy.json'
+        failOnStandardError: true
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'ESLZDeploy*.parameters.json'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: $(artifactName)
+
+- stage: Deploy
+  dependsOn: Build
+  jobs:
+  - deployment: 'DeployESLZ'
+    environment: $(environment)
+    variables:
+      templateFilePath: '$(Pipeline.Workspace)/$(artifactName)/ESLZDeploy.json'
+      paramFilePath: '@$(Pipeline.Workspace)/$(artifactName)/$(paramFile)'
+      deploymentName: '$(environment)'
+      parameterOverride: '-p JumpboxPassword="$(JumpboxPassword)"'
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(azureServiceConnectionName)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: 'az deployment sub create -n ${{ variables.deploymentName }} -l $(location) -f ${{ variables.templateFilePath }} -p "${{ variables.paramFilePath }}" ${{ variables.parameterOverride }}'
+              failOnStandardError: true

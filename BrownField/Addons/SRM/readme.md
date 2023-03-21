@@ -32,6 +32,14 @@ cd ARM
 az deployment group create -g AVS-Step-By-Step-RG -n AVS-SRM-Deployment -c -f "SRM.deploy.json" -p "@SRM.parameters.json"
 ```
 
+### Azure PowerShell
+
+```powershell
+cd PowerShell
+
+.\deploy.ps1
+```
+
 ### Azure CLI
 
 ```azurecli-interactive

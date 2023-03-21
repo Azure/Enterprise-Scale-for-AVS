@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.4.1318.3566",
-      "templateHash": "4827878110747686168"
+      "version": "0.14.46.61228",
+      "templateHash": "7802388426997655973"
     }
   },
   "parameters": {
@@ -59,8 +59,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1318.3566",
-              "templateHash": "12049220193843438421"
+              "version": "0.14.46.61228",
+              "templateHash": "9196308408937528262"
             }
           },
           "parameters": {
@@ -102,8 +102,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1318.3566",
-                      "templateHash": "10779157790839886898"
+                      "version": "0.14.46.61228",
+                      "templateHash": "8359988288953583068"
                     }
                   },
                   "resources": []
@@ -114,7 +114,7 @@
           "outputs": {
             "ExpressRouteAuthorizationKey": {
               "type": "string",
-              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('AuthKeyName'))).expressRouteAuthorizationKey]"
+              "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('AuthKeyName')), '2021-06-01').expressRouteAuthorizationKey]"
             },
             "ExpressRouteId": {
               "type": "string",
@@ -139,10 +139,10 @@
             "value": "[parameters('PrimaryPrivateCloudName')]"
           },
           "ExpressRouteId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteId.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteId.value]"
           },
           "ExpressRouteAuthorizationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey')).outputs.ExpressRouteAuthorizationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
           }
         },
         "template": {
@@ -151,8 +151,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.4.1318.3566",
-              "templateHash": "3739766238709142225"
+              "version": "0.14.46.61228",
+              "templateHash": "3727816572482763114"
             }
           },
           "parameters": {
@@ -163,13 +163,13 @@
               }
             },
             "ExpressRouteAuthorizationKey": {
-              "type": "secureString",
+              "type": "securestring",
               "metadata": {
                 "description": "The Express Route Authorization Key to be redeemed by the connection"
               }
             },
             "ExpressRouteId": {
-              "type": "secureString",
+              "type": "securestring",
               "metadata": {
                 "description": "The id of the Express Route to create the connection to"
               }
@@ -204,8 +204,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.4.1318.3566",
-                      "templateHash": "10779157790839886898"
+                      "version": "0.14.46.61228",
+                      "templateHash": "8359988288953583068"
                     }
                   },
                   "resources": []
