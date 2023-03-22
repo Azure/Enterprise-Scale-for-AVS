@@ -95,4 +95,4 @@ Official documentation on enabling HCX over public IP can be found in Microsoftâ
 - <sup>1</sup> Appliances can be deployed on a separate network from the Management Network as long as appliances have unrestricted access to the Management Network.
 - <sup>2</sup> Managemen/Uplink/Replication Networks can be the same network.
 - <sup>3</sup> Just outbound needed.
-- <sup>4</sup> Must be a VM Port Group, cannot e a VMKernel PG.
+- <sup>4</sup> Must be a VM Port Group, cannot be a VMKernel PG.
