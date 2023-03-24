@@ -1,10 +1,10 @@
 # VMware HCX Licensing Options
 
-HCX comes in 2 different licensing versions:
+VMware HCX comes in 2 different licensing versions:
 1.	VMware HCX Advanced
 2.	VMware HCX Enterprise
 
-Licenses for HCX Advanced version is included as part of Azure VMware Solution (AVS).
+Licenses for HCX Advanced and Enterprise versions are included as part of Azure VMware Solution (AVS).
 
 Customers can upgrade to VMware HCX Enterprise via the Azure Portal at no additional cost.
 
