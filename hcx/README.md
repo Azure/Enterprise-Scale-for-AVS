@@ -15,4 +15,4 @@ This folder contains some key recommendations and points on utilizing VMware HCX
 | [HCX Components](hcxcomponents.md) | Description and explanation of different HCX components. |
 | [HCX Service Mesh](hcx-servicemesh.md) | Explanation of HCX Service Mesh and its components. |
 | [HCX Deployment Scenarions](hcx-deployment.md) | Different possible HCX Deployment Scenarios and recommendations. |
-| [Networking and Network Extenstion Considerations](netextconsiderations.md) | Options for networking setups for migrations and HCX Network Extension considerations. |
+| [Networking and Network Extension Considerations](netextconsiderations.md) | Options for networking setups for migrations and HCX Network Extension considerations. |
