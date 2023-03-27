@@ -84,11 +84,11 @@ $storageAccountName = "" # Storage Account Name
 $saCheck = Get-AzStorageAccount -ResourceGroupName $storageAccountRgName -Name $storageAccountName -ErrorAction SilentlyContinue
 if ($null -eq $saCheck)
 {
-    Write-Output "Please create the storage account as per storage-services\deploy-storageaccounts.ps1"
+    Write-Output "Creating Storage Account : $storageAccountName"
+    New-AzStorageAccount -name $storageAccountName -location $storageAccountLocation -ResourceGroupName $storageAccountRgName -sku Standard_LRS
 } else {
     write-output "Storage Account already exists"
 }
-
 
 ## SNIPPET 4 - Create Container and upload certs
 ## create container
