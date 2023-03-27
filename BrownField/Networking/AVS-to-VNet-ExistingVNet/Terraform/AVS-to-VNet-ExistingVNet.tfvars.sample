@@ -1,0 +1,7 @@
+#populate this file and remove the .sample extension when running this module standalone
+#if calling this module from another module leave this file commented out
+DeploymentResourceGroupName = "<resource group name where new expressroute connection will be deployed>"
+PrivateCloudName = "<existing private cloud name>"
+PrivateCloudResourceGroup = "<resource group where existing private cloud is deployed"
+Location = "<vnet deployment region>"
+GatewayName = "<name for the existing vnet gateway>"

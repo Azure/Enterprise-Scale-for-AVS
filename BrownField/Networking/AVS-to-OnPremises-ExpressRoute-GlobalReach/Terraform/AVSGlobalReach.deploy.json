@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.1124.51302",
+      "templateHash": "16188408207026649776"
+    }
+  },
+  "parameters": {
+    "PrivateCloudName": {
+      "type": "string",
+      "metadata": {
+        "description": "The existing Private Cloud name"
+      }
+    },
+    "ExpressRouteAuthorizationKey": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The Express Route Authorization Key to be redeemed by the connection"
+      }
+    },
+    "ExpressRouteId": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The id of the Express Route to create the connection to"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.AVS/privateClouds/globalReachConnections",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), guid(parameters('ExpressRouteId'), parameters('ExpressRouteAuthorizationKey')))]",
+      "properties": {
+        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
+        "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
+      }
+    }
+  ]
+}
