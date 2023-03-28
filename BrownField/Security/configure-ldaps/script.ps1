@@ -106,7 +106,7 @@ foreach ($item in $certs)
 ## SNIPPET 5 - Create SAS Token
 
 ## create SAS token
-$containerName = $storageAccounts.ldaps.containername
+$containerName = "" # Name of the container
 $blobs = Get-AzStorageBlob -Container $containerName -Context $storageContext | Where-Object {$_.name -match ".cer"}
 foreach ($blob in $blobs)
 {
