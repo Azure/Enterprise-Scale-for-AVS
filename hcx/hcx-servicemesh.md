@@ -46,6 +46,32 @@ When creating a Compute Profile within HCX, customers will need to define the fo
     - *vSphere Replication Network Profile* - If a separate network/port group is used for replication traffic, specify it here. Otherwise, the management network profile can also serve as the replication network profile and there would be no need to create a separate replication network profile.
 - **Network Containers** - Also knows as vSphere Distributed Switches. Select the Switch(s) the customer would like to make eligible for Network Extensions.
 
+### Possible Scenarios for Compute Profiles
+
+> These diagrams can be accessed here: [HCX Compute Profile.](./diagrams/computeprofile1.drawio)
+
+VMware HCX has a 1-1 relationship with vCenter Server on-premises, meaning, if you have 2 vCenter Servers, each managing a separate cluster or set of clusters let's say in 2 different cities, then HCX Connector will need to be installed in each vCenter Server, each vCenter Server will have at least 1 Compute Profile, at least 1 Service Mesh, and each will have at least its own set of Interconnect Appliances deployed with their Service Mesh.
+
+There are other scenarios however where customers might have multiple clusters in a single vCenter Server with one or multiple clusters being managed. Some of these clusters might be in separate physical locations, each location with its own connectivity into Azure, and in situations like this, multiple Compute Profiles should be leveraged in order to take advantage of the separate connectivity into Azure.
+
+#### Scenario 1: Single vCenter Server, Single Cluster
+
+![Single vCenter, Single Cluster](./images/cp1vC1Cl.png)
+
+In this scenario, the on-premises vCenter Server manages a single cluster, which for purposes of the HCX Compute Profile, becomes both the Service Cluster as well as the Deployment Cluster.
+
+### Scenario 2: Single vCenter Server, 2 or more Clusters
+
+![Single vCenter, Multiple Clusters](./images/cp1vC2Cl.png)
+
+In this scenario, the on-premises vCenter Server manages 3 clusters (could be 2 or more), which for purposes of the HCX Compute Profile, Cluster-1 becomes not only the Deployment Cluster but also a Service Cluster. Cluster-2 becomes a Service Cluster only, and Cluster-3 is neither, meaning any VMs residing in Cluster-3, HCX will not have access to migrate or protect.
+
+### Scenario 3: Single vCenter, Clusters in different locations
+
+![Single vCenter, 2 Clusters, 2 Cities](./images/cp1vC2Cl-2.png)
+
+In this scenario, the on-premises vCenter Server manages 2 Clusters. Each cluster resides in different locations (possibly different cities). Each location has their own independent connectivity into Azure. The recommendation here would be to have a Compute Profile for each Cluster as depicted in the image. This will allow the migration and protection traffic HCX sends to its peers in Azure VMware Solution more efficient by establishing connections using their respective connectivity into Azure.
+
 ## Service Mesh Creation
 
 Adding a Service Mesh initiates the deployment of the HCX Interconnect appliances on both sides (Source and Destination). The creation of the Service Mesh should always occur at the Source site.
@@ -69,3 +95,5 @@ During the creation of the Service Mesh the following needs to be selected:
     - *Application Path Resiliency* - HCX Service Mesh can build multiple transport tunnels to establish path diversity to the target, and intelligently directs HCX service traffic using the optimal path for performance and resiliency.
     - *WAN Optimization Configuration* - Here a customer can configure the maximum aggregate uplink bandwidth that will be consumed for migrations across all the uplinks.
     
+
+[def]: ./images/cp1vC1Cl.png
