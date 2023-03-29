@@ -107,6 +107,7 @@ foreach ($item in $certs)
 
 ## create SAS token
 $containerName = "" # Name of the container
+$sasString = @()
 $blobs = Get-AzStorageBlob -Container $containerName -Context $storageContext | Where-Object {$_.name -match ".cer"}
 foreach ($blob in $blobs)
 {
@@ -115,4 +116,10 @@ foreach ($blob in $blobs)
     $sasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blob.name -Permission rwd -StartTime $StartTime -ExpiryTime $EndTime -Context $storageContext -FullUri
     #$sasToken
     write-host "SASToken created: $sasToken"
+    $sasString += $sasToken+','
 }
+
+$sasString = $sasString.replace("\s+",'')
+$sasString = [String]::Join("",$sasString)
+$sasString = $sasString.Substring(0,$sasString.Length-1)
+$sasString
