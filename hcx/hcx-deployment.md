@@ -8,7 +8,7 @@ HCX over a VPN connection is fully supported on Azure VMware Solution. VMware ha
 
 A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 1300 in the Uplink and Replication Network Profiles.
 
-![HCX over VPN](.\images\hcx-vpn.png)
+![HCX over VPN](./images/hcx-vpn.png)
 
 ### Requirements for HCX over VPN
 
@@ -31,7 +31,7 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 
 ## HCX over ExpressRoute
 
-![HCX over ExpressRoute](.\images\hcx-er.png)
+![HCX over ExpressRoute](./images/hcx-er.png)
 
 ### Requirements for HCX over Express Route
 
@@ -53,7 +53,7 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 
 ## HCX over Public IP
 
-![HCX over Public IP](.\images\hcx-pip.png)
+![HCX over Public IP](./images/hcx-pip.png)
 
 HCX can be enabled over public IP. Microsoft recommends this option when customers connect to Azure via VPN in order to avoid the “double tunneling” effect that HCX over VPN provides. If this is not an acceptable option, please use HCX over VPN recommendation.
 
