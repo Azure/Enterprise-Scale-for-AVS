@@ -30,7 +30,22 @@ This approach requires an outage for the VM being migrated. Bulk Migration does 
 
 Once and if the old network segment on-premises is evacuated, customer should decomission this old network segment.
 
+#### Steps to follow with Re-IP of workloads to AVS
+
+1. Deploy Azure VMware Solution (AVS) with HCX enabled, or enable HCX after deployment.
+2. Deploy and activate HCX Connector on-premises or source site.
+3. Create HCX Site Pairing.
+4. Deploy HCX Service Mesh.
+5. Create new NSX-T Network Segment in AVS to replace existing network segment on source site.
+6. Migrate workloads to new AVS Network Segment.
+7. Retire old network segment from source site.
+8. Accept new AVS network segment advertised via BGP.
+
 ### Option 2: Duplicating Existing Network Segments
+
+Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+
+![HCX Duplicate Networks](./images/hcx-duplicate.gif)
 
 > Keep in mind that this option should only be used when an on-premises network segment will be fully evacuated and decommissioned after it is evacuated.
 
@@ -50,6 +65,18 @@ After all workloads are migrated off the on-premises original network segment, t
 2. Connect pre-staged NSX-T ntwork segment to AVS NSX-T T1 router. This will immediately advertise the previously disconnected network segment through BGP back to the customer's on-premises environment.
 
 This approach like Option 1, will require an outage so please plan accordingly.
+
+#### Steps to follow for Duplication of Networks in AVS
+
+1. Deploy Azure VMware Solution (AVS) with HCX enabled, or enable HCX after deployment.
+2. Deploy and activate HCX Connector on-premises or source site.
+3. Create HCX Site Pairing.
+4. Deploy HCX Service Mesh.
+5. Create new disconnected NSX-T Network Segment in AVS to replace existing network segment on source site with same CIDR space as source network.
+6. Migrate workloads to new disconnected AVS Network Segment.
+7. Retire old network segment from source site.
+8. Connect NSX-T duplicate segment to T1 router.
+9. Accept new AVS network segment advertised via BGP.
 
 ### Option 3: Extending Layer 2 Networks with HCX
 
