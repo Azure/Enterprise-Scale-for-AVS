@@ -8,7 +8,9 @@ Application dependency mappings assessment are also strongly encouraged to be pe
 
 ### Option 1: Re-IP Migrated Workloads
 
-**INSERT IMAGE HERE FOR RE-IP WORKLOADS**
+Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+
+![HCX Re-IP](./images/hcx-reip.gif)
 
 Customers can opt for a Re-IP strategy when migrating workloads to Azure VMware Solution with HCX. As VMs migrate to AVS with HCX, they will adopt a brand new IP address once migrated to Azure VMware Solution. This is ideal to organize or cleanup a network infrastructure that has become unmanageable for on-premises data centers and also offers a chance to document from a clean slate of IP schemes for migrated workloads.
 
@@ -20,7 +22,7 @@ With a Re-IP option, customers will need to pre-stage the new network segments i
 
 | Old Network Segment On-Premises | New Network Segment in AVS NSX-T|
 |-------------|--------------|
-|172.16.20.0/24|10.100.20.0/24|
+|172.16.20.0/24|10.10.20.0/24|
 
 When selecting this option, once a VM has been migrated, routing from the new network segment will be handled by NSX-T locally on the AVS side. A new network segment will be advertised via BGP back to on-premises and native Azure as well. Updating DNS configuration for migrated VMs utilizing this approach is also critical.
 
