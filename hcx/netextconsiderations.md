@@ -4,7 +4,7 @@
 
 Common services such as DNS, DHCP, Active Directory (Authentication), Firewalls, Load Balancers and others should be planned for and architected prior to the migration of any VM(s).
 
-Application dependency mappings assessment are also strongly encouraged to be performed prior to migrating workloads with HCX to AVS. This will allow for the creation of migration waves or groups and also minimize potential latency due to traffic communicating back through an ExpressRoute or VPN connection. 
+Application dependency mappings assessment are also strongly encouraged to be performed prior to migrating workloads with HCX to AVS. This will allow for the creation of migration waves or groups and also minimize potential latency due to traffic communicating back through an ExpressRoute or VPN connection.
 
 ### Option 1: Re-IP Migrated Workloads
 
@@ -38,7 +38,7 @@ When given the option to not change IP addresses for their VMs as they migrate t
 
 The solution for this scenario would be to duplicate existing network IP schemes used on-premises on NSX-T in Azure VMware Solution.
 
-Duplicating a network from on-premises in NSX-T allows customers to migrate VMs without the requirement of changing their IP address or performing a layer-2 network extension. 
+Duplicating a network from on-premises in NSX-T allows customers to migrate VMs without the requirement of changing their IP address or performing a layer-2 network extension.
 
 First, customers will need to pre-stage a network segment in NSX-T in a **Disconnected** state, meaning not attached to any NSX-T T1 router to avoid this network segment from being advertised via BGP back to on-premises and create IP conflicts with existing network segments on-premises.
 
@@ -56,6 +56,7 @@ This approach like Option 1, will require an outage so please plan accordingly.
 HCX Network Extension is a service of VMware HCX that provides a secure Layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machines to retain IP/MAC address during migration. The network extension service of HCX provides a secure layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machine to retain IP/MAC address during migration. HCX Network Extension can be used to create layer-two networks at the destination HCX site (Azure VMware Solution) and bridge the remote network to the source network over a multi-gigabit-capable link. The new stretched network is automatically bridged with the network at the source (on-premises) HCX data center.
 
 Important facts about extending Layer-2 Networks with HCX to Azure VMware Solution:
+
 - VMware NSX is not required on-premises to extend layer 2 networks.
 - VLANS and overlay networks can be extended via layer 2 with HCX.
 - vSphere vDS (Virtual Distributed Switch) is required for layer 2 extensions.
