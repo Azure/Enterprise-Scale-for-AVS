@@ -62,7 +62,7 @@ Once the disconnected network is pre-staged on the AVS NSX-T side, customers can
 After all workloads are migrated off the on-premises original network segment, the following steps should be followed:
 
 1. Decommission (retire) on-premises network segment and default gateway.
-2. Connect pre-staged NSX-T ntwork segment to AVS NSX-T T1 router. This will immediately advertise the previously disconnected network segment through BGP back to the customer's on-premises environment.
+2. Connect pre-staged NSX-T network segment to AVS NSX-T T1 router. This will immediately advertise the previously disconnected network segment through BGP back to the customer's on-premises environment.
 
 This approach like Option 1, will require an outage so please plan accordingly.
 
@@ -80,6 +80,10 @@ This approach like Option 1, will require an outage so please plan accordingly.
 
 ### Option 3: Extending Layer 2 Networks with HCX
 
+Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+
+![HCX L2 Extension of Networks](./images/hcx-L2-noMON.gif)
+
 HCX Network Extension is a service of VMware HCX that provides a secure Layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machines to retain IP/MAC address during migration. The network extension service of HCX provides a secure layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machine to retain IP/MAC address during migration. HCX Network Extension can be used to create layer-two networks at the destination HCX site (Azure VMware Solution) and bridge the remote network to the source network over a multi-gigabit-capable link. The new stretched network is automatically bridged with the network at the source (on-premises) HCX data center.
 
 Important facts about extending Layer-2 Networks with HCX to Azure VMware Solution:
@@ -92,15 +96,34 @@ Important facts about extending Layer-2 Networks with HCX to Azure VMware Soluti
 - Traffic will always be sent to its default gateway (hairpinned) back to on-premises for any layer 3 connectivity between workloads on extended networks, on-premises, and/or in non-streched networks on AVS, as well as Azure VNETs.
 - This approach does not require an outage as migrations can be done via vMotion, Replication Assisted vMotion (RAV), which will not intefere with the operation of the VM(s). Bulk Migration and Cold Migration can also be used to migrate to extended networks, just keep in mind these methods require downtime for the VM to be migrated.
 - Once and on-premises network segment is fully evacuated, customers can choose to un-stretch a layer 2 network segment with an option to transfer the duties of the default gateway to the NSX-T T1 router on the AVS side. Once the gateway duties are fully migrated, NSX-T will do routing locally through the T1.
-- Mobility Optimized Networking (MON) can be enabled on extended layer 2 networks via HCX to avoid traffic being hairpinned back to the on-premises default gateway. MON injects /32 routes to route traffic locally on AVS.
+- Mobility Optimized Networking (MON) can be enabled on extended layer 2 networks via HCX to avoid traffic being hairpinned back to the on-premises default gateway. MON injects /32 routes to route traffic locally on AVS (See Option 4).
 
-#### Mobility Optimized Networking (MON) Considerations
+#### Steps to follow for L2 Stretch of Networks in AVS without MON
+
+1. Deploy Azure VMware Solution (AVS) with HCX enabled, or enable HCX after deployment.
+2. Deploy and activate HCX Connector on-premises or source site.
+3. Create HCX Site Pairing.
+4. Deploy HCX Service Mesh.
+5. Extend L2 Network from Source Site to AVS.
+6. Migrate workloads to new L2 Stretched AVS Network Segment. (vMotion, RAV, Bulk/Cold Migration).
+7. Un-Stretch L2 Network from Source Site and Transfer Default Gateway capabilities to T1.
+8. Retire old network segment from source site.
+
+> **IMPORTANT**
+>
+> If the purpose is to keep a permanent (or long term) stretch of an L2 network from the Source Site to AVS, customers should consider and follow the recommendations for deploying the HCX Network Extension (NE) appliances in a High Availability setup. More information can be found in VMware's documentation: [Understanding Network Extension High Availability](https://docs.vmware.com/en/VMware-HCX/4.6/hcx-user-guide/GUID-E1353511-697A-44B0-82A0-852DB55F97D7.html#:~:text=Network%20Extension%20High%20Availability%20protects%20against%20one%20Network,service.%20Network%20Extension%20HA%20operates%20in%20Active%2FStandby%20mode.).
+
+### Option 4: L2 Extensions with Mobility Optimized Networking (MON)
+
+Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+
+![HCX L2 Extension of Networks with MON](./images/hcx-L2-MON.gif)
 
 Mobility Optimized Networking (MON) is an Enterprise capability of the HCX Network Extension feature. MON enabled network extensions improve traffic flows for migrated virtual machines by enabling selective cloud routing (within the destination environment), avoiding a long round trip network path via the source default gateway. The HCX Mobility Optimized Networking (MON) feature routes network traffic based on locality of the source and destination virtual machines. MON operation requires specific configuration of the HCX Network Extension parameters and the network environment between the source and the destination sites.
 
 It's important to note that HCX MON will not always solve all customer issues regarding traffic hairpinning back to a default gateway on-premises. It often requires additional manual configuration and maintenance as well as a full understanding of VM dependencies in order for MON to work as anticipated.
 
-If the goal is to evacuate a data center on-premises, the focus should simply be on getting VMs as quick as possible to Azure VMware Solution either by Re-IP'ing VMs migrated, Duplicating Existing Networks, or simply cutting over the default gateways of networks that were stretched via L2.
+If the goal is to evacuate a data center on-premises, the focus should simply be on getting VMs as quick as possible to Azure VMware Solution either by Re-IP'ing VMs migrated, Duplicating Existing Networks, or simply cutting over the default gateways of networks that were stretched via L2 (See Options 1, 2, and 3).
 
 If the use case for a customer is to have a layer 2 extension in perpetuity, then MON is a good option to enable. For this use case also customers would need to consider Network Extension High Availability (HA). This capability protects against one Network Extension appliance failure in a HA group. Network Extension HA operates without preemption, with no automatic failback of an appliance pair to the Active role. The HCX Network Extension service provides layer 2 connectivity between sites. Network Extension HA protects extended networks from a Network Extension appliance failure at either the source or remote site.
 
@@ -108,7 +131,7 @@ If the use case for a customer is to have a layer 2 extension in perpetuity, the
 
 1. **Network Traffic Expectations** - Make sure customer has clear understanding of traffic patterns within customer's network.
     - Will this create asymmetrical traffic?
-2. **Stateful Firewalls** - Determine if they exist in potential HCX MON path, this includes traffic within AVS, back to on-premises, and to Native Azure VNETs.
+2. **Stateful Firewalls** - Determine if they exist in potential HCX MON paths, this includes traffic within AVS, back to on-premises, and to Native Azure VNETs.
 3. **Unicast Reverse Path Forwarding (uRPF)** - uRPF is a security feature in VMware NSX-T that prevents IP packets from being passed to your router with forged source IP addresses. It helps to avoid spoofed source IP address attacks in which packets are sent with random source IP addresses. Packets will be rejected if the routing table interfaces are different. It is set to *strict* by default.
 4. **Policy Routes** - Should be emptied out to avoid asymmetrical paths while enabling MON. This will force HCX to default to the local NSX-T T1 gateway first.
 
@@ -123,3 +146,14 @@ If MON is enabled at the time the L2 extension is created, MON will either be en
 - **RAV Migration** - MON needs to be *manually* enabled per VM.
 
 > **IMPORTANT**: If customers deploy a Network Virtual Appliance with a T1 gateway deployed with it, MON is not supported by Microsoft support.
+
+#### Steps to follow for L2 Stretch of Networks in AVS with MON
+
+1. Deploy Azure VMware Solution (AVS) with HCX enabled, or enable HCX after deployment.
+2. Deploy and activate HCX Connector on-premises or source site.
+3. Create HCX Site Pairing.
+4. Deploy HCX Service Mesh.
+5. Extend L2 Network from Source Site to AVS (MON could be enabled at time of stretch of L2 network).
+6. Migrate workloads to new L2 Stretched AVS Network Segment. (vMotion, RAV, Bulk/Cold Migration).
+7. Enable MON if applicable.
+8. Add Route Filter On-Premises for /32 Routes advertisements.
