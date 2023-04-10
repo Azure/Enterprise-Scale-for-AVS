@@ -64,34 +64,33 @@ Names and IP ranges used in this guide are examples, and you may need to customi
 
 
 4. Create a jumpbox virtual machine on the "Servers" subnet defined above. Build it in the AVS-Scenario-1 resource group, select a Windows server (2016 or later). Choose an appropriate size (suggested is Standard_DS1_v2). Fill in the appropriate fields as shown, overriding the default Public inbound ports setting to "None," and then click on the "Next: Disks." Leave the defaults, then click on "Next : Networking"
-    a. Select the virtual network we created above: "AVS-Scenario-1-Jumpbox-vNet"
-    b. Select the subnet "Servers"
-    c. Select the Public IP dropdown and select None
-    d. Leave the reset of the defaults as shown.
+    1. Select the virtual network we created above: "AVS-Scenario-1-Jumpbox-vNet"
+    2. Select the subnet "Servers"
+    3. Select the Public IP dropdown and select None
+    4. Leave the reset of the defaults as shown.
 
     ![](./media/image5.png)
 
     ![](./media/image6.png)
 
-    d. Click on "Review + create" then click on "Create" to complete the creation of the Scenario-1-Jumpbox
+    5. Click on "Review + create" then click on "Create" to complete the creation of the Scenario-1-Jumpbox
 
 
 5. Deploy Azure Bastion
 
-    a. In the Search bar, search for and select "Bastions"
-    b. Click "+ Create"
-    c. Fill in the appropriate fields as shown, selecting the appropriate resource group, virtual network, and subnet
-    d. Click "Review + Create," then "Create"
+    1. In the Search bar, search for and select "Bastions"
+    2. Click "+ Create"
+    3. Fill in the appropriate fields as shown, selecting the appropriate resource group, virtual network, and subnet
+    4. Click "Review + Create," then "Create"
 
     ![](./media/bastion1.png)
 
       
 
-7. Verify you can log into the Jumpbox via Bastion
-
-    a. Go to the Scenario-1-Jumpbox resource
-    b. From the Overview pane, click the Connect dropdown and select Bastion
-    c. Enter the username and password specified when you created the virtual machine, then click Connect. If prompted about pop-ups being blocked, allow them and try again.
+6. Verify you can log into the Jumpbox via Bastion
+   1. Go to the Scenario-1-Jumpbox resource
+   2. From the Overview pane, click the Connect dropdown and select Bastion
+   3. Enter the username and password specified when you created the virtual machine, then click Connect. If prompted about pop-ups being blocked, allow them and try again.
 
 
 ## Part 2 -- Create the vWAN and vWAN hub
@@ -106,21 +105,21 @@ Names and IP ranges used in this guide are examples, and you may need to customi
 
     Make sure the region is set to match the rest of your deployment.
 
-    a. Add the name "Scenario-1-vWAN-Hub"
+    1. Add the name "Scenario-1-vWAN-Hub"
 
-    b. Add hub private IP address of 10.40.216.0/23
+    2. Add hub private IP address of 10.40.216.0/23
 
-    c. Set the Virtual hub capacity to "2 Routing Infrastructure Units."
+    3. Set the Virtual hub capacity to "2 Routing Infrastructure Units."
 
-    d. Click "Next : Site to site" (add nothing)
+    4. Click "Next : Site to site" (add nothing)
 
-    e. Click "Next : Point to site" (add nothing)
+    5. Click "Next : Point to site" (add nothing)
 
-    f. Click "Next : ExpressRoute"
+    6. Click "Next : ExpressRoute"
 
     ![](./media/image13.png)
 
-    g. On the ExpressRoute tab, select "Yes" to create an ExpressRoute Gateway and select "1 scale unit -- 2 Gbps" for the "Gateway scale units" option
+    7. On the ExpressRoute tab, select "Yes" to create an ExpressRoute Gateway and select "1 scale unit -- 2 Gbps" for the "Gateway scale units" option
 
     ![](./media/image14.png)
 
@@ -139,17 +138,17 @@ There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>
 
 1. Connect the Scenario-1-Jumpbox-vNet to the vWAN Hub.
 
-    a. Go to the vWAN configuration blade
+    1. Go to the vWAN configuration blade
     
-    b. Select "Virtual Network Connections"
+    2. Select "Virtual Network Connections"
     
-    c. Then from the top left, click on "+ Add connection"
+    3. Then from the top left, click on "+ Add connection"
     
-    d. Provide a connection name, select the hub that was just created, select the appropriate subscription and resource group, and select the Scenario-1-Jumpbox-vNet virtual network
+    4. Provide a connection name, select the hub that was just created, select the appropriate subscription and resource group, and select the Scenario-1-Jumpbox-vNet virtual network
     
-    e. Leave the defaults as shown
+    5. Leave the defaults as shown
     
-    f. Click on "Create"
+    6. Click on "Create"
 
     ![Graphical user interface, application Description automatically generated](./media/image15.png)
 
@@ -159,17 +158,17 @@ There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>
 
 2. Connect the AVS private cloud to vWAN hub.
 
-    a. Open up your AVS instance
+    1. Open up your AVS instance
     
-    b. Click on the "Connectivity" option
+    2. Click on the "Connectivity" option
     
-    c. Select ExpressRoute
+    3. Select ExpressRoute
     
-    d. Click on the "+ Request Authorization Key"
+    4. Click on the "+ Request Authorization Key"
     
-    e. Provide a name for the key. It's a good idea to name the key with the name of the vWAN hub you will be connecting to. (Connect-Scenario-1-vWAN-Hub)
+    5. Provide a name for the key. It's a good idea to name the key with the name of the vWAN hub you will be connecting to. (Connect-Scenario-1-vWAN-Hub)
     
-    f. Click "Create"
+    6. Click "Create"
 
     ![](./media/image17.png)
 
@@ -178,17 +177,17 @@ There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>
 3. Now we will create the ExpressRoute connection between AVS and the vWAN
    hub.
 
-    a. Select ExpressRoute
+    1. Select ExpressRoute
 
-    b. Click on the "+ Redeem authorization key"
+    2. Click on the "+ Redeem authorization key"
 
-    c. Copy the key value from the other browser window
+    3. Copy the key value from the other browser window
 
-    d. Enter the Peer Circuit ID -- Note this is called the "Express Route ID" in the picture above, do not use the "Private Peering ID"
+    4. Enter the Peer Circuit ID -- Note this is called the "Express Route ID" in the picture above, do not use the "Private Peering ID"
 
-    e. Select "Automatically associate this ExpressRoute circuit with the hub"
+    5. Select "Automatically associate this ExpressRoute circuit with the hub"
 
-    f. Click "Add"
+    6. Click "Add"
 
     ![Graphical user interface, application Description automatically generated](./media/image18.png) </br></br>
 
@@ -206,19 +205,19 @@ There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>
 
 5. Testing connectivity
 
-    a. On the AVS page, click on the "VMware credentials" option and bring up the screen with the login credentials.
+    1. On the AVS page, click on the "VMware credentials" option and bring up the screen with the login credentials.
 
     ![](./media/image21.png)
 
-    b. Next, use Bastion to access the Scenario-1-Jumpbox VM. Turn off IE Enhanced Security for Administrators (Server Manager/Local Server).
+    2. Next, use Bastion to access the Scenario-1-Jumpbox VM. Turn off IE Enhanced Security for Administrators (Server Manager/Local Server).
 
-    c. Open up the browser and enter the Web client URL listed on the VMware credentials tab. This should take you to the vCenter logon page.
+    3. Open up the browser and enter the Web client URL listed on the VMware credentials tab. This should take you to the vCenter logon page.
         
-    d. You will see a "Your connection isn't private" message. Click through the logon pages until you can see the login screen for AVS
+    4. You will see a "Your connection isn't private" message. Click through the logon pages until you can see the login screen for AVS
             
     ![](./media/image22.png)
         
-    e. Login using the <cloudadmin@vsphere.local> and the password copied from the VMware credentials panel
+    5. Login using the <cloudadmin@vsphere.local> and the password copied from the VMware credentials panel
 
     Connectivity through the vWAN hub has now been established.
 
@@ -230,84 +229,84 @@ We need to add two machines with web services installed in the AVS environment. 
 
 1. Create a VMware network segment, either through the Azure portal, or through the NSX-T interface.
 
-**Portal**
+   **Portal**
 
-   a. From the portal, click on "Segments" then click "+ Add" to create a new segment
+   1. From the portal, click on "Segments" then click "+ Add" to create a new segment
         
-   b. Add the name Scenario-1-VMware-Subnet
+   2. Add the name Scenario-1-VMware-Subnet
         
-   c. Add the gateway subnet 10.2.100.1/24 (this is correct, this is how VMware adds address space)
+   3. Add the gateway subnet 10.2.100.1/24 (this is correct, this is how VMware adds address space)
         
-   d. Add a DHCP range (This is optional, but simplifies addressing. The first server will have IP an address of 10.2.100.100 and second server will have IP an address of 10.2.100.101.)
+   4. Add a DHCP range (This is optional, but simplifies addressing. The first server will have IP an address of 10.2.100.100 and second server will have IP an address of 10.2.100.101.)
         
-   e. Click "OK" and wait until provisioning has completed (check using the notification icon).
+   5. Click "OK" and wait until provisioning has completed (check using the notification icon).
 
    ![](./media/image23.png)
 
-   f. Select DHCP from the portal and click "+ Add".
+   6. Select DHCP from the portal and click "+ Add".
         
-   g. Server name "Scenario-1-DHCPServer"
+   7. Server name "Scenario-1-DHCPServer"
         
-   h. Server IP addresses 10.2.101.0/24
+   8. Server IP addresses 10.2.101.0/24
         
-   i. Lease time 86400 seconds
+   9. Lease time 86400 seconds
         
-   j. Click "OK" and wait for it to complete.
+   10. Click "OK" and wait for it to complete.
 
    ![](./media/image24.png)
 
 
    **NSX-T Interface**
 
-      a. Log into the NSX-T interface using the IP address and credentials shown under the identity tab. (Same location as the vCenter login information).
+   1. Log into the NSX-T interface using the IP address and credentials shown under the identity tab. (Same location as the vCenter login information).
 
-![](./media/image25.png)
+   ![](./media/image25.png)
 
-      b. On the NSX-T management page, select the Networking tab</br>
+   2. On the NSX-T management page, select the Networking tab
 
-![](./media/image26.png)
+   ![](./media/image26.png)
     
-      c. Select "Segments" and then select "ADD SEGMENT" and complete the following as shown below.
+   3. Select "Segments" and then select "ADD SEGMENT" and complete the following as shown below.
     
-      d. Segment name "Scenario-1-WebServers"
+   4. Segment name "Scenario-1-WebServers"
     
-      e. Connected gateway (choose the default Tier1 gateway, it will always have the format TNT##-T1
+   5. Connected gateway (choose the default Tier1 gateway, it will always have the format TNT##-T1
     
-      f. Transport zone (choose TNT##-Overlay-TZ)
+   6. Transport zone (choose TNT##-Overlay-TZ)
     
-      g. Subnets, use IP address 10.2.104.1/24.
+   7. Subnets, use IP address 10.2.104.1/24.
 
    ![](./media/image27.png)
 
-      h. Click on the "SET DHCP CONFIG" on the right hand side (see screenshot above bottom right)
+   8. Click on the "SET DHCP CONFIG" on the right hand side (see screenshot above bottom right)
     
-      i. Set the DCHP type to "Local DHCP Server"
+   9. Set the DCHP type to "Local DHCP Server"
     
-      j. On the right-hand side, select the three vertical dots next to the DHCP profile and click "Create New"
+   10. On the right-hand side, select the three vertical dots next to the DHCP profile and click "Create New"
 
    ![](./media/image28.png)
 
-      k. Add the DHCP server name "Scenario-1-DHCP" and the IP address range for the DHCP server 10.2.107.2/24 (yes this is way to big, just easy to follow)
+   11. Add the DHCP server name "Scenario-1-DHCP" and the IP address range for the DHCP server 10.2.107.2/24 (yes this is way to big, just easy to follow)
     
-      l. Add the Edge cluster, choose TNT##-CLSTR
+   12. Add the Edge cluster, choose TNT##-CLSTR
 
    ![](./media/image29.png)
 
-      m. Click "Save" in the bottom right-hand corner.
+   13. Click "Save" in the bottom right-hand corner.
     
-      n. Back on the "Set DHCP Config" screen, enable the DCHP Config.
+   14. Back on the "Set DHCP Config" screen, enable the DCHP Config.
     
-      o. Add in the address of the DCHP server created above 10.2.107.2/24
+   15. Add in the address of the DCHP server created above 10.2.107.2/24
     
-      p. DCHP range 10.2.104.100-10.2.104.200
+   16. DCHP range 10.2.104.100-10.2.104.200
     
-      q. DNS server enter the default Azure DNS IP 168.63.129.16
+   17. DNS server enter the default Azure DNS IP 168.63.129.16
 
    ![](./media/image30.png)
 
-      r. In the bottom right corner, click "APPLY"
+   18. In the bottom right corner, click "APPLY"
     
-      s. Back on the Segments/ADD SEGMENT page, click "SAVE" in the bottom left hand corner. You should see the following confirmation -- select No to continue editing
+   19. Back on the Segments/ADD SEGMENT page, click "SAVE" in the bottom left hand corner. You should see the following confirmation -- select No to continue editing
 
    ![](./media/image31.png)
 
@@ -315,47 +314,47 @@ We need to add two machines with web services installed in the AVS environment. 
 
 > Note: We assume that the user knows how to create a VM, so we will only cover key steps. In this process, we use a Content data store and load Windows Server 2019. Alternatively, an ISO can be uploaded to a data store if this is a new AVS build (Ref: [Example-How to upload an ISO to a datastore](https://www.youtube.com/watch?v=kO2BV1pMQtc&t=15s))
 
-   a.  Log into the vCenter console as shown above
+   1. Log into the vCenter console as shown above
 
-   b.  Right click on the Cluster-1 and select "New Virtual Machine"
+   2. Right click on the Cluster-1 and select "New Virtual Machine"
         
-      i.   Create a new virtual machine > Next
-      ii.  Select a name and folder Virtual Machine Name: Scenario-1-Web01, leave the default location as SDDC-Datacenter > Next
-      iii. Select a compute resource: Cluster-1 > Next
-      iv.  Select storage (default): vsanDatastore > Next
-      v.   Select compatibility (default): ESXi 6.7 and later > Next
-      vi.  Select a guest OS, Guest OS family: Windows Guest OS version Microsoft Windows Server 2016 or later (64 bit) > Next
-      vii.  Customize hardware, leave defaults except
-         a.  Under New Network, browse and select "Scenario-1-Webservers"
-         b.  Under "New CD/DVD Drive" select "Content Library or Datastore" (wherever the ISO files are stored).
-         c.  Select the Windows server ISO to be used for the OS installation.
-         d.  Click the "Connect" radio button and confirm, should look like this:
+      1. Create a new virtual machine > Next
+      2.  Select a name and folder Virtual Machine Name: Scenario-1-Web01, leave the default location as SDDC-Datacenter > Next
+      3. Select a compute resource: Cluster-1 > Next
+      4. Select storage (default): vsanDatastore > Next
+      5. Select compatibility (default): ESXi 6.7 and later > Next
+      6. Select a guest OS, Guest OS family: Windows Guest OS version Microsoft Windows Server 2016 or later (64 bit) > Next
+      7. Customize hardware, leave defaults except:
+         * Under New Network, browse and select "Scenario-1-Webservers"
+         * Under "New CD/DVD Drive" select "Content Library or Datastore" (wherever the ISO files are stored).
+         * Select the Windows server ISO to be used for the OS installation.
+         * Click the "Connect" radio button and confirm, should look like this:
 
       ![](./media/image32.png)
 
-         e.  Click Next
+      8. Click Next
 
 
-      viii. Verify the configuration and click FINISH
+      9. Verify the configuration and click FINISH
 
 
-   c.  Power on the new server Scenario-1-Web01 and go through the Windows
+   3. Power on the new server Scenario-1-Web01 and go through the Windows
         setup process. (Note you may have to issue a reboot from the console
         to see the "Press to boot from CD" option -- if you see "EFI Network
         -- unsuccessful.", reboot using the command prompt in the top right
         hand corner of the console.)
 
-        a.  Select language and keyboard settings (default for most)
+      1. Select language and keyboard settings (default for most)
         
-        b.  Select "Desktop Experience" when choosing the OS
+      2. Select "Desktop Experience" when choosing the OS
         
-        c.  Select "Custom: Install Windows only (advanced)"
+      3. Select "Custom: Install Windows only (advanced)"
         
-        d.  Leave the default Drive 0 Unallocated Space, click Next
+      4. Leave the default Drive 0 Unallocated Space, click Next
         
-        e.  Enter your administrator password and click "Finish"
+      5. Enter your administrator password and click "Finish"
 
-    d.  Log into the Scenario-1-Web01 server
+   4. Log into the Scenario-1-Web01 server
 
         a.  Set the IE Enhanced Security Configuration for Administrators to
             "Off"
