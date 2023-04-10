@@ -17,65 +17,98 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 
 ## Option 1: Re-IP Steps
 
-|**Step**|**Layer**|**<span style="color:green">ON</span>/<span style="color:red">OFF</span>**|**Notes**|
+|**Step**|**Layer**|**ON/OFF**|**Notes**|
 |--------|---------|----------|---------|
-|1|AVS Deployment|**<span style="color:green">ON</span>**|Here you have the opportunity to explain the components that get deployed once AVS is deployed.|
-|2|AVS L2 10.10 Network|**<span style="color:green">ON</span>**|Explain an L2 network is created in NSX-T and a VM connected to it.|
-|3|Azure VNET|**<span style="color:green">ON</span>**|Customer's Azure VNET which AVS will connect to.|
-|4|On-Prem|**<span style="color:green">ON</span>**|Customer's on-prem environment, with ER connected to their Azure VNET.|
-|5|ER Global Reach|**<span style="color:green">ON</span>**|Explain ER Global Reach connection from AVS.|
-|6|ER to VNET|**<span style="color:green">ON</span>**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**<span style="color:green">ON</span>**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
-|8|HCX On-Prem|**<span style="color:green">ON</span>**|Explain HCX Connector needs to be deployed on-premises.|
-|9|HCX Site Pairing|**<span style="color:green">ON</span>**|Explain the next step is to establish the HCX Site Pairing.|
-|10|HCX-IX|**<span style="color:green">ON</span>**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
-|11|HCX-WO|**<span style="color:green">ON</span>**|HCX Wan Optimization (WO) appliance is next|
-|12|HCX-NE|**<span style="color:green">ON</span>**|HCX Network Extension(NE) also gets deployed with the Service Mesh|
-|13|HCX-IX Tunnel|**<span style="color:green">ON</span>**|IX Tunnel gets established between the two IX appliances once successfully deployed. This is the tunnel that manages the migration/replication traffic.|
-|14|HCX-NE Tunnel|**<span style="color:green">ON</span>**|NE Tunnel gets established between the two NE appliances once successfully deployed. This is the tunnel that manages the communication traffic for VMs on extended L2 networks.|
-|15|AVS VM to VNET Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
-|16|AVS VM to VNET Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
-|17|OnPrem to VNET Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
-|18|OnPrem to VNET Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
-|19|OnPrem to AVS Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
-|20|OnPrem to AVS Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
-|21|Create new NSX-T Segment|**<span style="color:green">ON</span>**|Demonstrates the creation of an NSX-T Network Segment in AVS with a CIDR different from any Network on-premises or in Azure.|
-|22|HCX Bulk Migration|**<span style="color:green">ON</span>**|Initiate Bulk Migration of on-premises VMs.|
-|23|HCX Bulk Migration Complete|**<span style="color:green">ON</span>**|Migration of VMs completes.|
-|24|HCX Bulk Migration|**<span style="color:red">OFF</span>**|Initiate Bulk Migration of on-premises VMs. Turn off to demonstrate completion of migration.|
-|25|Retire L2 OnPrem Segment|**<span style="color:green">ON</span>**|This will mimic the on-premises network being removed/retired.|
-|26|New Flow-Migrated VMs|**<span style="color:green">ON</span>**|This will show the path the flow of communication utilizes for the newly migrated and re-IP'ed VMs in AVS back to on-premises VMs|
+|1|AVS Deployment|**ON**|Here you have the opportunity to explain the components that get deployed once AVS is deployed.|
+|2|AVS L2 10.10 Network|**ON**|Explain an L2 network is created in NSX-T and a VM connected to it.|
+|3|Azure VNET|**ON**|Customer's Azure VNET which AVS will connect to.|
+|4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
+|5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
+|6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
+|9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
+|10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
+|11|HCX-WO|**ON**|HCX Wan Optimization (WO) appliance is next|
+|12|HCX-NE|**ON**|HCX Network Extension(NE) also gets deployed with the Service Mesh|
+|13|HCX-IX Tunnel|**ON**|IX Tunnel gets established between the two IX appliances once successfully deployed. This is the tunnel that manages the migration/replication traffic.|
+|14|HCX-NE Tunnel|**ON**|NE Tunnel gets established between the two NE appliances once successfully deployed. This is the tunnel that manages the communication traffic for VMs on extended L2 networks.|
+|15|AVS VM to VNET Flow|**ON**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
+|16|AVS VM to VNET Flow|**OFF**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
+|17|OnPrem to VNET Flow|**ON**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
+|18|OnPrem to VNET Flow|**OFF**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
+|19|OnPrem to AVS Flow|**ON**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
+|20|OnPrem to AVS Flow|**OFF**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
+|21|Create new NSX-T Segment|**ON**|Demonstrates the creation of an NSX-T Network Segment in AVS with a CIDR different from any Network on-premises or in Azure.|
+|22|HCX Bulk Migration|**ON**|Initiate Bulk Migration of on-premises VMs.|
+|23|HCX Bulk Migration Complete|**ON**|Migration of VMs completes.|
+|24|HCX Bulk Migration|**OFF**|Initiate Bulk Migration of on-premises VMs. Turn off to demonstrate completion of migration.|
+|25|Retire L2 OnPrem Segment|**ON**|This will mimic the on-premises network being removed/retired.|
+|26|New Flow-Migrated VMs|**ON**|This will show the path the flow of communication utilizes for the newly migrated and re-IP'ed VMs in AVS back to on-premises VMs|
 
 ## Option 2: Duplicate Networks
 
-|**Step**|**Layer**|**<span style="color:green">ON</span>/<span style="color:red">OFF</span>**|**Notes**|
+|**Step**|**Layer**|**ON/OFF**|**Notes**|
 |--------|---------|----------|---------|
-|1|AVS Deployment|**<span style="color:green">ON</span>**|Here you have the opportunity to explain the components that get deployed once AVS is deployed.|
-|2|AVS L2 10.10 Network|**<span style="color:green">ON</span>**|Explain an L2 network is created in NSX-T and a VM connected to it.|
-|3|Azure VNET|**<span style="color:green">ON</span>**|Customer's Azure VNET which AVS will connect to.|
-|4|On-Prem|**<span style="color:green">ON</span>**|Customer's on-prem environment, with ER connected to their Azure VNET.|
-|5|ER Global Reach|**<span style="color:green">ON</span>**|Explain ER Global Reach connection from AVS.|
-|6|ER to VNET|**<span style="color:green">ON</span>**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**<span style="color:green">ON</span>**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
-|8|HCX On-Prem|**<span style="color:green">ON</span>**|Explain HCX Connector needs to be deployed on-premises.|
-|9|HCX Site Pairing|**<span style="color:green">ON</span>**|Explain the next step is to establish the HCX Site Pairing.|
-|10|HCX-IX|**<span style="color:green">ON</span>**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
-|11|HCX-WO|**<span style="color:green">ON</span>**|HCX Wan Optimization (WO) appliance is next|
-|12|HCX-NE|**<span style="color:green">ON</span>**|HCX Network Extension(NE) also gets deployed with the Service Mesh|
-|13|HCX-IX Tunnel|**<span style="color:green">ON</span>**|IX Tunnel gets established between the two IX appliances once successfully deployed. This is the tunnel that manages the migration/replication traffic.|
-|14|HCX-NE Tunnel|**<span style="color:green">ON</span>**|NE Tunnel gets established between the two NE appliances once successfully deployed. This is the tunnel that manages the communication traffic for VMs on extended L2 networks.|
-|15|AVS VM to VNET Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
-|16|AVS VM to VNET Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
-|17|OnPrem to VNET Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
-|18|OnPrem to VNET Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
-|19|OnPrem to AVS Flow|**<span style="color:green">ON</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
-|20|OnPrem to AVS Flow|**<span style="color:red">OFF</span>**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
-|21|Create new disconnected NSX-T Segment|**<span style="color:green">ON</span>**|Demonstrates the creation of a disconeected NSX-T Network Segment in AVS with the same CIDR as the network on-premises being recreated.|
-|22|HCX Bulk Migration|**<span style="color:green">ON</span>**|Initiate Bulk Migration of on-premises VMs.|
-|23|HCX Bulk Migration Complete|**<span style="color:green">ON</span>**|Migration of VMs completes.|
-|24|HCX Bulk Migration|**<span style="color:red">OFF</span>**|Initiate Bulk Migration of on-premises VMs. Turn off to demonstrate completion of migration.|
-|25|Retire L2 OnPrem Segment|**<span style="color:green">ON</span>**|This will mimic the on-premises network being removed/retired.|
-|26|Connect Segment to T1|**<span style="color:green">ON</span>**|This will connect the previously created disconnected NSX-T Segment to the T1.|
-|27|Update newly advertised BGP route|**<span style="color:green">ON</span>**|Newly duplicated network will advertise via BGP the new route, it must be updated.|
-|28|New Flow-Migrated VMs to Source|**<span style="color:green">ON</span>**|This will show the path the flow of communication utilizes for the newly migrated VMs in the duplicated network on the AVS side back to on-premises VMs|
-|29|AVS to AVS Flow|**<span style="color:green">ON</span>**|This will show the path the flow of communication utilizes for the newly migrated VMs in the duplicated network on the AVS side back to another VM in a different network on the AVS side.|
+|1|AVS Deployment|**ON**|Here you have the opportunity to explain the components that get deployed once AVS is deployed.|
+|2|AVS L2 10.10 Network|**ON**|Explain an L2 network is created in NSX-T and a VM connected to it.|
+|3|Azure VNET|**ON**|Customer's Azure VNET which AVS will connect to.|
+|4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
+|5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
+|6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
+|9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
+|10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
+|11|HCX-WO|**ON**|HCX Wan Optimization (WO) appliance is next|
+|12|HCX-NE|**ON**|HCX Network Extension(NE) also gets deployed with the Service Mesh|
+|13|HCX-IX Tunnel|**ON**|IX Tunnel gets established between the two IX appliances once successfully deployed. This is the tunnel that manages the migration/replication traffic.|
+|14|HCX-NE Tunnel|**ON**|NE Tunnel gets established between the two NE appliances once successfully deployed. This is the tunnel that manages the communication traffic for VMs on extended L2 networks.|
+|15|AVS VM to VNET Flow|**ON**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
+|16|AVS VM to VNET Flow|**OFF**|Demonstrates the path the flow of communication utilizes between the VM in the AVS L2 network and the customer's Azure VNET.|
+|17|OnPrem to VNET Flow|**ON**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
+|18|OnPrem to VNET Flow|**OFF**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in the customer's Azure VNET.|
+|19|OnPrem to AVS Flow|**ON**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
+|20|OnPrem to AVS Flow|**OFF**|Demonstrates the path the flow of communication utilizes between an on-premises VM and a VM in AVS.|
+|21|Create new disconnected NSX-T Segment|**ON**|Demonstrates the creation of a disconnected NSX-T Network Segment in AVS with the same CIDR as the network on-premises being recreated.|
+|22|HCX Bulk Migration|**ON**|Initiate Bulk Migration of on-premises VMs.|
+|23|HCX Bulk Migration Complete|**ON**|Migration of VMs completes.|
+|24|HCX Bulk Migration|**OFF**|Initiate Bulk Migration of on-premises VMs. Turn off to demonstrate completion of migration.|
+|25|Retire L2 OnPrem Segment|**ON**|This will mimic the on-premises network being removed/retired.|
+|26|Connect Segment to T1|**ON**|This will connect the previously created disconnected NSX-T Segment to the T1.|
+|27|Update newly advertised BGP route|**ON**|Newly duplicated network will advertise via BGP the new route, it must be updated.|
+|28|New Flow-Migrated VMs to Source|**ON**|This will show the path the flow of communication utilizes for the newly migrated VMs in the duplicated network on the AVS side back to on-premises VMs|
+|29|AVS to AVS Flow|**ON**|This will show the path the flow of communication utilizes for the newly migrated VMs in the duplicated network on the AVS side back to another VM in a different network on the AVS side.|
+
+## Option 3: Network Extension without MON
+
+|**Step**|**Layer**|**ON/OFF**|**Notes**|
+|--------|---------|----------|---------|
+|1|AVS Deployment|**ON**|Here you have the opportunity to explain the components that get deployed once AVS is deployed.|
+|2|AVS L2 10.10 Network|**ON**|Explain an L2 network is created in NSX-T and a VM connected to it.|
+|3|Azure VNET|**ON**|Customer's Azure VNET which AVS will connect to.|
+|4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
+|5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
+|6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
+|9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
+|10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
+|11|HCX-WO|**ON**|HCX Wan Optimization (WO) appliance is next|
+|12|HCX-NE|**ON**|HCX Network Extension(NE) also gets deployed with the Service Mesh|
+|13|HCX-IX Tunnel|**ON**|IX Tunnel gets established between the two IX appliances once successfully deployed. This is the tunnel that manages the migration/replication traffic.|
+|14|HCX-NE Tunnel|**ON**|NE Tunnel gets established between the two NE appliances once successfully deployed. This is the tunnel that manages the communication traffic for VMs on extended L2 networks.|
+|15|Extend L2 Network to AVS|**ON**|In this step we extend the on-premises network with HCX to AVS.|
+|16|HCX vMotion or RAV Migration|**ON**|Demonstrates the initialization of the VMs migrations.|
+|17|Migration Complete|**ON**|Demonstrates the completed migration of VMs.|
+|18|HCX vMotion or RAV Migration|**OFF**|Demonstrates the initialization of the VMs migrations.|
+|19|L2 Flow OnPrem|**ON**|Demonstrates the communication flow between the migrated VMs and on-premises for the migrated VMs.|
+|20|L2 Flow OnPrem|**OFF**|Demonstrates the communication flow between the migrated VMs and on-premises for the migrated VMs.|
+|21|L2 Flow AVS|**ON**|Demonstrates the communication flow between the migrated VMs and the AVS VMs on a non-stretched network.|
+|22|L2 Flow AVS|**OFF**|Demonstrates the communication flow between the migrated VMs and the AVS VMs on a non-stretched network.|
+|23|Un-Stretch L2 Network|**ON**|Demonstrates the process of un-stretching the L2 network from on-premises.|
+|24|Extend L2 Network to AVS|**OFF**|In this step we extend the on-premises network with HCX to AVS.|
+|25|Retire L2 OnPrem Segment|**ON**|Demonstrates the retirement of the original L2 network stretched to AVS.|
+|26|Update newly advertised BGP Routes|**ON**|Newly un-stretched network will advertise via BGP the new route, it must be updated.|
+|27|New Flow-Migrated VMs to Source|**ON**|This will show the path the flow of communication utilizes for the newly migrated VMs in the un-stretched network on the AVS side back to an on-premises VM.|
+|28|AVS to AVS Flow|**ON**|This will show the path the flow of communication utilizes for the newly migrated VMs in the un-stretched network on the AVS side back to another VM in a different network on the AVS side.|
