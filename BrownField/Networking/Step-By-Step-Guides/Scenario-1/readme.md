@@ -367,42 +367,42 @@ We need to add two machines with web services installed in the AVS environment. 
 
       6. Repeat step three of this section (Part 3) to create the Scenario-1-Web02 server
 
-    ## Part 5 -- Configure vWAN Secure Hub & Push default route (0.0.0.0/0)
+## Part 5 -- Configure vWAN Secure Hub & Push default route (0.0.0.0/0)
 
-   In this section, the secure vWAN hub Azure Firewall is deployed and a Firewall policy is applied to enable traffic flow to and from the Internet. 
+In this section, the secure vWAN hub Azure Firewall is deployed and a Firewall policy is applied to enable traffic flow to and from the Internet. 
   
-   1. Adding the Azure Firewall
+1. Adding the Azure Firewall
 
-      1. In the Azure portal, select vWAN
+   1. In the Azure portal, select vWAN
 
-      2. Select on the Scenario-1-vWAN
+   2. Select on the Scenario-1-vWAN
 
-      3. Select Scenario-1-vWAN-Hub
+   3. Select Scenario-1-vWAN-Hub
 
-      4. Select Azure Firewall and Firewall Manger
+   4. Select Azure Firewall and Firewall Manger
 
-      5. Make sure the checkbox next to Scenario-1-vWAN-Hub is selected
+   5. Make sure the checkbox next to Scenario-1-vWAN-Hub is selected
 
-      ![](./media/image34.png)
+   ![](./media/image34.png)
 
         
-      6. Click on "Next : AzureFirewall"
+   6. Click on "Next : AzureFirewall"
 
-      7. Select Azure Firewall "Enabled" (default)
+   7. Select Azure Firewall "Enabled" (default)
 
-      8. Azure Firewall tier -- Standard (default) (Select Premium if you want the additional features [Azure Firewall Premium features \| Microsoft Docs](https://docs.microsoft.com/en-us/azure/firewall/premium-features))
+   8. Azure Firewall tier -- Standard (default) (Select Premium if you want the additional features [Azure Firewall Premium features \| Microsoft Docs](https://docs.microsoft.com/en-us/azure/firewall/premium-features))
 
-      9. Change the number of public IP addresses to 2
+   9. Change the number of public IP addresses to 2
 
-      10. Leave the Default Deny Policy
+   10. Leave the Default Deny Policy
 
-      ![](./media/image35.png)
+   ![](./media/image35.png)
 
-      11. Leave security partner provider "Disabled", click "Next : Review and confirm"
+   11. Leave security partner provider "Disabled", click "Next : Review and confirm"
 
-      12. Click "Confirm"
+   12. Click "Confirm"
 
-    > Note: This deployment takes under 10 minutes to complete.
+   > Note: This deployment takes under 10 minutes to complete.
 
 
 2. Create the Azure Firewall Policy
@@ -462,43 +462,43 @@ We need to add two machines with web services installed in the AVS environment. 
         
    2. Select "DNAT rules" and click on the "+ Add a rule collection"
         
-   3. Name: Scenario-1-DNAT-Rule-Collection
+      1. Name: Scenario-1-DNAT-Rule-Collection
         
-   4. Rule collection type: DNAT
+      2. Rule collection type: DNAT
         
-   5. Priority: 300
+      3. Priority: 300
    
-   6. Rule collection action: Allow
+      4. Rule collection action: Allow
         
-   7. Rule collection group: DefaultDnatRuleCollectionGroup
+      5. Rule collection group: DefaultDnatRuleCollectionGroup
 
-   ![](./media/image38.png) </br></br>
+      ![](./media/image38.png) </br></br>
 
-   Under the Rules section enter the following
+   3. Under the Rules section enter the following
 
-   8. Name: Allow-Home-Office (any appropriate descriptor)
+      1. Name: Allow-Home-Office (any appropriate descriptor)
         
-   9. Source type: IP Address
+      2. Source type: IP Address
         
-   10. Source: Your internet IP address (eg. 24.68.78.190)
+      3. Source: Your internet IP address (eg. 24.68.78.190)
         
-   11. Protocol: TCP
+      4. Protocol: TCP
         
-   12. Destination port: 3389
+      5. Destination port: 3389
 
-   13. Destination type: IP address
+      6. Destination type: IP address
         
-   14. Destination: IP address of the Azure Firewall
+      7. Destination: IP address of the Azure Firewall
         
-   15. Translated address: IP address of Scenario-1-Web01
+      8. Translated address: IP address of Scenario-1-Web01
         
-   16. Translated port: 3389
+      9. Translated port: 3389
 
-   ![](./media/image39.png)
+      ![](./media/image39.png)
 
-   Repeat this rule for Scenario-1-Web02, but use the second IP address assigned to the Azure Firewall, and set the "Translated address" to the IP address of Scenario-1-Web02. (10.2.104.101)
+      Repeat this rule for Scenario-1-Web02, but use the second IP address assigned to the Azure Firewall, and set the "Translated address" to the IP address of Scenario-1-Web02. (10.2.104.101)
 
-   17. Click "Add" to create the rule collection and rules.
+      10. Click "Add" to create the rule collection and rules.
 
 
 
@@ -508,33 +508,33 @@ We need to add two machines with web services installed in the AVS environment. 
 
    2. Click on "+ Add a rule collection"
 
-        i.  Name: Scenario-1-Application-Rule-Collection
+      1. Name: Scenario-1-Application-Rule-Collection
         
-        ii.  Rule collection type: Application
+      2. Rule collection type: Application
         
-        iii.  Priority: 150
+      3. Priority: 150
         
-        iv.  Rule collection action: Allow
+      4. Rule collection action: Allow
         
-        v.  Rule collection group: DefaultApplicationRuleCollectionGroup
+      5. Rule collection group: DefaultApplicationRuleCollectionGroup
 
-![](./media/image40.png) </br></br>
+      ![](./media/image40.png) </br></br>
 
-Under the Rules section enter the following
+   3. Under the Rules section enter the following
 
-    a.  Name: Allow-IPAddress.com
+      1. Name: Allow-IPAddress.com
 
-    b.  Source type: IP Address
+      2. Source type: IP Address
 
-    c.  Source: \*
+      3. Source: \*
 
-    d.  Protocol: Http:80,Https:443
+      4. Protocol: Http:80,Https:443
 
-    e.  Destination type: FQDN
+      5. Destination type: FQDN
 
-    f.  Destination: \*.ipaddress.com
+      6. Destination: \*.ipaddress.com
 
-Click "Add" to save the rule collection.
+      7. Click "Add" to save the rule collection.
 
 **Network Rule to Allow AVS DNS Resolution**
 
