@@ -312,8 +312,8 @@ We need to add two machines with web services installed in the AVS environment. 
 
 2. Create a virtual machine attached to the VMware segment configured above. 
 
-> [!NOTE]
->Note: We assume that the user knows how to create a VM, so we will only cover key steps. In this process, we use a Content data store and load Windows Server 2019. Alternatively, an ISO can be uploaded to a data store if this is a new AVS build (Ref: [Example-How to upload an ISO to a datastore](https://www.youtube.com/watch?v=kO2BV1pMQtc&t=15s))
+   > [!NOTE]
+   > We assume that the user knows how to create a VM, so we will only cover key steps. In this process, we use a Content data store and load Windows Server 2019. Alternatively, an ISO can be uploaded to a data store if this is a new AVS build (Ref: [Example-How to upload an ISO to a datastore](https://www.youtube.com/watch?v=kO2BV1pMQtc&t=15s))
 
    1. Log into the vCenter console as shown above
 
