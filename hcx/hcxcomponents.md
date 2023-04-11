@@ -2,17 +2,11 @@
 
 ## HCX Connector & HCX Cloud Manager
 ![HCX Connector](./images/hcx-connector.png)
-<<<<<<< HEAD
 
 HCX Connector
 
 ![HCX Cloud Manager](./images/hcx-cloudmanager.png)
 
-=======
-HCX Connector
-
-![HCX Cloud Manager](./images/hcx-cloudmanager.png)
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 HCX Cloud Manager
 
 In an HCX site-to-site architecture, there is notion of an HCX source and an HCX destination environment. This is true also for AVS-to-AVS deployments as well. Depending on the architecture and environment HCX is being deployed in, there may be a specific installer: HCX Connector or HCX Cloud.
@@ -24,10 +18,7 @@ Microsoft deploys HCX Cloud in the management zone within AVS. Both HCX Cloud an
 ## HCX-IX - Interconnect Appliance
 
 ![HCX Interconnect Appliance](./images/hcx-ix.png)
-<<<<<<< HEAD
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 HCX-IX - Interconnect Appliance
 
 The HCX-IX service appliance provides replication and vMotion-based migration capabilities to Azure VMware Solution (AVS), providing strong encryption, traffic engineering, and virtual machine mobility.
@@ -37,10 +28,7 @@ This appliance includes the deployment of the Mobility Agent service that appear
 ## HCX-WO - WAN Optimization Appliance
 
 ![HCX WAN Optimization Appliance](./images/hcx-wo.png)
-<<<<<<< HEAD
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 HCX-WO - WAN Optimization Appliance
 
 The VMware HCX WAN Optimization service improves performance characteristics of the private lines or Internet paths by applying WAN Optimization techniques like data de-duplication and line conditioning.
@@ -48,10 +36,7 @@ The VMware HCX WAN Optimization service improves performance characteristics of 
 ## HCX-NE - Network Extension Appliance
 
 ![HCX Network Extension Appliance](./images/hcx-ne.png)
-<<<<<<< HEAD
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 HCX-NE - Network Extension Appliance
 
 The HCX Network Extension service provides layer 2 connectivity between sites. HCX Network Extension provides the ability to keep the same IP and MAC addresses during virtual machine migrations. When the Network Extension service is enabled on a Service Mesh, a pair of virtual appliances will be deployed: one in the source and one in the destination site (AVS).
@@ -59,10 +44,7 @@ The HCX Network Extension service provides layer 2 connectivity between sites. H
 ## HCX-SGW - Sentinel Gateway Appliance
 
 ![HCX Sentinel Gateway Appliance](./images/hcx-sentinel.png)
-<<<<<<< HEAD
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 HCX-SGW - Sentinel Gateway Appliance
 
 HCX Enterprise also includes a service called OS Assisted Migration (OSAM). With OSAM you can migrate guest (non-vSphere) virtual machines from an on-premises data center to AVS. The OSAM service has several components: the HCX Sentinel software that is installed on each virtual machine to be migrated, a Sentinel Gateway (SGW) appliance for connecting and forwarding guest workloads in the source environment, and a Sentinel Data Receiver (SDR) in the destination (AVS) environment.
@@ -71,9 +53,6 @@ HCX Enterprise also includes a service called OS Assisted Migration (OSAM). With
 
 ![HCX Sentinel Data Reciever Appliance](./images/hcx-sdr.png)
 
-<<<<<<< HEAD
 HCX-SDR - Sentinel Data Receiver Appliance
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
 The HCX Sentinel Data Receiver (SDR) appliance works with the HCX Sentinel Gateway appliance to receive, manage, and monitor data replication operations at the destination environment.
