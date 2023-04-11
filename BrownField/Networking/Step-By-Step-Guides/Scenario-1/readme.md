@@ -312,8 +312,7 @@ We need to add two machines with web services installed in the AVS environment. 
 
 2. Create a virtual machine attached to the VMware segment configured above. 
 
-   > [!NOTE]
-   > We assume that the user knows how to create a VM, so we will only cover key steps. In this process, we use a Content data store and load Windows Server 2019. Alternatively, an ISO can be uploaded to a data store if this is a new AVS build (Ref: [Example-How to upload an ISO to a datastore](https://www.youtube.com/watch?v=kO2BV1pMQtc&t=15s))
+   > Note: We assume that the user knows how to create a VM, so we will only cover key steps. In this process, we use a Content data store and load Windows Server 2019. Alternatively, an ISO can be uploaded to a data store if this is a new AVS build (Ref: [Example-How to upload an ISO to a datastore](https://www.youtube.com/watch?v=kO2BV1pMQtc&t=15s))
 
    1. Log into the vCenter console as shown above
 
@@ -455,59 +454,59 @@ We need to add two machines with web services installed in the AVS environment. 
 
 
 
-3.  Configure Firewall Policy Rules
+3. Configure Firewall Policy Rules
 
-**RDP Access From Home Office**
+   **RDP Access From Home Office**
 
-    a.  In the blue search bar at the top of the portal window, search for "Firewall Policies" then select Scenario-1-FWPolicy
+   1. In the blue search bar at the top of the portal window, search for "Firewall Policies" then select Scenario-1-FWPolicy
         
-    b.  Select "DNAT rules" and click on the "+ Add a rule collection"
+   2. Select "DNAT rules" and click on the "+ Add a rule collection"
         
-    c.  Name: Scenario-1-DNAT-Rule-Collection
+   3. Name: Scenario-1-DNAT-Rule-Collection
         
-    d.  Rule collection type: DNAT
+   4. Rule collection type: DNAT
         
-    e.  Priority: 300
+   5. Priority: 300
+   
+   6. Rule collection action: Allow
         
-    f.  Rule collection action: Allow
-        
-    g.  Rule collection group: DefaultDnatRuleCollectionGroup
+   7. Rule collection group: DefaultDnatRuleCollectionGroup
 
-![](./media/image38.png) </br></br>
+   ![](./media/image38.png) </br></br>
 
-Under the Rules section enter the following
+   Under the Rules section enter the following
 
-    h.  Name: Allow-Home-Office (any appropriate descriptor)
+   8. Name: Allow-Home-Office (any appropriate descriptor)
         
-    i.  Source type: IP Address
+   9. Source type: IP Address
         
-    j.  Source: Your internet IP address (eg. 24.68.78.190)
+   10. Source: Your internet IP address (eg. 24.68.78.190)
         
-    k.  Protocol: TCP
+   11. Protocol: TCP
         
-    l.  Destination port: 3389
+   12. Destination port: 3389
+
+   13. Destination type: IP address
         
-    m.  Destination type: IP address
+   14. Destination: IP address of the Azure Firewall
         
-    n.  Destination: IP address of the Azure Firewall
+   15. Translated address: IP address of Scenario-1-Web01
         
-    o.  Translated address: IP address of Scenario-1-Web01
-        
-    p.  Translated port: 3389
+   16. Translated port: 3389
 
-![](./media/image39.png) </br></br>
+   ![](./media/image39.png)
 
-Repeat this rule for Scenario-1-Web02, but use the second IP address assigned to the Azure Firewall, and set the "Translated address" to the IP address of Scenario-1-Web02. (10.2.104.101)
+   Repeat this rule for Scenario-1-Web02, but use the second IP address assigned to the Azure Firewall, and set the "Translated address" to the IP address of Scenario-1-Web02. (10.2.104.101)
 
-    q.  Click "Add" to create the rule collection and rules.
+   17. Click "Add" to create the rule collection and rules.
 
 
 
-**Application (HTTP, HTTPS) Access for Azure/AVS Servers**
+   **Application (HTTP, HTTPS) Access for Azure/AVS Servers**
 
-    a.  Select "Application rules"
+   1. Select "Application rules"
 
-    b.  Click on "+ Add a rule collection"
+   2. Click on "+ Add a rule collection"
 
         i.  Name: Scenario-1-Application-Rule-Collection
         
