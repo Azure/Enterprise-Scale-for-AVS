@@ -1,7 +1,7 @@
 # AVS Networking Secured Virtual WAN hub with default route propagation
 
 This lab shows you how to build out **Scenario 1: Secured Virtual WAN hub
-with default route propagation** as outlined [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-1-secured-virtual-wan-hub-with-default-route-propagation).
+with default route propagation** as described in the Mirosoft Cloud Adoption Framework [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-1-secured-virtual-wan-hub-with-default-route-propagation).
 
 Scenario 1 Connectivity: ExpressRoute & Global Reach
 
@@ -53,10 +53,10 @@ Names and IP ranges used in this guide are examples, and you may need to customi
 
 3. Create a vNet with IP address 10.40.218.0/23. Next, create four subnets:
 
-    * Configure the "Servers" subnet with IP address range 10.40.218.0/24
-    * Configure the "GatewaySubnet" subnet with IP address range 10.40.219.0/26
-    * Configure the "AzureBastionSubnet" subnet with IP address range 10.40.219.64/26
-    * Configure the "AppGW-Subnet" subnet with IP address range 10.40.219.128/26
+    1. Configure the "Servers" subnet with IP address range 10.40.218.0/24
+    2. Configure the "GatewaySubnet" subnet with IP address range 10.40.219.0/26
+    3. Configure the "AzureBastionSubnet" subnet with IP address range 10.40.219.64/26
+    4. Configure the "AppGW-Subnet" subnet with IP address range 10.40.219.128/26
 
     ![](./media/image4.png)
 
@@ -67,7 +67,7 @@ Names and IP ranges used in this guide are examples, and you may need to customi
     1. Select the virtual network we created above: "AVS-Scenario-1-Jumpbox-vNet"
     2. Select the subnet "Servers"
     3. Select the Public IP dropdown and select None
-    4. Leave the reset of the defaults as shown.
+    4. Leave the reset of the defaults as shown:
 
     ![](./media/image5.png)
 
@@ -109,7 +109,7 @@ Names and IP ranges used in this guide are examples, and you may need to customi
 
     2. Add hub private IP address of 10.40.216.0/23
 
-    3. Set the Virtual hub capacity to "2 Routing Infrastructure Units."
+    3. Set the Virtual hub capacity to "2 Routing Infrastructure Units"
 
     4. Click "Next : Site to site" (add nothing)
 
@@ -227,7 +227,7 @@ There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>
 
 We need to add two machines with web services installed in the AVS environment. To do this, we will add a network segment to the existing default Tier-1 gateway, configure DHCP for that subnet, and then build two virtual machines and add IIS.
 
-1. Create a VMware network segment, either through the Azure portal, or through the NSX-T interface.
+1. Create a VMware network segment, either through the Azure portal, or through the NSX-T interface
 
    **Portal**
 
@@ -239,11 +239,11 @@ We need to add two machines with web services installed in the AVS environment. 
         
    4. Add a DHCP range (This is optional, but simplifies addressing. The first server will have IP an address of 10.2.100.100 and second server will have IP an address of 10.2.100.101.)
         
-   5. Click "OK" and wait until provisioning has completed (check using the notification icon).
+   5. Click "OK" and wait until provisioning has completed (check using the notification icon)
 
    ![](./media/image23.png)
 
-   6. Select DHCP from the portal and click "+ Add".
+   6. Select DHCP from the portal and click "+ Add"
         
    7. Server name "Scenario-1-DHCPServer"
         
@@ -251,14 +251,14 @@ We need to add two machines with web services installed in the AVS environment. 
         
    9. Lease time 86400 seconds
         
-   10. Click "OK" and wait for it to complete.
+   10. Click "OK" and wait for it to complete
 
    ![](./media/image24.png)
 
 
    **NSX-T Interface**
 
-   1. Log into the NSX-T interface using the IP address and credentials shown under the identity tab. (Same location as the vCenter login information).
+   1. Log into the NSX-T interface using the IP address and credentials shown under the VMware credentials tab
 
    ![](./media/image25.png)
 
@@ -266,15 +266,15 @@ We need to add two machines with web services installed in the AVS environment. 
 
    ![](./media/image26.png)
     
-   3. Select "Segments" and then select "ADD SEGMENT" and complete the following as shown below.
+   3. Select "Segments" and then select "ADD SEGMENT" and complete the following as shown below
     
-   4. Segment name "Scenario-1-WebServers"
+   4. Segment name: "Scenario-1-WebServers"
     
-   5. Connected gateway (choose the default Tier1 gateway, it will always have the format TNT##-T1
+   5. Connected gateway: Choose the default Tier1 gateway, it will always have the format TNT##-T1
     
-   6. Transport zone (choose TNT##-Overlay-TZ)
+   6. Transport zone: choose TNT##-Overlay-TZ
     
-   7. Subnets, use IP address 10.2.104.1/24.
+   7. Subnets: Enter IP address 10.2.104.1/24
 
    ![](./media/image27.png)
 
@@ -286,15 +286,15 @@ We need to add two machines with web services installed in the AVS environment. 
 
    ![](./media/image28.png)
 
-   11. Add the DHCP server name "Scenario-1-DHCP" and the IP address range for the DHCP server 10.2.107.2/24 (yes this is way to big, just easy to follow)
+   11. Add the DHCP server name "Scenario-1-DHCP" and the IP address range for the DHCP server 10.2.107.2/24 (Range does not need to be this large--we're just using /24s for simplicity)
     
    12. Add the Edge cluster, choose TNT##-CLSTR
 
    ![](./media/image29.png)
 
-   13. Click "Save" in the bottom right-hand corner.
+   13. Click "Save" in the bottom right-hand corner
     
-   14. Back on the "Set DHCP Config" screen, enable the DCHP Config.
+   14. Back on the "Set DHCP Config" screen, enable the DCHP Config
     
    15. Add in the address of the DCHP server created above 10.2.107.2/24
     
@@ -325,10 +325,10 @@ We need to add two machines with web services installed in the AVS environment. 
       5. Select compatibility (default): ESXi 6.7 and later > Next
       6. Select a guest OS, Guest OS family: Windows Guest OS version Microsoft Windows Server 2016 or later (64 bit) > Next
       7. Customize hardware, leave defaults except:
-         * Under New Network, browse and select "Scenario-1-Webservers"
-         * Under "New CD/DVD Drive" select "Content Library or Datastore" (wherever the ISO files are stored).
-         * Select the Windows server ISO to be used for the OS installation.
-         * Click the "Connect" radio button and confirm, should look like this:
+         1. Under New Network, browse and select "Scenario-1-Webservers"
+         2. Under "New CD/DVD Drive" select "Content Library or Datastore" (wherever the ISO files are stored)
+         3. Select the Windows server ISO to be used for the OS installation
+         4. Click the "Connect" radio button and confirm:
 
       ![](./media/image32.png)
 
@@ -338,11 +338,7 @@ We need to add two machines with web services installed in the AVS environment. 
       9. Verify the configuration and click FINISH
 
 
-   3. Power on the new server Scenario-1-Web01 and go through the Windows
-        setup process. (Note you may have to issue a reboot from the console
-        to see the "Press to boot from CD" option -- if you see "EFI Network
-        -- unsuccessful.", reboot using the command prompt in the top right
-        hand corner of the console.)
+   3. Power on the new server Scenario-1-Web01 and go through the Windows setup process. (Note you may have to issue a reboot from the console to see the "Press to boot from CD" option -- if you see "EFI Network -- unsuccessful.", reboot using the command prompt in the top right hand corner of the console.)
 
       1. Select language and keyboard settings (default for most)
         
@@ -356,118 +352,105 @@ We need to add two machines with web services installed in the AVS environment. 
 
    4. Log into the Scenario-1-Web01 server
 
-        a.  Set the IE Enhanced Security Configuration for Administrators to
+      1. Set the IE Enhanced Security Configuration for Administrators to
             "Off"
         
-        b.  Set the Remote desktop to "Enabled"
+      2. Set the Remote desktop to "Enabled"
         
-        c.  Optional -- change the firewall inbound to allow ICMP on IPv4
+      3. Optional -- change the firewall inbound to allow ICMP on IPv4
         
-        d.  Launch IE and record your Internet IP address using
-            <https://www.ipconfig.com>. If you don't get an IP address,
-            that's fine, if you do, it likely means that the Internet access
-            setting in the Azure AVS portal / Workload Networking / Internet
-            Connectivity has been enabled. Check that the setting has been
-            changed to "Do not connect or connect using default route from
-            Azure".
+      4.  Launch IE and record your Internet IP address using <https://www.ipconfig.com>. If you don't get an IP address, that's fine, if you do, it likely means that the Internet access setting in the Azure AVS portal / Workload Networking / Internet Connectivity has been enabled. Check that the setting has been changed to "Do not connect or connect using default route from Azure".
 
-    > ![](./media/image33.png) </br></br>
+    ![](./media/image33.png)
 
-    e.  RDP from the Scenario-1-Jumpbox to the Scenario-1-Web01 server and
-        install IIS on the Scenario-1-Web01 server. (Server manager, add
-        roles, select IIS)
+      5. RDP from the Scenario-1-Jumpbox to the Scenario-1-Web01 server and install IIS on the Scenario-1-Web01 server. (Server manager, add roles, select IIS)
 
-    f.  Repeat step "3)" of this section (Part 3) to create the Scenario-1-Web02 server
+      6. Repeat step three of this section (Part 3) to create the Scenario-1-Web02 server
 
     ## Part 5 -- Configure vWAN Secure Hub & Push default route (0.0.0.0/0)
 
-    In this section, the secure vWAN hub Azure Firewall is deployed and a
-    Firewall policy is applied to enable traffic flow to and from the
-    Internet. 
+   In this section, the secure vWAN hub Azure Firewall is deployed and a Firewall policy is applied to enable traffic flow to and from the Internet. 
   
-    1.  Adding the Azure Firewall
+   1. Adding the Azure Firewall
 
-        a.  In the Azure portal, select vWAN
+      1. In the Azure portal, select vWAN
 
-        b.  Select on the Scenario-1-vWAN
+      2. Select on the Scenario-1-vWAN
 
-        c.  Select Scenario-1-vWAN-Hub
+      3. Select Scenario-1-vWAN-Hub
 
-        d.  Select Azure Firewall and Firewall Manger
+      4. Select Azure Firewall and Firewall Manger
 
-        e.  Make sure the checkbox next to Scenario-1-vWAN-Hub is selected
+      5. Make sure the checkbox next to Scenario-1-vWAN-Hub is selected
 
-        ![](./media/image34.png) </br>
+      ![](./media/image34.png)
 
         
-        f.  Click on "Next : AzureFirewall"
+      6. Click on "Next : AzureFirewall"
 
-        g.  Select Azure Firewall "Enabled" (default)
+      7. Select Azure Firewall "Enabled" (default)
 
-        h.  Azure Firewall tier -- Standard (default) (Select Premium if you want the additional features [Azure Firewall Premium features \| Microsoft Docs](https://docs.microsoft.com/en-us/azure/firewall/premium-features))
+      8. Azure Firewall tier -- Standard (default) (Select Premium if you want the additional features [Azure Firewall Premium features \| Microsoft Docs](https://docs.microsoft.com/en-us/azure/firewall/premium-features))
 
-        i.  Change the number or public IP address to 2
+      9. Change the number of public IP addresses to 2
 
-        j.  Leave the Default Deny Policy
+      10. Leave the Default Deny Policy
 
-        ![](./media/image35.png) </br></br>
+      ![](./media/image35.png)
 
-        k.  Leave security partner provider "Disabled", click "Next : Review and confirm"
+      11. Leave security partner provider "Disabled", click "Next : Review and confirm"
 
-        l.  Click "Confirm"
+      12. Click "Confirm"
 
     > Note: This deployment takes under 10 minutes to complete.
 
-</br>
 
-2.  Create the Azure Firewall Policy
+2. Create the Azure Firewall Policy
 
-    a.  In the blue search bar at the top of the portal window, search for "Firewall Policies" then click on "+ Create"
+   1. In the blue search bar at the top of the portal window, search for "Firewall Policies" then click on "+ Create"
 
-    ![](./media/image36.png) </br></br>
+   ![](./media/image36.png) </br></br>
 
 
-    b.  Under the basics tab enter the following information
+   2. Under the basics tab enter the following information:
     
-        i.  Resource group "AVS-Scenario-1"
+      1. Resource group "AVS-Scenario-1"
     
-        ii. Name "Scenario-1-FWPolicy"
+      2. Name "Scenario-1-FWPolicy"
     
-        iii. Region (wherever you are building, for this demo it is in East
-            Asia)
+      3. Region (wherever you are building, for this demo it is in East Asia)
     
-        iv. Policy Tier -- Standard (This must match the Firewall Tier
-            above)
+      4. Policy Tier -- Standard (This must match the Firewall Tier above)
     
-        v.  Parent policy None (default)
+      5. Parent policy None (default)
     
-        vi. Select "Next : DNS Settings"
+      6. Select "Next : DNS Settings"
 
-    ![](./media/image37.png) </br></br>
+      ![](./media/image37.png) </br></br>
 
-    > At this point you can select "Review + create" and then "Create". Then skip forward to 3. below.
+   At this point you can select "Review + create" and then "Create". Then skip forward to 3. below.
 
-    > If you would prefer to look through the other options, follow the instructions below.
+   If you would prefer to look through the other options, follow the instructions below.
 
-    c.  Leave the DNS 'Disabled'
+   3. Leave the DNS 'Disabled'
 
-    d.  Select 'Next : TLS Inspection'
+   4. Select 'Next : TLS Inspection'
 
-    e.  TLS inspection is disabled because this is a Standard Azure Firewall
+   5. TLS inspection is disabled because this is a Standard Azure Firewall
 
-    f.  Select 'Next : Rules'
+   6. Select 'Next : Rules'
 
-    g.  Don't add rules here, select 'Next :IDPS'
+   7. Don't add rules here, select 'Next :IDPS'
 
-    h.  IDPS is disabled because this is a Standard Azure Firewall
+   8. IDPS is disabled because this is a Standard Azure Firewall
 
-    i.  Select 'Next : Threat Intelligence'
+   9. Select 'Next : Threat Intelligence'
 
-    j.  No changes on the 'Threat Intelligence screen
+   10. No changes on the 'Threat Intelligence screen
 
-    k.  Click 'Review and Create' in the bottom right hand corner of the portal
+   11. Click 'Review and Create' in the bottom right hand corner of the portal
 
-    l.  After Validation is complete, select 'Create'
+   12. After Validation is complete, select 'Create'
 
 
 
