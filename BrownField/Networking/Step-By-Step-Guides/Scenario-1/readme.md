@@ -498,7 +498,7 @@ In this section, the secure vWAN hub Azure Firewall is deployed and a Firewall p
 
       Repeat this rule for Scenario-1-Web02, but use the second IP address assigned to the Azure Firewall, and set the "Translated address" to the IP address of Scenario-1-Web02. (10.2.104.101)
 
-      10. Click "Add" to create the rule collection and rules.
+   4. Click "Add" to create the rule collection and rules.
 
 
 
@@ -534,92 +534,91 @@ In this section, the secure vWAN hub Azure Firewall is deployed and a Firewall p
 
       6. Destination: \*.ipaddress.com
 
-      7. Click "Add" to save the rule collection.
+   4. Click "Add" to save the rule collection.
 
-**Network Rule to Allow AVS DNS Resolution**
+   **Network Rule to Allow AVS DNS Resolution**
 
-Create a network rule to allow the NSX DNS service to resolve external names.
+   Create a network rule to allow the NSX DNS service to resolve external names.
 
-    a.  Select "Network rules"
+   1. Select "Network rules"
 
-    b.  Click on "+ Add a rule collection"
+   2. Click on "+ Add a rule collection"
 
-        i.  Name: Scenario-1-Network-Rule-Collection
+      1. Name: Scenario-1-Network-Rule-Collection
         
-        ii.  Rule collection type: Network
+      2. Rule collection type: Network
         
-        iii.  Priority: 150
+      3. Priority: 150
         
-        iv.  Rule collection action: Allow
+      4. Rule collection action: Allow
         
-        v.  Rule collection group: DefaultApplicationRuleCollectionGroup
+      5. Rule collection group: DefaultApplicationRuleCollectionGroup
 
-Under the Rules section enter the following
+   3. Under the Rules section enter the following
 
-    a.  Name: AllowDNS
+      1. Name: AllowDNS
 
-    b.  Source Type: IP Address
+      2. Source Type: IP Address
 
-    c.  Source: Enter the address of the AVS DNS Service. This can be found in the Private cloud object. Under Workload networking, click DNS, then DNS service
+      3. Source: Enter the address of the AVS DNS Service. This can be found in the AVS Private cloud object. Under Workload networking, click DNS, then DNS service
 
-    d.  Protocol: UDP
+      4. Protocol: UDP
     
-    e.  Destination Ports: 53
+      5. Destination Ports: 53
 
-    f.  Destination Type: IP Address
+      6. Destination Type: IP Address
 
-    f.  Destination: 1.1.1.1, 1.0.0.1
+      7. Destination: 1.1.1.1, 1.0.0.1
 
-Click "Add" to save the rule collection.
+   4. Click "Add" to save the rule collection.
 
-4.  Associate the policy to the secure Scenario-1-vWAN-Hub
+4. Associate the policy to the secure Scenario-1-vWAN-Hub
 
-Use the Search bar to search for and select Firewall Manager
+   Use the Search bar to search for and select Firewall Manager
 
-    a.  Select Azure Firewall Policies
+   1. Select Azure Firewall Policies
         
-    b.  Select "Scenario-1-FWPolicy"
+   2. Select "Scenario-1-FWPolicy"
         
-     c.  Click on Manage Associations
+   3. Click on Manage Associations
         
-    d.  Select the Scenario-1-vWAN hub
+   4. Select the Scenario-1-vWAN hub
         
-    e.  Click "Add" at the bottom of the page to complete the association.
+   5. Click "Add" at the bottom of the page to complete the association.
 
-![](./media/image41.png) </br></br>
+   ![](./media/image41.png)
 
-The result in should look like this:
+   The result in should look like this:
 
-![](./media/image42.png) </br></br>
+   ![](./media/image42.png)
 
-6.  Enable the default route to send outbound Internet traffic through
-    the Firewall
+5. Enable the default route to send outbound Internet traffic through the Firewall
 
-Go to the Firewall Manager portal screen.
+   Go to the Firewall Manager portal screen.
 
-    a.  Select "Virtual Hubs"
+   1. Select "Virtual Hubs"
 
-![](./media/image43.png) </br></br>
+   ![](./media/image43.png)
 
-    b.  Select the "Scenario-1-vWAN-Hub" and click on it. This will launch the "Security configuration" portal page (below).
+   2. Select the "Scenario-1-vWAN-Hub" and click on it. This will launch the "Security configuration" portal page (below).
     
-    c.  Select "Security configuration"
+   3. Select "Security configuration"
 
-![](./media/image44.png) </br></br>
+   ![](./media/image44.png)
 
-    d.  Under Internet traffic, change to "Azure Firewall"
+   4. Under Internet traffic, change to "Azure Firewall"
         
-    e.  Leave "Private traffic" as "Bypass Azure Firewall" (we are not inspecting traffic that stays inside Azure)
+   5. Leave "Private traffic" as "Bypass Azure Firewall" (we are not inspecting traffic that stays inside Azure)
         
-    f.  Select both connections,
+   6. Select both connections:
         
-        i.  Connect-Scenario-1-Jumpbox-vNet
+      * Connect-Scenario-1-Jumpbox-vNet
         
-        ii. ExRConnection-eastasia-#######
+      * ExRConnection-eastasia-#######
         
-    g.  Click on Save, you will see a warning message, read it, and acknowledge it.
+   7. Click on Save, you will see a warning message, read it, and acknowledge it.
 
-> Note: This update takes about 5 minutes to complete.
+   > Note: This update takes about 5 minutes to complete.
 
 
 ## Part 6 -- Enable Global Routing
@@ -636,23 +635,23 @@ This establishes a GlobalReach connection between the AVS network and the networ
 
 ## Part 7 -- Testing Routing On-Premises & Internet Traffic Routing
 
-1. Checking the default route, 0.0.0.0/0 has been propagated to the Scenario-1-Jumpbox.
+1. Confirm the default route 0.0.0.0/0 has been propagated to the Scenario-1-Jumpbox.
 
-    a.  Use Bastion to access the Jumpbox VM
+   1. Use Bastion to access the Jumpbox VM
 
-    b.  Launch IE or Edge and type in [www.ipaddress.com](http://www.ipaddress.com). Check the IP address against the one your recorded in Step 5 of Part 1 (above).
+   2. Launch IE or Edge and type in [www.ipaddress.com](http://www.ipaddress.com). Check the IP address against the one your recorded in Step 5 of Part 1 (above).
 
-    c.  The IP address should have change to the IP address of the Azure Firewall. In our case it is 20.239.194.252. This should be different from the IP address associated with the Scenario-1-Jumpbox 20.205.60.208
+   3. The IP address should have change to the IP address of the Azure Firewall. In our case it is 20.239.194.252. This should be different from the IP address associated with the Scenario-1-Jumpbox 20.205.60.208
 
 2. From the Scenario-1-Jumpbox, check you can RDP to the Scenario-1-Web01 and Scenario-1-Web02 servers.
 
-    a. RDP to Scenario-1-Web01 (10.2.104.100) from the Jumpbox
+   1. RDP to Scenario-1-Web01 (10.2.104.100) from the Jumpbox
 
-    b. Launch IE or Edge and type in [www.ipaddress.com](http://www.ipaddress.com)
+   2. Launch IE or Edge and type in [www.ipaddress.com](http://www.ipaddress.com)
 
-    c.  You should see the same IP address you get from the Jumpbox, 10.239.194.252, this is the public IP address of the Azure Firewall.
+   3. You should see the same IP address you get from the Jumpbox, 10.239.194.252, this is the public IP address of the Azure Firewall.
 
-    d.  Repeat for Scenario-1-Web02 (10.2.104.101)
+   4. Repeat for Scenario-1-Web02 (10.2.104.101)
     
 
 ## Part 8 -- Configuring Application Gateway
@@ -661,133 +660,129 @@ In this section, an Application Gateway is installed into the existing Scenario-
 
 1. Deploy Application Gateway
 
-    a.  Use the Search bar to search for and select "Application Gateway"
+   1. Use the Search bar to search for and select "Application Gateway"
 
-    b.  Select "+ Create"
+   2. Select "+ Create"
 
-    c.  Resource Group: AVS-Scenario-1
+   3. Resource Group: AVS-Scenario-1
 
-    d.  Application GW name: Scenario-1-AppGW
+   4. Application GW name: Scenario-1-AppGW
 
-    e.  Region: East Asia (or wherever you are building the lab)
+   5. Region: East Asia (or wherever you are building the lab)
 
-    f.  Tier: Standard v2
+   6. Tier: Standard v2
 
-    g.  Enable autoscaling: Yes (default)
+   7. Enable autoscaling: Yes (default)
 
-    h.  Minimum instance count: 0 (default)
+   8. Minimum instance count: 0 (default)
 
-    i.  Maximum instance count: 10 (default)
+   9. Maximum instance count: 10 (default)
 
-    j.  Availability zone: None (default)
+   10. Availability zone: None (default)
 
-    k.  HTTP2: Disabled (default)
+   11. HTTP2: Disabled (default)
 
-    l.  Virtual Network: Scenario-1-Jumpbox-vNet
+   12. Virtual Network: Scenario-1-Jumpbox-vNet
 
-    m.  Subnet: AppGW-Subnet
+   13. Subnet: AppGW-Subnet
 
-    n. Click "Next : Frontends"
+   14. Click "Next : Frontends"
 
-    o.  Frontend IP address: Public
+   15. Frontend IP address: Public
 
-    p.  Add new Public IP address
+   16. Add new Public IP address with a name such as Scenario-1-AppGW-PIP and click "OK"
 
-        i.  Name: Scenario-1-AppGW-PIP
+   17. Click "Next : Backends"
+
+   18. Select "Add a backend pool"
+
+   19. Name: Scenario-1-AppGW-BackEndPool
+
+   20. Add backend pool w/t targets: No
+
+   21. Target type: IP Address or FQDN
+
+      1. Enter IP address for Scenario-1-Web01 (10.2.104.100)
     
-        ii. Click 'OK'
+      2. Enter IP address For Scenario-1-Web02 (10.2.104.101)
 
-    r.  Click "Next : Backends"
+   22.Click 'Add' in the bottom left corner of the 'Add a backend pool' blade.
 
-    s.  Select "Add a backend pool"
+   23. Click "Next : Configuration"
 
-    t.  Name: Scenario-1-AppGW-BackEndPool
+   24. Rule name: Scenario-1-AppGW-RoutingRule-01
 
-    u.  Add backend pool w/t targets: No
-
-    v.  Target type: IP Address or FQDN
-
-        i.  Enter IP address for Scenario-1-Web01 (10.2.104.100)
-    
-        ii. Enter IP address For Scenario-1-Web02 (10.2.104.101)
-
-    w.  Click 'Add' in the bottom left corner of the 'Add a backend pool' blade.
-
-Click "Next : Configuration"
-
-    x. Rule name:     Scenario-1-AppGW-RoutingRule-01
-
- ![](./media/image46.png) </br></br>
-
-    y.  Priority: 500
+   25. Priority: 500
+   
+   ![](./media/image46.png)
 
 2. Configuring the App Gateway "Listener"
 
-    a.  Listener name: Scenario-1-Listener1
+   1. Listener name: Scenario-1-Listener1
 
-    b.  FrontEnd IP: Public
+   2. FrontEnd IP: Public
+   
+   3. Protocol: Http
 
-    c.  Protocol: Http
+   4. Listener type Basic
 
-    d.  Listener type Basic
+   5. Error page URL No
 
-    e.  Error page URL No
-
-    f.  Click "Add"
+   6. Click "Add"
 
 3. Configuring the App Gateway "Backend targets"
 
-    a.  Backend Pool: Scenario-1-AggGW-BackEndPool
+   1. Backend Pool: Scenario-1-AggGW-BackEndPool
 
-    b.  Backend target: Add new
+   2. Backend target: Add new
 
-        i.  Settings name: Scenario-1-BackEndSettings
+      1. Settings name: Scenario-1-BackEndSettings
             
-        ii. Backend protocol: HTTP
-            
-        iii. Backend port: 80
-            
-        iv. Leave everything else default
-            
-        v.  Click "Add"
+      2. Backend protocol: HTTP
 
-    c.  Click "Add" on the "Add a routing" rule page. This takes you back to the "Create application gateway" page.
+      3. Backend port: 80
+            
+      4. Leave everything else default
+            
+      5. Click "Add"
 
-    d.  Click "Next : Tags" then click "Next : Review + create"
+   3. Click "Add" on the "Add a routing" rule page. This takes you back to the "Create application gateway" page.
 
-    e.  Click "Create"
+   4. Click "Next : Tags" then click "Next : Review + create"
+
+   5. Click "Create"
 
 4. Create a Route table for the Application Gateway subnet
 
     Because we created an Application Gateway subnet on a VNet that is protected by Azure Firewall, we need to create a custom route table with a next hop of "Internet" and apply it to the AppGateway subnet to allow AppGateway traffic to bypass the Azure Firewall.
 
-    a.  In the Search bar, search for and select Route tables
+   1. In the Search bar, search for and select Route tables
 
-    b. Click "+ Create"
+   2. Click "+ Create"
 
-    c. Select the appropriate Resource Group and Region
+   3. Select the appropriate Resource Group and Region
 
-    d. Enter a name, such as Scenario-1-AppGW-RouteTable
+   4. Enter a name, such as Scenario-1-AppGW-RouteTable
 
-    e.  Leave the Propagate gateway routes as 'Yes'
+   5. Leave the Propagate gateway routes as 'Yes'
 
-    f.  Click 'Review + create' then click 'Create'
+   6. Click 'Review + create' then click 'Create'
 
-    ![](./media/AppGW-RouteTable.png)
+   ![](./media/AppGW-RouteTable.png)
 
     When the route table build is complete, go to the resource, select "Routes" then "+ Add"
 
-    a.  Enter a route name, such as "BypassFirewall"
+   1. Enter a route name, such as "BypassFirewall"
 
-    b.  Destination address prefix: IP Addresses
+   2. Destination address prefix: IP Addresses
 
-    c.  Destination IP addresses/CIDR ranges: 0.0.0.0/0
+   3. Destination IP addresses/CIDR ranges: 0.0.0.0/0
 
-    d.  Next hop type: Internet
+   4. Next hop type: Internet
 
-    e. Click "Add"
+   5. Click "Add"
 
-![](./media/AppGW-Route.png)
+   ![](./media/AppGW-Route.png)
 
 
     Next, select "Subnets" and click "+ Associate."
@@ -806,14 +801,14 @@ Open a new browser tab and enter the Application Gateway frontend IP address. Th
 
 ## Appendix -- Testing without AVS.
 
-1.  Create another vnet
+1. Create another vnet
 
-2.  Create an ExpressRoute virtual gateway
+2. Create an ExpressRoute virtual gateway
 
-3.  Connect the ExpressRoute virtual gateway via an ExR connection to
+3. Connect the ExpressRoute virtual gateway via an ExR connection to
     the vWAN hub
 
-4.  Change the Security configuration and add the new ExpressRoute
+4. Change the Security configuration and add the new ExpressRoute
     connection so that it shows up as 'Secured by the Azure Firewall'
 
 ![Graphical user interface, text, application, email Description
