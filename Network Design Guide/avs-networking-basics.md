@@ -6,7 +6,7 @@ Azure VMware Solution runs on bare-metal VMWare ESXi nodes deployed in Azure dat
 When an Azure VMware Solution Private Cloud is provisioned, an associated Expressroute circuit is also instantiated in a Microsoft-managed subscription. The private cloud’s owner can connect the circuit to one or more Expressroute virtual network gateways in  Azure VNets, by redeeming authorization keys for the circuit (the same procedure used to create connections between Expressroute gateways and customer-managed circuits). Please refer to the [Azure VMware Solution official documentation](https://learn.microsoft.com/azure/azure-vmware/deploy-azure-vmware-solution?tabs=azure-portal#connect-to-azure-virtual-network-with-expressroute ) for detailed instructions.
  
 ![figure2](media/figure2.png) 
-Figure 2. Azure VMware Solution leverages a dedicated Expressroute implementation to provide layer-3 connectivity between Azure VNets and the physical network to which the VMWare ESXi clusters are attached. The VMWare ESXi clusters are hosted in the same Microsoft datacenter facilities that host the Azure platform.
+Figure 2. Azure VMware Solution leverages a dedicated Expressroute implementation to provide layer-3 connectivity between Azure VNets and the physical network to which the VMWare ESXi clusters are attached. The VMware ESXi clusters are hosted in the same Microsoft datacenter facilities that host the Azure platform.
 
 ## What is the role played by Expressroute Global Reach?
 An Azure Expressroute Gateway cannot be used to route traffic between on-prem locations connected to it over different circuits. This limitation applies to the Azure VMware Solution dedicated Expressroute implementation too, as shown in the figure below.
