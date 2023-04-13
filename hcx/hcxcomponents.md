@@ -1,79 +1,45 @@
 # VMware HCX Components
 
-## HCX Connector & HCX Cloud Manager
-![HCX Connector](./images/hcx-connector.png)
-<<<<<<< HEAD
+## VMware HCX Connector & VMware HCX Cloud Manager
 
-HCX Connector
+More information can be found in VMware's Official Documentation for [VMware HCX Connector and VMware HCX Cloud Installations](https://docs.vmware.com/en/VMware-HCX/4.6/hcx-getting-started/GUID-B1023D31-0458-433B-9ABB-62E8BDD3FEC2.html).
 
-![HCX Cloud Manager](./images/hcx-cloudmanager.png)
+![VMware HCX Connector](./images/hcx-connector.png)
 
-=======
-HCX Connector
+In an VMware HCX site-to-site architecture, there is notion of an VMware HCX source and a VMware HCX destination environment. This is true also for Azure VMware Solution to Azure VMware Solution deployments as well. Depending on the architecture and environment VMware HCX is being deployed in, there may be a specific installer: VMware HCX Connector or VMware HCX Cloud.
 
-![HCX Cloud Manager](./images/hcx-cloudmanager.png)
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-HCX Cloud Manager
+VMware HCX Connector is always deployed as the source. VMware HCX Cloud is typically deployed as the destination, but it can be used as the source in Azure VMware Solution to Azure VMware Solution deployments. In Azure VMware Solution, Microsoft deploys VMware HCX Cloud through the Add-Ons tab in the Azure Portal Azure VMware Solution Private Cloud blade. Customer is responsible for deploying VMware HCX Connector on-premises.
 
-In an HCX site-to-site architecture, there is notion of an HCX source and an HCX destination environment. This is true also for AVS-to-AVS deployments as well. Depending on the architecture and environment HCX is being deployed in, there may be a specific installer: HCX Connector or HCX Cloud.
+Microsoft deploys VMware HCX Cloud in the management zone within Azure VMware Solution. Both VMware HCX Cloud and VMware HCX Connector are a one-to-one relationship to a vCenter Server environment.
 
-HCX Connector is always deployed as the source. HCX Cloud is typically deployed as the destination, but it can be used as the source in AVS-to-AVS deployments. In AVS, Microsoft deploys HCX Cloud through the Add-Ons tab in the Azure Portal AVS Private Cloud blade. Customer is responsible for deploying HCX Connector on-premises.
+## VMware HCX-IX - Interconnect Appliance
 
-Microsoft deploys HCX Cloud in the management zone within AVS. Both HCX Cloud and HCX Connector are a one-to-one relationship to a vCenter environment.
+![VMware HCX Interconnect Appliance](./images/hcx-ix.png)
 
-## HCX-IX - Interconnect Appliance
+The VMware HCX-IX service appliance provides replication and vMotion-based migration capabilities to Azure VMware Solution, providing strong encryption, traffic engineering, and virtual machine mobility.
 
-![HCX Interconnect Appliance](./images/hcx-ix.png)
-<<<<<<< HEAD
+This appliance includes the deployment of the Mobility Agent service that appears as a host object in vCenter Server. The Mobility Agent is the mechanism that VMware HCX uses to perform vMotion, Cold, and Replication Assisted vMotion (RAV) migrations to a destination site.
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-HCX-IX - Interconnect Appliance
+## VMware HCX-WO - WAN Optimization Appliance
 
-The HCX-IX service appliance provides replication and vMotion-based migration capabilities to Azure VMware Solution (AVS), providing strong encryption, traffic engineering, and virtual machine mobility.
-
-This appliance includes the deployment of the Mobility Agent service that appears as a host object in vCenter server. The Mobility Agent is the mechanism that HCX uses to perform vMotion, Cold, and Replication Assisted vMotion (RAV) migrations to a destination site.
-
-## HCX-WO - WAN Optimization Appliance
-
-![HCX WAN Optimization Appliance](./images/hcx-wo.png)
-<<<<<<< HEAD
-
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-HCX-WO - WAN Optimization Appliance
+![VMware HCX WAN Optimization Appliance](./images/hcx-wo.png)
 
 The VMware HCX WAN Optimization service improves performance characteristics of the private lines or Internet paths by applying WAN Optimization techniques like data de-duplication and line conditioning.
 
-## HCX-NE - Network Extension Appliance
+## VMware HCX-NE - Network Extension Appliance
 
-![HCX Network Extension Appliance](./images/hcx-ne.png)
-<<<<<<< HEAD
+![VMware HCX Network Extension Appliance](./images/hcx-ne.png)
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-HCX-NE - Network Extension Appliance
+The VMware HCX Network Extension service provides layer 2 connectivity between sites. VMware HCX Network Extension provides the ability to keep the same IP and MAC addresses during virtual machine migrations. When the Network Extension service is enabled on a Service Mesh, a pair of virtual appliances will be deployed: one in the source and one in the destination site (Azure VMware Solution).
 
-The HCX Network Extension service provides layer 2 connectivity between sites. HCX Network Extension provides the ability to keep the same IP and MAC addresses during virtual machine migrations. When the Network Extension service is enabled on a Service Mesh, a pair of virtual appliances will be deployed: one in the source and one in the destination site (AVS).
+## VMware HCX-SGW - Sentinel Gateway Appliance
 
-## HCX-SGW - Sentinel Gateway Appliance
+![VMware HCX Sentinel Gateway Appliance](./images/hcx-sentinel.png)
 
-![HCX Sentinel Gateway Appliance](./images/hcx-sentinel.png)
-<<<<<<< HEAD
+VMware HCX Enterprise also includes a service called OS Assisted Migration (OSAM). With OSAM you can migrate guest (non-vSphere) virtual machines from an on-premises data center to Azure VMware Solution. The OSAM service has several components: the VMware HCX Sentinel software that is installed on each virtual machine to be migrated, a Sentinel Gateway (SGW) appliance for connecting and forwarding guest workloads in the source environment, and a Sentinel Data Receiver (SDR) in the destination (AVS) environment.
 
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-HCX-SGW - Sentinel Gateway Appliance
+## VMware HCX-SDR - Sentinel Data Receiver Apppliance
 
-HCX Enterprise also includes a service called OS Assisted Migration (OSAM). With OSAM you can migrate guest (non-vSphere) virtual machines from an on-premises data center to AVS. The OSAM service has several components: the HCX Sentinel software that is installed on each virtual machine to be migrated, a Sentinel Gateway (SGW) appliance for connecting and forwarding guest workloads in the source environment, and a Sentinel Data Receiver (SDR) in the destination (AVS) environment.
+![VMware HCX Sentinel Data Reciever Appliance](./images/hcx-sdr.png)
 
-## HCX-SDR - Sentinel Data Receiver Apppliance
-
-![HCX Sentinel Data Reciever Appliance](./images/hcx-sdr.png)
-
-<<<<<<< HEAD
-HCX-SDR - Sentinel Data Receiver Appliance
-
-=======
->>>>>>> 501eb76367c4e75e791e314b94e27bb025135607
-The HCX Sentinel Data Receiver (SDR) appliance works with the HCX Sentinel Gateway appliance to receive, manage, and monitor data replication operations at the destination environment.
+The VMware HCX Sentinel Data Receiver (SDR) appliance works with the VMware HCX Sentinel Gateway appliance to receive, manage, and monitor data replication operations at the destination environment.
