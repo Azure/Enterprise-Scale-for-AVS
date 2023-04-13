@@ -13,3 +13,9 @@
 
 # Dev tfvars files
 dev.tfvars
+
+#drawio diagrams
+**/.$computeprofile1.drawio.bkp
+**/.$computeprofile1.drawio.dtmp
+**/.$hcx-options.drawio.bkp
+**/.$hcx-options2.drawio.bkp
