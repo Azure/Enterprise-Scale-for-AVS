@@ -1,6 +1,6 @@
-# HCX Deployment Scenarios
+# VMware HCX Deployment Scenarios
 
-## HCX over VPN
+## VMware HCX over VPN
 
 For the purposes of this article, VPN will also include connections via 3rd party SD-WAN solutions.
 
@@ -8,11 +8,11 @@ HCX over a VPN connection is fully supported on Azure VMware Solution. VMware ha
 
 A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 1300 in the Uplink and Replication Network Profiles.
 
-![HCX over VPN](./images/hcx-vpn.png)
+![VMware HCX over VPN](./images/hcx-vpn.png)
 
-### Requirements for HCX over VPN
+### Requirements for VMware HCX over VPN
 
-|On-Premises|HCX Connector|Interconnect (IX)|Network Extension (NE)|
+|On-Premises|VMware HCX Connector|Interconnect (IX)|Network Extension (NE)|
 |-----|-----|-----|-----|
 |IP Addresses |<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Replication Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from vMotion Network <sup>4</sup>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|
 |Ports - Uplink|Outbound TCP 443 <sup>3</sup> <p style="padding-left: 20px;">- https://connect.hcx.vmware.com</p> <p style="padding-left: 20px;">- https://hybridity-depot.vmware.com</p> <p style="padding-left: 20px;">- https://avs-hcx-url (Obtained from Azure Portal)</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- TNT**XX**-HCX-UPLINK network profile range of IPs obtained from HCX Network Profiles in AVS side</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- TNT**XX**-HCX-UPLINK network profile range of IPs obtained from HCX Network Profiles in AVS side</p>|
@@ -29,13 +29,13 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 - <sup>4</sup> Must be a VM Port Group, cannot e a VMKernel PG.
 - <sup>5</sup> If Management Network will also serve as Uplink and/or Replication Network, set this to 1300.
 
-## HCX over ExpressRoute
+## VMware HCX over ExpressRoute
 
-![HCX over ExpressRoute](./images/hcx-er.png)
+![VMware HCX over ExpressRoute](./images/hcx-er.png)
 
-### Requirements for HCX over Express Route
+### Requirements for VMware HCX over Express Route
 
-|On-Premises|HCX Connector|Interconnect (IX)|Network Extension (NE)|
+|On-Premises|VMware HCX Connector|Interconnect (IX)|Network Extension (NE)|
 |-----|-----|-----|-----|
 |IP Addresses |<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Replication Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from vMotion Network <sup>4</sup>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|
 |Ports - Uplink|Outbound TCP 443 <sup>3</sup> <p style="padding-left: 20px;">- https://connect.hcx.vmware.com</p> <p style="padding-left: 20px;">- https://hybridity-depot.vmware.com</p> <p style="padding-left: 20px;">- https://avs-hcx-url (Obtained from Azure Portal)</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- TNT**XX**-HCX-UPLINK network profile range of IPs obtained from HCX Network Profiles in AVS side</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- TNT**XX**-HCX-UPLINK network profile range of IPs obtained from HCX Network Profiles in AVS side</p>|
@@ -51,15 +51,15 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 - <sup>3</sup> Just outbound needed.
 - <sup>4</sup> Must be a VM Port Group, cannot e a VMKernel PG.
 
-## HCX over Public IP
+## VMware HCX over Public IP
 
-![HCX over Public IP](./images/hcx-pip.png)
+![VMware HCX over Public IP](./images/hcx-pip.png)
 
-HCX can be enabled over public IP. Microsoft recommends this option when customers connect to Azure via VPN in order to avoid the “double tunneling” effect that HCX over VPN provides. If this is not an acceptable option, please use HCX over VPN recommendation.
+VMware HCX can be enabled over public IP. Microsoft recommends this option when customers connect to Azure via VPN in order to avoid the “double tunneling” effect that VMware HCX over VPN provides. If this is not an acceptable option, please use HCX over VPN recommendation.
 
 Official documentation on enabling HCX over public IP can be found in Microsoft’s official documentation: [Enable HCX over the internet](https://learn.microsoft.com/en-us/azure/azure-vmware/enable-hcx-access-over-internet).
 
-### Prerequisites for enabling HCX over Public IP
+### Prerequisites for enabling VMware HCX over Public IP
 
 - Select “Connect using Public IP down to the NSX-T Edge” for Internet Connectivity in the AVS Private Cloud.
 -	Create 2 blocks of Public IP blocks:
@@ -79,9 +79,9 @@ Official documentation on enabling HCX over public IP can be found in Microsoft�
 -	When creating Site Pairing from On-Premises HCX Connector, enter the Public IP address assigned to HCX Manager on AVS side.
 -	When creating Service Mesh from On-Premises HCX Connector, select the newly created Uplink Network Profile from the /29 block of IPs.
 
-### Requirements for HCX over Public IP
+### Requirements for VMware HCX over Public IP
 
-|On-Premises|HCX Connector|Interconnect (IX)|Network Extension (NE)|
+|On-Premises|VMware HCX Connector|Interconnect (IX)|Network Extension (NE)|
 |-----|-----|-----|-----|
 |IP Addresses |<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Replication Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from vMotion Network <sup>4</sup>|<p style="padding-left: 20px;">- 1 IP from Management Network <sup>1</sup> <sup>2</sup></p> <p style="padding-left: 20px;">- 1 IP from Uplink Network <sup>1</sup> <sup>2</sup></p>|
 |Ports - Uplink|Outbound TCP 443 <sup>3</sup> <p style="padding-left: 20px;">- https://connect.hcx.vmware.com</p> <p style="padding-left: 20px;">- https://hybridity-depot.vmware.com</p> <p style="padding-left: 20px;">- https://avs-hcx-url (Obtained from Azure Portal) - This will be the public IP address assigned to HCX Manager on AVS side</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- New PUBLIC IP network profile created with range of IPs obtained from HCX Network Profiles on AVS side</p>|Outbound UDP 4500 <sup>3</sup> <p style="padding-left: 20px;">- New PUBLIC IP network profile created with range of IPs obtained from HCX Network Profiles on AVS side</p>|
