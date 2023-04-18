@@ -351,11 +351,11 @@ In this section you will set up a static route on default Tier-1 gateway to dive
 
 1. Login to NSX-T manager.
 2. Click on "Networking".
-3. Click on the three dots just before the default Tier-1 gateway. ![t1-static-route01](../nsx-firewall-patterns/assets/t1-static-route01.jpg)
+3. Click on the three dots just before the default Tier-1 gateway. ![t1-static-route01](../Nsx-Firewall-Patterns/assets/t1-static-route01.jpg)
 4. Click on "Edit" to modify the gateway.
-5. Click on Static Route to expand the section. ![t1-static-route02](../nsx-firewall-patterns/assets/t1-static-route02.jpg)
+5. Click on Static Route to expand the section. ![t1-static-route02](../Nsx-Firewall-Patterns/assets/t1-static-route02.jpg)
 6. Click on "Set" to create a new static route.
-7. Add a static route to divert southbound ingress traffic from default Tier-1 towards NVA virtual IP address (North VIP). ![t1-static-route03](../Nsx-firewall-patterns/assets/t1-static-route03.jpg)
+7. Add a static route to divert southbound ingress traffic from default Tier-1 towards NVA virtual IP address (North VIP). ![t1-static-route03](../Nsx-Firewall-Patterns/assets/t1-static-route03.jpg)
 
 
 8. Save the configuration.
