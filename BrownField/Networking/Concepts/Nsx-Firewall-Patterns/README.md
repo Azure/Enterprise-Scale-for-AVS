@@ -87,11 +87,11 @@ Default routes on workload VMs has next hop as the virtual IP address of NVA and
 
 **Solutions Diagram:**
 
-![firewall-directly-connected-01](../nsx-firewall-patterns/assets/firewall-directly-connected-01.jpg)
+![firewall-directly-connected-01](./assets/firewall-directly-connected-01.jpg)
 
 _Figure 1.0: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web and DB) and transit segment (default Tier-1 gateway). Source NAT'ting is done on the default Tier-1 Gateway._
 
-![firewall-directly-connected-02](../nsx-firewall-patterns/assets/firewall-directly-connected-01.jpg)
+![firewall-directly-connected-02](./assets/firewall-directly-connected-01.jpg)
 
 _Figure 1.1: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web, and DB) and transit segment (default Tier-1 gateway). Source NAT'ting is done on the NVA._
 
@@ -114,11 +114,11 @@ _P.S: This is the pattern we are going to elaborate on in this document. For sim
 
 **Solutions Diagram:**
 
-![firewall-t1-connected-01](../nsx-firewall-patterns/assets/firewall-t1-connected-01.jpg)
+![firewall-t1-connected-01](./assets/firewall-t1-connected-01.jpg)
 
 _Figure 2.0: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three completely isolated Tier-1 gateways with respective segments (Transit and workload). NVA is connected to transit segments. Each Tier-1 gateway has its own transit segment. Source NAT is on default Tier-1 Gateway._
 
-![firewall-t1-connected-02](../nsx-firewall-patterns/assets/firewall-t1-connected-02.jpg)
+![firewall-t1-connected-02](./assets/firewall-t1-connected-02.jpg)
 
 _Figure 2.1: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three completely isolated Tier-1 gateways with respective segments (Transit and workload). NVA is connected to transit segments. Each Tier-1 gateway has its own transit segment. Source NAT is on NVA._
 
@@ -186,18 +186,18 @@ _Note: You may use a smaller IPv4 range like /28 for DHCP. We are using /24 for 
 
 In this section you will create an isolated Tier-1 gateway. As per diagram in figure 2.1, there are 3 isolated Tier-1 gateways.
 1. Click on "Networking -> Tier-1 Gateways."
- ![isolated-t1-01](../nsx-firewall-patterns/assets/isolated-t1-01.jpg)
+ ![isolated-t1-01](./assets/isolated-t1-01.jpg)
  1. Click on "ADD TIER-1 GATEWAY."
- ![isolated-t1-02](../nsx-firewall-patterns/assets/isolated-t1-02.jpg)
+ ![isolated-t1-02](./assets/isolated-t1-02.jpg)
  1. Enter Tier-1 gateway name as "Red-T1-Gateway".
- ![isolated-t1-03](../nsx-firewall-patterns/assets/isolated-t1-03.jpg)
+ ![isolated-t1-03](./assets/isolated-t1-03.jpg)
  1. Select allocated edge cluster.
-![isolated-t1-04](../nsx-firewall-patterns/assets/isolated-t1-04.jpg)
+![isolated-t1-04](./assets/isolated-t1-04.jpg)
  1. Click "SAVE."
  2. Click on three dots next to the newly created Tier-1 Gateway to edit it.
  3. Click "Set DHCP Configuration" and select appropriate DHCP configuration.
-![isolated-t1-05](../nsx-firewall-patterns/assets/isolated-t1-05.jpg)
-![isolated-t1-06](../nsx-firewall-patterns/assets/isolated-t1-06.jpg)
+![isolated-t1-05](./assets/isolated-t1-05.jpg)
+![isolated-t1-06](./assets/isolated-t1-06.jpg)
  1. Click "SAVE" to save the configuration.
 
 
@@ -226,7 +226,7 @@ You can also replace it with the firewall of your choice.
 3. Create Ubuntu Linux virtual machine. This VM will act as NVA/firewall device. Details on steps to create a VM can be found on VMware documentation here:
    1. [Create a Virtual Machine](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE8AFBF1-75D1-4172-988C-378C35C9FAF2.html)
    2. Make sure the NVA host has two network adaptors. First one connected to default Tier-1 gateway segment and second to the respective transit segments. ![vm-adaptor](assets/vm-adaptor.jpg)
-   3. Login to the newly created NVA host above using "WEB CONSOLE". ![vm-console](../nsx-firewall-patterns/assets/vm-console.jpg)
+   3. Login to the newly created NVA host above using "WEB CONSOLE". ![vm-console](./assets/vm-console.jpg)
    4. Enable IP forwarding on the NVA
        1. Run
        ```
@@ -351,11 +351,11 @@ In this section you will set up a static route on default Tier-1 gateway to dive
 
 1. Login to NSX-T manager.
 2. Click on "Networking".
-3. Click on the three dots just before the default Tier-1 gateway. ![t1-static-route01](../nsx-firewall-patterns/assets/t1-static-route01.jpg)
+3. Click on the three dots just before the default Tier-1 gateway. ![t1-static-route01](./assets/t1-static-route01.jpg)
 4. Click on "Edit" to modify the gateway.
-5. Click on Static Route to expand the section. ![t1-static-route02](../nsx-firewall-patterns/assets/t1-static-route02.jpg)
+5. Click on Static Route to expand the section. ![t1-static-route02](./assets/t1-static-route02.jpg)
 6. Click on "Set" to create a new static route.
-7. Add a static route to divert southbound ingress traffic from default Tier-1 towards NVA virtual IP address (North VIP). ![t1-static-route03](../nsx-firewall-patterns/assets/t1-static-route03.jpg)
+7. Add a static route to divert southbound ingress traffic from default Tier-1 towards NVA virtual IP address (North VIP). ![t1-static-route03](./assets/t1-static-route03.jpg)
 
 
 8. Save the configuration.
@@ -365,18 +365,18 @@ In this section you will set up a static route on default Tier-1 gateway to dive
 
 In this section you will create static routes from isolated Tier-1 gateways to firewall/NVA. Due to the limitation of NSX-T, you will be breaking down the default route (0.0.0.0/0) into two sub networks (0.0.0.0/1 and 128.0.0.0/1)
 
-1. Select "Tier-1 Gateways" blade on right. ![t1-static-route04](../nsx-firewall-patterns/assets/t1-static-route04.jpg)
+1. Select "Tier-1 Gateways" blade on right. ![t1-static-route04](./assets/t1-static-route04.jpg)
 2. Click three dots on the left to edit the gateway.
-3. Expand "STATIC ROUTES". ![t1-static-route05](../nsx-firewall-patterns/assets/t1-static-route05.jpg)
-4. Click "ADD STATIC ROUTES". ![t1-static-route06](../nsx-firewall-patterns/assets/t1-static-route06.jpg)
+3. Expand "STATIC ROUTES". ![t1-static-route05](./assets/t1-static-route05.jpg)
+4. Click "ADD STATIC ROUTES". ![t1-static-route06](./assets/t1-static-route06.jpg)
 5. Create a default static route.
    1. Enter "default01" as the name.
    2. Enter "0.0.0.0/1" as the network.
-   3. Click on "Next Hops" to add one. ![t1-static-route06](../nsx-firewall-patterns/assets/t1-static-route07.jpg)
-6. Set Virtual NVA IP Address as the next hop. ![t1-static-route07](../nsx-firewall-patterns/assets/t1-static-route08.jpg)
+   3. Click on "Next Hops" to add one. ![t1-static-route06](./assets/t1-static-route07.jpg)
+6. Set Virtual NVA IP Address as the next hop. ![t1-static-route07](./assets/t1-static-route08.jpg)
 7. Save the changes.
 8. Create one more default route like above. This time replace name with "default02" and network with "128.0.0.0/1". Save the configuration.
-9. Final static routes should look like below: ![t1-static-route09](../nsx-firewall-patterns/assets/t1-static-route09.jpg)
+9. Final static routes should look like below: ![t1-static-route09](./assets/t1-static-route09.jpg)
 
 
 
