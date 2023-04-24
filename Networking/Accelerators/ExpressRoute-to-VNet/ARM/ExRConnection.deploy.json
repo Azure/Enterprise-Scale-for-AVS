@@ -1,0 +1,91 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.14.46.61228",
+      "templateHash": "15704538625101035097"
+    }
+  },
+  "parameters": {
+    "GatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "The existing virtual network gateway name"
+      }
+    },
+    "ConnectionName": {
+      "type": "string",
+      "metadata": {
+        "description": "The connection name to be created"
+      }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the virtual network gateway"
+      }
+    },
+    "ExpressRouteAuthorizationKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The Express Route Authorization Key to be redeemed by the connection"
+      }
+    },
+    "ExpressRouteId": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The id of the Express Route to create the connection to"
+      }
+    }
+  },
+  "variables": {
+    "varCuaid": "174ca090-c796-4183-bc1f-ac6578e81d39"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/connections",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('ConnectionName')]",
+      "location": "[parameters('Location')]",
+      "properties": {
+        "connectionType": "ExpressRoute",
+        "routingWeight": 0,
+        "virtualNetworkGateway1": {
+          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]",
+          "properties": {}
+        },
+        "peer": {
+          "id": "[parameters('ExpressRouteId')]"
+        },
+        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {},
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.14.46.61228",
+              "templateHash": "8359988288953583068"
+            }
+          },
+          "resources": []
+        }
+      }
+    }
+  ]
+}
