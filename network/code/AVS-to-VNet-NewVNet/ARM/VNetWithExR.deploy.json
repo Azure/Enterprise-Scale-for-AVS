@@ -5,20 +5,14 @@
     "_generator": {
       "name": "bicep",
       "version": "0.14.46.61228",
-      "templateHash": "517302489389231550"
+      "templateHash": "8021635974732412133"
     }
   },
   "parameters": {
     "PrivateCloudName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the existing Private Cloud that should be used to generate an authorization key"
-      }
-    },
-    "PrivateCloudClusterName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the existing cluster that the Azure NetApp Files datastore should be connected to"
+        "description": "The name of the existing Private Cloud that should be used to generate an autorization key"
       }
     },
     "PrivateCloudResourceGroup": {
@@ -30,7 +24,7 @@
     },
     "PrivateCloudSubscriptionId": {
       "type": "string",
-      "defaultValue": "[subscription().subscriptionId]",
+      "defaultValue": "[subscription().id]",
       "metadata": {
         "description": "The subscription id that the existing Private Cloud resides in"
       }
@@ -60,54 +54,6 @@
         "description": "Subnet to be used for the virtual network gateway, should be a valid CIDR block within the address space provided above, in the format: 10.0.0.0/24"
       }
     },
-    "ANFDelegatedSubnet": {
-      "type": "string",
-      "metadata": {
-        "description": "Subnet to be used for Azure NetApp Files datastores, should be a valid CIDR block within the address space provided above, in the format: 10.0.0.0/24"
-      }
-    },
-    "netappAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the NetApp Account to be created for the Azure NetApp Files datastore"
-      }
-    },
-    "netappCapacityPoolName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the capacity pool to be created for the Azure NetApp Files datastore"
-      }
-    },
-    "netappCapacityPoolServiceLevel": {
-      "type": "string",
-      "defaultValue": "Ultra",
-      "allowedValues": [
-        "Standard",
-        "Premium",
-        "Ultra"
-      ],
-      "metadata": {
-        "description": "Service level of the Azure NetApp Files capacity pool and volume to be created"
-      }
-    },
-    "netappCapacityPoolSize": {
-      "type": "int",
-      "metadata": {
-        "description": "Size of the Azure NetApp Files datastore to be created"
-      }
-    },
-    "netappVolumeName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the volume to be created for the Azure NetApp Files datastore"
-      }
-    },
-    "netappVolumeSize": {
-      "type": "int",
-      "metadata": {
-        "description": "Size of the volume to be created for the Azure NetApp Files datastore"
-      }
-    },
     "GatewayName": {
       "type": "string",
       "defaultValue": "[parameters('VNetName')]",
@@ -132,7 +78,7 @@
     }
   },
   "variables": {
-    "varCuaid": "20f60d5e-587f-4145-aa6d-4901171eb752"
+    "varCuaid": "938cd838-e22a-47da-8a6f-bdda923e3edb"
   },
   "resources": [
     {
@@ -154,28 +100,6 @@
             }
           }
         ]
-      }
-    },
-    {
-      "type": "Microsoft.Network/virtualNetworks/subnets",
-      "apiVersion": "2022-01-01",
-      "name": "[format('{0}/{1}', parameters('VNetName'), 'ANFDelegatedSubnet')]",
-      "properties": {
-        "delegations": [
-          {
-            "name": "microsoftnetapp",
-            "properties": {
-              "serviceName": "Microsoft.Netapp/volumes"
-            }
-          }
-        ],
-        "addressPrefix": "[parameters('ANFDelegatedSubnet')]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
-      ],
-      "metadata": {
-        "description": "create Azure NetApp files delegated subnet"
       }
     },
     {
@@ -230,7 +154,6 @@
       "properties": {
         "connectionType": "ExpressRoute",
         "routingWeight": 0,
-        "expressRouteGatewayBypass": true,
         "virtualNetworkGateway1": {
           "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]",
           "properties": {}
@@ -244,88 +167,6 @@
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')]",
         "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('GatewayName'))]"
       ]
-    },
-    {
-      "type": "Microsoft.NetApp/netAppAccounts",
-      "apiVersion": "2022-01-01",
-      "name": "[parameters('netappAccountName')]",
-      "location": "[parameters('Location')]",
-      "metadata": {
-        "description": "create Azure NetApp Files account"
-      }
-    },
-    {
-      "type": "Microsoft.NetApp/netAppAccounts/capacityPools",
-      "apiVersion": "2022-01-01",
-      "name": "[format('{0}/{1}', parameters('netappAccountName'), parameters('netappCapacityPoolName'))]",
-      "location": "[parameters('Location')]",
-      "properties": {
-        "coolAccess": false,
-        "qosType": "Auto",
-        "serviceLevel": "[parameters('netappCapacityPoolServiceLevel')]",
-        "size": "[parameters('netappCapacityPoolSize')]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.NetApp/netAppAccounts', parameters('netappAccountName'))]"
-      ],
-      "metadata": {
-        "description": "create Azure NetApp Files capacity pool"
-      }
-    },
-    {
-      "type": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes",
-      "apiVersion": "2022-01-01",
-      "name": "[format('{0}/{1}/{2}', parameters('netappAccountName'), parameters('netappCapacityPoolName'), parameters('netappVolumeName'))]",
-      "location": "[parameters('Location')]",
-      "properties": {
-        "avsDataStore": "Enabled",
-        "creationToken": "[parameters('netappVolumeName')]",
-        "exportPolicy": {
-          "rules": [
-            {
-              "allowedClients": "0.0.0.0/0",
-              "chownMode": "restricted",
-              "cifs": false,
-              "hasRootAccess": true,
-              "nfsv3": true,
-              "nfsv41": false,
-              "ruleIndex": 1,
-              "unixReadWrite": true
-            }
-          ]
-        },
-        "networkFeatures": "Standard",
-        "protocolTypes": [
-          "NFSv3"
-        ],
-        "serviceLevel": "[parameters('netappCapacityPoolServiceLevel')]",
-        "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'ANFDelegatedSubnet')]",
-        "usageThreshold": "[parameters('netappVolumeSize')]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.NetApp/netAppAccounts/capacityPools', parameters('netappAccountName'), parameters('netappCapacityPoolName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'ANFDelegatedSubnet')]"
-      ],
-      "metadata": {
-        "description": "create Azure NetApp Files volume"
-      }
-    },
-    {
-      "type": "Microsoft.AVS/privateClouds/clusters/datastores",
-      "apiVersion": "2021-12-01",
-      "name": "[format('{0}/{1}/{2}', parameters('PrivateCloudName'), parameters('PrivateCloudClusterName'), parameters('netappVolumeName'))]",
-      "properties": {
-        "netAppVolume": {
-          "id": "[resourceId('Microsoft.NetApp/netAppAccounts/capacityPools/volumes', parameters('netappAccountName'), parameters('netappCapacityPoolName'), parameters('netappVolumeName'))]"
-        }
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/connections', parameters('PrivateCloudName'))]",
-        "[resourceId('Microsoft.NetApp/netAppAccounts/capacityPools/volumes', parameters('netappAccountName'), parameters('netappCapacityPoolName'), parameters('netappVolumeName'))]"
-      ],
-      "metadata": {
-        "description": "create AVS datastore from ANF volume"
-      }
     },
     {
       "type": "Microsoft.Resources/deployments",

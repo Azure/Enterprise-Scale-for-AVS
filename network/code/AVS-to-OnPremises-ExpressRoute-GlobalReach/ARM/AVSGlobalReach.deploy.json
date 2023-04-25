@@ -5,56 +5,41 @@
     "_generator": {
       "name": "bicep",
       "version": "0.14.46.61228",
-      "templateHash": "5237717297165298837"
+      "templateHash": "8112168728200494808"
     }
   },
   "parameters": {
     "PrivateCloudName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the existing Private Cloud to setup SRM on"
+        "description": "The existing Private Cloud name"
       }
     },
-    "SRMLicenseKey": {
-      "type": "string",
-      "defaultValue": "",
+    "ExpressRouteAuthorizationKey": {
+      "type": "securestring",
       "metadata": {
-        "description": "The SRM license key to be used, can be left blank for a trial license"
+        "description": "The Express Route Authorization Key to be redeemed by the connection"
       }
     },
-    "ReplicationServerCount": {
-      "type": "int",
-      "defaultValue": 1,
-      "minValue": 1,
+    "ExpressRouteId": {
+      "type": "securestring",
       "metadata": {
-        "description": "Number of vSphere Replication servers to be deployed"
+        "description": "The id of the Express Route to create the connection to"
       }
     }
   },
   "variables": {
-    "varCuaid": "c542e61c-1907-483f-9e18-76f5b85eee0a"
+    "varCuaid": "8fb78b9c-973d-45d1-bd35-fcad3c00e09e"
   },
   "resources": [
     {
-      "type": "Microsoft.AVS/privateClouds/addons",
+      "type": "Microsoft.AVS/privateClouds/globalReachConnections",
       "apiVersion": "2021-06-01",
-      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'srm')]",
+      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), guid(parameters('ExpressRouteId'), parameters('ExpressRouteAuthorizationKey')))]",
       "properties": {
-        "licenseKey": "[parameters('SRMLicenseKey')]",
-        "addonType": "SRM"
+        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]",
+        "peerExpressRouteCircuit": "[parameters('ExpressRouteId')]"
       }
-    },
-    {
-      "type": "Microsoft.AVS/privateClouds/addons",
-      "apiVersion": "2021-06-01",
-      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'vr')]",
-      "properties": {
-        "vrsCount": "[parameters('ReplicationServerCount')]",
-        "addonType": "VR"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.AVS/privateClouds/addons', parameters('PrivateCloudName'), 'srm')]"
-      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
