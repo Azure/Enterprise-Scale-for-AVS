@@ -8,7 +8,7 @@ Application dependency mappings assessment are also strongly encouraged to be pe
 
 ### Option 1: Re-IP Migrated Workloads
 
-Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+Feel free to download the draw.io diagram (Save Link As) [here](https://rcantonstorage.blob.core.windows.net/drawio-diagrams/hcx-reIP.drawio).
 
 ![HCX Re-IP](./images/hcx-reip.gif)
 
@@ -43,7 +43,7 @@ Once and if the old network segment on-premises is evacuated, customer should de
 
 ### Option 2: Duplicating Existing Network Segments
 
-Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+Feel free to download the draw.io diagram (Save Link As) [here](https://rcantonstorage.blob.core.windows.net/drawio-diagrams/hcx-duplicateNetworks.drawio).
 
 ![HCX Duplicate Networks](./images/hcx-duplicate.gif)
 
@@ -80,7 +80,7 @@ This approach like Option 1, will require an outage so please plan accordingly.
 
 ### Option 3: Extending Layer 2 Networks with HCX
 
-Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+Feel free to download the draw.io diagram (Save Link As) [here](https://rcantonstorage.blob.core.windows.net/drawio-diagrams/hcx-ne-woMON.drawio).
 
 ![HCX L2 Extension of Networks](./images/hcx-L2-noMON.gif)
 
@@ -115,7 +115,7 @@ Important facts about extending Layer-2 Networks with HCX to Azure VMware Soluti
 
 ### Option 4: L2 Extensions with Mobility Optimized Networking (MON)
 
-Feel free to download the draw.io diagram [here](./diagrams/hcx-options.drawio).
+Feel free to download the draw.io diagram (Save Link As) [here](https://rcantonstorage.blob.core.windows.net/drawio-diagrams/hcx-ne-MON.drawio).
 
 ![HCX L2 Extension of Networks with MON](./images/hcx-L2-MON.gif)
 
