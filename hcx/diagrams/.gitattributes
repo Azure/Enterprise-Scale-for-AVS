@@ -3,3 +3,4 @@ hcx-duplicateNetworks.drawio filter=lfs diff=lfs merge=lfs -text
 hcx-ne-MON.drawio filter=lfs diff=lfs merge=lfs -text
 hcx-ne-woMON.drawio filter=lfs diff=lfs merge=lfs -text
 hcx-reIP.drawio filter=lfs diff=lfs merge=lfs -text
+hcx-options.drawio filter=lfs diff=lfs merge=lfs -text
