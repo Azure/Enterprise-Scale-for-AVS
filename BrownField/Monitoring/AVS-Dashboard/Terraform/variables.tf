@@ -39,3 +39,9 @@ variable "exRConnectionResourceId" {
   type        = string
   default     = ""
 }
+
+variable "vwanExrGatewayResourceId" {
+  description = "Optional, The full resource ID of the ExpressRoute Gateway in the primary VWAN hub where AVS is connected."
+  type        = string
+  default     = ""
+}
