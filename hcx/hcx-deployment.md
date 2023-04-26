@@ -6,7 +6,7 @@ For the purposes of this article, VPN will also include connections via 3rd part
 
 HCX over a VPN connection is fully supported on Azure VMware Solution. VMware has a set of minimum requirements for support which can be found here: [Network Underlay Minimum Requirements](https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html).
 
-A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 1300 in the Uplink and Replication Network Profiles.
+A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 1300 in the Uplink Network Profile.
 
 ![VMware HCX over VPN](./images/hcx-vpn.png)
 
@@ -21,19 +21,20 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 #### MTUs for Network Profiles
 |Management|Uplink|Replication|vMotion|
 |-----|-----|-----|-----|
-1500<sup>5</sup>|1300|1300|9000 (Default)|
+1500<sup>5</sup>|1300<sup>5</sup>|1500 or 9000<sup>6</sup>|1500 or 9000<sup>6</sup>|
 
 - <sup>1</sup> Appliances can be deployed on a separate network from the Management Network as long as appliances have unrestricted access to the Management Network.
-- <sup>2</sup> Managemen/Uplink/Replication Networks can be the same network.
+- <sup>2</sup> Management/Replication Networks can be the same network.
 - <sup>3</sup> Just outbound needed.
-- <sup>4</sup> Must be a VM Port Group, cannot e a VMKernel PG.
-- <sup>5</sup> If Management Network will also serve as Uplink and/or Replication Network, set this to 1300.
+- <sup>4</sup> Must be a VM Port Group, cannot be a VMKernel PG.
+- <sup>5</sup> Management Network cannot serve as Uplink Network for HCX over VPN, a new separate network should be set up for Uplink and MTU set to 1300.
+- <sup>6</sup> Will depend on on-premises setup.
 
 ## VMware HCX over ExpressRoute
 
 ![VMware HCX over ExpressRoute](./images/hcx-er.png)
 
-### Requirements for VMware HCX over Express Route
+### Requirements for VMware HCX over ExpressRoute
 
 |On-Premises|VMware HCX Connector|Interconnect (IX)|Network Extension (NE)|
 |-----|-----|-----|-----|
@@ -44,12 +45,13 @@ A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 
 #### MTUs for Network Profiles
 |Management|Uplink|Replication|vMotion|
 |-----|-----|-----|-----|
-9000 (Default)|9000 (Default)|9000 (Default)|9000 (Default)|
+1500 or 9000<sup>5</sup>|1500|1500 or 9000<sup>5</sup>|1500 or 9000<sup>5</sup>|
 
 - <sup>1</sup> Appliances can be deployed on a separate network from the Management Network as long as appliances have unrestricted access to the Management Network.
-- <sup>2</sup> Managemen/Uplink/Replication Networks can be the same network.
+- <sup>2</sup> Management/Uplink/Replication Networks can be the same network.
 - <sup>3</sup> Just outbound needed.
-- <sup>4</sup> Must be a VM Port Group, cannot e a VMKernel PG.
+- <sup>4</sup> Must be a VM Port Group, cannot be a VMKernel PG.
+- <sup>5</sup> Will depend on on-premises setup.
 
 ## VMware HCX over Public IP
 
@@ -90,9 +92,10 @@ Official documentation on enabling HCX over public IP can be found in Microsoftâ
 #### MTUs for Network Profiles
 |Management|Uplink|Replication|vMotion|
 |-----|-----|-----|-----|
-|1500|1500|1500|9000 (Default)|
+|1500|1500|1500 or 9000<sup>5</sup>|1500 or 9000<sup>5</sup>|
 
 - <sup>1</sup> Appliances can be deployed on a separate network from the Management Network as long as appliances have unrestricted access to the Management Network.
-- <sup>2</sup> Managemen/Uplink/Replication Networks can be the same network.
+- <sup>2</sup> Management/Uplink/Replication Networks can be the same network.
 - <sup>3</sup> Just outbound needed.
 - <sup>4</sup> Must be a VM Port Group, cannot be a VMKernel PG.
+- <sup>5</sup> Will depend on on-premises setup.

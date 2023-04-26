@@ -84,7 +84,7 @@ Feel free to download the draw.io diagram (Save Link As) [here](./diagrams/hcx-n
 
 ![HCX L2 Extension of Networks](./images/hcx-L2-noMON.gif)
 
-HCX Network Extension is a service of VMware HCX that provides a secure Layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machines to retain IP/MAC address during migration. The network extension service of HCX provides a secure layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machine to retain IP/MAC address during migration. HCX Network Extension can be used to create layer-two networks at the destination HCX site (Azure VMware Solution) and bridge the remote network to the source network over a multi-gigabit-capable link. The new stretched network is automatically bridged with the network at the source (on-premises) HCX data center.
+HCX Network Extension is a service of VMware HCX that provides a secure Layer 2 extension capability (VLAN, VXLAN, and Geneve) for vSphere or 3rd party distributed switches and allows the virtual machines to retain IP/MAC address during migration.  HCX Network Extension can be used to create layer-two networks at the destination HCX site (Azure VMware Solution) and bridge the remote network to the source network over a multi-gigabit-capable link. The new stretched network is automatically bridged with the network at the source (on-premises) HCX data center.
 
 Important facts about extending Layer-2 Networks with HCX to Azure VMware Solution:
 
@@ -95,10 +95,10 @@ Important facts about extending Layer-2 Networks with HCX to Azure VMware Soluti
 - By default, when extending a Layer 2 network with HCX, the default gateway for this L2 network remains on-premises including things like common services (DNS, Firewalls, etc.).
 - Traffic will always be sent to its default gateway (hairpinned) back to on-premises for any layer 3 connectivity between workloads on extended networks, on-premises, and/or in non-streched networks on AVS, as well as Azure VNETs.
 - This approach does not require an outage as migrations can be done via vMotion, Replication Assisted vMotion (RAV), which will not intefere with the operation of the VM(s). Bulk Migration and Cold Migration can also be used to migrate to extended networks, just keep in mind these methods require downtime for the VM to be migrated.
-- Once and on-premises network segment is fully evacuated, customers can choose to un-stretch a layer 2 network segment with an option to transfer the duties of the default gateway to the NSX-T T1 router on the AVS side. Once the gateway duties are fully migrated, NSX-T will do routing locally through the T1.
+- Once an on-premises network segment is fully evacuated, customers can choose to un-stretch a layer 2 network segment with an option to transfer the duties of the default gateway to the NSX-T T1 router on the AVS side. Once the gateway duties are fully migrated, NSX-T will do routing locally through the T1.
 - Mobility Optimized Networking (MON) can be enabled on extended layer 2 networks via HCX to avoid traffic being hairpinned back to the on-premises default gateway. MON injects /32 routes to route traffic locally on AVS (See Option 4).
 
-#### Steps to follow for L2 Stretch of Networks in AVS without MON
+#### Steps to follow for L2 Stretch of Networks to AVS without MON
 
 1. Deploy Azure VMware Solution (AVS) with HCX enabled, or enable HCX after deployment.
 2. Deploy and activate HCX Connector on-premises or source site.
@@ -125,7 +125,7 @@ It's important to note that HCX MON will not always solve all customer issues re
 
 If the goal is to evacuate a data center on-premises, the focus should simply be on getting VMs as quick as possible to Azure VMware Solution either by Re-IP'ing VMs migrated, Duplicating Existing Networks, or simply cutting over the default gateways of networks that were stretched via L2 (See Options 1, 2, and 3).
 
-If the use case for a customer is to have a layer 2 extension in perpetuity, then MON is a good option to enable. For this use case also customers would need to consider Network Extension High Availability (HA). This capability protects against one Network Extension appliance failure in a HA group. Network Extension HA operates without preemption, with no automatic failback of an appliance pair to the Active role. The HCX Network Extension service provides layer 2 connectivity between sites. Network Extension HA protects extended networks from a Network Extension appliance failure at either the source or remote site.
+If the use case for a customer is to have a layer 2 extension in perpetuity, or for an extended period of time, then MON is a good option to enable. For this use case also customers would need to consider Network Extension High Availability (HA). This capability protects against one Network Extension appliance failure in a HA group. Network Extension HA operates without preemption, with no automatic failback of an appliance pair to the Active role. The HCX Network Extension service provides layer 2 connectivity between sites. Network Extension HA protects extended networks from a Network Extension appliance failure at either the source or remote site.
 
 ##### Prerequistes for Mobility Optimized Networking (MON) setup
 
