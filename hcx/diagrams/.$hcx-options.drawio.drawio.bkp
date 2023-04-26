@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-04-24T16:23:06.131Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="CLOyu8kUXHimJAia0WLI" version="21.1.2" type="device" pages="4">
+<mxfile host="Electron" modified="2023-04-24T16:23:01.593Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="9_0QUCbwjDvMX9U-xDFr" version="21.1.2" type="device" pages="4">
   <diagram name="Re-IP" id="nKxb2Q4yp1eQMpQWqfWD">
     <mxGraphModel dx="2518" dy="1936" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -3065,7 +3065,7 @@
         <mxCell id="t7zBY_j7b1J3ZhwAm8Gt-176" value="&lt;font face=&quot;Comic Sans MS&quot; style=&quot;font-size: 15px;&quot;&gt;9. Accept new Route Advertisement from NSX-T Segment&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="t7zBY_j7b1J3ZhwAm8Gt-172" vertex="1">
           <mxGeometry x="45" y="-176" width="418" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="t7zBY_j7b1J3ZhwAm8Gt-177" value="AVS to AVS Flow - NA" parent="t7zBY_j7b1J3ZhwAm8Gt-0" />
+        <mxCell id="t7zBY_j7b1J3ZhwAm8Gt-177" value="AVS to AVS Flow - NA" parent="t7zBY_j7b1J3ZhwAm8Gt-0" visible="0" />
         <mxCell id="t7zBY_j7b1J3ZhwAm8Gt-178" value="" style="endArrow=classic;startArrow=classic;html=1;dashed=1;dashPattern=1 2;strokeColor=#00CC00;strokeWidth=4;curved=1;flowAnimation=1;" parent="t7zBY_j7b1J3ZhwAm8Gt-177" source="t7zBY_j7b1J3ZhwAm8Gt-153" target="t7zBY_j7b1J3ZhwAm8Gt-37" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1450" y="557" as="sourcePoint" />
