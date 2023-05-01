@@ -12,7 +12,7 @@ Customers can upgrade to VMware HCX Enterprise via the Azure Portal at no additi
 
 ### VMware HCX Advanced
 
-More information can be found at [VMware HCX Services](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-32AF32BD-DE0B-4441-95B3-DF6A27733EED.html#GUID-32AF32BD-DE0B-4441-95B3-DF6A27733EED)
+More information can be found at [VMware HCX Services](https://docs.vmware.com/en/VMware-HCX/4.3/hcx-user-guide/GUID-32AF32BD-DE0B-4441-95B3-DF6A27733EED.html#GUID-32AF32BD-DE0B-4441-95B3-DF6A27733EED).
 
 |VMware HCX Advanced Services|Description|
 |-----------|-----------|
