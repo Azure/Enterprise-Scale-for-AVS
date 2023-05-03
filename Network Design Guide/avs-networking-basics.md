@@ -2,7 +2,7 @@
 This section summarizes some fundamental concepts about Azure VMware Solution networking. They are a pre-requisite for understanding the design options covered in the following sections and for designing complex Azure VMware Solution topologies.
 
 ## What is the role played by ExpressRoute?
-Azure VMware Solution runs on bare-metal VMWare vSphere ESXi nodes deployed in Azure datacenters and attached to a physical network. Just like how ExpressRoute circuits allow Azure customers to establish layer-3 connectivity between their physical datacenter networks and Azure VNets, a dedicated ExpressRoute implementation provides layer-3 connectivity between physical ESXi nodes and Azure VNets. 
+Azure VMware Solution runs on bare-metal VMware ESXi nodes deployed in Azure datacenters and attached to a physical network. Just like how ExpressRoute circuits allow Azure customers to establish layer-3 connectivity between their physical datacenter networks and Azure VNets, a dedicated ExpressRoute implementation provides layer-3 connectivity between physical ESXi nodes and Azure VNets. 
 When an Azure VMware Solution Private Cloud is provisioned, an associated ExpressRoute circuit is also instantiated in a Microsoft-managed subscription. The private cloud’s owner can then connect the circuit to one or more ExpressRoute Virtual Network Gateways in Azure VNets, by redeeming authorization keys for the circuit (the same procedure used to create connections between ExpressRoute Gateways and customer-managed circuits). Please refer to the [Azure VMware Solution official documentation](https://learn.microsoft.com/azure/azure-vmware/deploy-azure-vmware-solution?tabs=azure-portal#connect-to-azure-virtual-network-with-expressroute ) for detailed instructions.
  
 ![figure2](media/figure2.png) 
@@ -12,7 +12,7 @@ Figure 2. Azure VMware Solution leverages a dedicated ExpressRoute implementatio
 An Azure ExpressRoute Gateway cannot be used to route traffic between on-premises locations connected to it over different circuits. This limitation applies to the Azure VMware Solution dedicated ExpressRoute implementation too, as shown in the figure below.
  
 ![figure3](media/figure3.png) 
-Figure 3. ExpressRoute does not support routing traffic between different circuits connected to the same Gateway.
+Figure 3. ExpressRoute does not support routing traffic between different circuits connected to the same gateway.
 
 Global Reach is an ExpressRoute feature that allows connecting two circuits, so that the networks connected to each circuit can route traffic to each other over the Microsoft backbone. Global Reach is available in the Azure VMware Solution dedicated ExpressRoute implementation. As such, Azure VMware Solution managed ExpressRoute circuits can be connected to customer-managed circuits, providing layer-3 connectivity between on-premises networks and Azure VMware Solution private clouds.
  
