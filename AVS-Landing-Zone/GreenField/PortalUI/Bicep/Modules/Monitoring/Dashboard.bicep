@@ -1,7 +1,6 @@
-param Prefix string
 param Location string
+param PrivateCloudName string
 param PrivateCloudResourceId string
-param ExRConnectionResourceId string
 
 var DashboardHeading = {
   position: {
@@ -16,7 +15,7 @@ var DashboardHeading = {
     settings: {
       content: {
         settings:{
-          content: '# ${Prefix}-SDDC Private Cloud Metrics'
+          content: '# AVS Private Cloud Metrics'
           title: ''
           subtitle: ''
           markdownSource: 1
@@ -110,8 +109,8 @@ var PrivateCloudDiskMetric = {
   position: {
     colSpan: 6
     rowSpan: 4
-    x: 6
-    y: 1
+    x: 0
+    y: 5
   }
   metadata: {
     type: 'Extension/HubsExtension/PartType/MonitorChartPart'
@@ -169,8 +168,8 @@ var PrivateCloudMemoryMetric = {
   position: {
     colSpan: 6
     rowSpan: 4
-    x: 0
-    y: 5
+    x: 6
+    y: 1
   }
   metadata: {
     type: 'Extension/HubsExtension/PartType/MonitorChartPart'
@@ -224,7 +223,7 @@ var PrivateCloudMemoryMetric = {
   }
 }
 
-var ExpressRouteConnectionsMetric = {
+var PrivateCloudDiskUsedMetric = {
   position: {
     colSpan: 6
     rowSpan: 4
@@ -241,28 +240,17 @@ var ExpressRouteConnectionsMetric = {
             metrics: [
               {
                 resourceMetadata: {
-                  id: ExRConnectionResourceId
+                  id: PrivateCloudResourceId
                 }
-                name: 'BitsInPerSecond'
+                name: 'UsedLatest'
                 aggregationType: 4
-                namespace: 'microsoft.network/connections'
+                namespace: 'microsoft.avs/privateclouds'
                 metricVisualization: {
-                  displayName: 'BitsInPerSecond'
-                }
-              }
-              {
-                resourceMetadata: {
-                  id: ExRConnectionResourceId
-                }
-                name: 'BitsOutPerSecond'
-                aggregationType: 4
-                namespace: 'microsoft.network/connections'
-                metricVisualization: {
-                  displayName: 'BitsOutPerSecond'
+                  displayName: 'Datastore Disk Used'
                 }
               }
             ]
-            title: 'Private Cloud to VNet Utilization'
+            title: 'Private Cloud Avg Datastore Disk Used'
             titleKind: 1
             visualization: {
               chartType: 2
@@ -287,6 +275,13 @@ var ExpressRouteConnectionsMetric = {
               sort: 2
               top: 10
             }
+            timespan: {
+              relative: {
+                duration: 86400000
+              }
+              showUTCTime: false
+              grain: 1
+            }
           }
         }
       }
@@ -295,7 +290,7 @@ var ExpressRouteConnectionsMetric = {
 }
 
 resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
-  name: '${Prefix}-Dashboard'
+  name: '${PrivateCloudName}-Dashboard'
   location: Location
   properties: {
     lenses: {
@@ -304,15 +299,15 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
         parts: {
           '0': DashboardHeading
           '1': PrivateCloudLink
-          '2': PrivateCloudDiskMetric
-          '3': PrivateCloudCPUMetric
-          '4': PrivateCloudMemoryMetric
-          '5': ExpressRouteConnectionsMetric
+          '2': PrivateCloudCPUMetric
+          '3': PrivateCloudMemoryMetric
+          '4': PrivateCloudDiskMetric
+          '5': PrivateCloudDiskUsedMetric
         }
       }
     }
   }
   tags:{
-    'hidden-title': '${Prefix}-Dashboard'
+    'hidden-title': 'AVS-Dashboard'
   }
 }
