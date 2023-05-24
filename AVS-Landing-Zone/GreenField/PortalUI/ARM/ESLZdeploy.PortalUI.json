@@ -1227,7 +1227,7 @@
                             "visible": true,
                             "options": {
                                 "text": "Click here to see the resource group and resource names that will be created with the Prefix above. This Prefix is still required even when custom naming is selected as it will be used for the deployment tasks and for naming other resources",
-                                "uri": "https://raw.githubusercontent.com/shaunjacob/Enterprise-Scale-for-AVS-Fork/RemoveOnPremGreenfield/docs/images/AVSLZ-CustomNaming.png",
+                                "uri": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/docs/images/AVSLZ-CustomNaming.png",
                                 "style": "Info"
                             }
                         },
