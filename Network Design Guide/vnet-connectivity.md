@@ -4,7 +4,7 @@ Azure VMware Solution private clouds connect to Azure VNets via managed ExpressR
 While the primary function of managed ExpressRoute circuits is providing layer-3 connectivity between Azure VMware Solution virtual machines and native Azure virtual machines (or other Azure VNet-injected resources), they also enable connectivity between private clouds and an on-premises sites when the option “ExpressRoute transit” is selected in [Design Phase #1](onprem-connectivity.md). Therefore, the hybrid connectivity option selected in Design Phase#1 influences design decisions for Phase #2, as shown in the flow chart below.
   
 ![figure15](media/figure15.png) 
-Figure 15. Design Phase #2: Design connectivity with Azure VNets based on the hybrid connectivity option chosen in phase #1.
+*Design Phase #2: Design connectivity with Azure VNets based on the hybrid connectivity option chosen in phase #1.*
 
 ## Connectivity with Azure VNets when ExpressRoute Global Reach or IPSec VPN's are used for on-prem traffic
 When Azure VMware Solution private clouds are connected to on-premises sites using [ExpressRoute Global Reach](onprem-connectivity.md#expressroute-global-reach) or [IPSec VPNs](onprem-connectivity.md#ipsec-vpns), Azure VMware Solution managed ExpressRoute circuits only carry traffic between Azure VMware Solution virtual machines and Azure VNets. That traffic can routed to NVAs running in Azure by means of UDR's in the GatewaySubnet's route table (for traditional hub and spoke networks with customer-managed hub VNets) or custom routes in Virtual WAN hubs. More specifically:

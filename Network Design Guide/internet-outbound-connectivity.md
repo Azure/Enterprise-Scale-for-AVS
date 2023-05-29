@@ -8,7 +8,7 @@ Almost invariably, outbound Internet access must be secured, by routing connecti
 The flow chart below describes how to approach design phase #4.
  
 ![figure17](media/figure17.png) 
-Figure 17. Design Phase #4: Outbound Internet connectivity.
+*Design Phase #4: Outbound Internet connectivity.*
 
 ## Default routes and outbound Internet connectivity in Azure VMware Solution
 Default routes configured on a private cloud’s network segments determine how outbound Internet connections initiated within the private cloud are routed. Different default routes are used in different network segments.
@@ -19,7 +19,7 @@ Workload segments can:
 All workload segments share the same default route configuration (platform-managed breakout with platform- or user-managed SNAT, or custom internet breakout in Azure VNets or on-premises sites). Outbound internet connectivity for workload segments can be configured through the Azure portal, as shown in the figure below.
  
 ![figure18](media/figure18.png) 
-Figure 18. Outbound Internet connectivity options for workload segments. Option #1 disables the platform-managed Internet breakout. Use this option when a custom default route is announced over the Azure VMware Solution Expressroute circuit from Azure or on-premises sites. Option #2 provides a platform-managed Internet breakout with a managed NAT pool. Option #3 provides a platform-managed internet breakout with user-managed NAT pool. 
+*Outbound Internet connectivity options for workload segments. Option #1 disables the platform-managed Internet breakout. Use this option when a custom default route is announced over the Azure VMware Solution Expressroute circuit from Azure or on-premises sites. Option #2 provides a platform-managed Internet breakout with a managed NAT pool. Option #3 provides a platform-managed internet breakout with user-managed NAT pool.*
 
 ### Use Azure VMware Solution managed SNAT
 Managed SNAT is the lowest complexity option for outbound Internet access in Azure VMware Solution. When enabled on a private cloud, a default route in installed on T0/T1 gateways that forwards Internet-bound traffic to a platform-managed edge. The platform managed edge perform Source-NAT. Users have no control on the SNAT pool. Managed SNAT can be used to provide direct Internet access to Azure VMware Solution virtual machines. It is however possible to define NSX-T topologies whereby Internet-bound connections initiated by Azure VMware Solution virtual machines are routed to secure Internet edge devices (firewall, forward proxies) deployed as virtual applicances in Azure VMware Solution. Typical reasons for discarding Azure VMware Solution managed SNAT for outbound connectivity are listed below:
@@ -36,7 +36,7 @@ Internet-bound traffic emitted by Azure VMware Solution VMs can be routed to an 
 If the NVAs do not support BGP (or cannot be used as BGP speakers due to security-related constraints), additional NVAs can be deployed to act as BGP speakers. A typical scenario that requires additional BGP-capable NVAs is when the Azure Internet edge is Azure Firewall (Azure Firewall does not support BGP).
 
 ![figure19](media/figure19.png)  
-Figure 19. 
+*Default route origination from Azure Virtual Networks.*
 
 ## Next Steps
 - Go back to [Design Phase #3: Inbound Internet Connectivity](internet-inbound-connectivity.md)

@@ -8,7 +8,7 @@ Inbound Internet connectivity for Azure VMware Solution must be designed based o
 The flow chart below summarizes how to approach Phase #3:
  
 ![figure16](media/figure16.png) 
-Figure 16. Design Phase #3: Design outbound Internet connectivity based on where NVAs for application publishing will be hosted (Azure VMware Solution or Azure VNet).
+*Design Phase #3: Design outbound Internet connectivity based on where NVAs for application publishing will be hosted (Azure VMware Solution or Azure VNet).*
 
 ## NVAs for application publishing hosted in an Azure VNet
 Publising Azure VMware Solution applications via Azure first-party services (Azure Firewall, Azure Application Gateway) or third-party NVAs hosted in a VNet only requires connectivity between the VNet and the Azure VMware Solution private cloud (covered in section [Azure VNet connectivity](vnet-connectivity.md)). Azure VMware Solution applications are published behind Azure Public IP resources assigned to the first-party service or third-party NVAs. Standalone Public IPs, Public IPs from [Public Ip Prefixes](https://learn.microsoft.com/azure/virtual-network/ip-services/public-ip-address-prefix) or Public IPs from [Custom IP Prefixes (BYOIP)](https://learn.microsoft.com/azure/virtual-network/ip-services/custom-ip-address-prefix) can be used. The first-party services or the third-party NVAs can act either as layer 3/4 devices (i.e. route/NAT connections to the application server VMs on Azure VMware Solution) or as layer 7 devices (i.e. reverse-proxy connections). In both cases, the application server VMs on Azure VMware Solution receive traffic destined to their private IP and originating from the publishing service/NVA's private IP.  
