@@ -3,10 +3,25 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Prefix": {
-            "value": "ESLZ"
+            "value": "SJTEST2"
+        },
+        "DeployPrivateCloud": {
+            "value": false
+        },
+        "PrivateCloudName": {
+            "value": "SA-SDDC-1"
+        },
+        "ExistingPrivateCloudName": {
+            "value": "SA-SDDC-1"
+        },
+        "ExistingPrivateCloudResourceId": {
+            "value": "/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/SA-SDDC-1/providers/Microsoft.AVS/privateClouds/SA-SDDC-1"
+        },
+        "PrivateCloudResourceGroupName": {
+            "value": "SA-SDDC-1"
         },
         "PrivateCloudAddressSpace": {
-            "value": "10.0.0.0/22"
+            "value": "10.20.0.0/22"
         },
         "PrivateCloudSKU": {
             "value": "AV36"
@@ -14,11 +29,29 @@
         "PrivateCloudHostCount": {
             "value": 3
         },
-        "VNetAddressSpace": {
-            "value": "10.1.0.0/16"
+        "DeployNetworking": {
+            "value": true
         },
-        "VNetGatewaySubnet": {
-            "value": "10.1.0.0/24"
+        "VNetExists": {
+            "value": false
+        },
+        "NewNetworkName": {
+            "value": "SJTESTNET2-vnet"
+        },
+        "NewNetworkResourceGroupName": {
+            "value": "SJTESTNET2"
+        },
+        "NewVNetAddressSpace": {
+            "value": "10.111.0.0/16"
+        },
+        "NewVnetNewGatewaySubnetAddressPrefix": {
+            "value": "10.111.0.0/24"
+        },
+        "ExistingNetworkResourceId": {
+            "value": "/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/SJTESTNET1/providers/Microsoft.Network/virtualNetworks/SJTESTNET1-vnet"
+        },
+        "ExistingGatewayName": {
+            "value": "SJTEST2-gw"
         },
         "AlertEmails": {
             "value": "example@microsoft.com"
@@ -33,13 +66,10 @@
             "value": "ChangeM3!"
         },
         "JumpboxSubnet": {
-            "value": "10.1.1.0/25"
+            "value": "10.111.2.0/24"
         },
         "BastionSubnet": {
-            "value": "10.1.1.128/25"
-        },
-        "VNetExists": {
-            "value": false
+            "value": "10.111.1.0/24"
         }
     }
 }
