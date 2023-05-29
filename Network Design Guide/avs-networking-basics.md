@@ -37,6 +37,18 @@ In the standard topology shown in Figure 5:
 
 It should be noted that Expressroute gateways do not propagate routes across circuit connections. In Figure 5, the Expressroute Gateway does not propagate routes learned in the “red” BGP session to the “green” BGP peer, and vice versa. This is the reason why Global Reach is required to enable connectivity between the Azure VMware Solution private cloud and the on-prem site.
 
+## Outbound data transfer charges
+The managed ExpressRoute circuit associated to an Azure VMware Solution private cloud is instantiated in a Microsoft-owned subscription. Azure VMware Solution customers' subscriptions are not billed for any costs (monthly fees and data transfer fees) associated to the managed circuit. More specifically, customers' subscriptions are not billed for:
+- ExpressRoute monthly fees for the managed circuit;
+- Traffic transferred from an Azure Virtual Network to the private cloud over the managed circuit;
+- ExpressRoute Global Reach ingress and egress traffic charges. It should be noted that, when ExpressRoute Global Reach is used to connect a customer-owned ExpressRoute circuit to an Azure VMware Solution managed circuit, Global Reach ingress and egress charges are suppressed on the customer-owned circuit too (for traffic to/from private clouds), provided that the the customer-owned circuit is in the same [geopolitical region](https://learn.microsoft.com/azure/expressroute/expressroute-locations#locations) as the private cloud.
+
+The ExpressRoute Virtual Network Gateway connected to the private cloud's managed circuit is instantiated in a customer-owned Virtual Network and, as such, billed at the [standard ExpressRoute Virtual Network Gateway rates](https://azure.microsoft.com/pricing/details/expressroute/). 
+
+Any other network-related resources (Azure VPN Gateways, Azure Route Servers, Virtual Network Peerings, Public IP addresses, ...) required by the topologies discussed in this guide are deployed in customer-owned subscriptions and billed at the standard rates.  
+
+More details on billing for Azure VMware Solution are provided in the [official documentation](https://learn.microsoft.com/azure/azure-vmware/faq#billing).
+
 ## Next Steps
 - Go back to the Azure VMware Solution Network Design Guide [introduction](readme.md).
 - Go to the next section to learn about [connectivity between Azure VMware Solution and on-prem sites](onprem-connectivity.md) 
