@@ -27,7 +27,7 @@ An Azure VMware Solution private cloud infrastructure includes several network s
 The network topology of an Azure VMware solution private cloud is shown in the figure below.
 
 ![figure4-1](media/figure4-1.png) 
-*Network toploogy of an Azure VMware Solution private cloud.*
+*Network topology of an Azure VMware Solution private cloud.*
 
 ## Dynamic routing in Azure VMware Solution
 Azure VMware Solution private clouds connect to Azure VNets and remote sites over the managed ExpressRoute circuit. BGP is used for dynamic route exchange, as shown in the figure below.
