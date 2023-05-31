@@ -20,9 +20,14 @@ Global Reach is an ExpressRoute feature that allows connecting two circuits, so 
 *ExpressRoute Global Reach provides direct, layer-3 connectivity over ExpressRoute for on-premises sites.*
 
 ## Azure VMware Solution network topology
-An Azure VMware Solution private cloud infrastructure includes several network segments. 
+An Azure VMware Solution private cloud infrastructure includes several network segments. The segments are realized by VMware's network virtualization stack (virtual distributed switches) and connected to the underlying physical infrastructure through the ESXi hosts' physical NICs.  
 - Management networks support  basic vSphere cluster functions (vCenter Server and NSX-T management VMs, vMotion, replication, vSAN, …). The management networks’ address space is allocated from the /22 address block assigned to each Azure VMware Solution private cloud at provisioning time. See the [Azure VMware Solution official documentation](https://learn.microsoft.com/azure/azure-vmware/tutorial-network-checklist#routing-and-subnet-considerations) for details on how IP address ranges from the /22 block are assigned to management networks. 
-- Workload segments are customer-defined NSX-T segments to which Azure VMware Solution virtual machines attach. The address range for a workload segment is customer-defined. It cannot overlap with the Azure VMware Solution private cloud’s /22 management block, nor with any other address range used in Azure VNets or remote networks connected to the private cloud that must be reachable from the segment. 
+- Workload segments are customer-defined NSX-T segments to which Azure VMware Solution virtual machines attach. The address range for a workload segment is customer-defined. It cannot overlap with the Azure VMware Solution private cloud’s /22 management block, nor with any other address range used in Azure VNets or remote networks connected to the private cloud that must be reachable from the segment. Workload segments can be attached to Tier-1 gateways. An Azure VMware solution private cloud can have one or more Tier-1 gateways. Tier-1 gateways can be linked to the private cloud's default Tier-0 gateway, which provides connectivity to the physical network outside the vSphere/NSX-T cluster. 
+
+The network topology of an Azure VMware solution private cloud is shown in the figure below.
+
+![figure4-1](media/figure4-1.png) 
+*Network toploogy of an Azure VMware Solution private cloud.*
 
 ## Dynamic routing in Azure VMware Solution
 Azure VMware Solution private clouds connect to Azure VNets and remote sites over the managed ExpressRoute circuit. BGP is used for dynamic route exchange, as shown in the figure below.
