@@ -1,20 +1,22 @@
 ---
-title: Network considerations for Azure VMware Solution dual-region deployments
-description: Learn how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes.
-author: fguerri
-ms.author: fguerri
-ms.date: 02/09/2023
+title: Network considerations for Azure VMware Solution dual-region deployments with vWAN
+description: Learn how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions with vWAN.
+author: jmedina
+ms.author: jmedina
+ms.date: 06/22/2023
 ms.topic: conceptual
 ms.service: caf
 ms.subservice: caf-scenario-vmware
 ms.custom: think-tank, e2e-azure-vmware
 ---
 
-# Network considerations for Azure VMware Solution dual-region deployments
+# Network considerations for Azure VMware Solution dual-region deployments with vWAN Routing-Intent
 
 This article describes how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes. If there are partial or complete regional outages, the network topology in this article allows the surviving components (private clouds, Azure-native resources, and on-premises sites) to maintain connectivity with each other and with the internet.
 
 ## Dual-region scenario
+
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/eaa5fef2-0b6b-4743-8387-bb54ad6447ce)
 
 This article focuses on a typical dual-region scenario, shown in the following Figure 1:
 
