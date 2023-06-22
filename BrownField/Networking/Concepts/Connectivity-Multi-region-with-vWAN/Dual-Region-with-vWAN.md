@@ -14,7 +14,7 @@ ms.custom: think-tank, e2e-azure-vmware
 
 This article describes how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes. If there are partial or complete regional outages, the network topology in this article allows the surviving components (private clouds, Azure-native resources, and on-premises sites) to maintain connectivity with each other and with the internet.
 
-## Dual-region scenario
+## Dual-region with vWAN scenario
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/eaa5fef2-0b6b-4743-8387-bb54ad6447ce)
 
