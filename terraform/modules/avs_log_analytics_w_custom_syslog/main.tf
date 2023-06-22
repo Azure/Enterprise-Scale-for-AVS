@@ -44,6 +44,38 @@ resource "azapi_resource" "law_table" {
             {
               "name" : "Message",
               "type" : "string"
+            },
+            {
+            "name" : "syslog_timestamp",
+            "type" : "datetime"
+            },
+            {
+            "name" : "syslog_host",
+            "type" : "string"
+            },
+            {
+            "name" : "syslog_program",
+            "type" : "string"
+            },
+            {
+            "name" : "syslog_subprogram",
+            "type" : "string"
+            },
+            {
+            "name" : "syslog_pid",
+            "type" : "int"
+            },
+            {
+            "name" : "syslog_loglevel",
+            "type" : "string"
+            },
+            {
+            "name" : "syslog_message",
+            "type" : "string"
+            },
+            {
+            "name" : "syslog_trans_id",
+            "type" : "string"
             }
           ]
         }
@@ -118,6 +150,38 @@ resource "azurerm_monitor_data_collection_rule" "avs_log_processing_dcr" {
     }
     column {
       name = "Message"
+      type = "string"
+    }
+    column {
+      name = "syslog_timestamp"
+      type = "datetime"
+    }
+    column {
+      name = "syslog_host"
+      type = "string"
+    }
+    column {
+      name = "syslog_program"
+      type = "string"
+    }
+    column {
+      name = "syslog_subprogram"
+      type = "string"
+    }
+    column {
+      name = "syslog_pid"
+      type = "int"
+    }
+    column {
+      name = "syslog_loglevel"
+      type = "string"
+    }
+    column {
+      name = "syslog_message"
+      type = "string"
+    }
+    column {
+      name = "syslog_trans_id"
       type = "string"
     }
   }
