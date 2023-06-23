@@ -14,15 +14,20 @@ ms.custom: think-tank, e2e-azure-vmware
 
 This article describes how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes. If there are partial or complete regional outages, the network topology in this article allows the surviving components (private clouds, Azure-native resources, and on-premises sites) to maintain connectivity with each other and with the internet.
 
-## Dual-region with vWAN scenario
+## Dual-region with vWAN scenario  
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/eaa5fef2-0b6b-4743-8387-bb54ad6447ce)
+### Understanding Topology Connectivity 
+**Brown Connections**: AVS private cloud connection to its local regional hub.  
+**Pink Connections**: AVS private cloud connection to its cross-regional hub.   
+**Orange Connection**: AVS Region 1 Global Reach connection back to on-premise.   
+**Green Connection**: AVS Region 2 Global Reach connection back to on-premise.   
+**Purple Connection**: AVS Region 1 and AVS Region 2 Global Reach connection back to each other's private cloud.   
+**Black Connections**: On-premise connectivity via ExpressRoute to both regional hubs.  
+**Inter-Hub Connection**: When two hubs are deployed under the same vWAN, they automatically form an inter-hub connection with one another. The purpose of the inter-hub is to transit cross-regional traffic between the two hubs.  
 
-This article focuses on a typical dual-region scenario, shown in the following Figure 1:
+This article focuses on a typical dual-region scenario, shown in the following Figure 1:  
 
-- An Azure hub and spoke network exists in each region.
-- A disaster-resilient configuration for ExpressRoute (two circuits in two different peering locations, with each circuit connected to hub virtual networks in both regions) has been deployed. The guidance provided in the following sections stays the same in case [fall-back VPN connectivity](/azure/expressroute/expressroute-howto-coexist-resource-manager#configure-a-site-to-site-vpn-as-a-failover-path-for-expressroute) is configured.
-- An Azure VMware Solution private cloud has been deployed in each region.
 
 :::image type="content" source="media/dual-region-figure-1.png" alt-text="Diagram of Figure 1, which shows the dual-region scenario covered in this article." lightbox="media/dual-region-figure-1.png":::
 
