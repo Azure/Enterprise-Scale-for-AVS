@@ -16,7 +16,7 @@ This article describes how to configure network connectivity when Azure VMware S
 
 ## Dual-region with vWAN scenario  
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/eaa5fef2-0b6b-4743-8387-bb54ad6447ce)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/963e2b02-f449-4663-96b7-1a87731dc951)
 ### Understanding Topology Connectivity 
 **Brown Connections**: AVS private cloud connection to its local regional hub.  
 **Pink Connections**: AVS private cloud connection to its cross-regional hub.   
