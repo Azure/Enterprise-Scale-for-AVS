@@ -35,23 +35,28 @@ The next sections describe the Azure VMware Solution network configuration that 
 - Azure VMware Solution to Azure Virtual Network (covered in the section [Azure Virtual Network connectivity](#azure-virtual-network-connectivity));
 - Azure VMware Solution to internet (covered in the section [Internet connectivity](#internet-connectivity)).
 
-### Azure VMware Solution cross-region connectivity
+### Azure VMware Solution cross-region connectivity & traffic flows
 
 When multiple Azure VMware Solution private clouds exist, Layer 3 connectivity among them is often a requirement for tasks such as supporting data replication.
 
 Azure VMware Solution natively supports direct connectivity between two private clouds deployed in different Azure regions. Private clouds connect to the Azure network in their own region through ExpressRoute circuits, managed by the platform and terminated on dedicated ExpressRoute meet-me locations. Throughout this article, these circuits are referred to as *Azure VMware Solution managed circuits*. Azure VMware Solution managed circuits shouldn't be confused with the normal circuits that customers deploy to connect their on-premises sites to Azure. The normal circuits that customers deploy are *customer managed circuits* (see Figure 2).
 
-Direct connectivity between private clouds is based on [ExpressRoute Global Reach](/azure/expressroute/expressroute-global-reach) connections between Azure VMware Solution managed circuits, as shown by the green line in the following diagram. For more information, see [Tutorial: Peer on-premises environments to Azure VMware Solution](/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud). The article describes the procedure for connecting an Azure VMware Solution managed circuit with a customer-managed circuit. The same procedure applies to connecting two Azure VMware Solution managed circuits.
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/258c71ec-d3d8-461d-b94d-c4cd57b85151)
 
-:::image type="complex" source="media/dual-region-figure-2.png" alt-text="Diagram of Figure 2, which shows private clouds in different regions connected over a Global Reach connection between managed ExpressRoute circuits." lightbox="media/dual-region-figure-2.png":::
-   Diagram of Figure 2, which shows Azure VMware Solution private clouds in different regions are directly connected to each other over a Global Reach connection between the private clouds' managed ExpressRoute circuits. In each Azure region where Azure VMware Solution is available, network infrastructure that terminates the Azure VMware Solution side of the Azure VMware Solution managed circuits is present. It's referred to as a Dedicated ExpressRoute meet-me location in the picture.
-:::image-end:::
+| From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud| Internet|
+| -------------- | -------- | ---------- | ---| ---| ---| ---|
+| Private Cloud AVS Region 1     | &#8594;| Hub1Fw|  Global Reach (A)    | Hub2Fw | Global Reach (C)| Hub1Fw|
+| Private Cloud AVS Region 2   | &#8594;|  Hub1Fw |  Global Reach (B)    | Hub2Fw | Global Reach (C)| Hub2Fw|
 
-### Hybrid connectivity
+### On-Pemise connectivity & traffic flow
 
 The recommended option for connecting Azure VMware Solution private clouds to on-premises sites is ExpressRoute Global Reach. Global Reach connections can be established between customer managed ExpressRoute circuits and Azure VMware Solution managed ExpressRoute circuits. Global Reach connections aren't transitive, therefore a full mesh (each Azure VMware Solution managed circuit connected to each customer managed circuit) is necessary for disaster resilience, as shown in the following Figure 3 (represented by orange lines).
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/4efba313-0620-4891-b83a-01a0f8ec8111)
+
+| From |   To |  Hub 1 VNets | Hub 2 VNets | AVS Region 1| AVS Region 2| 
+| -------------- | -------- | ---------- | ---| ---| ---|
+| On-Premise    | &#8594;| Hub1Fw|  Hub2Fw  | Global Reach (A) | Global Reach (B)| 
 
 ### Azure Virtual Network connectivity
 
