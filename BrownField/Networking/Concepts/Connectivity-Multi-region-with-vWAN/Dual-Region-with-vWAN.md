@@ -1,6 +1,6 @@
 ---
-title: Network considerations for Azure VMware Solution dual-region deployments with vWAN
-description: Learn how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions with vWAN.
+title: Network considerations for Azure VMware Solution dual-region deployments with Secure vWAN
+description: Learn how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions with Secure vWAN.
 author: jmedina
 ms.author: jmedina
 ms.date: 06/22/2023
@@ -10,11 +10,11 @@ ms.subservice: caf-scenario-vmware
 ms.custom: think-tank, e2e-azure-vmware
 ---
 
-# Network considerations for Azure VMware Solution dual-region deployments with vWAN Routing-Intent
+# Network considerations for Azure VMware Solution dual-region deployments using Secure vWAN with Routing-Intent
 
 This article describes how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes. If there are partial or complete regional outages, the network topology in this article allows the surviving components (private clouds, Azure-native resources, and on-premises sites) to maintain connectivity with each other and with the internet.
 
-## Dual-region with vWAN scenario  
+## Dual-region with Secure vWAN scenario  
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/963e2b02-f449-4663-96b7-1a87731dc951)
 ### Understanding Topology Connectivity 
@@ -26,15 +26,7 @@ This article describes how to configure network connectivity when Azure VMware S
 **Black Connections**: On-premise connectivity via ExpressRoute to both regional hubs.  
 **Inter-Hub Connection**: When two hubs are deployed under the same vWAN, they automatically form an inter-hub connection with one another. The purpose of the inter-hub is to transit cross-regional traffic between the two hubs.  
 
-This article focuses on a typical dual-region scenario, shown in the following Figure 1:  
-
-
-:::image type="content" source="media/dual-region-figure-1.png" alt-text="Diagram of Figure 1, which shows the dual-region scenario covered in this article." lightbox="media/dual-region-figure-1.png":::
-
-> [!NOTE]
-> In the reference scenario of Figure 1, the two regional hub virtual networks are connected via global VNet peering. While not strictly necessary, as traffic between Azure virtual networks in the two regions could be routed over ExpressRoute connections, we strongly recommend this configuration. VNet Peering minimizes latency and maximizes throughput, as it removes the need to hairpin traffic through the ExpressRoute meet-me edge routers.
-
-## Dual-region communication patterns
+## Dual-region Secure vWAN Traffic Flows
 
 The next sections describe the Azure VMware Solution network configuration that is necessary to enable, in the reference dual-region scenario, the following communication patterns:
 
@@ -59,9 +51,7 @@ Direct connectivity between private clouds is based on [ExpressRoute Global Reac
 
 The recommended option for connecting Azure VMware Solution private clouds to on-premises sites is ExpressRoute Global Reach. Global Reach connections can be established between customer managed ExpressRoute circuits and Azure VMware Solution managed ExpressRoute circuits. Global Reach connections aren't transitive, therefore a full mesh (each Azure VMware Solution managed circuit connected to each customer managed circuit) is necessary for disaster resilience, as shown in the following Figure 3 (represented by orange lines).
 
-:::image type="complex" source="media/dual-region-figure-3.png" alt-text="Diagram of Figure 3, which shows Global Reach connections connecting customer managed ExpressRoute circuits and VMware Solution ExpressRoute circuits." lightbox="media/dual-region-figure-3.png":::
-   Diagram of Figure 3, which shows Global Reach connections can be established between customer managed ExpressRoute circuits and Azure VMware Solution managed ExpressRoute circuits.
-:::image-end:::
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/4efba313-0620-4891-b83a-01a0f8ec8111)
 
 ### Azure Virtual Network connectivity
 
