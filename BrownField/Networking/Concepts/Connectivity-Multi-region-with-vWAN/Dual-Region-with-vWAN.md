@@ -41,7 +41,8 @@ When multiple Azure VMware Solution private clouds exist, Layer 3 connectivity a
 
 Azure VMware Solution natively supports direct connectivity between two private clouds deployed in different Azure regions. Private clouds connect to the Azure network in their own region through ExpressRoute circuits, managed by the platform and terminated on dedicated ExpressRoute meet-me locations. Throughout this article, these circuits are referred to as *Azure VMware Solution managed circuits*. Azure VMware Solution managed circuits shouldn't be confused with the normal circuits that customers deploy to connect their on-premises sites to Azure. The normal circuits that customers deploy are *customer managed circuits* (see Figure 2).
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/96eb1921-68fb-42f5-966c-874533c09210)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/43d9ac83-d982-4cd1-8760-ff32b5dd6f76)
+
 
 | From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud|
 | -------------- | -------- | ---------- | ---| ---| ---|
