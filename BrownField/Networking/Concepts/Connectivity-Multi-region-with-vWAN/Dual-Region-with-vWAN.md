@@ -16,7 +16,7 @@ This article describes how to configure network connectivity when Azure VMware S
 
 ## Dual-region with Secure vWAN scenario  
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/963e2b02-f449-4663-96b7-1a87731dc951)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/0d2d0b80-e550-4f69-a321-411658a066ab)
 ### Understanding Topology Connectivity 
 **Brown Connections**: AVS private cloud connection to its local regional hub.  
 **Pink Connections**: AVS private cloud connection to its cross-regional hub.   
@@ -43,16 +43,17 @@ Azure VMware Solution natively supports direct connectivity between two private 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/96eb1921-68fb-42f5-966c-874533c09210)
 
-| From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud| Internet|
-| -------------- | -------- | ---------- | ---| ---| ---| ---|
-| Private Cloud AVS Region 1     | &#8594;| Hub1Fw|  Global Reach (A)    | Hub2Fw | Global Reach (C)| Hub1Fw|
-| Private Cloud AVS Region 2   | &#8594;|  Hub1Fw |  Global Reach (B)    | Hub2Fw | Global Reach (C)| Hub2Fw|
+| From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud|
+| -------------- | -------- | ---------- | ---| ---| ---|
+| Private Cloud AVS Region 1     | &#8594;| Hub1Fw|  Global Reach (A)    | Hub2Fw | Global Reach (C)|
+| Private Cloud AVS Region 2   | &#8594;|  Hub1Fw |  Global Reach (B)    | Hub2Fw | Global Reach (C)|
 
 ### On-Premise connectivity & traffic flow
 
 The recommended option for connecting Azure VMware Solution private clouds to on-premises sites is ExpressRoute Global Reach. Global Reach connections can be established between customer managed ExpressRoute circuits and Azure VMware Solution managed ExpressRoute circuits. Global Reach connections aren't transitive, therefore a full mesh (each Azure VMware Solution managed circuit connected to each customer managed circuit) is necessary for disaster resilience, as shown in the following Figure 3 (represented by orange lines).
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/4efba313-0620-4891-b83a-01a0f8ec8111)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/9ce15daf-f6a8-412a-8d5f-a01c68bd3df1)
+
 
 | From |   To |  Hub 1 VNets | Hub 2 VNets | AVS Region 1| AVS Region 2| 
 | -------------- | -------- | ---------- | ---| ---| ---|
@@ -75,7 +76,7 @@ In dual region scenarios, we recommend a full mesh for the ExpressRoute connecti
 
 When deploying Azure VMware Solution private clouds in multiple regions, we recommend native options for internet connectivity (managed source network address translation (SNAT) or public IPs down to the NSX-T). Either option can be configured through the Azure portal (or via PowerShell, CLI or ARM/Bicep templates) at deployment time, as shown in the following Figure 5.
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/acd6fcb2-6eb7-425e-8566-dfed99657760)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5c12b6c1-2518-47f8-b1ea-17c3be86bff4)
 
 
 Both the options highlighted in Figure 5 provide each private cloud with a direct internet breakout in its own region. The following considerations should inform the decision as to which native internet connectivity option to use:
