@@ -35,7 +35,22 @@ Understand your options for recoverability, whether the applications are archite
 Using a validated disaster recovery solution will ensure you get support from Microsoft and the Vendor together should you ever encounter a disaster.
 Replicating them to an alternative Azure region to protect against the unlikely event of a prolonged regional outage, 
 Using a validated disaster recovery solution will ensure you get support from Microsoft and the Vendor together should you ever encounter a disaster.
+
 ### Backups
 Backups can be stored locally in Azure VMware Solution (not recommended), on Azure disk in the same region, or a different region (preferred).   Select the best option for your data based on the application's SLAs.  Microsoft Backup Server (MABS) is available today, and Microsoft cloud-native backup is expected by the end of CY23Q2.  There are also several 3rd party backup services available.
 Inter-regional storage is equivalent to off-site backups.  This is Microsoft's recommended pattern.
+
 For Azure VMware Solution environment, SRM, or a third-party application. Alternatively, Azure Site Recovery can protect workloads running in Azure VMware Solution by replicating VMs to an Azure Native disaster recovery site.
+
+### Operations for Application Recovery 
+It is important to perform backups and ensure that applications can be up and fully operational from the backup restores. 
+A triage process that lists roles, responsibilities, and operations required in the application recovery process. 
+A reliable backup must meet a certain RTO point and need to be assessed if they go past that time.  
+Ensure you have identified all your applications and their dependencies. This can be in the form of runbooks and application dependency mapping. 
+
+Listen for daily/weekly/quarterly/yearly backups. Listen for DB log shipping to a remote site for the most critical databases with some log marker and 24-hour or 48-hour delay. Listen for backups that happen every 1/2/4/8 hours - these are candidates for DB log replication to a remote site and/or backup from the read-only DB node in a cluster.
+
+If a DR were to occur today, could you meet your SLAs?
+Looking for a high-level description like "we use Commvault to push backups of everything to a DataDomain, which then replicates to a DataDomain in our DR site."  
+If this exists, it means the customer understands the cost of an outage and the impact of not meeting their SLA (e.g., financial, damage to the brand, damage to reputation, loss of life). For customers that do not have a BIA, they are just following the best-effort model.
+Listening for typical disaster scenarios like natural disasters, man-made disasters, malicious attacks/ransomware, disgruntled employee, accidental mistake, etc. 
