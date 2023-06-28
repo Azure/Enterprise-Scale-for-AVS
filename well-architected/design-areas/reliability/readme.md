@@ -10,7 +10,6 @@ The overall SLA includes availability targets, such as Service Level Agreements 
 SLAs for each application and its dependencies should be clearly defined. The Azure VMware Solution SLA is only a part of the reliability, and  other services will affect the overall SLA.
 Maximum time to recover an application in the event of an outage, regardless of the nature of the outage.
 Categorizing applications by  defined Business Continuity tiers will assist the overall BCDR strategy.  Every application should be assigned to a Tier, and be sure to look at application dependencies to ensure cross-tier services map to the lower tier.
-## Operations 
 
 ## Infrastructure Resiliency
 
