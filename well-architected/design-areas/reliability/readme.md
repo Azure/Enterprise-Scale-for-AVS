@@ -1,8 +1,9 @@
 # Azure VMware Solution Well-Architected Framework: Reliability Planning and Design Guidance
 
-In the shared responsibility model, an organization primarily manages and operates workloads, while Microsoft manages the Azure VMware Solutions physical and virtual infrastructure. 
 
 ## Service Level Agreements and Objectives 
+
+In the shared responsibility model, an organization primarily manages and operates workloads, while Microsoft manages the Azure VMware Solutions physical and virtual infrastructure. 
 
 The overall SLA includes availability targets, such as Service Level Agreements (SLA), and Recovery targets, such as Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO), which should be defined and tested to ensure Azure VMware Solution application reliability aligns with business requirements.
 
