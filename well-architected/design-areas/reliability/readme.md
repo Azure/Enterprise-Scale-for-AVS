@@ -30,6 +30,7 @@ A zone outage could affect your connectivity if your ExpressRoute is connected t
 
 ## Recoverability 
 
+### Design for Recoverability
 Understand your options for recoverability, whether the applications are architected for local, regional, or inter-regional availability.
 Using a validated disaster recovery solution will ensure you get support from Microsoft and the Vendor together should you ever encounter a disaster.
 Replicating them to an alternative Azure region to protect against the unlikely event of a prolonged regional outage, 
