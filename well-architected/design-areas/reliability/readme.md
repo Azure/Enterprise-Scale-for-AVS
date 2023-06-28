@@ -16,7 +16,7 @@ Categorizing applications by  defined Business Continuity tiers will assist the 
 
 ### Compute and Storage 
 Knowing when a node becomes unavailable, and a node replacement process starts is important. Also, how will this affect the overall workload? 
-Ensure enough tolerance within the overall design to cater to a complete cluster failure.
+Please ensure enough tolerance within the overall design to cater to a complete cluster failure.
 
 While the Default Storage Policy in Azure VMware Solution is redundant, if virtual machines require that data be copied to additional vSAN nodes, another policy should be created to ensure that the data meets your enhanced redundancy requirements. Suppose your VMs operate in a HA or clustered fashion within Azure VMware Solution. In that case, it is advisable to create anti-affinity rules to keep your VMs apart and on separate hosts.
  
@@ -35,4 +35,7 @@ Understand your options for recoverability, whether the applications are archite
 Using a validated disaster recovery solution will ensure you get support from Microsoft and the Vendor together should you ever encounter a disaster.
 Replicating them to an alternative Azure region to protect against the unlikely event of a prolonged regional outage, 
 Using a validated disaster recovery solution will ensure you get support from Microsoft and the Vendor together should you ever encounter a disaster.
-
+### Backups
+Backups can be stored locally in Azure VMware Solution (not recommended), on Azure disk in the same region, or a different region (preferred).   Select the best option for your data based on the application's SLAs.  Microsoft Backup Server (MABS) is available today, and Microsoft cloud-native backup is expected by the end of CY23Q2.  There are also several 3rd party backup services available.
+Inter-regional storage is equivalent to off-site backups.  This is Microsoft's recommended pattern.
+For Azure VMware Solution environment, SRM, or a third-party application. Alternatively, Azure Site Recovery can protect workloads running in Azure VMware Solution by replicating VMs to an Azure Native disaster recovery site.
