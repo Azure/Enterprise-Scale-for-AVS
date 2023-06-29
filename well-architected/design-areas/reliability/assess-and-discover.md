@@ -1,4 +1,4 @@
-# Azure VMware Solution Well-Architected: Reliability Discovery and Assessment
+# Azure VMware Solution Well-Architected Framework: Reliability Discovery and Assessment
 This step collects detailed information about each application's reliability readiness. 
 
 ### What reliability targets and metrics have you defined for your Azure VMware Solution and Azure?
