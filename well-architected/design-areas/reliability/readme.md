@@ -1,5 +1,6 @@
 # Azure VMware Solution Well-Architected Framework: Reliability Planning and Design Guidance
 
+The Well-Architected framework assesses hybrid workloads that are running in the Azure VMware solution where the application footprint extends over to Azure Native Services. 
 
 ## Service Level Agreements and Objectives 
 
