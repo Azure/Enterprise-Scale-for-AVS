@@ -17,10 +17,16 @@ The Build and Deploy section implements the supporting infrastructure  (SDDC) is
 ### Networking 
 - Activate high availability (HA) for HCX network extension: https://learn.microsoft.com/en-us/azure/azure-vmware/configure-hcx-network-extension-high-availability#activate-high-availability-ha
 - Create a zone redundant gateway: https://learn.microsoft.com/en-us/azure/vpn-gateway/create-zone-redundant-vnet-gateway
-
 - Review reliability best practices: https://learn.microsoft.com/en-us/azure/well-architected/resiliency/design-best-practices
 
+### Backups
 
+- Azure Backup servers must live on a Recovery Vault for long-term retention. Local/Geo-Redundant must be set before configuring backups: https://learn.microsoft.com/en-us/azure/azure-vmware/set-up-backup-server-for-azure-vmware-solution#set-storage-replication
+
+### Automation
+- Setup Monitoring and Alerting for host quota: https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/BrownField/Monitoring/AVS-Utilization-Alerts
+- Send syslogs to Log Analytics workspace: https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs
+  
 
 
 
