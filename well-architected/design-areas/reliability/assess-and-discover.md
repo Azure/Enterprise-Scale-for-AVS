@@ -15,7 +15,7 @@ This step collects detailed information about each application's reliability rea
 - Can you describe the recovery process if an app fails?  
 - Do you have trouble backing everything up within the prescribed windows?
 - Do you have enough engineers qualified to do backup/restore administrator?
-- How sure are you that everything in your environment that needs to be backed up is?
+- How sure are you that everything in your environment needs to be backed up?
 - What are your specified backup/recovery policies for your application tiers?
 - Are you confident that systems being backed up can be properly restored?
 - Can you describe your backup and recovery infrastructure at a high level?
@@ -23,11 +23,11 @@ This step collects detailed information about each application's reliability rea
 - What scenarios are you protecting against - have you developed a risk assessment guide? 
 - Do you use a DR Automation system or manual Runbooks?
 
-### Do you have a comprehensive BCDR strategy for your environment?
+### Do you have a comprehensive Business Continuity strategy for your environment?
 
-- You have SLAs established for your applications
-- You are using an Azure-validated backup application
-- You are storing your backups in a different region
-- You are using an Azure-validated disaster recovery application
-- Your failover architecture is  local to a region 
-- Your failover architecture is inter-regional
+- Are SLAs established for your applications? 
+- Are you using an Azure-validated backup application?
+- Are backups stored in a different region?
+- Is the disaster recovery application Azure validated?
+- Is failover architecture in places across multiple regions?
+- Is the failover architecture is inter-regional (across availability zones)
