@@ -6,7 +6,7 @@ The Build and Deploy section implements the supporting infrastructure  (SDDC) is
 
 
 - Identity and access management services (LDAPS)
-- Infrastructure services (Virtual Machines, Virtual Networks, vSAN)
+- Infrastructure services (Virtual Machines, Virtual Networks, vSAN, and Expressroute)
 - Automation of infrastructure, workload, and security services
 
 ### Compute
