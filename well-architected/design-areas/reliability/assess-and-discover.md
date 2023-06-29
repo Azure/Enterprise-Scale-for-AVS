@@ -13,20 +13,20 @@ This step collects detailed information about each application's reliability rea
 ### Do you have documentation on what and how to recover your applications?
 - How often do you practice your recovery procedures?  
 - Can you describe the recovery process if an app fails?  
-- Do you have trouble backing everything up within the prescribed windows?
-- Do you have enough engineers qualified to do backup/restore administrator?
-- How sure are you that everything in your environment needs to be backed up?
-- What are your specified backup/recovery policies for your application tiers?
-- Are you confident that systems being backed up can be properly restored?
-- Can you describe your backup and recovery infrastructure at a high level?
-- Do you have a Business Impact Analysis (BIA) for DR?
-- What scenarios are you protecting against - have you developed a risk assessment guide? 
-- Do you use a DR Automation system or manual Runbooks?
+- Are backups able to complete in the windows allocated?
+- Are there engineers qualified and dedicated to administering backup/restore procedures?
+- Does everything in the environment need to be backed up?
+- What are the specified backup/recovery policies for your application tiers?
+- What is the level of confidence in the current backup and restore procedures?
+- Is the backup and recovery infrastructure defined?
+- Is there a Business Impact Analysis (BIA) for DR?
+- What scenarios are you protecting against and is there a developed a risk assessment guide? 
+- Is the DR strategy today executed manually through a runbook or are there automated steps?
 
 ### Do you have a comprehensive Business Continuity strategy for your environment?
 
-- Are SLAs established for your applications? 
-- Are you using an Azure-validated backup application?
+- Are SLAs established for the applications? 
+- Is the backup solution in place Azure-validated?
 - Are backups stored in a different region?
 - Is the disaster recovery application Azure validated?
 - Is failover architecture in places across multiple regions?
