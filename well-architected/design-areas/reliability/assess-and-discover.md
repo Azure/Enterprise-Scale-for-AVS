@@ -22,3 +22,12 @@ This step collects detailed information about each applications reliability read
 - Do you have a Business Impact Analysis (BIA) for DR?
 - What scenarios are you protecting against - have you developed a risk assessment guide? 
 - Do you use a DR Automation system or manual Runbooks?
+
+### Do you have a comprehensive BCDR strategy for your environment?
+
+- You have SLA’s established for your applications
+- You are using an Azure validated backup application
+- You are storing your backups in a different region
+- You are using an Azure validated disaster recovery application
+- Your failover architecture is  local to a region 
+- Your failover architecture is inter-regional
