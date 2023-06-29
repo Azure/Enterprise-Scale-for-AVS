@@ -5,19 +5,23 @@ The Build and Deploy section implements the supporting infrastructure  (SDDC) is
 ## Concepts
 
 
-Identity and access management services
-Infrastructure services (Virtual Machines, Virtual Networks, vSAN)
-Automation of infrastructure, workload, and security services
+- Identity and access management services (LDAPS)
+- Infrastructure services (Virtual Machines, Virtual Networks, vSAN)
+- Automation of infrastructure, workload, and security services
 
-Backup and disaster recovery services
-
-
+### Compute
 - Create a placement policy: https://learn.microsoft.com/en-us/azure/azure-vmware/create-placement-policy#create-a-placement-policy
 - Deploy Stretched clusters: https://learn.microsoft.com/en-us/azure/azure-vmware/deploy-vsan-stretched-clusters#deploy-a-stretched-cluster-private-cloud.
+- Configure storage policies: https://learn.microsoft.com/en-us/azure/azure-vmware/configure-storage-policy#list-storage-policies
+  
+### Networking 
 - Activate high availability (HA) for HCX network extension: https://learn.microsoft.com/en-us/azure/azure-vmware/configure-hcx-network-extension-high-availability#activate-high-availability-ha
 - Create a zone redundant gateway: https://learn.microsoft.com/en-us/azure/vpn-gateway/create-zone-redundant-vnet-gateway
-- Configure storage policies: https://learn.microsoft.com/en-us/azure/azure-vmware/configure-storage-policy#list-storage-policies
+
 - Review reliability best practices: https://learn.microsoft.com/en-us/azure/well-architected/resiliency/design-best-practices
+
+
+
 
 
 
