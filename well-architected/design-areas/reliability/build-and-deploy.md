@@ -1,4 +1,4 @@
-# Azure VMware Solution Well-Architected Framework: Reliability Discovery and Assessment
+# Azure VMware Solution Well-Architected Framework: Build and Deploy
 
 The Build and Deploy section implements the supporting infrastructure  (SDDC) is deployed and configured based on the information gathered from the Assess and Discovery section. 
 
