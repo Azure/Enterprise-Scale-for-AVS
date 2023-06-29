@@ -10,7 +10,7 @@ This step collects detailed information about each applications reliability read
 - Have you verified that vSAN Storage Policies are in place that meet corporate standards?
 - Do you have VMware Anti Affinity rules in place to keep VMs apart in event of host failures?
 
-### Have you got documentation on what and how to recover your applications?
+### Do you have documentation on what and how to recover your applications?
 - How often do you practice your recovery procedures?  
 - Can you describe how the recovery process would go if an app fails?  
 - Do you have trouble backing everything up within prescribed windows?
