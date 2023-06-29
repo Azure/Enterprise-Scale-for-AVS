@@ -21,7 +21,7 @@ runcmd:
   - echo "${lawPluginDataCollectionEndpointURI}" | /usr/share/logstash/bin/logstash-keystore add lawplugindatacollectionendpointuri --path.settings /etc/logstash
   - echo "${lawPluginDcrImmutableId}" | /usr/share/logstash/bin/logstash-keystore add lawplugindcrimmutableid --path.settings /etc/logstash
   - echo "${lawPluginDcrStreamName}" | /usr/share/logstash/bin/logstash-keystore add lawplugindcrstreamname --path.settings /etc/logstash
-  - curl -L https://raw.githubusercontent.com/jchancellor-ms/avs-terraform/main/modules/avs_log_filtering_vm/templates/logstash-avs-custom.conf > /etc/logstash/conf.d/logstash-avs-custom.conf
+  - curl -L https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/terraform/modules/avs_log_filtering_vm/templates/logstash-avs-custom.conf > /etc/logstash/conf.d/logstash-avs-custom.conf
   - |
     sed -i -e "s/# pipeline.ecs_compatibility: v8/pipeline.ecs_compatibility: disabled/g" /etc/logstash/logstash.yml
   - chmod 644 /etc/logstash/startup.options
