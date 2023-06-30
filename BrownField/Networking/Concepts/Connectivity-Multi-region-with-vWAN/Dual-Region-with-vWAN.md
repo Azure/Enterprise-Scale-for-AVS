@@ -93,38 +93,6 @@ Both the options highlighted in Figure 5 provide each private cloud with a direc
 
 Changing a private cloud's internet connectivity configuration after the initial deployment is possible. But the private cloud loses connectivity to internet, Azure Virtual Network, and on-premises sites while the configuration is being updated. When either one of the native internet connectivity options in the preceding Figure 5 is used, no extra configuration is necessary in dual region scenarios (the topology stays the same as the one shown in Figure 4). For more information on internet connectivity for Azure VMware Solution, see [Internet connectivity design considerations](/azure/azure-vmware/concepts-design-public-internet-access).
 
-#### Azure-native internet breakout
-
-If a secure internet edge was built in Azure Virtual Network prior to Azure VMware Solution adoption, it might be necessary to use it for internet access for Azure VMware Solution private clouds. Using a secure internet edge in this way is necessary for the centralized management of network security policies, cost optimization, and more. Internet security edges in Azure Virtual Network can be implemented using Azure Firewall or third-party firewall and proxy network virtual appliances (NVAs) available on the Azure Marketplace.
-
-Internet-bound traffic emitted by Azure VMware Solution virtual machines can be attracted to an Azure VNet by originating a default route and announcing it, over border gateway protocol (BGP), to the private cloud's managed ExpressRoute circuit. This internet connectivity option can be configured through the Azure portal (or via PowerShell, CLI or ARM/Bicep templates) at deployment time, as shown in the following Figure 6. For more information, see [Disable internet access or enable a default route](/azure/azure-vmware/disable-internet-access).
-
-:::image type="content" source="media/dual-region-figure-6.png" alt-text="Diagram of Figure 6, which shows the Azure VMware Solution configuration to enable internet connectivity via internet edges in Azure Virtual Network." lightbox="media/dual-region-figure-6.png":::
-
-The internet edge NVAs can originate the default route if they support BGP. If not, you must deploy other BGP-capable NVAs. For more information on how to implement internet outbound connectivity for Azure VMware Solution in a single region, see [Implementing internet connectivity for Azure VMware Solution with Azure NVAs](https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/BrownField/Networking/Step-By-Step-Guides/Implementing%20internet%20connectivity%20for%20AVS%20with%20Azure%20NVAs). In the dual-region scenario discussed in this article, the same configuration must be applied to both regions.
-
-The key consideration in dual-region scenarios is that the default route originated in each region should be propagated over ExpressRoute only to the Azure VMware Solution private cloud in same region. This propagation allows Azure VMware Solution workloads to access the internet through a local (in-region) breakout. However, if you use the topology shown in Figure 4, each Azure VMware Solution private cloud also receives an equal-cost default route from the remote region over the cross-region ExpressRoute connections. The red dashed lines represent this unwanted cross-region default route propagation in Figure 7.
-
-:::image type="complex" source="media/dual-region-figure-7.png" alt-text="Diagram of Figure 7, which shows the cross-region connections between ExpressRoute Gateways and VMware Solution-managed ExpressRoute circuits must be removed." lightbox="media/dual-region-figure-7.png":::
-   Diagram of Figure 7, which shows the cross-region connections between ExpressRoute Gateways and Azure VMware Solution-managed ExpressRoute circuits must be removed to avoid cross-region propagation of the default route.
-:::image-end:::
-
-Removing the Azure VMware Solution cross-region ExpressRoute connections achieves the goal of injecting, in each private cloud, a default route to forward internet-bound connections to the Azure internet edge in the local region.
-
-It should be noted that if the cross-region ExpressRoute connections (red dashed lines in Figure 7) are removed, cross-region propagation of the default route still occurs over Global Reach. However, routes propagated over Global Reach have a longer AS Path than the locally originated ones and get discarded by the BGP route selection process.
-
-The cross-region propagation over Global Reach of a less preferred default route provides resiliency against faults of the local internet edge. If a region's internet edge goes offline, it stops originating the default route. In that event, the less-preferred default route learned from the remote region installs in the Azure VMware Solution private cloud, so that internet-bound traffic is routed via the remote region's breakout.
-
-The recommended topology for dual-region deployments with internet breakouts in Azure VNets is shown in the following Figure 8.
-
-:::image type="complex" source="media/dual-region-figure-8.png" alt-text="Diagram of Figure 8, which shows the recommended topology for dual region deployments with internet outbound access through internet edges." lightbox="media/dual-region-figure-8.png":::
-   Diagram of Figure 8, which shows the recommended topology for dual region Azure VMware Solution deployments with internet outbound access through internet edges in Azure Virtual Network. Cross-region connections between ExpressRoute Gateways and Azure VMware Solution managed circuits must not be established to prevent unwanted cross-region propagation of the default route.
-:::image-end:::
-
-When you originate default routes in Azure, special care must be taken to avoid propagation to on-premises sites, unless there's a requirement to provide internet access to on-premises sites via an internet edge in Azure. The customer-operated devices that terminate the customer managed ExpressRoute circuits must be configured to filter default routes received from Azure, as shown in Figure 9. This configuration is necessary to avoid disrupting internet access for the on-premises sites.
-
-:::image type="content" source="media/dual-region-figure-9.png" alt-text="Diagram of Figure 9, which shows the BGP speakers that terminate the customer-managed ExpressRoute circuits are filtering Azure NVAs' default routes." lightbox="media/dual-region-figure-9.png":::
-
 ## Next steps
 
 - For more information on Azure VMware Solution network features, see [Azure VMware Solution networking and interconnectivity concepts](/azure/azure-vmware/concepts-networking).
