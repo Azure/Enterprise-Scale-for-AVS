@@ -1,6 +1,6 @@
 # Azure VMware Solution Well-Architected Framework: Cost and Spend Management Assessment 
 
-##What cost models are in place today for the Azure VMware Solution?
+## What cost models are in place today for the Azure VMware Solution?
 
 There is a good understanding of cloud costs?
 Cloud costs for AVS are being modeled?
