@@ -58,7 +58,7 @@ The recommended option for connecting Azure VMware Solution private clouds to on
 
 | From |   To |  Hub 1 VNets | Hub 2 VNets | AVS Region 1| AVS Region 2| 
 | -------------- | -------- | ---------- | ---| ---| ---|
-| On-Premise    | &#8594;| Hub1Fw>Vnet1|  Hub2Fw>Vnet2  | Global Reach (A) | Global Reach (B)| 
+| On-Premise    | &#8594;| Hub1Fw>Vnet1|  Hub2Fw>Vnet2  | Global Reach(A)>AVS Cloud Region 1 | Global Reach(B)>AVS Cloud Region 2| 
 
 ### Azure Virtual Network connectivity & traffic flow
 
