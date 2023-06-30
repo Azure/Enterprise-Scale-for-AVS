@@ -79,7 +79,7 @@ When deploying Azure VMware Solution private clouds in multiple regions, we reco
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5c12b6c1-2518-47f8-b1ea-17c3be86bff4)
 
-| From |   To |  Primary Internet Connection | Backup Internet Connection
+| From |   To |  Primary Internet Route | Backup Internet Route
 | -------------- | -------- | ---------- | ---------- |
 | Vnet1    | &#8594;| Hub1Fw>Internet| None|
 | Vnet2    | &#8594;| Hub2Fw>Internet| None|
