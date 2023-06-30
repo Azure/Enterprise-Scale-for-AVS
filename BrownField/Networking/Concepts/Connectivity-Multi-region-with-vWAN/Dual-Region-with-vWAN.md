@@ -46,8 +46,8 @@ Azure VMware Solution natively supports direct connectivity between two private 
 
 | From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud|
 | -------------- | -------- | ---------- | ---| ---| ---|
-| Private Cloud AVS Region 1     | &#8594;| Hub1Fw|  Global Reach (A)    | Hub2Fw | Global Reach (C)|
-| Private Cloud AVS Region 2   | &#8594;|  Hub1Fw |  Global Reach (B)    | Hub2Fw | Global Reach (C)|
+| AVS Cloud Region 1    | &#8594;| Hub1Fw>Vnet1|  GlobalReach(A)>OnPremise   | Hub2Fw>Vnet2 | Global Reach(C)>AVS Cloud Region 2|
+| AVS Cloud Region 2   | &#8594;|  Hub1Fw>Vnet1 |  GlobalReach(B)>OnPremise   | Hub2Fw>Vnet2 | Global Reach(C)>AVS Cloud Region 1|
 
 ### On-Premise connectivity & traffic flow
 
@@ -58,7 +58,7 @@ The recommended option for connecting Azure VMware Solution private clouds to on
 
 | From |   To |  Hub 1 VNets | Hub 2 VNets | AVS Region 1| AVS Region 2| 
 | -------------- | -------- | ---------- | ---| ---| ---|
-| On-Premise    | &#8594;| Hub1Fw|  Hub2Fw  | Global Reach (A) | Global Reach (B)| 
+| On-Premise    | &#8594;| Hub1Fw>Vnet1|  Hub2Fw>Vnet2  | Global Reach (A) | Global Reach (B)| 
 
 ### Azure Virtual Network connectivity & traffic flow
 
