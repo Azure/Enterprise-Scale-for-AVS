@@ -70,8 +70,8 @@ In dual region scenarios, we recommend a full mesh for the ExpressRoute connecti
 
 | From |   To |  On-Premise | AVS Region 1 | AVS Region 2| Cross-Region Vnet| 
 | -------------- | -------- | ---------- | ---| ---| ---|
-| Vnet1    | &#8594;| Hub1Fw|  Hub1Fw  | Hub1Fw | Hub1Fw>Hub2Fw |
-| Vnet2    | &#8594;| Hub2Fw|  Hub2Fw  | Hub2Fw | Hub2Fw>Hub1Fw |
+| Vnet1    | &#8594;| Hub1Fw>OnPremise|  Hub1Fw>AVS Cloud Region 1  | Hub1Fw>AVS Cloud Region 2 | Hub1Fw>Hub2Fw>Vnet2 |
+| Vnet2    | &#8594;| Hub2Fw>OnPremise|  Hub2Fw>AVS Cloud Region 1  | Hub2Fw>AVS Cloud Region 2 | Hub2Fw>Hub1Fw>Vnet1 |
 
 ### Internet connectivity
 
