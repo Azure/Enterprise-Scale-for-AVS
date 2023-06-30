@@ -7,7 +7,7 @@ https://learn.microsoft.com/en-us/azure/azure-vmware/plan-private-cloud-deployme
 
 
 Go through the checklist in the attached link.  Read the Azure VMware Solution Azure docs published on the web.	Azure/review-checklists: This repo contains code and examples to operationalize Azure review checklists. (github.com)
-![image](https://github.com/Azure/Enterprise-Scale-for-AVS/assets/6500757/61ab6b25-2243-4059-b1f8-079631afe822)
+
 
 
 ## Cost Optimizing Application usage 
