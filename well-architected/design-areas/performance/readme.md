@@ -16,6 +16,4 @@ Database workloads may have native tools for scale such as ....Zonal deployments
 
 
 ### Management and Monitoring 
-Microsoft tooling can help assess metrics for the servers to help with capacity planning and management. 
-s
-It's important not only understand the traffic patterns 
+Microsoft tooling can help assess server metrics to help with capacity planning and management. Understanding traffic patterns will help not only with capacity planning but help prevent future performance degradation.
