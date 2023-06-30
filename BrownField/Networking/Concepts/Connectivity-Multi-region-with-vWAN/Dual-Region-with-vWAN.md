@@ -79,6 +79,12 @@ When deploying Azure VMware Solution private clouds in multiple regions, we reco
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5c12b6c1-2518-47f8-b1ea-17c3be86bff4)
 
+| From |   To |  Primary Internet Connection | Backup Internet Connection
+| -------------- | -------- | ---------- | ---------- |
+| Vnet1    | &#8594;| Hub1Fw>Internet| None|
+| Vnet2    | &#8594;| Hub2Fw>Internet| None|
+| AVS Cloud Region 1    | &#8594;| Hub1Fw>Internet| Hub2Fw>Internet|
+| AVS Cloud Region 2    | &#8594;| Hub2Fw>Internet| Hub1Fw>Internet|
 
 Both the options highlighted in Figure 5 provide each private cloud with a direct internet breakout in its own region. The following considerations should inform the decision as to which native internet connectivity option to use:
 
