@@ -14,6 +14,8 @@ Having performant workload requires knowing which SKU's are available in the reg
 
 Database workloads may have native tools for scale such as ....Zonal deployments will also facilate horizontally scaling across different regions
 
+### Networking 
 
-### Management and Monitoring 
+## Maintain and Monitor
+### Perfrmance Monitoring  
 Microsoft tooling can help assess server metrics to help with capacity planning and management. Understanding traffic patterns will help not only with capacity planning but help prevent future performance degradation.
