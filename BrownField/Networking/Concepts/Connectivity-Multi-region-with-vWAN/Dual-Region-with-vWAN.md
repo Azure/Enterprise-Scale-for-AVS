@@ -88,7 +88,21 @@ The diagram shows how all Azure native resources in Vnet1 and Vnet2 will learn r
 
 ### Internet connectivity
 
-When deploying Azure VMware Solution private clouds in multiple regions, we recommend native options for internet connectivity (managed source network address translation (SNAT) or public IPs down to the NSX-T). Either option can be configured through the Azure portal (or via PowerShell, CLI or ARM/Bicep templates) at deployment time, as shown in the following Figure 5.
+This section will focus only on how internet connectivity will be provided for Azure native resources in Vnets and AVS Private Clouds in both regions.
+
+As mentioned earlier, when you enable Routing Intent on the Secure Hub, it will advertise RFC 1918 to all peered Vnets. However, you also have the option to advertise a default route 0.0.0.0/0 to provide internet connectivity for downstream resources. The blue default route originated in Hub1 with a next hop of HubFw1 and the red default route originated in Hub2 with a next hop of HubFw2.
+
+ Each Vnet will egress to the internet using its local regional hub firewall. The default route is never advertised across regional hubs over the "inter-hub" link. Therefore, Vnets can only use their local regional hub for internet access. 
+
+From an AVS Private Cloud perspective, when advertising the default route across regional connections (pink connections), you need to configure route maps with BGP prepending on the Secure vWAN hubs. If you do not use BGP prepending AVS Cloud regions will load balance internet traffic between its local and regional hub. This load balance would introduce asymmetric traffic and impact internet performance. 
+
+Before we continue, let's go over what BGP prepending is. BGP prepending is a technique in inter-domain routing where an AS artificially extends the AS Path by adding its own AS number multiple times to influence inbound traffic. By making the path appear longer, the AS aims to divert traffic away from the prepended route and towards other potentially more favorable paths.
+
+The goal here is to use BGP prepending for only the default routes across cross regional ExpressRoute links (pink connections) down to AVS Private clouds. We will not prepend the default route across local ExpressRoute links (brown connections) down the AVS Private Clouds. There is a new feature in vWAN called Route Maps where you can configure a Route Map and apply the Route Map to the ExpressRoute connection of your choosing. 
+
+In conclusion, you will have AVS Private Clouds using internet access to their regional local hubs as the preferred route and using the cross regional hub as a backup in the event there is an outage within the local regional hub. Please see below for traffic flow for internet. 
+
+Another thing to keep note is with Routing Intent you have the option to disable advertising the default route over any ExpressRoute of your choosing. We recommend not to advertise the default route to your on-premise ExpressRoute connections. 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/42be71ef-5416-41e7-8f8b-a0a177757ed8)
 
@@ -100,12 +114,6 @@ When deploying Azure VMware Solution private clouds in multiple regions, we reco
 | AVS Cloud Region 1    | &#8594;| Hub1Fw>Internet| Hub2Fw>Internet|
 | AVS Cloud Region 2    | &#8594;| Hub2Fw>Internet| Hub1Fw>Internet|
 
-Both the options highlighted in Figure 5 provide each private cloud with a direct internet breakout in its own region. The following considerations should inform the decision as to which native internet connectivity option to use:
-
-- Managed SNAT should be used in scenarios with basic and outbound-only requirements (low volumes of outbound connections and no need for granular control over the SNAT pool).
-- Public IPs down to the NSX-T edge should be preferred in scenarios with large volumes of outbound connections or when you require granular control over NAT IP addresses. For example, which Azure VMware Solution VMs use SNAT behind which IP addresses. Public IPs down to the NSX-T edge also support inbound connectivity via DNAT. Inbound internet connectivity isn't covered in this article.
-
-Changing a private cloud's internet connectivity configuration after the initial deployment is possible. But the private cloud loses connectivity to internet, Azure Virtual Network, and on-premises sites while the configuration is being updated. When either one of the native internet connectivity options in the preceding Figure 5 is used, no extra configuration is necessary in dual region scenarios (the topology stays the same as the one shown in Figure 4). For more information on internet connectivity for Azure VMware Solution, see [Internet connectivity design considerations](/azure/azure-vmware/concepts-design-public-internet-access).
 
 ## Next steps
 
