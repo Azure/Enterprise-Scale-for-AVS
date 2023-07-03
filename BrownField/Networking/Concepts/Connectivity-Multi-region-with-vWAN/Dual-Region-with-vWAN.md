@@ -45,7 +45,7 @@ The following sections below will discuss traffic flows and connectivity for AVS
 
 This section will focus on only the AVS Cloud Region 1 and AVS Cloud Region 2. Each AVS private cloud will have an ExpressRoute connection to its local region (brown lines) and an ExpressRoute connection to the cross-regional hub (pink lines).
 
-The diagram depicts how all routes in each AVS Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1 and all red routes are from Region 2. 
+The diagram also depicts how all routes in each AVS Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1, and all red routes are from Region 2. 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/43d9ac83-d982-4cd1-8760-ff32b5dd6f76)
 
