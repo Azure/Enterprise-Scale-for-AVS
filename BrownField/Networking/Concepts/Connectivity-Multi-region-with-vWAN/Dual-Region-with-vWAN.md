@@ -12,9 +12,12 @@ ms.custom: think-tank, e2e-azure-vmware
 
 # Network considerations for Azure VMware Solution dual-region deployments using Secure vWAN with Routing-Intent
 
-This article describes the best practices for connectivity, traffic flows, and high availability of dual-region Azure VMWare Solution when using Azure vWAN with Routing Intent. This article will break down vWAN with Routing Intent topology from the perspective of AVS private clouds, On-premise sites, and Azure native. 
+This article describes the best practices for connectivity, traffic flows, and high availability of dual-region Azure VMWare Solution when using Azure vWAN with Routing Intent. This article will break down vWAN with Routing Intent topology from the perspective of AVS private clouds, On-premise sites, and Azure native. How to implement and configure Secure vWAN with Routing Intent is out of the scope and will not be discussed in this document.
 
-The document assumes readers have a basic understanding of what Secure vWAN with Routing Intent is.  
+The document assumes readers have a basic understanding of vWAN and Secure vWAN with Routing Intent.
+
+**What is Azure Virtual WAN?**  
+[https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
 
 **How to configure Virtual WAN Hub routing intent and routing policies**  
 https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies
