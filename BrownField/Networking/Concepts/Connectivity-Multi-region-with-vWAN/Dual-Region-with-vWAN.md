@@ -74,9 +74,9 @@ The diagram shows how On-Premise will learn routes from both regional hubs and b
 
 ### Azure Virtual Network connectivity & traffic flow
 
-Azure Virtual Network can be connected to Azure VMware Solution private clouds through connections between ExpressRoute Gateways and Azure VMware Solution managed circuits. This connection is exactly the same way that Azure Virtual Network can be connected to on-premises sites over customer managed ExpressRoute circuits. See [Connect to the private cloud manually](/azure/azure-vmware/tutorial-configure-networking#connect-to-the-private-cloud-manually) for configuration instructions.
+This section will focus only on connectivity from an Azure Vnet perspective. As shown in the diagram below, both Vnet1 and Vnet2 will have a vnet peering directly to its local regional hub. 
 
-In dual region scenarios, we recommend a full mesh for the ExpressRoute connections between the two regional hub Virtual Network and private clouds, as shown in Figure 4 (represented by yellow lines).
+The diagram shows how all Azure native resources in Vnet1 and Vnet2 will learn routes under their "Effective Routes". A Secure Hub with Routing Intent enabled will always send the default RFC 1918 addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to peered Vnets. In our case, since Routing Intent is enabled, all resources within Vnet1 and Vnet2 will have the default RFC 1918 address with a next-hop of their local regional hub firewall. All traffic ingressing and egressing the Vnets will always transit the Hub Firewalls. Please see the traffic flow below for more detailed information.
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5f153c7b-f683-44e7-b9ab-cebece766580)
 
