@@ -43,9 +43,9 @@ The following sections below will discuss traffic flows and connectivity for AVS
 
 ### Azure VMware Solution cross-region connectivity & traffic flows
 
-When multiple Azure VMware Solution private clouds exist, Layer 3 connectivity among them is often a requirement for tasks such as supporting data replication.
+This section will focus on only the AVS Cloud Region 1 and AVS Cloud Region 2. Each AVS private cloud will have an ExpressRoute connection to its local region (brown lines) and an ExpressRoute connection to the cross-regional hub (pink lines).
 
-Azure VMware Solution natively supports direct connectivity between two private clouds deployed in different Azure regions. Private clouds connect to the Azure network in their own region through ExpressRoute circuits, managed by the platform and terminated on dedicated ExpressRoute meet-me locations. Throughout this article, these circuits are referred to as *Azure VMware Solution managed circuits*. Azure VMware Solution managed circuits shouldn't be confused with the normal circuits that customers deploy to connect their on-premises sites to Azure. The normal circuits that customers deploy are *customer managed circuits* (see Figure 2).
+The diagram depicts how all routes in each AVS Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1 and all red routes are from Region 2. 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/43d9ac83-d982-4cd1-8760-ff32b5dd6f76)
 
