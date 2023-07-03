@@ -39,12 +39,7 @@ Each region has its own AVS Private Cloud and an Azure Vnet. There is also an on
 
 ## Dual-region Secure vWAN Traffic Flows
 
-The next sections describe the Azure VMware Solution network configuration that is necessary to enable, in the reference dual-region scenario, the following communication patterns:
-
-- Azure VMware Solution to Azure VMware Solution (covered in the section [Azure VMware Solution cross-region connectivity](#azure-vmware-solution-cross-region-connectivity));
-- Azure VMware Solution to on-premises sites connected over ExpressRoute (covered in the section [Hybrid connectivity](#hybrid-connectivity));
-- Azure VMware Solution to Azure Virtual Network (covered in the section [Azure Virtual Network connectivity](#azure-virtual-network-connectivity));
-- Azure VMware Solution to internet (covered in the section [Internet connectivity](#internet-connectivity)).
+The following sections below will discuss traffic flows and connectivity for AVS, On-Premise, Azure Vnets, and the Internet. 
 
 ### Azure VMware Solution cross-region connectivity & traffic flows
 
