@@ -45,11 +45,13 @@ The following sections below will discuss traffic flows and connectivity for AVS
 
 This section will focus on only the AVS Cloud Region 1 and AVS Cloud Region 2. Each AVS private cloud will have an ExpressRoute connection to its local region (brown lines) and an ExpressRoute connection to the cross-regional hub (pink lines).
 
+Each AVS Cloud Region connects back to on-premise via Global Reach. AVS Cloud Region 1 Global Reach connection is shown in orange as "Global Reach (A)". AVS Cloud Region 2 Global Reach connection is shown in green as "Global Reach (B)". Both AVS private clouds are connected directly to each other via Global Reach shown in purple as Global Reach (C). Keep in mind that Global Reach traffic will never transit any hub firewalls. See traffic flow section below for more information.  
+
 The diagram also depicts how all routes in each AVS Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1, and all red routes are from Region 2. 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/43d9ac83-d982-4cd1-8760-ff32b5dd6f76)
 
-
+**Traffic Flow**
 | From |   To |  Hub 1 VNets | On-Premise | Hub 2 VNets | Cross-Regional AVS Private Cloud|
 | -------------- | -------- | ---------- | ---| ---| ---|
 | AVS Cloud Region 1    | &#8594;| Hub1Fw>Vnet1|  GlobalReach(A)>OnPremise   | Hub2Fw>Vnet2 | Global Reach(C)>AVS Cloud Region 2|
