@@ -12,7 +12,7 @@ ms.custom: think-tank, e2e-azure-vmware
 
 # Network considerations for Azure VMware Solution dual-region deployments using Secure vWAN with Routing-Intent
 
-This article describes how to configure network connectivity when Azure VMware Solution private clouds are deployed in two Azure regions for disaster resilience purposes. If there are partial or complete regional outages, the network topology in this article allows the surviving components (private clouds, Azure-native resources, and on-premises sites) to maintain connectivity with each other and with the internet.
+This article describes the best practices for connectivity, traffic flows, and high availability of dual-region Azure VMWare Solution when using Azure vWAN with Routing Intent. This article will break down vWAN with Routing Intent topology from the perspective of AVS private clouds, On-premise sites, and Azure native. 
 
 ## Dual-region with Secure vWAN scenario  
 
@@ -77,7 +77,7 @@ In dual region scenarios, we recommend a full mesh for the ExpressRoute connecti
 
 When deploying Azure VMware Solution private clouds in multiple regions, we recommend native options for internet connectivity (managed source network address translation (SNAT) or public IPs down to the NSX-T). Either option can be configured through the Azure portal (or via PowerShell, CLI or ARM/Bicep templates) at deployment time, as shown in the following Figure 5.
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5c12b6c1-2518-47f8-b1ea-17c3be86bff4)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/42be71ef-5416-41e7-8f8b-a0a177757ed8)
 
 | From |   To |  Primary Internet Route | Backup Internet Route
 | -------------- | -------- | ---------- | ---------- |
