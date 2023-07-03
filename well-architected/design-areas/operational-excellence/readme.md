@@ -7,7 +7,7 @@ This section aims to build out the operating model for the Azure VMware Solution
 It's essential to know how the workload in the SDDC is doing. Similar to how you would monitor things such as CPU usage, OS logs, and security alerts, to name a few, these same elements are monitored in the SDDC. The key difference is that you can now leverage cloud-native plus existing VMware tools into your operating model. Tools include but are not limited to enabling VMware VROPs, installing Azure Monitor agents, and any third-party monitoring/reporting tool used today on-prem. 
 
 
-The Azure VMware Solution also assists with OS-level metrics and telemetry collection for analysis. It's important to monitor OS extensions, guests managements, patching, and upgrades.
+The Azure VMware Solution also assists with OS-level metrics and telemetry collection for analysis. Monitoring OS extensions, guest management, patching, and upgrades is important.
 
 Once logs are collected, it's important to have a centralized place for logging and analysis. Once data has been collected and analyzed, it's possible to triage and remediate anomalies. Analysis for security, performance benchmarks, and anomalies are then available for triage and alerting. This is often in terms of an automated ticket generation process for remediation or service restoration. 
 
@@ -16,10 +16,10 @@ Once logs are collected, it's important to have a centralized place for logging 
 
 ### Alerting and Remediation 
 Utilizing platform and workload data and proactively addressing escalations such as downtime, increased performance, and security alerts. 
-Assigning roles and responsibilities using the least privilege will ensure that more permissions are not given than needed and that the permissions are appropriate to the role assigned. Accounts and roles can map to a RACI. 
+
 
 ### Disk Expansion 
-Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. 
+Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure there is node reservation available for growing the environment as needed. 
 
 ### Tagging and Patch management 
 
@@ -32,3 +32,10 @@ Recognizing which workloads are critical to running the business is a central re
 It's also important to have a list of follow-up activities and know who is assigned to them to mark a failure or recovery as complete. 
 
 Backups need to be regularly verified and tested to be useful. This means completing in the time allotted, not being corrupted, and the data integrity and recovery process are valid. 
+
+## Security and Governance
+
+Assigning roles and responsibilities using the least privilege will ensure that more permissions are not given than needed and that the permissions are appropriate to the role assigned. Accounts and roles can map to a RACI. RBAC roles and JIT access to enforce the least privileged of roles and responsibilities
+
+
+
