@@ -43,7 +43,7 @@ The following sections below will discuss traffic flows and connectivity for AVS
 
 ### Azure VMware Solution cross-region connectivity & traffic flows
 
-This section will focus on only the AVS Cloud Region 1 and AVS Cloud Region 2. Each AVS private cloud will have an ExpressRoute connection to its local regional hub (depicted in brown) and an ExpressRoute connection to the cross-regional hub (depicted in pink).
+This section will focus on only the AVS Cloud Region 1 and AVS Cloud Region 2. Each AVS private cloud will have an ExpressRoute connection to its local regional hub (brown connections) and an ExpressRoute connection to the cross-regional hub (pink connections).
 
 Each AVS Cloud Region connects back to on-premise via Global Reach. AVS Cloud Region 1 Global Reach connection is shown in orange as "Global Reach (A)". AVS Cloud Region 2 Global Reach connection is shown in green as "Global Reach (B)". Both AVS private clouds are connected directly to each other via Global Reach shown in purple as Global Reach (C). Keep in mind that Global Reach traffic will never transit any hub firewalls. See traffic flow section below for more information.  
 
@@ -59,11 +59,15 @@ The diagram also depicts how all routes in each AVS Cloud region will learn rout
 
 ### On-Premise connectivity & traffic flow
 
-The recommended option for connecting Azure VMware Solution private clouds to on-premises sites is ExpressRoute Global Reach. Global Reach connections can be established between customer managed ExpressRoute circuits and Azure VMware Solution managed ExpressRoute circuits. Global Reach connections aren't transitive, therefore a full mesh (each Azure VMware Solution managed circuit connected to each customer managed circuit) is necessary for disaster resilience, as shown in the following Figure 3 (represented by orange lines).
+This section will focus only on the on-premise site. As shown in the diagram below, the On-Premise site will have an ExpressRoute connection to both Region 1 and Region 2 hubs (black connections).
+
+On-Premise can communicate to AVS Cloud Region 1 via orange connection "Global Reach (A)". On-Premise will also be able to communicate with AVS Cloud Region 2 via green connection "Global Reach (B).
+
+The diagram shows how On-Premise will learn routes from both regional hubs and both AVS Private clouds. All blue routes are from Region 1, and all red routes are from Region 2. Black routes are on-premise routes and are advertised back to Azure.
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/9ce15daf-f6a8-412a-8d5f-a01c68bd3df1)
 
-
+**Traffic Flow**
 | From |   To |  Hub 1 VNets | Hub 2 VNets | AVS Region 1| AVS Region 2| 
 | -------------- | -------- | ---------- | ---| ---| ---|
 | On-Premise    | &#8594;| Hub1Fw>Vnet1|  Hub2Fw>Vnet2  | Global Reach(A)>AVS Cloud Region 1 | Global Reach(B)>AVS Cloud Region 2| 
