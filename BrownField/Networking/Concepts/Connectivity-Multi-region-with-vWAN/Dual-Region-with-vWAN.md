@@ -92,6 +92,7 @@ When deploying Azure VMware Solution private clouds in multiple regions, we reco
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/42be71ef-5416-41e7-8f8b-a0a177757ed8)
 
+**Traffic Flow**
 | From |   To |  Primary Internet Route | Backup Internet Route
 | -------------- | -------- | ---------- | ---------- |
 | Vnet1    | &#8594;| Hub1Fw>Internet| None|
