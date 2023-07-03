@@ -23,7 +23,10 @@ The document assumes readers have a basic understanding of vWAN and Secure vWAN 
 https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies
 
 ## Dual-region with Secure vWAN scenario  
+Secure vWAN with Routing Intent provides the capability to send all Internet traffic and Private network traffic (RFC 1918) to a security solution like Azure Firewall, a third-party NVA, or SaaS. 
+In the scenario, we have a network topology that spans two regions. There is one vWAN with two Hubs, Hub1 and Hub2. Hub1 is in Region 1, and Hub2 is in Region 2.Each Hub in both regions has its instance of Azure Firewall deployed(Hub1Fw, Hub2Fw), essentially making them Secure vWAN Hubs. Having Secure vWAN hubs is a technical prerequisite to Routing Intent. Secure vWAN Hub1 and Hub2 have Routing Intent enabled.  
 
+Each region has its own AVS Private Cloud and an Azure Vnet. There is also an on-premise site connecting to both regions, which we will review in more detail later in this document.
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/0d2d0b80-e550-4f69-a321-411658a066ab)
 ### Understanding Topology Connectivity 
 **Brown Connections**: AVS private cloud connection to its local regional hub.  
