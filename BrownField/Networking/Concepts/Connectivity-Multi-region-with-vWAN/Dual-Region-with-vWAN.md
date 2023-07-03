@@ -80,6 +80,7 @@ In dual region scenarios, we recommend a full mesh for the ExpressRoute connecti
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/5f153c7b-f683-44e7-b9ab-cebece766580)
 
+**Traffic Flow**
 | From |   To |  On-Premise | AVS Region 1 | AVS Region 2| Cross-Region Vnet| 
 | -------------- | -------- | ---------- | ---| ---| ---|
 | Vnet1    | &#8594;| Hub1Fw>OnPremise|  Hub1Fw>AVS Cloud Region 1  | Hub1Fw>AVS Cloud Region 2 | Hub1Fw>Hub2Fw>Vnet2 |
