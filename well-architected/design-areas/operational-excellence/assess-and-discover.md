@@ -17,9 +17,9 @@ This section assesses how the Azure VMware Solution Private cloud and workloads 
 
 This section assesses how  alerting takes place if anomalies are detected in the Azure VMware Solution Private cloud?
 
- Are thresholds configured for...
- Is automation configured to alert responsible parties when thresholds are exceeded?
- Are notifications in place to alert the appropriate teams in the even of an outage?
- Are there tools in place for alerting and remediating stale patches, OS versions, and software configurations? 
- Are Log retention durations clearly defined?
- Are alerts set to trigger only when thresholds defined are exceeded?
+ - Are thresholds configured for...
+ - Is automation configured to alert responsible parties when thresholds are exceeded?
+ - Are notifications in place to alert the appropriate teams in the even of an outage?
+ - Are there tools in place for alerting and remediating stale patches, OS versions, and software configurations? 
+ - Are Log retention durations clearly defined?
+ - Are alerts set to trigger only when thresholds defined are exceeded?
