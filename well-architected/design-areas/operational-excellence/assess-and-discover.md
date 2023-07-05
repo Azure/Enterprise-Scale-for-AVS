@@ -24,4 +24,8 @@ This section assesses how  alerting occurs if anomalies are detected in the Azur
  - Are Log retention durations clearly defined?
  - Are alerts set to trigger only when thresholds defined are exceeded?
  - Are application state dashboards (e.g Granfana) created and are published?
+## Applications
+- Are dependencies mappings available (e.g flow chart, application diagram)?
+- Are there mappings between the application and platform layer (e.g. if you get a site down alert and there is an infra alert for high CPU).
+- Is there monitoring for how the application availability (up and down)? 
 
