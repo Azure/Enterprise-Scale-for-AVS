@@ -30,4 +30,6 @@ This section assesses how  alerting occurs if anomalies are detected in the Azur
 - Is there monitoring for how the application availability (e.g up/down alerts)? 
 
 ## Roles and Responsibilites
+- Are roles and responsibilities clearly identified (e.g, Network Engineer, Security, Application Owners/Developers, etc)
 - Are application owners identified and mapped to specific roles that follow the principle of least privilege?
+- Is a Service Management framework (e.g ITIL/ISO) in place
