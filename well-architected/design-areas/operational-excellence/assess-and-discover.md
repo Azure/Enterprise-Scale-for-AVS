@@ -1,12 +1,25 @@
 # Azure VMware Solution Well-Architected Framework: Operational Procedures -  Discovery and Assessment
 
-## Management & Monitoring 
+## Monitoring and Logging
 
-This section assess how the Azure VMware Solution Private cloud and workloads are being monitored, how events are logged, and how alerting takes place if anomalies are detected
+This section assesses how the Azure VMware Solution Private cloud and workloads are being monitored, how events are logged, and how alerting takes place if anomalies are detected
 
 ### How are you monitoring workloads deployed in your Azure VMware Solution Private Cloud 
 - Are Azure Monitor agents installed and deployed to collect OS metrics?
+- Are there tools in place for log aggregation?
 - Are Infrastructure, OS,  and application logs in a centralized place?
 - Are third tools a part of the monitoring solution? If so, are they approved for use with the Azure VMware Solution
 - Do you have vROPS (vRealize Operations) in use?
-- How are you collecting and assessing secrurity logs today?
+- How are you collecting and assessing security logs today?
+- Do you have tools in place for patch management?
+
+##  Alerting and remediation
+
+This section assesses how  alerting takes place if anomalies are detected in the Azure VMware Solution Private cloud?
+
+ Are thresholds configured for...
+ Is automation configured to alert responsible parties when thresholds are exceeded?
+ Are notifications in place to alert the appropriate teams in the even of an outage?
+ Are there tools in place for alerting and remediating stale patches, OS versions, and software configurations? 
+ Are Log retention durations clearly defined?
+ Are alerts set to trigger only when thresholds defined are exceeded?
