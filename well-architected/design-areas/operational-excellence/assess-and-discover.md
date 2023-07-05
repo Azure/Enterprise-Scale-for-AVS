@@ -27,5 +27,5 @@ This section assesses how  alerting occurs if anomalies are detected in the Azur
 ## Applications
 - Are dependencies mappings available (e.g flow chart, application diagram)?
 - Are there mappings between the application and platform layer (e.g. if you get a site down alert and there is an infra alert for high CPU).
-- Is there monitoring for how the application availability (up and down)? 
+- Is there monitoring for how the application availability (e.g up/down alerts)? 
 
