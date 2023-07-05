@@ -29,3 +29,5 @@ This section assesses how  alerting occurs if anomalies are detected in the Azur
 - Are there mappings between the application and platform layer (e.g. if you get a site down alert and there is an infra alert for high CPU).
 - Is there monitoring for how the application availability (e.g up/down alerts)? 
 
+## Roles and Responsibilites
+- Are application owners identified and mapped to specific roles that follow the principle of least privilege?
