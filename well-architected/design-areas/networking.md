@@ -23,7 +23,8 @@ If the application spans multiple regions, consider deploying a DNS-based global
 
 Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution of static and dynamic assets for the application through caching. 
 
-Consider placing your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
+### Recommendation
+Place your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
 
 ### Assessment questions 
 - How is retrieving static assets from the website or application optimized?
