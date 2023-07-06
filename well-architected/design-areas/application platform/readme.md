@@ -1,1 +1,0 @@
-Application Design & Application Platform 
