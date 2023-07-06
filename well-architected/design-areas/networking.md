@@ -28,11 +28,15 @@ Place your content behind Azure CDN to improve responsiveness and reduce latency
 
 ### Assessment questions 
 - How is retrieving static assets from the website or application optimized?
+- Does the application infrastructure span multiple regions?
 
 ## Isolation boundaries
 
 #### Impact: Security
 
+Implementing network isolation through segmentation and  using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment.
+
+### Recommendation 
 Network security groups (NSG) are used to isolate and protect traffic within the workloads VNet. 	An Azure native service that is part of a complete zero trust pattern.	5		Use NSG or Azure Firewall to protect and control traffic within VNETs. 
 
 Also, create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
