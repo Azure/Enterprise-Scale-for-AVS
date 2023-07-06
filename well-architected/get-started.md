@@ -11,6 +11,9 @@ While technical implementation is key to building applications in AVS, it's also
 effectively and understand the processes for maintaining business continuity. A well-architected application will also help end-users to have a consistent, reliable experience. 
 
 The guidance is designed for one Azure VMware Solution workload at a time. You should use this guide whenever you want to optimize a specific application in AVS (e.g., a 3-tier app, virtual desktops ) for Azure or in Azure. 
+
+![figure1](images/scribblings.png) 
+
 Work through the guide as often as needed to derive the expected benefits. This guidance should be paired with Well-Architected Review assessments and health checks in operations. We address these tools in our guidance.
 
 Since this tool leverages both VMware and Microsoft propriety services, the Well-Architected guidance has AVS-specific guidance on how to scale, maintain, and secure applications 
