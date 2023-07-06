@@ -40,3 +40,10 @@ This will allow for application workloads that avoid unnecessary complexities, a
 
 The Well-architected pillars also aim to involve modularity, separation of roles, and a way to improve operational productivity. 
 
+## Next steps
+
+Our guidance adheres to five pillars of the Well-Architected Framework. It's important to understand what those pillars mean for an SAP workload and how they interact at a high level.
+
+> [!div class="nextstepaction"]
+> [Design principles](design-principles.md)
+
