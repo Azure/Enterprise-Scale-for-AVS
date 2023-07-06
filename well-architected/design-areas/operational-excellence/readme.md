@@ -14,8 +14,6 @@ Once logs are collected, it's important to have a centralized place for logging 
 #### Cost Management & Monitoring
 Azure provides tools such as Azure Cost management and BIlling that enable organizations to monitor, analyze and optimize AVS costs by providing a window into resource usage, cost allocation, and budget management.
 
-## Operational Procedures 
-
 ### Alerting and Remediation 
 Utilizing platform and workload data and proactively addressing escalations such as downtime, increased performance, and security alerts. 
 
