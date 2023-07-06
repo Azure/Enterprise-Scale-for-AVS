@@ -26,7 +26,7 @@ Azure VMware solution makes it possible to expand the environment with minimal u
 
 Tagging also for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool 
 
-### Disaster Recovery and Business Continuity
+## Disaster Recovery and Business Continuity
 
 Recognizing which workloads are critical to running the business is a central requirement for disaster preparation. Once a DR plan is in place, verified, and tested, this will create day-to-day procedures to be prepared in the event of a disaster. 
 
