@@ -17,12 +17,12 @@ Once logs are collected, it's important to have a centralized place for logging 
 ### Alerting and Remediation 
 Utilizing platform and workload data and proactively addressing escalations such as downtime, increased performance, and security alerts. 
 
-##Performance Optimization
+## Performance Optimization
 
 ### Disk Expansion 
 Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. 
 
-### Tagging and Patch management 
+## Patching and Upgrades
 
 Tagging also for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool 
 
@@ -34,12 +34,9 @@ It's also important to have a list of follow-up activities and know who is assig
 
 Backups need to be regularly verified and tested to be useful. This means completing in the time allotted, not being corrupted, and the data integrity and recovery process are valid. 
 
-## Security, Governance and comliance
+## Security, Governance, and compliance
 
 Assigning roles and responsibilities using the least privilege will ensure that more permissions are not given than needed and that the permissions are appropriate to the role assigned. Accounts and roles can map to a RACI. RBAC roles and JIT access to enforce the least privileged of roles and responsibilities
 
-## Application Platform
-
-It's important to not only have an understanding of the application dependencies, but how to provision and deploy.
 
 
