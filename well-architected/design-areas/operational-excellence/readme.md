@@ -11,6 +11,8 @@ The Azure VMware Solution also assists with OS-level metrics and telemetry colle
 
 Once logs are collected, it's important to have a centralized place for logging and analysis. Once data has been collected and analyzed, it's possible to triage and remediate anomalies. Analysis for security, performance benchmarks, and anomalies are then available for triage and alerting. This is often in terms of an automated ticket generation process for remediation or service restoration. 
 
+#### Cost Management & Monitoring
+Azure provides tools such as Azure Cost management and BIlling that enable organizations to monitor, analyze and optimize AVS costs by providing a window into resource usage, cost allocation, and budget management.
 
 ## Operational Procedures 
 
@@ -22,9 +24,13 @@ Utilizing platform and workload data and proactively addressing escalations such
 ### Disk Expansion 
 Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. 
 
+#### Continous cost optimization and right-sizing 
+Identifying underutilized or idle resources and right-sizing VMs can save money by reducing unnecessary costs.
+
+
 ## Patching and Upgrades
 
-Tagging also for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool 
+Tagging also for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool 
 
 ## Disaster Recovery and Business Continuity
 
@@ -34,9 +40,13 @@ It's also important to have a list of follow-up activities and know who is assig
 
 Backups need to be regularly verified and tested to be useful. This means completing in the time allotted, not being corrupted, and the data integrity and recovery process are valid. 
 
-## Security, Governance, and compliance
+## Security, Governance, and Compliance
 
-Assigning roles and responsibilities using the least privilege will ensure that more permissions are not given than needed and that the permissions are appropriate to the role assigned. Accounts and roles can map to a RACI. RBAC roles and JIT access to enforce the least privileged of roles and responsibilities
+Assigning roles and responsibilities using the least privilege will ensure that more permissions are not given than needed and that the permissions are appropriate to the role assigned. Accounts and roles can map to a RACI. RBAC roles and JIT access enforce the least privileged roles and responsibilities. 
+
+#### Cost Optimization through financial governance 
+
+Consider implementing cost management policies, defining spending thresholds, and having budget controls in place to optimize and track spending.
 
 
 
