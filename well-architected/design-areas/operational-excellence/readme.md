@@ -46,9 +46,8 @@ Assigning roles and responsibilities using the least privilege will ensure that 
 
 #### Cost Optimization through financial governance 
 
-Consider implementing cost management policies, defining spending thresholds, and having budget controls in place to optimize and track spending.
-
+Consider implementing cost management policies, defining spending thresholds, and having budget controls to optimize and track spending.
 
 ## Automation and DevOps
 
-Embracing automation and DevOps methodologies enhances operational efficiency and cost management. Organizations can reduce manual effort, minimize errors, and improve resource utilization by automating routine tasks, such as provisioning, scaling, and patching. This streamlines operations saves time, and allows teams to focus on value-added activities.
+Embracing automation and DevOps methodologies enhances operational efficiency and cost management. Organizations can reduce manual effort, minimize errors, and improve resource utilization by automating routine tasks like provisioning, scaling, and patching. This streamlines operations saves time, and allows teams to focus on value-added activities.
