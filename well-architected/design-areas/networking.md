@@ -13,6 +13,7 @@ You may also deploy an Azure Loadbalancer natively in Azure Application Gateway,
 If your AVS deployment spans multiple Azure Availability Zones, Azure Load Balancer can distribute traffic across those zones, providing high availability and fault tolerance.
 
 ## Global distribution and Content Delivery 
+#### Impact: Performance
 
 Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution of static and dynamic assets for the application through caching. 
 
