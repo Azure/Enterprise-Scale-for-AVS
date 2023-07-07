@@ -2,7 +2,7 @@
 
 ## Load Distribution 
 
-#### Impact: Reliability
+#### Impact: _Reliability_
 
 Load balancing the Azure VMware Solution allows for the distribution of traffic through various algorithms such as performance and weight to make sure incoming traffic is divided  to improve
 both the scale and reliability of the workload applications. 
@@ -19,7 +19,7 @@ If the application spans multiple regions, consider deploying a DNS-based global
 - How is traffic to the workload distributed?
 ## Global distribution and Content Delivery 
 
-#### Impact: Performance
+#### Impact: _Performance_
 
 Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution of static and dynamic assets for the application through caching. 
 
@@ -32,7 +32,7 @@ Place your content behind Azure CDN to improve responsiveness and reduce latency
 
 ## Isolation boundaries
 
-#### Impact: Security
+#### Impact: _Security_
 
 Implementing network isolation through segmentation and  using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment.
 
@@ -47,7 +47,7 @@ Also, create segments and VLANs for your AVS workloads. Create firewall rules wi
 - How is internal communication between segments secured? 
 
 ## IP planning
-#### Impact: Infrastructure
+#### **Impact**: _Infrastructure_
 Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. 	An IP addressing tool is in place and allocation is being enforced.	10		Design virtual networks for growth. 
 
 Remember that in addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Make sure to plan to have enough IPs for
