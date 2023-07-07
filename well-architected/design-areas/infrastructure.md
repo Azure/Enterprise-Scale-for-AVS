@@ -65,7 +65,7 @@ Azure services (such as ANF) that interact with AVS are in the same zone as AVS	
 
 
 ### Assessment questions
-- If a node replacement process starts, how will this affect your overall workload?
+- If a node replacement process starts, will this affect your overall workload?
 - If  using a stretched cluster(s) in an active/active or active/passive setup, do you have enough capacity to continue running your service in the event of active/passive cluster failure?	
 - Are there vSAN Storage Policies that meet corporate standards?
 - Are there thick and/or thin provisioning storage policies in use?	
