@@ -41,4 +41,4 @@ Operational Excellence is leveraging the Azure VMware Solution's full capabiliti
 These design principles are incorporated into our comprehensive guidance across specific design domains. Each design domain offers focused guidance, enabling you to quickly access the information you need for enhanced productivity within minimal time. Consider the headings as your navigational tool, guiding you toward the relevant direction for networking, core infrastructure, the application platform, monitoring, and operational procedures.
 
 > [!div class="nextstepaction"]
-> [Design principles](design-areas/readme.md)
+> [Design principles](design-areas/application-platform.md)
