@@ -143,3 +143,9 @@ For detailed coverage of Infrastructure Monitoring, see the [Monitoring](./monit
 ### Defining and tracking metrics
 
 * Use [Auto-scale for Azure VMware Solution](https://github.com/Azure/azure-vmware-solution/tree/main/avs-autoscale) to define performance metrics to be used for scale-in or scale-out operations in Azure VMware Solution cluster nodes.
+
+## Next steps
+
+Now that we've taken a look at the underlying platform, lets investigate further into the application platform (e.g databases, vms, operating systems, and configurations)
+> [!div class="nextstepaction"]
+> [Application Platform](./application-platform.md)
