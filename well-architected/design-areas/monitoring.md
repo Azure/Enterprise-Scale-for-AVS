@@ -10,7 +10,7 @@ To monitor the workload, you'll need to collect data from various VMware compone
 
 ### Recommendations 
 
-Impact: Operational excellence, Cost optimization 
+Impact: _Operational excellence, Cost optimization_
 
 Azure VMware Solution (AVS) is integrated with VMware Software-Defined Data Center (SDDC) that runs several VMware native components. Configure vSphere Health Status to get a high-level overview of Azure VMware Solution SDDC's health status. Use vRealize Network Insight to get enhanced visibility and analytics of Azure VMware Solution SDDC's network infrastructure. 
 
@@ -40,7 +40,7 @@ Security monitoring is a critical to detect and respond to anomalous activities.
 
 ### Recommendations 
 
-Impact: Security, Operational excellence 
+#### Impact: _Security, Operational excellence_
 
 Use security monitoring solutions from Partners. These tools are pre-validated to be used for Azure VMware Solution SDDC. 
 
@@ -68,9 +68,9 @@ How are you monitoring identity and networking events?
 
 You also need to configure alerts so that notifications are sent to the accountable teams when certain conditions are met. 
 
-Recommendations 
+### Recommendations 
 
-Impact: Operational excellence, Cost optimization 
+### Impact: _Operational excellence, Cost optimization_ 
 
 vSphere events and alarms subsystem is recommended for monitoring vSphere and setting up triggers. 
 
@@ -82,7 +82,7 @@ Configure Resource Health alerts. Operations teams can use these alerts to get
 
 Assessment question 
 
-Have you identified users/usergroups who will receive alerts? 
+Have you identified users/user groups who will receive alerts? 
 
 Have you defined processes to be followed in response to various alerts? 
 
@@ -94,7 +94,7 @@ How do you govern and set Azure budgets and alerts on costs?
 
 It's highly recommended that you visually represent the monitoring reports in dashboards to drive effective operations. This will help the operations team to quickly do root-cause analysis and troubleshooting. 
 
-### Impact: Operational excellence 
+#### Impact: _Operational excellence_ 
 
 Configure Monitoring dashboard. Operation teams can use such dashboard for a simplified view of all key resources that make up Azure VMware Solution in a single pane. 
 
