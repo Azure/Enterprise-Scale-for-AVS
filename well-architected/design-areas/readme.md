@@ -16,13 +16,13 @@ An optimal Azure VMware Solution workload exhibits both resilience and availabil
 
 **Conduct a reliability assessment.** Before you can standardize the reliability of an Azure VMware Solution workload, you need to assess its reliability. It’s critical to know how reliable an AVS workload is so steps can be taken to fix issues or solidify those configurations. One way to do this is by assessing your workload's reliability. The assessment asks  questions about a workload and provides specific recommendations to focus on. The assessment builds on itself, so you can track your progress constantly without restarting.
 
-For the assessment, start an [Azure Well-Architected Review](/assessments/azure-architecture-review/). Select "Start Assessment" and “Azure VMware Solution” when prompted.
+Start an [Azure Well-Architected Review](/assessments/azure-architecture-review/) for the assessment. Select "Start Assessment" and “Azure VMware Solution” when prompted.
 
 ## Security
 
-In the context of the shared responsibility model, organizations are primarily responsible for managing and operating their workloads, while Microsoft takes care of managing the physical and virtual infrastructure of Azure VMware Solutions. It is strongly recommended to regularly assess the services and technologies used to ensure that your security posture adapts to the evolving threat landscape. Additionally, it is essential to establish a clear understanding of the shared responsibility model when collaborating with vendors to implement suitable security measures.
+In the shared responsibility model context, organizations are primarily responsible for managing and operating their workloads, while Microsoft manages the physical and virtual infrastructure of Azure VMware Solutions. It is strongly recommended to regularly assess the services and technologies used to ensure that your security posture adapts to the evolving threat landscape. Additionally, it is essential to establish a clear understanding of the shared responsibility model when collaborating with vendors to implement suitable security measures.
 
-To secure the AVS environment, several methods can be employed. Network isolation through the use of segments, VLANs, and network security groups (NSGs) for Azure Native services is recommended. Effective patch management, regular environment audits, and security monitoring with a SIEM solution like Azure Sentinel are crucial. Encryption should be implemented for data at rest and in transit. Robust Identity and Access Management (IAM) practices should be in place, including the enforcement of multi-factor authentication (MFA), integration with Azure Active Directory, and the assignment of least privileged RBAC roles."
+To secure the AVS environment, several methods can be employed. Network isolation through segments, VLANs, and network security groups (NSGs) for Azure Native services is recommended. Effective patch management, regular environmental audits, and security monitoring with a SIEM solution like Azure Sentinel are crucial. Encryption should be implemented for data at rest and in transit. Robust Identity and Access Management (IAM) practices should be in place, including the enforcement of multi-factor authentication (MFA), integration with Azure Active Directory, and the assignment of least privileged RBAC roles."
 
 ## Cost optimization
 
@@ -40,3 +40,5 @@ Operational Excellence is leveraging the Azure VMware Solution's full capabiliti
 
 These design principles are incorporated into our comprehensive guidance across specific design domains. Each design domain offers focused guidance, enabling you to quickly access the information you need for enhanced productivity within minimal time. Consider the headings as your navigational tool, guiding you toward the relevant direction for networking, core infrastructure, the application platform, monitoring, and operational procedures.
 
+> [!div class="nextstepaction"]
+> [Design principles](design-areas/readme.md)
