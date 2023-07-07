@@ -43,4 +43,4 @@ These design principles are incorporated into our comprehensive guidance across 
 Let's first take a look at the infrastructure components.
 
 > [!div class="nextstepaction"]
-> [Application Platform](./infrastructure.md)
+> [Infrastructure](./infrastructure.md)
