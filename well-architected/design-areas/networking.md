@@ -1,5 +1,4 @@
-# Azure VMware (AVS) networking considerations
-
+# Network Considerations for the Azure VMware Solution
 ## Load Distribution 
 
 #### Impact: _Reliability_
