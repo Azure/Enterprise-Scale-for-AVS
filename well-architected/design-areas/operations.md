@@ -17,4 +17,13 @@ It's essential to know how the workload in the SDDC is doing. Similar to how you
 
 ### Recommendation
 
+Discuss and document acceptable thresholds. 
+
 Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool
+
+ A tool such as Azure Monitor or Grafana is used to visualize the application health model and encompass logs and metrics. Dashboards are tailored to a specific audience, such as developers, security, or networking teams. A tool such as Azure Monitor or Splunk is used for alerting.
+
+Specific owners and processes are defined and documented  for each alert type. Consider prioritizing operational events based on business impact
+ Push notifications are used to inform responsible parties of alerts in real time
+ Alerting is integrated with an IT Service Management (ITSM) system such as ServiceNow
+
