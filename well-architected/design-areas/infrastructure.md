@@ -2,7 +2,7 @@
 
 This section refers to the foundational layer of the Azure VMWare Solution offering that supports the operations and services running the applications such as compute, storage, and their operations.
 
-## Introduction 
+## Introduction  
 
 #### Impact: _Performance_, _Operational Excellence_
 
