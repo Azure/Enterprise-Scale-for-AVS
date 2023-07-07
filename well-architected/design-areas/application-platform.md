@@ -98,3 +98,9 @@ An affinity rule specifies that the members of a selected virtual machine DRS gr
 ##### Recommendation
 
 An important capability with the Vmware solution.  Because auto-failover isn't available in Azure VMware Solution, having a good understanding of affinity policies is key to application availability.
+
+The next section visits how to securely establish connectivity, create perimeters for your workload, and evenly distribute traffic to the application workloads.
+
+> [!div class="nextstepaction"]
+> [Networking](./networking.md)
+
