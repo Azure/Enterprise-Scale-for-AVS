@@ -63,7 +63,7 @@ Remember that in addition to a /22 RFC-1918, workload segments will have separat
 The next section visits how to securely establish connectivity, create perimeters for your workload, and evenly distribute traffic to the application workloads.
 
 > [!div class="nextstepaction"]
-> [Application Platform](./networking.md)
+> [Networking](./networking.md)
 
 
 
