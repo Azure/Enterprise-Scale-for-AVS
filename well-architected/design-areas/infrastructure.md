@@ -59,7 +59,7 @@ Azure services (such as ANF) that interact with AVS are in the same zone as AVS	
 
 ### Recommendation
 - 	Azure NetApp Files can be connected as an additional datastore attached  for the Azure Vmware solution. Going through an application assessment will help determine the optimal combination of Azure VMware Solution Nodes and external storage like Azure NetApp Files.
-- Co-locate the application and service tiers.
+- Co-locate the application and service tiers by making sure the application, and database, and storage tiers are in the same availability zone.
 
 
 ### Assessment questions
