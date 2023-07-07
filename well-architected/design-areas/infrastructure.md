@@ -2,12 +2,14 @@
 
 This section refers to the foundational layer of the Azure VMWare Solution offering that supports the operations and services running the applications such as compute, storage, and their operations.
 
-## Initial design
+## Introduction 
 
 #### Impact: _Performance_, _Operational Excellence_
 
 
 For deploying the Azure VMware Solution, there must be a general understanding of the components required to support the Azure VMware Solution. Another aspect to consider is the latency of connecting to workloads as some may not be latency-sensitive.  Having users physically close to the peering location will mean minimal latency. For example, there is a requirement that if using HCX, the roundtrip latency must be less than 150ms.
+
+Also, ensure that AVS is the right choice for your infrastructure deployment. Consider assessing Azure native solutions prior to moving to the Azure VMware Solution. 
 
 Organizing infrastructure deployments using Infrastructure and Code (IaC) enables more efficient infrastructure provisioning by reducing manual error and facilitating the adoption of DevOps principles in infrastructure management. Infrastructure updates can be made through code modifications, reducing the time and effort required for manual configuration and provisioning.
 
