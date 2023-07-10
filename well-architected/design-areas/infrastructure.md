@@ -111,7 +111,7 @@ One way to ensure resource availability is through affinity rules. By configurin
 For VMs deployed with HA or clustering within the Azure VMware Solution, creating anti-affinity rules to keep your VMs apart and on separate hosts is highly recommended. A stretched cluster primarily relates to  computing resource distribution across fault domains or availability zones. Another aspect to consider is the latency of connecting to workloads, as some may not be latency-sensitive. 
 
 #### Assessment Questions 
-- If  using a stretched cluster(s), do you have enough capacity to continue running your service in the event of active/passive cluster failure?
+- When using a stretched cluster(s), is there enough capacity to continue running services in the event of active/passive cluster failure?
 
 #### Recommendations
 - Use stretched clusters for high-availability
