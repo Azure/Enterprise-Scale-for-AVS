@@ -136,11 +136,16 @@ If one host experiences an issue or failure, the anti-affinity rule enforces dis
 #### Impact: _Reliability_, _Performance_
 
 ### vSAN
+Designing a well-architected Azure VMware Solution (AVS) with storage involves designing for adequate data protection and redundancy. 
 
 AVS vSAN leverages local storage resources from the Azure VMware ESXi hosts within an AVS cluster to create a distributed, shared storage infrastructure. The vSAN provisioning must adquately meet current and future storage needs. SAN storage policies allow you to define the characteristics and behaviors of the storage used by the VMs. Policies enable you to configure data protection, performance, and space efficiency settings based on the specific requirements of your workloads. While the Default Storage Policy in Azure VMware Solution is redundant, If your machines require that data be copied to additional vSAN nodes, another policy should be created to ensure that the data meets your enhanced redundancy requirements.
 
 #### Assessment Questions
 - Are there vSAN Storage Policies that meet corporate standards?
+
+### Recommendations 
+- Determine the failure tolerance (FTT) level based on your desired resiliency.
+- Choose the appropriate RAID configuration to ensure data availability and protection against host or disk failures.
 
 ### Azure Netapp Files (ANF)
 When you plan to exceed the storage in the SDDC, Azure NetApp Files (ANF) in AVS is another solution that will expand disk allocation and  provide a high-performance, low-latency, scalable storage platform. ANF dynamically adjusts the storage capacity and performance tiers based on the workload needs so that the AVS environment can scale as your storage requirements grow.
