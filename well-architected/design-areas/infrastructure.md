@@ -165,7 +165,9 @@ Azure services (such as ANF) that interact with AVS are in the same zone as AVS	
 
 
 
-## Business Continuity and Disaster Recovery 
+## Business Continuity and Disaster Recovery
+#### Impact: _Performance_, _Operational Excellence_
+
 The SDDC should have protection against data loss, minimizes downtime, and maintain the continuity of operations when there are unexpected disruptions or disasters. 
 
 ### Service Level Agreements (SLAs)
