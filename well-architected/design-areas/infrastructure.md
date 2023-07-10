@@ -87,31 +87,38 @@ Before deploying an application in AVS, it is crucial to ensure proper sizing an
 #### Impact: _Reliability_
 
 
-When sizing for an application, ensure the VM is sized to handle the workload at peak performance.  The application should also be able to operate with reduced functionality or degraded performance in the case of an outage.	In a failure event, design for resilience to respond to outages and deliver reliability. The application should therefore be designed to operate even when impacted by regional, zonal, service, or component failures across critical application scenarios and functionality. Scaling vertically is the ability of the virtual machine to add more resources to the individual hosts. This requires picking the right SKU, powering the host down, and adding more resources from an ESXi host with those resources available. This can be disruptive as it requires downtime, so scaling horizontally should also be considered in the workload design. Horizontal scaling is the ability to dynamically span the workload across multiple virtual machines. 
+When sizing for an application, ensure the VM is sized to handle the workload at peak performance.  The application should also be able to operate with reduced functionality or degraded performance in the case of an outage.	In a failure event, design for resilience to respond to outages and deliver reliability even when impacted by regional, zonal, service, or component failures impact critical application functionality. Scaling vertically is the ability of the virtual machine to add more resources to the individual hosts. This requires picking the right SKU, powering the host down, and adding more resources from an ESXi host with those resources available. 
+
+
+
+
 
 ### Assessment questions
 
 - Is application scaling based on vertical and or horizontal scaling?
 
 
-One way to do so is by configuring affinity rules. By configuring affinity rules, administrators have more control over VM placement, enabling the VMs to be distributed according to specific requirements, performance considerations, availability needs, or licensing constraints. 
-
+The downtime associated with vertical scaling may disrupt the business, so consider scaling horizontally in the workload design. Horizontal scaling is the ability to dynamically span the workload across multiple virtual machines. This typically involves leveraging vSphere features like resource allocation settings, VM templates, cloning, or dynamic resource allocation techniques. For example, if you want to distribute traffic across three separate VMs, you would want those on three separate hosts for high availability.
 
 ### Recommendations 
-- When a low-latent communication path is required from VM to VM, use affinity rules so that they live on the same hosts
-- When VM's supporting the application need fault tolerance or to optimize host performance through resource distribution, use VM to VM affinity.
+- Use [Auto-scale for Azure VMware Solution](https://github.com/Azure/azure-vmware-solution/tree/main/avs-autoscale) to define performance metrics to be used for scale-in or scale-out operations in Azure VMware Solution cluster nodes.
 
-You may also want to design your hosts to scale horizontally. For example, if you want to distribute traffic across three separate VM's, you would want those on three separate hosts for high availability.  If one host experiences an issue or failure, the anti-affinity rule enforces distribution across multiple hosts, ensuring that the impact is limited and the availability of applications or services is maintained.
+One way to ensure resource availability is through affinity rules. By configuring affinity rules, administrators have more control over VM placement, enabling the VMs to be distributed according to specific requirements, performance considerations, availability needs, or licensing constraints. 
+ 
+ For VMs deployed with HA or clustering within the Azure VMware Solution, creating anti-affinity rules to keep your VMs apart and on separate hosts is highly recommended.
 
-- For VMs deployed with HA or clustering within the Azure VMware Solution, it is highly recommended to create anti-affinity rules to keep your VMs apart and on separate hosts.
+If one host experiences an issue or failure, the anti-affinity rule enforces distribution across multiple hosts, ensuring that the impact is limited and the availability of applications or services is maintained.
 
-* Use [Auto-scale for Azure VMware Solution](https://github.com/Azure/azure-vmware-solution/tree/main/avs-autoscale) to define performance metrics to be used for scale-in or scale-out operations in Azure VMware Solution cluster nodes.
 
 ### Assessment questions
 
-- Are workloads designed to make use of  affinity and anti-affinity policies?
-- Are Anti-Affinity rules in place to keep VMs apart in the event of host failures?
 
+- Are Affinity/Anti-Affinity rules in place to keep VMs apart in the event of host failures?
+
+### Recommendations 
+- When a low-latent communication path is required from VM to VM, use affinity rules so that they live on the same hosts
+- When VMs supporting the application need fault tolerance or to optimize host performance through resource distribution, use VM-to-VM affinity.
+- For VMs deployed with HA or clustering within the Azure VMware Solution, create anti-affinity rules to keep VMs apart and on separate hosts
 
 ## Storage
 #### Impact: _Reliability_, _Performance_
@@ -167,7 +174,7 @@ Recovery targets to identify how long the Azure VMware Solution can be unavailab
 
 - Have you got a calculated SLA based on the key services being used within Azure VMware Solution and the surrounding technologies?
 
-## Back up 
+## Backup 
 
 For business continuity, robust data protection must be implemented to ensure your virtual machines' availability, integrity, and recoverability and critical data within the AVS environment. Not only must the backup tools be in place, but they must be confirmed to work.	A key principle of Azure VMware Solution is to  provide Independent software vendor (ISV) technology support, validated with Azure VMware Solution.  Understanding the partners and options available to you is critical to your backup success.	
 
@@ -182,13 +189,13 @@ Azure Site Recovery is a disaster recovery solution designed to minimize downtim
 
 ### Recommendations
 - In a prolonged regional outage, workloads protect the workloads by replicating them to an alternative Azure region.
-- Configure Azure Site Recovery to send th backups to an alternate region 
+- Configure Azure Site Recovery to send the backups to an alternate region 
 
 #### Assessment Questions
 - Are backups stored in a different region	To protect against a regional disaster?
 
 
-Most importantly, there needs to be a clear understanding of what backup and recovery infrastructure exists in the environment. To have a backup solution configured, there also needs to be backup targets for the infrastructure. Your applications, databases, and assets are sent to a blob storage or Azure backup vault. From there, owners for backing up and restoring the application should be identified. 
+Most importantly, there needs to be a clear understanding of what backup and recovery infrastructure exists in the environment. To have a backup solution configured, backup targets for the infrastructure must also be used. Your applications, databases, and assets are sent to a blob storage or Azure backup vault. From there, owners for backing up and restoring the application should be identified. 
 
 - Is there a clear understanding of backup and recovery infrastructure exists? Are the backup and discovery procedures documented? 
 
@@ -200,7 +207,7 @@ Establishing a performance baseline provides insight into the Azure VMware Solut
 
 #### Assessment Question
 
-Has the workload been benchmarked and performance tested for metrics such as CPU utilization, memory usage, storage IOPS, network throughput, latency, and response times prior to migrating to the Azure VMware Solution?
+Has the workload been benchmarked and performance tested for metrics such as CPU utilization, memory usage, storage IOPS, network throughput, latency, and response times before migrating to the Azure VMware Solution?
 
 ### Recommendations 
 
@@ -210,7 +217,7 @@ Has the workload been benchmarked and performance tested for metrics such as CPU
 
 ### Debugging and troubleshooting tools
 
-A systematic approach to identifying, troubleshooting, and fixing problems in the SDDC leads to faster resolution times. Operations teams must be able define the problem or symptom the workload is experiencing, the scope of the issue, and the ability to collect information including error messages, logs, and any specific conditions or actions that trigger the issue.
+A systematic approach to identifying, troubleshooting, and fixing problems in the SDDC leads to faster resolution times. Operations teams must be able to define the problem or symptom the workload is experiencing, the scope of the issue, and the ability to collect information, including error messages, logs, and any specific conditions or actions that trigger the issue.
 
 #### Assessment Question
 What tools are installed for debugging and diagnosing issues?
