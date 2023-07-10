@@ -21,7 +21,15 @@ Have you considered Azure Native PaaS or IaaS solutions before migrating workloa
 
 ## Provisioning
 
-When provisioning infrastructure in the SDDC, the primary focus is on the hosts, which are the underlying compute and storage for the virtual machine.  
+When provisioning infrastructure in the SDDC, the primary focus is on the hosts, which are the underlying compute and storage for the virtual machine.  In AVS, you can choose either thin provisioning or thick provisioning for the virtual disks of your VMs based on your specific storage requirements, performance considerations, and anticipated growth of the VMs.Thin provisioning optimizes storage utilization by allocating storage on-demand, reducing the wastage of unused space, while thick provisioning uses the full amount of allocated storage space immediately reserved and allocated for a VM.
+
+### Recommendations
+
+ - If storage efficiency is a priority and you want to minimize unused storage consumption, look to use thin provisioning
+ - If your application requires consistent and high-performance storage access, thick provisioning may be a better 
+ 
+ #### Assessment Questions
+- Are there thick and/or thin provisioning storage policies in use?	
 
 
 ### Capacity and Resource Utilization
@@ -59,9 +67,9 @@ Different regions may have specific regulatory requirements and data residency r
 
 ### Recommendations
 
-Understand the cloud [shared responsibility](https://azure.microsoft.com/resources/shared-responsibility-for-cloud-computing/) model for industry or region-based regulatory compliance.
+- Understand the cloud [shared responsibility](https://azure.microsoft.com/resources/shared-responsibility-for-cloud-computing/) model for industry or region-based regulatory compliance.
 
-Ensure your data remains in the correct geopolitical zone when using Azure data services. Azure's geo-replicated storage uses the concept of a paired region in the same geopolitical region
+- Ensure your data remains in the correct geopolitical zone when using Azure data services. Azure's geo-replicated storage uses the concept of a paired region in the same geopolitical region
 
 ### Automation
 Organizing infrastructure deployments using Infrastructure and Code (IaC) enables more efficient infrastructure provisioning by reducing manual error and facilitating the adoption of DevOps principles in infrastructure management. Infrastructure updates can be made through code modifications, reducing the time and effort required for manual configuration and provisioning.
@@ -128,11 +136,10 @@ If one host experiences an issue or failure, the anti-affinity rule enforces dis
 
 ### vSAN
 
-While the Default Storage Policy in Azure VMware Solution is redundant, If your machines require that data be copied to additional vSAN nodes, another policy should be created to ensure that the data meets your enhanced redundancy requirements.
+AVS vSAN leverages local storage resources from the Azure VMware ESXi hosts within an AVS cluster to create a distributed, shared storage infrastructure. The vSAN provisioning must adquately meet current and future storage needs. SAN storage policies allow you to define the characteristics and behaviors of the storage used by the VMs. Policies enable you to configure data protection, performance, and space efficiency settings based on the specific requirements of your workloads. While the Default Storage Policy in Azure VMware Solution is redundant, If your machines require that data be copied to additional vSAN nodes, another policy should be created to ensure that the data meets your enhanced redundancy requirements.
 
 #### Assessment Questions
 - Are there vSAN Storage Policies that meet corporate standards?
-- Are there thick and/or thin provisioning storage policies in use?	
 
 ### Azure Netapp Files (ANF)
 When you plan to exceed the storage in the SDDC, Azure NetApp Files (ANF) in AVS is another solution that will expand disk allocation and  provide a high-performance, low-latency, scalable storage platform. ANF dynamically adjusts the storage capacity and performance tiers based on the workload needs so that the AVS environment can scale as your storage requirements grow.
