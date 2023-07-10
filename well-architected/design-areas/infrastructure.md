@@ -84,7 +84,7 @@ Organizing infrastructure deployments using Infrastructure and Code (IaC) enable
 ## High Availability 
 #### Impact: _Reliability_
 
-### Designing for Peak Performance
+### Designing for Scalability
 
 When sizing for an application, ensure the VM is sized to handle the workload at peak performance.  The application should also be able to operate with reduced functionality or degraded performance in the case of an outage.	In a failure event, design for resilience to respond to outages and deliver reliability even when impacted by regional, zonal, service, or component failures impact critical application functionality. Scaling vertically is the ability of the virtual machine to add more resources to the individual hosts. This requires picking the right SKU, powering the host down, and adding more resources from an ESXi host with those resources available. 
 
