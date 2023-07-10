@@ -118,7 +118,7 @@ For VMs deployed with HA or clustering within the Azure VMware Solution, creatin
 - Co-locate the application and service tiers by ensuring the application, database, and storage tiers are in the same availability zone.
 - Choose the Azure region for deploying the AVS cluster carefully by considering the proximity to your users or other resources, network connectivity options, and latency requirements.
 
-
+### Affinity 
 If one host experiences an issue or failure, the anti-affinity rule enforces distribution across multiple hosts, ensuring that the impact is limited and the availability of applications or services is maintained.
 
 
