@@ -2,7 +2,7 @@
 
 The Infrastructure section refers to the foundational layer of the Azure VMWare Solution offering that supports the compute, storage, and networking capabilities required to run VMware workloads efficiently and reliably. This section also details using the Software Defined Data Center (SDDC) stack, which includes VMware vSphere, vCenter Server, NSX-T, and vSAN, to address areas such as resilience, security, scalability, automation, and disaster recovery.
 
-## Introduction  
+## Choice of hosting platform
 
 #### Impact: _Performance_, _Operational Excellence_
 
