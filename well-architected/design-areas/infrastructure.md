@@ -19,31 +19,34 @@ Have you considered Azure Native PaaS or IaaS solutions before migrating workloa
 - Use the Azure VMware Solution Deployment Planning Guide Checklist and read the Azure VMware Solution Azure docs published online.
 - Set up criteria to determine which workloads should be moved to Azure VMware Solution and which to Azure Native, considering cost, ability to re-IP capacity, and usage patterns.
 
-## Clustering and Provisioning
+## Provisioning
 
-When provisioning infrastructure in the SDDC, the primary focus is on the hosts, which are the underlying compute and storage for the virtual machine.  Clustering is concerned with creating logical groupings of hosts to provide advanced management and availability features. Once the hosts are provisioned, you can create and configure vSphere clusters within the AVS environment to manage VMs and provide compute capabilities.
+When provisioning infrastructure in the SDDC, the primary focus is on the hosts, which are the underlying compute and storage for the virtual machine.  
 
-### Fault Tolerance
 
-A stretched cluster primarily relates to  computing resource distribution across fault domains or availability zones. Another aspect to consider is the latency of connecting to workloads, as some may not be latency-sensitive. 
+### Capacity and Resource Utilization
 
-#### Assessment Questions 
-- If  using a stretched cluster(s), do you have enough capacity to continue running your service in the event of active/passive cluster failure?
+Before deploying an application in AVS, it is crucial to ensure proper sizing and capacity planning. This entails considering scalability requirements, growth projections, and performance considerations. 
 
-#### Recommendations
-- Use stretched clusters for high-availability
-- Co-locate the application and service tiers by ensuring the application, database, and storage tiers are in the same availability zone.
+#### Assessment questions
+
+- Do dependency maps show application flows, communication paths, dependencies, and infrastructure components?
+
+### Recommendations:
+- Leverage Azure Migrate for insights into resource utilization and SKU size recommendations before migrating to Azure. 
+- Analyzing resource utilization patterns over a specific timeframe helps establish baseline usage, identify peak periods, and anticipate resource spikes.
+- Create a dependency map that outlines the components on the critical path. The map should be actively maintained and regularly checked for changes in the solution.
+ 
 
 ### Region Selection and Application Placement
 
 Region selection is important because it ensures users are near the solution. Having users physically close to the peering location will mean minimal latency. For example, there is a requirement that if using HCX, the roundtrip latency must be less than 150ms.
 
-### Assessment Questions 
+#### Assessment Questions 
 - Are users located near the Azure VMware Solution region(s) hosting your SDDC?
 
 ### Recommendations
 
-- Choose the Azure region for deploying the AVS cluster carefully by considering the proximity to your users or other resources, network connectivity options, and latency requirements.
 - Select a region closer to the users or other Azure services can help minimize latency.
 
 #### Data Sovereignty
@@ -69,19 +72,6 @@ Organizing infrastructure deployments using Infrastructure and Code (IaC) enable
 ### Recommendations
 - Automate expansion and contraction through Infrastructure-as-Code. Repeatable deployments will ensure consistency each time.
 
-### Capacity and Resource Utilization
-
-Before deploying an application in AVS, it is crucial to ensure proper sizing and capacity planning. This entails considering scalability requirements, growth projections, and performance considerations. 
-
-#### Assessment questions
-
-- Do dependency maps show application flows, communication paths, dependencies, and infrastructure components?
-
-### Recommendations:
-- Leverage Azure Migrate for insights into resource utilization and SKU size recommendations before migrating to Azure. 
-- Analyzing resource utilization patterns over a specific timeframe helps establish baseline usage, identify peak periods, and anticipate resource spikes.
-- Create a dependency map that outlines the components on the critical path. The map should be actively maintained and regularly checked for changes in the solution.
- 
 
 ## High Availability 
 #### Impact: _Reliability_
@@ -100,12 +90,25 @@ When sizing for an application, ensure the VM is sized to handle the workload at
 
 The downtime associated with vertical scaling may disrupt the business, so consider scaling horizontally in the workload design. Horizontal scaling is the ability to dynamically span the workload across multiple virtual machines. This typically involves leveraging vSphere features like resource allocation settings, VM templates, cloning, or dynamic resource allocation techniques. For example, if you want to distribute traffic across three separate VMs, you would want those on three separate hosts for high availability.
 
+Clustering is concerned with creating logical groupings of hosts to provide advanced management and availability features. Once the hosts are provisioned, you can create and configure vSphere clusters within the AVS environment to manage VMs and provide compute capabilities.
+
+
 ### Recommendations 
 - Use [Auto-scale for Azure VMware Solution](https://github.com/Azure/azure-vmware-solution/tree/main/avs-autoscale) to define performance metrics to be used for scale-in or scale-out operations in Azure VMware Solution cluster nodes.
 
 One way to ensure resource availability is through affinity rules. By configuring affinity rules, administrators have more control over VM placement, enabling the VMs to be distributed according to specific requirements, performance considerations, availability needs, or licensing constraints. 
  
- For VMs deployed with HA or clustering within the Azure VMware Solution, creating anti-affinity rules to keep your VMs apart and on separate hosts is highly recommended.
+ ### Fault Tolerance
+For VMs deployed with HA or clustering within the Azure VMware Solution, creating anti-affinity rules to keep your VMs apart and on separate hosts is highly recommended. A stretched cluster primarily relates to  computing resource distribution across fault domains or availability zones. Another aspect to consider is the latency of connecting to workloads, as some may not be latency-sensitive. 
+
+#### Assessment Questions 
+- If  using a stretched cluster(s), do you have enough capacity to continue running your service in the event of active/passive cluster failure?
+
+#### Recommendations
+- Use stretched clusters for high-availability
+- Co-locate the application and service tiers by ensuring the application, database, and storage tiers are in the same availability zone.
+- Choose the Azure region for deploying the AVS cluster carefully by considering the proximity to your users or other resources, network connectivity options, and latency requirements.
+
 
 If one host experiences an issue or failure, the anti-affinity rule enforces distribution across multiple hosts, ensuring that the impact is limited and the availability of applications or services is maintained.
 
