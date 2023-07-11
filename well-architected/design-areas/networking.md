@@ -46,7 +46,7 @@ Also, create segments and VLANs for your AVS workloads. Create firewall rules wi
 - How is internal communication between segments secured? 
 
 ## IP planning
-#### Impact: _Security_
+#### Impact: _Security_, _Operational Excellence_
 Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. 	An IP addressing tool is in place and allocation is being enforced.	10		Design virtual networks for growth. 
 
 Remember that in addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Make sure to plan to have enough IPs for
