@@ -59,7 +59,7 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
  - Make sure the firewall has rules and access control lists (ACLs) to restrict and filter inbound traffic
    
 ### Assessment questions 
-- How is access to front-facing AVS workload segments secured? 
+- How is access to front-facing AVS workloads secured? 
 
 ### Securing traffic between internal workloads
 #### Impact: _Security_
