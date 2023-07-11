@@ -135,9 +135,9 @@ How is identity managed for workloads running in Azure VMware Solution?
 ## Security Monitoring and Threat Detection:
 #### Impact: _Security_, _Operational Excellence_
 
-This section refers to detecting and responding to changes in the security posture of Azure VMware Solution private cloud workloads. For specific use case, its important to follow industry best practices and comply with  regulatory requirements, such as GDPR, HIPAA, or PCI DSS.
+This section refers to detecting and responding to changes in the security posture of Azure VMware Solution private cloud workloads. For specific use cases, its important to follow industry best practices and comply with  regulatory requirements, such as GDPR, HIPAA, or PCI DSS.
 
-Using a Security Information and Event Management (SIEM) tool or Azure Sentinel aggregates, monitors, and analyzes security logs and events to detect and respond to potential threats. Also maintaining a regular audit review will help monitor the AVS environment to ensure it aligns with security standards and policies.
+Using a Security Information and Event Management (SIEM) tool or Azure Sentinel aggregates, monitors, and analyzes security logs and events to detect and respond to potential threats. Also, maintaining a regular audit review will help monitor the AVS environment to ensure it aligns with security standards and policies.
 
 
 ### Recommendations 
@@ -161,4 +161,4 @@ Using a Security Information and Event Management (SIEM) tool or Azure Sentinel 
 - How are you monitoring security-related events in Azure VMware Solution? 
 
 
-It is important to note that securing AVS requires a shared responsibility model, where both Microsoft Azure and VMware are responsible for certain aspects of security. Ensure a clear understanding of the shared responsibility model and collaborate with both vendors to implement appropriate security measures.
+It is important to note that securing AVS requires a shared responsibility model, where both Microsoft Azure and VMware are responsible for certain aspects of security. Ensure a clear understanding of the shared responsibility model and collaboration between IT teams, VMware, and Microsoft to implement appropriate security measures.
