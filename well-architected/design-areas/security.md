@@ -86,7 +86,9 @@ Are there management and rotation mechanisms for keys, secrets, and certificates
 ## Network Security:
 #### Impact:  _Infrastructure_
 
-Network security refers to preventing unauthorized access to different components of the Azure VMware Solution by implementing boundaries through network segmentation to create isolation between your applications. A VLAN operates at the data-link layer and provides physical separation of the virtual machines by partitioning the physical network into logical ones to separate traffic. Segments are then created to provide more advanced security capabilities and routing. For example, if you want to separate your application, web, and database tier, you would add them to separate segments. From there, you can microsegment them by adding security rules to restrict network communication between the VMs in each segment. 
+Network security refers to preventing unauthorized access to different components of the Azure VMware Solution by implementing boundaries through network segmentation to create isolation between your applications. A VLAN operates at the data-link layer and provides physical separation of the virtual machines by partitioning the physical network into logical ones to separate traffic. 
+
+Segments are then created to provide more advanced security capabilities and routing. For example, in a three-tier, the application, web, and database tier can have separate segments. From there, the application can have further micro-segmentation by adding security rules to restrict network communication between the VMs in each segment. 
 
 ![image](https://github.com/Azure/Enterprise-Scale-for-AVS/assets/6500757/35803331-1097-4772-a552-cc5c5dd97ff1)
 
@@ -95,6 +97,12 @@ In front of the segments sits the tier-1 routers, which provide routing capabili
 For example, if you wanted to restrict traffic east/west from your prod and dev-test workloads, you can use distributed tier-1s to segment and filter the traffic based on specific rules and policies. 
 
 <img width="646" alt="image" src="https://github.com/Azure/Enterprise-Scale-for-AVS/assets/6500757/e37e807f-a48b-4832-804c-be8530c6e757">
+
+### Recommendations 
+- Use network segments to logically separate and monitor different components
+- Use NSX-T native microsegmentation capabilities to restrict network communication between different components in the application
+- Use a centralized routing appliance to secue and optimize routing between segments
+- Use staggered tier-1 routers when network segmention is driven by organizational security/networking policies, compliance requirements, business units, departments or environments. 
 
 
 
