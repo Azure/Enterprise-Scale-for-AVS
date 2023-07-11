@@ -54,8 +54,12 @@ Remember that in addition to a /22 RFC-1918, workload segments will have separat
 - Public IPs
 - and load balancer
 
+### Recommendations
+- Ensure the IP address range is large enough to accommodate all current and future workloads in the  Azure VMware Solution.
+- Efficiently organize available IPs using a spreadsheet and or IP address management (IPAM) tool to avoid. A mechanism to track IPs will help track IP usage and avoid IP conflicts. 
+- Plan for potential increases in devices, segments, or subnets so that the IP addressing scheme can handle the additional demands.
 
-### Assessment questions 
+#### Assessment questions 
 - How are IP addresses spaced, planned, and segmented?
 
 ## Next steps
