@@ -30,10 +30,12 @@ For applications with a Global presence, it's important to route traffic to the 
 
 #### Impact: _Performance_
 
-Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution of static and dynamic assets for the application through caching. 
+High-traffic applications require optimal retrieval of content. Implementing optimization techniques such as compression and HTTP accelerators can improve the retrieval performance of assets within your AVS environment. Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution by caching frequently accessed content. 
 
 ### Recommendation
-Place your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
+- Place your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
+- Use compression to minimize the payload of static assets
+- Use caching solutions like Redis or Azure Cache for Redis to cache frequently accessed data
 
 ### Assessment questions 
 - Is the retrieval of static assets from websites or applications optimized?
@@ -49,7 +51,8 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
  - For Internet-facing applications, use a firewall (e.g. Azure Firewall) to inspect AVS traffic coming into Azure VNET.
  - Make sure the firewall has rules and access control lists (ACL's) to restrict and filter inbound traffic
    
-
+### Assessment questions 
+- How is access to front-facing AVS workload segments secured? 
 
 ### Securing traffic between internal workloads
 #### Impact: _Security_
@@ -61,8 +64,10 @@ Implementing network isolation through segmentation and using virtual LANs (VLAN
 
 Also, create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
 
-### Assessment questions 
-- How is access to front-facing AVS workload segments secured? 
+
+
+
+#### Assessment Questions
 
 - How is internal communication between segments secured? 
 
