@@ -160,5 +160,5 @@ Using a Security Information and Event Management (SIEM) tool or Azure Sentinel 
 
 - How are you monitoring security-related events in Azure VMware Solution? 
 
-
+## Conclusion
 It is important to note that securing AVS requires a shared responsibility model, where both Microsoft Azure and VMware are responsible for certain aspects of security. Ensure a clear understanding of the shared responsibility model and collaboration between IT teams, VMware, and Microsoft to implement appropriate security measures.
