@@ -51,7 +51,7 @@ including
 - Deploy security updates regularly using the Volume Activation Management Tool for any guest VMs using Extended Security Benefits in the Azure VMware Solution SDDC. 
 
 #### Assessment Question 
--  Have you done a threat analysis of your Azure VMware Solution workload?
+-  Was a threat analysis of the Azure VMware Solution workload performed?
 
 ## Data Encryption
 #### Impact: _Security_, _Infrastructure_
