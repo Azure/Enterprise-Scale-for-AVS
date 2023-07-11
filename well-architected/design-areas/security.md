@@ -130,7 +130,7 @@ Data Protection:
 
 #### Assessment question 
 
-How are you managing identity for workloads running in Azure VMware Solution? 
+How is identity managed for workloads running in Azure VMware Solution? 
 
 ## Security Monitoring and Threat Detection:
 #### Impact: _Security_, _Operational Excellence_
