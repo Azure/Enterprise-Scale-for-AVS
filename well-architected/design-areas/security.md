@@ -53,11 +53,6 @@ including
 #### Assessment Question 
 -  Have you done a threat analysis of your Azure VMware Solution workload?
 
-### Intrusion Detection and Prevention Systems (IDPS): 
-
-Deploying an IDPS solution will  detect and prevent network-based attacks and malicious activities within the AVS environment.
-
-
 ## Data Encryption
 #### Impact: _Security_, _Infrastructure_
 
@@ -97,13 +92,23 @@ For example, if you wanted to restrict traffic east/west from your prod and dev-
 <img width="646" alt="image" src="https://github.com/Azure/Enterprise-Scale-for-AVS/assets/6500757/e37e807f-a48b-4832-804c-be8530c6e757">
 
 ### Recommendations 
-- Use network segments to logically separate and monitor different components
-- Use NSX-T native microsegmentation capabilities to restrict network communication between different components in the application
-- Use a centralized routing appliance to secue and optimize routing between segments
-- Use staggered tier-1 routers when network segmention is driven by organizational security/networking policies, compliance requirements, business units, departments or environments. 
+- Use network segments to separate and monitor different components logically
+- Use NSX-T native micro-segmentation capabilities to restrict network communication between different components in the application
+- Use a centralized routing appliance to secure and optimize routing between segments
+- Use staggered tier-1 routers when network segmentation is driven by organizational security/networking policies, compliance requirements, business units, departments, or environments.
 
 #### Assessment Question
 - How is traffic between different components of the application transmitted securely?
+
+### Intrusion Detection and Prevention Systems (IDPS): 
+Deploying an IDPS solution will  detect and prevent network-based attacks and malicious activities within the AVS environment.
+
+### Recommendation 
+
+- Use NSX-T's Distributed FIrewall to detect  malicious patterns and malware detection in east-west traffic between your AVS components.
+
+#### Assessment question
+- Are intrusion detection and protection solutions in use? 
 
 ### RBAC and Multi-Factor Authentication (MFA)
 #### Impact:  _Security_, _Infrastructure_
