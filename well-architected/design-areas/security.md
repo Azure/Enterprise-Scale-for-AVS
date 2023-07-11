@@ -1,7 +1,7 @@
 # Azure VMware Solution Well-Architected Framework: Security
 
 
-This section covers how to secure and protect workloads running in the. Azure VMware Solution (AVS) by implementing various measures to protect the infrastructure, data, and applications. This entails having a holistic approach that aligns with the organization's core priorities. 
+This section covers how to secure and protect workloads running in the Azure VMware Solution (AVS) by implementing various measures to protect the infrastructure, data, and applications. This entails having a holistic approach that aligns with the organization's core priorities. 
 
 
 ## Infrastructure Security
