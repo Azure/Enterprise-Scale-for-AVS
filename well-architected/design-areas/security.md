@@ -66,14 +66,14 @@ Deploying an IDPS solution will  detect and prevent network-based attacks and ma
 #### Impact: _Security_, _Infrastructure_
 
 Data Encryption is an important aspect of keeping the Azure VMware Solution workload from unauthorized access and protecting the integrity of sensitive data. This includes both data at rest on the systems and data in transit. 
-### Recoomendations
+### Recommendations
 
 - Encrypt vSAN storage with Customer Managed Keys to encrypt data at rest.
 - Use native encryption tools such as BitLocker for encrypting guest VMs. 
-- Use native database encryption options (e.g. TDE for SQL Server) for databases running on Azure VMware Solution SDDC guest VMs.
-- Monitor database activities using tools native database monitoring tools (e.g. SQL Server Activity Monitor) for any suspicious activity monitoring.
+- Use native database encryption options (e.g., TDE for SQL Server) for databases running on Azure VMware Solution SDDC guest VMs.
+- Monitor database activities using native database monitoring tools (e.g., SQL Server Activity Monitor) for any suspicious activity monitoring.
 
-#### Asssement Question
+#### Assessment Question
 - Is data being encrypted both in transit and at rest? 
 
 ### Key Rotation 
