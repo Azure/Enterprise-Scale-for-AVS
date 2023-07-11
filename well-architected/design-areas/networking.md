@@ -60,7 +60,7 @@ Also, create segments and VLANs for your AVS workloads. Create firewall rules wi
 #### Impact: _Security_, _Operational Excellence_
 Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. 	An IP addressing tool is in place and allocation is being enforced.	10		Design virtual networks for growth. 
 
-In addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Make sure to plan to have enough IPs for
+In addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Plan to have enough IPs for
 - virtual machines
 - Public IPs
 - and load balancers
