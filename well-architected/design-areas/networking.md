@@ -29,14 +29,25 @@ Place your content behind Azure CDN to improve responsiveness and reduce latency
 - How is retrieving static assets from the website or application optimized?
 - Does the application infrastructure span multiple regions?
 
-## Isolation boundaries
+## Network Security
 
-#### Impact: _Security_
-
-Implementing network isolation through segmentation and  using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment.
+### Internet Facing workloads 
+Workloads in the Azure VMware Solution can be front-facing, meaning they get mapped to a Public IP, can be exposed to the internet, and accept incoming connections from external sources. However, this association with your VM or load balancer does pose risks to the workloads. 
 
 ### Recommendation 
-Network security groups (NSG) are used to isolate and protect traffic within the workloads VNet. 	An Azure native service that is part of a complete zero trust pattern.	5		Use NSG or Azure Firewall to protect and control traffic within VNETs. 
+
+ - For Internet-facing applications, use a firewall (e.g. Azure Firewall) to inspect AVS traffic coming into Azure VNET.
+ - Make sure the firewall has rules and access control lists (ACL's) to restrict and filter inbound traffic
+   
+
+
+### Securing traffic between internal workloads
+#### Impact: _Security_
+
+Implementing network isolation through segmentation and using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment. Network security groups (NSG) are used to isolate and protect traffic within the workloads VNet.
+
+### Recommendation 
+ - Use NSGs to restrict further traffic to VMs and other application components  vnets, subnets, and traffic from AVS.  
 
 Also, create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
 
@@ -49,10 +60,10 @@ Also, create segments and VLANs for your AVS workloads. Create firewall rules wi
 #### Impact: _Security_, _Operational Excellence_
 Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. 	An IP addressing tool is in place and allocation is being enforced.	10		Design virtual networks for growth. 
 
-Remember that in addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Make sure to plan to have enough IPs for
+In addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Make sure to plan to have enough IPs for
 - virtual machines
 - Public IPs
-- and load balancer
+- and load balancers
 
 ### Recommendations
 - Ensure the IP address range is large enough to accommodate all current and future workloads in the  Azure VMware Solution.
