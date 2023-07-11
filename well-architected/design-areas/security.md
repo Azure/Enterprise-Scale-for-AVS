@@ -104,7 +104,8 @@ For example, if you wanted to restrict traffic east/west from your prod and dev-
 - Use a centralized routing appliance to secue and optimize routing between segments
 - Use staggered tier-1 routers when network segmention is driven by organizational security/networking policies, compliance requirements, business units, departments or environments. 
 
-
+#### Assessment Question
+- How is traffic between different components of the application transmitted securely?
 
 ### RBAC and Multi-Factor Authentication (MFA)
 #### Impact:  _Security_, _Infrastructure_
