@@ -3,6 +3,7 @@ The networking pillar of well-architected is critical for enabling connectivity,
 
 ## Traffic Distribution 
 
+This section highlights different configurations and tools to distribute traffic across destinations within the Azure VMware Solution infrastructure to achieve various objectives such as scalability, load balancing, performance optimization, and fault tolerance.
 
 ### Load Distribution and High Availability
 #### Impact: _Reliability_, _Performance_
