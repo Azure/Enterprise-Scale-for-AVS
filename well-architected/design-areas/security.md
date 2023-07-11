@@ -60,7 +60,7 @@ including
 ### Intrusion Detection and Prevention Systems (IDPS): 
 
 Deploying an IDPS solution will  detect and prevent network-based attacks and malicious activities within the AVS environment.
-Vulnerability Scanning: 
+
 
 ## Data Encryption
 #### Impact: _Security_, _Infrastructure_
