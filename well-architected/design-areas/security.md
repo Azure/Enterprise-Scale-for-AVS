@@ -105,7 +105,7 @@ For example, if you wanted to restrict traffic east/west from your prod and dev-
 
 Identity security controls access to Azure VMware Solution private cloud workloads and applications running on them to users, groups, and credentials. Using Role-Based Access Control (RBAC) assigns  roles and permissions appropriate to specific users and groups, which are then granted based on least privilege. 
 
-Enforcing  MFA for user authentication  provides an additional layer of security against unauthorized access. Various MFA methods, such as mobile push notifications, offer a convenient user experience while ensuring strong authentication. Integrating AVS with Azure Active Directory (Azure AD) to centralize user management and leverage Azure AD's advanced security features such as PIM, MFA, and Conditional Acess. 
+Enforcing  MFA for user authentication  provides an additional layer of security against unauthorized access. Various MFA methods, such as mobile push notifications, offer a convenient user experience while ensuring strong authentication. Integrate AVS with Azure Active Directory (Azure AD) to centralize user management and leverage Azure AD's advanced security features such as PIM, MFA, and Conditional Acess. 
 Data Protection:
 
 ### Recommendations
