@@ -1,9 +1,12 @@
 # Network Considerations for the Azure VMware Solution
 ## Traffic Distribution 
 
-#### Impact: _Reliability_
+The networking pillar of well-architected is critical for enabling connectivity, optimizing response times, distributing traffic, and ensuring continuous availability of workloads in the Azure VMware Solution. 
+
 
 ### Load Distribution and High Availability
+#### Impact: _Reliability_
+
 Load balancing the Azure VMware Solution allows for the distribution of traffic through various algorithms such as performance and weight to make sure incoming traffic is divided  to improve
 both the scale and reliability of the workload applications. If the application spans multiple SDDCs, the Azure load balancer can also distribute traffic across the two environments.
 
