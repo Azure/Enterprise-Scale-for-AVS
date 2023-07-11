@@ -48,8 +48,6 @@ including
 
 - Configure Arc machines to automatically create an association with the default data collection rule for Microsoft Defender for Cloud. 
 
-- System updates should be installed on your machines. 
-
 - Enable Microsoft Defender for Cloud with Servers plan on the subscription for deploying and running Azure VMware Solution SDDC.
 
 - For any guest VMs using Extended Security Benefits on Azure VMware Solution SDDC, deploy security updates regularly using the Volume Activation Management Tool. 
