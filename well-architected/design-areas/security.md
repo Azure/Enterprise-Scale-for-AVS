@@ -22,7 +22,7 @@ centralized management and governance for servers, Azure ARC, gives you a single
 
 - Deploy Arc for Azure VMware Solution (Preview) 
 
-- Use Azure Policy for Azure Arc-enabled Servers to audit and enforce security controls on Azure VMware Solution guest VMs. Some of the key policies are provided below. 
+- Use Azure Policy for Azure Arc-enabled Servers to audit and enforce security controls on Azure VMware Solution guest VMs. 
 
 #### Assessment Questions 
 - What tools are in place for patch management and system upgrades? _(new)_
@@ -31,14 +31,16 @@ centralized management and governance for servers, Azure ARC, gives you a single
 #### Impact: _Security_ 
 
 The operating system is susceptible to vulnerabilities if not patched and regularly updated, which can put your entire platform at risk. Patching regularly combined with an endpoint protection solution helps prevent 
-common attack vectors that target the OS and keep your systems up to date. Regularly performing  vulnerability scans and assessments will identify and remediate security weaknesses or vulnerabilities. Azure Defender for Cloud has unique tools that provide advanced threat protection across your Azure VMware Solution and on-premises virtual machines (VMs). 
+common attack vectors that target the OS and keep your systems up to date. Regularly performing  vulnerability scans and assessments will identify and remediate security weaknesses or vulnerabilities. 
+
+- Azure Defender for Cloud has unique tools that provide advanced threat protection across your Azure VMware Solution and on-premises virtual machines (VMs) 
 including 
 
-  - - File integrity monitoring
-  - - Fileless attack detection
-  - - Operating system patch assessment
-  - - Security misconfigurations assessment
-  - - Endpoint protection assessment
+   - File integrity monitoring
+   - Fileless attack detection
+   - Operating system patch assessment
+   - Security misconfigurations assessment
+   - Endpoint protection assessment
 
   ### Recommendations
 
