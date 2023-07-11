@@ -9,7 +9,7 @@ This section highlights different configurations and tools to distribute traffic
 #### Impact: _Reliability_, _Performance_
 
 Load balancing the Azure VMware Solution allows for the distribution of traffic through various algorithms such as performance and weight to make sure incoming traffic is divided  to improve
-both the scale and reliability of the workload applications. If the application spans multiple SDDCs, the Azure load balancer can also distribute traffic across the two environments.
+both the scale and reliability of the workload applications. If the application spans multiple SDDCs, the Azure load balancer can distribute traffic across the two environments.
 
 ### Recommendation
 - Use a load balancer such as NSX Advanced Loadbalancer for even distribution of internal and external facing application gateways for routing, application delivery, and SSL termination.
@@ -47,7 +47,7 @@ High-traffic applications require optimal retrieval of content. Implementing opt
 
 
 ## Network Security
-The network is the one primary perimeters for controlling access, protecting data, and mitigating threats in the AVS environment. Robust network security measure ensure the availability and resiliency of the Azure VMware Solution workloads. 
+The network is a crticial perimeter for controlling access, protecting data, and mitigating threats in the AVS environment. Robust network security measures ensure the availability and resiliency of the Azure VMware Solution workloads. 
 
 ### Internet Facing workloads 
 #### Impact: _Security_
@@ -56,8 +56,8 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
 
 ### Recommendation 
 
- - For Internet-facing applications, use a firewall (e.g. Azure Firewall) to inspect AVS traffic coming into Azure VNET.
- - Make sure the firewall has rules and access control lists (ACL's) to restrict and filter inbound traffic
+ - For Internet-facing applications, use a firewall (e.g., Azure Firewall) to inspect AVS traffic into Azure VNET.
+ - Make sure the firewall has rules and access control lists (ACLs) to restrict and filter inbound traffic
    
 ### Assessment questions 
 - How is access to front-facing AVS workload segments secured? 
@@ -68,7 +68,7 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
 Implementing network isolation through segmentation and using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment. Network security groups (NSG) are used to isolate and protect traffic within the workloads VNet.
 
 ### Recommendation 
- - Use NSGs to restrict further traffic to VMs and other application components  vnets, subnets, and traffic from AVS.  
+ - Use NSGs to restrict further traffic to VMs and other application components,  vnets, subnets, and traffic from AVS.  
 
 Also, create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
 
