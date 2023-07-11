@@ -1,7 +1,7 @@
 # Network Considerations for the Azure VMware Solution
-## Traffic Distribution 
-
 The networking pillar of well-architected is critical for enabling connectivity, optimizing response times, distributing traffic, and ensuring continuous availability of workloads in the Azure VMware Solution. 
+
+## Traffic Distribution 
 
 
 ### Load Distribution and High Availability
