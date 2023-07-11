@@ -35,8 +35,7 @@ For applications with a Global presence, it's important to route traffic to the 
 
 #### Impact: _Performance_, _Cost Optimiztion_
 
-High-traffic applications require optimal retrieval of content. Implementing optimization techniques such as compression and HTTP accelerators can improve the retrieval performance of assets within your AVS environment. Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution by caching frequently accessed content. 
-
+High-traffic applications require optimal retrieval of content. Implementing optimization techniques such as compression and HTTP accelerators can improve the retrieval performance of assets within your AVS environment. Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution by caching frequently accessed content. Compression techniques on files before they are transmitted also can save costs by reducing the size of transmitted data. Additional cost savings are possible when the data is served through the CDN as they are cached at a nearby edge location closer to the user reducing the distance traveled. 
 ### Recommendation
 - Place your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
 - Use compression to minimize the payload of static assets
