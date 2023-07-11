@@ -81,7 +81,7 @@ Are there management and rotation mechanisms for keys, secrets, and certificates
 
 Network security refers to preventing unauthorized access to different components of the Azure VMware Solution by implementing boundaries through network segmentation to create isolation between your applications. A VLAN operates at the data-link layer and provides physical separation of the virtual machines by partitioning the physical network into logical ones to separate traffic. 
 
-Segments are then created to provide more advanced security capabilities and routing. For example, in a three-tier, the application, web, and database tier can have separate segments. From there, the application can have further micro-segmentation by adding security rules to restrict network communication between the VMs in each segment. 
+Segments are then created to provide more advanced security capabilities and routing. For example, the application, web, and database tier can have separate segments in a three-tier architecture. From there,the application can have further micro-segmentation by adding security rules to restrict network communication between the VMs in each segment. 
 
 ![image](https://github.com/Azure/Enterprise-Scale-for-AVS/assets/6500757/35803331-1097-4772-a552-cc5c5dd97ff1)
 
@@ -113,7 +113,7 @@ Deploying an IDPS solution will  detect and prevent network-based attacks and ma
 ### RBAC and Multi-Factor Authentication (MFA)
 #### Impact:  _Security_, _Infrastructure_
 
-Identity security controls access to Azure VMware Solution private cloud workloads and applications running on them to users, groups, and credentials. Using Role-Based Access Control (RBAC) assigns  roles and permissions appropriate to specific users and groups, which are then granted based on least privilege. 
+Identity security controls access to Azure VMware Solution private cloud workloads and applications running on them to users, groups, and credentials. Role-Based Access Control (RBAC) assigns roles and permissions appropriate to specific users and groups, which are then granted based on least privilege. 
 
 Enforcing  MFA for user authentication  provides an additional layer of security against unauthorized access. Various MFA methods, such as mobile push notifications, offer a convenient user experience while ensuring strong authentication. Integrate AVS with Azure Active Directory (Azure AD) to centralize user management and leverage Azure AD's advanced security features such as PIM, MFA, and Conditional Acess. 
 Data Protection:
@@ -135,7 +135,7 @@ How is identity managed for workloads running in Azure VMware Solution?
 ## Security Monitoring and Threat Detection:
 #### Impact: _Security_, _Operational Excellence_
 
-This section refers to detecting and responding to changes in the security posture of Azure VMware Solution private cloud workloads. For specific use cases, its important to follow industry best practices and comply with  regulatory requirements, such as GDPR, HIPAA, or PCI DSS.
+This section refers to detecting and responding to changes in the security posture of Azure VMware Solution private cloud workloads. It is important to follow industry best practices and comply with regulatory requirements, such as GDPR, HIPAA, or PCI DSS for specific use cases.
 
 Using a Security Information and Event Management (SIEM) tool or Azure Sentinel aggregates, monitors, and analyzes security logs and events to detect and respond to potential threats. Also, maintaining a regular audit review will help monitor the AVS environment to ensure it aligns with security standards and policies.
 
@@ -162,3 +162,9 @@ Using a Security Information and Event Management (SIEM) tool or Azure Sentinel 
 
 ## Conclusion
 It is important to note that securing AVS requires a shared responsibility model, where both Microsoft Azure and VMware are responsible for certain aspects of security. Ensure a clear understanding of the shared responsibility model and collaboration between IT teams, VMware, and Microsoft to implement appropriate security measures.
+
+## Next steps
+
+Now that we've looked at the best practices for securing the Azure VMware Solution let's investigate further procedures to ensure Operational Management and Business Excellence.
+> [!div class="nextstepaction"]
+> [Operational Procedures](./oerations.md)
