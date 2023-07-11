@@ -5,7 +5,7 @@ The networking pillar of well-architected is critical for enabling connectivity,
 
 
 ### Load Distribution and High Availability
-#### Impact: _Reliability_
+#### Impact: _Reliability_, _Performance_
 
 Load balancing the Azure VMware Solution allows for the distribution of traffic through various algorithms such as performance and weight to make sure incoming traffic is divided  to improve
 both the scale and reliability of the workload applications. If the application spans multiple SDDCs, the Azure load balancer can also distribute traffic across the two environments.
@@ -19,6 +19,7 @@ both the scale and reliability of the workload applications. If the application 
 - How is traffic to the workload distributed?
 
 ### Global Distribution 
+#### Impact: _Reliability_, _Performance_
 
 For applications with a Global presence, it's important to route traffic to the nearest Azure VMware Solution SDDC to minimize the distance between the instances and the users. 
 
@@ -46,7 +47,10 @@ High-traffic applications require optimal retrieval of content. Implementing opt
 
 ## Network Security
 
+
 ### Internet Facing workloads 
+#### Impact: _Security_
+
 Workloads in the Azure VMware Solution can be front-facing, meaning they get mapped to a Public IP, can be exposed to the internet, and accept incoming connections from external sources. However, this association with your VM or load balancer does pose risks to the workloads. 
 
 ### Recommendation 
