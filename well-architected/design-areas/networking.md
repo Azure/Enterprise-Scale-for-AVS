@@ -65,7 +65,7 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
 ### Securing traffic between internal workloads
 #### Impact: _Security_
 
-Implementing network isolation through segmentation and using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment. Network security groups (NSG) are used to isolate and protect traffic within the workloads VNet.
+Implementing network isolation through segmentation and using virtual LANs (VLANs) aids in preventing unauthorized access between different components of the AVS environment. Network security groups (NSG) are used to isolate and protect traffic within the workload VNETs.
 
 ### Recommendation 
  - Use NSGs to restrict further traffic to VMs and other application components,  vnets, subnets, and traffic from AVS.  
