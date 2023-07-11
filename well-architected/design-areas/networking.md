@@ -5,11 +5,12 @@
 
 ### Load Distribution and High Availability
 Load balancing the Azure VMware Solution allows for the distribution of traffic through various algorithms such as performance and weight to make sure incoming traffic is divided  to improve
-both the scale and reliability of the workload applications. 
+both the scale and reliability of the workload applications. If the application spans multiple SDDCs, the Azure load balancer can also distribute traffic across the two environments.
 
 ### Recommendation
 - Use a load balancer such as NSX Advanced Loadbalancer for even distribution of internal and external facing application gateways for routing, application delivery, and SSL termination.
 - For workloads that extend into Azure, use Azure Application Gateway, which provides similar functionality to enhance application performance, plus IDPS and Web Application Firewall (WAF) capabilities. Azure Load Balancer can distribute traffic across those zones, providing high availability and fault tolerance for workloads that span multiple Azure Availability Zones.
+- 
 
 ### Assessment questions 
 - How is traffic to the workload distributed?
@@ -20,13 +21,12 @@ For applications with a Global presence, it's important to route traffic to the 
 
 ### Recommendation 
 - For applications that span multiple regions, consider deploying a DNS-based global traffic load balancing solution such as Azure Traffic Manager
-
-
-## Content Delivery
-
+- Create traffic routing profiles and configure various routing methods such as priority-based routing, weighted round-robin, performance-based routing, or geographic-based routing
 
 ### Assessment questions 
 - Does the application require a global presence?
+
+## Content Delivery
 
 #### Impact: _Performance_
 
