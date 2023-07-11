@@ -68,8 +68,7 @@ Implementing network isolation through segmentation and using virtual LANs (VLAN
 
 ### Recommendation 
  - Use NSGs to restrict further traffic to VMs and other application components,  vnets, subnets, and traffic from AVS.  
-
-Also, create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
+ - Create segments and VLANs for your AVS workloads. Create firewall rules within NSX-T.
 
 
 
