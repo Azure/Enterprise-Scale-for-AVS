@@ -10,7 +10,7 @@ both the scale and reliability of the workload applications. If the application 
 ### Recommendation
 - Use a load balancer such as NSX Advanced Loadbalancer for even distribution of internal and external facing application gateways for routing, application delivery, and SSL termination.
 - For workloads that extend into Azure, use Azure Application Gateway, which provides similar functionality to enhance application performance, plus IDPS and Web Application Firewall (WAF) capabilities. Azure Load Balancer can distribute traffic across those zones, providing high availability and fault tolerance for workloads that span multiple Azure Availability Zones.
-- 
+ 
 
 ### Assessment questions 
 - How is traffic to the workload distributed?
@@ -36,8 +36,8 @@ Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solu
 Place your content behind Azure CDN to improve responsiveness and reduce latency for those accessing the applications and websites.
 
 ### Assessment questions 
-- How is retrieving static assets from the website or application optimized?
-- Does the application infrastructure span multiple regions?
+- Is the retrieval of static assets from websites or applications optimized?
+
 
 ## Network Security
 
