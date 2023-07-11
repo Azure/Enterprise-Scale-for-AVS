@@ -147,7 +147,7 @@ Using a Security Information and Event Management (SIEM) tool or Azure Sentinel 
 
     - Workflow automation for regulatory compliance changes 
 
-- Deploy Microsoft Sentinel. When deploying Microsoft Sentinel, use the Log Analytics workspace that collects logs from Azure VMware Solution SDDC guest VMs. 
+- Deploy Microsoft Sentinel and set the destination to a Log Analytics workspace to collect logs from Azure VMware Solution SDDC guest VMs.
 
 - Connect Microsoft Sentinel and Microsoft Defender for Cloud using a data connector. 
 
