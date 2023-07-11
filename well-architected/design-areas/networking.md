@@ -100,7 +100,7 @@ In addition to a /22 RFC-1918, workload segments will have separate non-conflict
 
 ## Next steps
 
-The next section visits how to securely establish connectivity, create perimeters for your workload, and evenly distribute traffic to the application workloads.
+The next section goes into additional mechanisms, tools, and perimeters to further secure workloads in the SDDC. 
 
 > [!div class="nextstepaction"]
 > [Networking](./networking.md)
