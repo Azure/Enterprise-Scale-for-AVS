@@ -47,7 +47,7 @@ High-traffic applications require optimal retrieval of content. Implementing opt
 
 
 ## Network Security
-
+The network is the one primary perimeters for controlling access, protecting data, and mitigating threats in the AVS environment. Robust network security measure ensure the availability and resiliency of the Azure VMware Solution workloads. 
 
 ### Internet Facing workloads 
 #### Impact: _Security_
@@ -81,7 +81,8 @@ Also, create segments and VLANs for your AVS workloads. Create firewall rules wi
 
 ## IP planning
 #### Impact: _Security_, _Operational Excellence_
-Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. 	An IP addressing tool is in place and allocation is being enforced.	10		Design virtual networks for growth. 
+
+A well-architected Azure VMware Solution and Cloud virtual networks are designed for growth based on an intentional subnet security strategy. This involves strategically designing and organizing IP address allocation.  	An IP addressing tool is in place, and allocation is being enforced.	10		Design virtual networks for growth. 
 
 In addition to a /22 RFC-1918, workload segments will have separate non-conflicting CIDR ranges. Plan to have enough IPs for
 - virtual machines
@@ -92,6 +93,7 @@ In addition to a /22 RFC-1918, workload segments will have separate non-conflict
 - Ensure the IP address range is large enough to accommodate all current and future workloads in the  Azure VMware Solution.
 - Efficiently organize available IPs using a spreadsheet and or IP address management (IPAM) tool to avoid. A mechanism to track IPs will help track IP usage and avoid IP conflicts. 
 - Plan for potential increases in devices, segments, or subnets so that the IP addressing scheme can handle the additional demands.
+- Use DHCP for dynamic IP address assignment 
 
 #### Assessment questions 
 - How are IP addresses spaced, planned, and segmented?
