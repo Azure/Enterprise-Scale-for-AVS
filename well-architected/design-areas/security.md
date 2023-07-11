@@ -146,8 +146,6 @@ Using a Security Information and Event Management (SIEM) tool or Azure Sentinel 
 
 #### Assessment question 
 
-- What considerations for compliance and governance did you make in your Azure VMware Solution deployment? 
-
 - How are you monitoring security-related events in Azure VMware Solution? What tools do you use to monitor your Azure VMware Solution Private Cloud and clusters? 
 
 
