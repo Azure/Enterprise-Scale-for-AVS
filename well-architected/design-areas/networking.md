@@ -56,7 +56,7 @@ Workloads in the Azure VMware Solution can be front-facing, meaning they get map
 
 ### Recommendation 
 
- - For Internet-facing applications, use a firewall (e.g., Azure Firewall) to inspect AVS traffic into Azure VNET.
+ - For Internet-facing applications, use a firewall (e.g., Azure Firewall) to inspect AVS traffic into Azure VNETs.
  - Make sure the firewall has rules and access control lists (ACLs) to restrict and filter inbound traffic
    
 ### Assessment questions 
