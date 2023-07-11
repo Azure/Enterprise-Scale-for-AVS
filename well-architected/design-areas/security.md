@@ -81,7 +81,7 @@ It is significantly more challenging for attackers to access or misuse encrypted
 - Use Azure Key Vault to store encryption keys.
 
 #### Asssement Question
-- Are there key/secret/cert management and rotation mechanisms?
+Are there management and rotation mechanisms for keys, secrets, and certificates?
 
 ## Network Security:
 #### Impact:  _Infrastructure_
