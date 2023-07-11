@@ -20,9 +20,9 @@ both the scale and reliability of the workload applications. If the application 
 - How is traffic to the workload distributed?
 
 ### Global Distribution 
-#### Impact: _Reliability_, _Performance_
+#### Impact: _Reliability_, _Performance_, _Cost Optimization_
 
-For applications with a Global presence, it's important to route traffic to the nearest Azure VMware Solution SDDC to minimize the distance between the instances and the users. 
+For applications with a Global presence, it's important to route traffic to the nearest Azure VMware Solution SDDC to minimize the distance between the instances and the users. Using a traffic manager also has the potential to lower outbound data transfer costs by sending users to the nears AVS deployment or edge location. Reducing the distance data travels will help avoid unnecessarily long data transfers. 
 
 ### Recommendation 
 - For applications that span multiple regions, consider deploying a DNS-based global traffic load balancing solution such as Azure Traffic Manager
@@ -33,7 +33,7 @@ For applications with a Global presence, it's important to route traffic to the 
 
 ## Content Delivery
 
-#### Impact: _Performance_
+#### Impact: _Performance_, _Cost Optimiztion_
 
 High-traffic applications require optimal retrieval of content. Implementing optimization techniques such as compression and HTTP accelerators can improve the retrieval performance of assets within your AVS environment. Using a Content Delivery Network (CDN) in conjunction with the Azure VMware Solution assists in optimizing the retrieval and distribution by caching frequently accessed content. 
 
