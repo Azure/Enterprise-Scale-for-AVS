@@ -16,9 +16,7 @@ It's important to easily see and detect which servers are following out of compl
 centralized management and governance for servers, Azure ARC, gives you a single pane glass view to applying updates and hotfixes in Azure, On-Premises, and AVS for a consistent management experience. 
 
 ### Recommendations 
-- Configure Azure VMware Solution guest VMs as Azure Arc-enabled Servers by using one of the following methods. 
-
-- Azure Connected Machine agent deployment options 
+- Configure Azure VMware Solution guest VMs as Azure Arc-enabled Servers by using one of the following methods: Azure Connected Machine agent deployment options 
 
 - Deploy Arc for Azure VMware Solution (Preview) 
 
