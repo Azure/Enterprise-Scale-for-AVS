@@ -115,8 +115,6 @@ It's essential to know how the workload in the SDDC is doing by monitoring metri
 - Is there a substantial amount of noise and false positives?
 - Are there adequate escalation procedures in place?
 
-Evaluating the processes and procedures to respond to critical alerts assists in making sure they are addressed promptly. 
-
 ### Establishing Incident Response Teams 
 
 Before an incident or outage, it is crucial to establish a well-defined notification process to ensure timely communication. Identifying the relevant personnel responsible for resolution is vital. Having dedicated remediation team can be formed comprising operations, application owners, and DevOps experts who possess the necessary expertise is needed to resolve issues quickly. The operations team must be aware of the appropriate individuals to involve in triaging the problem.
@@ -136,7 +134,7 @@ Regularly reviewing the distribution list is essential to ensure its accuracy an
 
 #### Assessment Questions
 
-- Is a Service Management framework (e.g., ITIL/ISO) in place?
+- Are practices and protocols in place to promptly address critical alerts and events?
  
 ### Effective Manage alerts 
 
