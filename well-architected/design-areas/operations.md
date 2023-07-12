@@ -73,13 +73,22 @@ Having well-defined roles and responsibilities helps ensure clarity, accountabil
 
 It's important to have a culture of continual improvement that focuses on efficient day-to-day operations for applications in the SDDC, such as maintaining SLAs, maintaining availability, having the capacity to minimize service disruptions, and having a smooth delivery. For example, the Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. Also, someone should be responsible for identifying underutilized or idle resources and right-sizing VMs to reduce unnecessary costs.
 
- A tagging strategy can be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool
+### Tagging Strategies and Best Practices 
+
+ A tagging strategy can be applied for chargeback and resource tracking. These tags are key-pair values defined at the resource level and can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool. Examples of tags include
+ - Environment: Identifying resources as "Production," "QA," or "Dev Test"
+ - Cost Center to track resource costs and expenses
+ - SLA: Prioritizing resources on their SLA requirements
+ - Lifecycle: Noting if the application is "Active," "Archived," or "Retired.
+ - Criticality: Labeling resources based on their business impact and significance
+
+These tagging considerations are general, and it's important that the tagging strategy used aids in effective resource categorization, resource lifecycle management, and reporting within AVS. 
 
 ### Recommendations 
-- Identify roles and responsibilities and assign owners based on least privilege (e.g., Network Engineer, Security, Application Owners/Developers, etc.)
-- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
 - Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.).
 
+ #### Assessment Questions
+ - Are there tags on the workloads services, and does the tagging strategy align with organizational needs?
 
 #### Assessment Questions
 - Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc) and mapped to roles based on least privilege?
@@ -90,9 +99,9 @@ It's essential to know how the workload in the SDDC is doing by monitoring metri
 - Are all the critical components identified, such as databases, network devices, and storage, amongst other relevant components?
 - Are the thresholds set appropriate?
 - Are the alerts specific and actionable?
-- Are the right people receive the alerts?
+- Are the right people receiving the alerts?
 - Is there a substantial amount of noise and false positives?
-- Are there adquate escalation procedures in place?
+- Are there adequate escalation procedures in place?
 
 Evaluating the processes and procedures to respond to critical alerts assists in making sure they are addressed promptly. 
 
@@ -111,6 +120,7 @@ Regularly reviewing the distribution list is essential to ensure its accuracy an
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
 - Leverage notification channels such as SMS, Email, and collaboration platforms such as teams to ensure alerts are delivered effectively
 - Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
+- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
 
 
 #### Assessment Questions
