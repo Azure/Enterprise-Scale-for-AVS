@@ -111,3 +111,18 @@ Have you identified common queries needed for troubleshooting and debugging?
  - Are application state dashboards (e.g., Granfana) created and published?
  - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
  - Are Log retention durations clearly defined?
+
+### Application Performance Monitoring and Alerting 
+
+### Recommendation
+
+- Discuss and establish baselines based on performance data
+- Use application performance monitoring (APM) tools to gain performance insights and the application code level.
+- Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
+- Integrate alerts with collaboration messaging tools such as Microsoft Teams
+
+
+#### Assessment Questions 
+ - Are thresholds defined for CPU, Memory, and disks?
+ - Is automation configured to alert responsible parties when thresholds are exceeded?
+ - Are notifications in place to alert the appropriate teams during an outage?
