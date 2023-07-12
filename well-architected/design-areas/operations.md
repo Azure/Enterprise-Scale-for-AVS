@@ -7,10 +7,14 @@ This section aims to establish the operational framework for the Azure VMware So
 
 It's essential to know how the workload in the SDDC is doing. Similar to how you would monitor things such as CPU usage, OS logs, and security alerts, to name a few, these same elements are monitored in the SDDC. The critical difference is that it is possible now to leverage cloud-native plus existing VMware tools into your operating model. Tools include but are not limited to enabling VMware VROPs, installing Azure Monitor agents, and any third-party monitoring/reporting tool used today on-prem. For more information, see [application monitoring](/application-platform.md)
 
+
+
 ### Recommendation
 
-- Discuss and document thresholds for CPU, Memory, and disk I/O
-- 
+- Discuss and establish baselines based on performance data
+- Use application performance monitoring (APM) tools to gain performance insights and the application code level.
+- Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
+- Integrate alerts with collaboration messaging tools such as Microsoft Teams
 
 ## Assessment Questions 
  - Are thresholds defined for CPU, Memory, and disks?
@@ -25,7 +29,7 @@ It's essential to know how the workload in the SDDC is doing. Similar to how you
 
 Discuss and document acceptable thresholds. 
 
-Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.). The tagging strategy can then be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool
+
 
  A tool such as Azure Monitor or Grafana is used to visualize the application health model and encompass logs and metrics. Dashboards are tailored to a specific audience, such as developers, security, or networking teams. A tool such as Azure Monitor or Splunk is used for alerting.
 
@@ -69,7 +73,7 @@ In summary, organizations can reduce manual effort, minimize errors, and improve
 - Use Infrastructure as Code to deploy and provision infrastructure in a way that is repeatable, auditable, and consistent
 - Use Version Control Systems such as Azure DevOps or GIT to track changes, collaborate, and rollback code to previous versions as needed.
 - Leverage the blue-green concept by creating a staging environment that mirrors production and test before going live
-- Maintain the last good state of the application by using snapshots, cloning the disks, and having version controlled code. 
+- Maintain the last good state of the application by using snapshots, cloning the disks, and having version-controlled code. 
  
 
 #### Assessment Questions
@@ -78,13 +82,16 @@ In summary, organizations can reduce manual effort, minimize errors, and improve
 ## Defining Roles and Responsibilities for Efficient Operations
 #### Impact _Operational Excellence_
 
-Having well-defined roles and responsibilities helps ensure clarity, accountability, and effective management of a well-architected AVS workload. A defined set of standards and structured processes and knowing who will execute them leads to efficient operations, helping IT organizations align their technical offerings with business objectives and strategies. As the AVS environment grows and evoles, well-defined roles and responsibilities leads to easier task delegation, and the potential to scale the solution without disruption, resulting in a better experience for the applications users. 
+Having well-defined roles and responsibilities helps ensure clarity, accountability, and effective management of a well-architected AVS workload. A defined set of standards and structured processes and knowing who will execute them leads to efficient operations, helping IT organizations align their technical offerings with business objectives and strategies. As the AVS environment grows and evolves, well-defined roles and responsibilities lead to easier task delegation and the potential to scale the solution without disruption, resulting in a better experience for the applications users. 
 
 It's important to have a culture of continual improvement that focuses on efficient day-to-day operations for applications in the SDDC, such as maintaining SLAs, maintaining availability, having the capacity to minimize service disruptions, and having a smooth delivery. For example, the Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. Also, someone should be responsible for identifying underutilized or idle resources and right-sizing VMs to reduce unnecessary costs.
 
+ A tagging strategy can be applied for chargeback and resource tracking. These tags can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool
+
 ### Recommendations 
 - Identify roles and responsibilities and assign owners based on least privilege (e.g., Network Engineer, Security, Application Owners/Developers, etc.)
-- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management. 
+- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
+- Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.).
 
 
 #### Assessment Questions
