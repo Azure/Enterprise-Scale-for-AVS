@@ -1,6 +1,6 @@
 # Azure VMware Solution Well-Architected Framework: Operational Procedures
 
-The objective of this section is to establish the operational framework for the Azure VMware Solution, along with the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload. Each AVS workload should have SOPs to govern operations. Without SOPs, teams drift from management best practices, so we recommend a continuous cycle of assessment and health checks for your AVS workload.
+This section aims to establish the operational framework for the Azure VMware Solution, along with the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
 
 ## Management & Monitoring & Analytics
 #### Impact _Operational Excellence_
