@@ -123,12 +123,14 @@ An incident response team can effectively coordinate responses by maintaining a 
 
 Regularly reviewing the distribution list is essential to ensure its accuracy and alignment with current roles and responsibilities. This ensures that key stakeholders are promptly informed about significant events occurring in AVS.
 
+An IT Service Management (ITSM) solution can map events to tasks. For example, you can use Azure DevOps for managing ITSM tasks, Azure Automation for automating IT processes, Azure Logic Apps for building workflows to have a customized solution for problem management in AVS.  
+
 ### Recommendations
 - Define the appropriate recipients for AVS Alerts and Incidents
 - Clearly define escalation contacts that should be reachable and authorized to make decisions or escalate issues
 - Identify key business stakeholders or representatives to ensure visibility into any potential impact and to provide guidance
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
-- Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
+- Integrate alerts with an IT Service Management (ITSM) like Azure DevOps, JIRA, or ServiceNow
 
 
 
