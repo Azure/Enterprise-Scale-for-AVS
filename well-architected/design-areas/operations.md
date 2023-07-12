@@ -6,9 +6,15 @@ This section aims to establish the operational framework for the Azure VMware So
 ### Application Performance Monitoring and Alerting 
 #### Impact _Operational Excellence_
 
-It's essential to know how the workload in the SDDC is doing. Similar to how you would monitor things such as CPU usage, OS logs, and security alerts, to name a few, these same elements are monitored in the SDDC. The critical difference is that it is possible now to leverage cloud-native plus existing VMware tools into your operating model. Tools include but are not limited to enabling VMware VROPs, installing Azure Monitor agents, and any third-party monitoring/reporting tool used today on-prem. For more information, see [application monitoring](/application-platform.md)
+It's essential to know how the workload in the SDDC is doing by monitoring metrics such as CPU usage, OS logs, and security alerts in the SDDC. However, several key operational aspects must be evaluated to ensure the alerting system's effectiveness. 
+- Are all the critical components identified such as databases,network devices, and storage amongst other relevant components?
+- Are the thresholds set appropriate?
+- Are the alerts specific and actionable?
+- Are the right people receive the alerts?
+- Is there a substantial amount of noise and false positives?
+- Are there adquate escalation procedures in place?
 
-
+Evaluating the the processes and procedures to respond to critical alerts assists in making sure they are addressed in a timely manner. 
 
 ### Recommendation
 
