@@ -111,7 +111,7 @@ Regularly reviewing the distribution list is essential to ensure its accuracy an
 - Identify key business stakeholders or representatives to ensure visibility into any potential impact and to provide guidance
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
 - Leverage notification channels such as SMS, Email, and collaboration platforms such as teams to ensure alerts are delivered effectively
-- Have a mechanism to ensure key stakeholders are notified about significant events to minimize alert fatigue. 
+
 #### Assessment Questions
 
 - Is a Service Management framework (e.g., ITIL/ISO) in place?
@@ -123,7 +123,8 @@ Consider consolidating alerts to reduce the number of individual notifications. 
 ### Recommendations 
 - Prioritize alerts based on their impact on operations or the criticality of the affected systems. Fine-tune alerts to trigger only meaningful events
 - Define relevant alert criteria such as thresholds, severity levels, or specific conditions
-- Use methods for reducing the number of individual notifications to reduce noise and effectively manage alerts. 
+- Use methods for reducing the number of individual notifications to reduce noise and effectively manage alerts.
+- Have a mechanism to ensure key stakeholders are notified about significant events to minimize alert fatigue. 
   
 #### Assessment Questions
 - Are severity thresholds clearly defined?
