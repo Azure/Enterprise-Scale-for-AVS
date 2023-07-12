@@ -88,7 +88,13 @@ The diagram shows how all Azure native resources in Virtual Network1 and Virtual
 
 ### Internet connectivity
 
-This section will focus only on how internet connectivity will be provided for Azure native resources in Virtual Networks and Azure VMWare Solution Private Clouds in both regions.
+This section will focus only on how internet connectivity will be provided for Azure native resources in Virtual Networks and Azure VMWare Solution Private Clouds in both regions. There are several options to provide internet connectivity to Azure VMWare Solution. - see https://learn.microsoft.com/azure/azure-vmware/concepts-design-public-internet-access
+
+Option 1: Internet Service hosted in Azure  
+Option 2: VMWare Solution Managed SNAT  
+Option 3: Azure Public IPv4 address to NSX-T Data Center Edge  
+
+Although you can use all three options with Dual Region Secure Virtual WAN with Routing Intent,  "Option 1: Internet Service hosted in Azure" is the best option when using Secure Virtual WAN with Routing Intent and is the option that is used to provide internet connectivity in the scenario.  
 
 As mentioned earlier, when you enable Routing Intent on the Secure Hub, it will advertise RFC 1918 to all peered Virtual Networks. However, you also have the option to advertise a default route 0.0.0.0/0 to provide internet connectivity for downstream resources. The blue default route originated in Hub1 with a next hop of HubFw1 and the red default route originated in Hub2 with a next hop of HubFw2.
 
