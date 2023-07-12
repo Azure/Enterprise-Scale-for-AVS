@@ -22,7 +22,6 @@ It's essential to know how the workload in the SDDC is doing. Similar to how you
  - Are notifications in place to alert the appropriate teams during an outage?
  - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
  - Are Log retention durations clearly defined?
- - Are alerts set to trigger only when thresholds defined are exceeded?
  - Are application state dashboards (e.g., Granfana) created and published?
 
 ### Recommendation
