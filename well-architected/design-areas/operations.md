@@ -3,6 +3,7 @@
 This section aims to establish the operational framework for the Azure VMware Solution, along with the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
 
 ## Management & Monitoring & Analytics
+### Application Performance Monitoring and Alerting 
 #### Impact _Operational Excellence_
 
 It's essential to know how the workload in the SDDC is doing. Similar to how you would monitor things such as CPU usage, OS logs, and security alerts, to name a few, these same elements are monitored in the SDDC. The critical difference is that it is possible now to leverage cloud-native plus existing VMware tools into your operating model. Tools include but are not limited to enabling VMware VROPs, installing Azure Monitor agents, and any third-party monitoring/reporting tool used today on-prem. For more information, see [application monitoring](/application-platform.md)
@@ -96,6 +97,13 @@ It's important to have a culture of continual improvement that focuses on effici
 #### Assessment Questions
 - Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc) and mapped to roles based on least privilege?
 
+### Establishing Incident Response Teams 
+
+Prior to an incident or outage, it is crucial to establish a well-defined notification process to ensure timely communication. Identifying the relevant personnel responsible for resolution is vital. A dedicated remediation team comprising operations, application owners, and DevOps experts, who possess the necessary expertise to resolve issues, can be formed. The operations team must be aware of the appropriate individuals to involve in triaging the problem.
+
+An incident response team can effectively coordinate responses by maintaining a comprehensive distribution list. This list should include key stakeholders from business-critical departments and designated escalation contacts. Business stakeholders need to be informed of any potential impact on operations resulting from the incident. The assigned escalation contacts should be individuals capable of making decisions or escalating issues to higher levels for guidance.
+
+Regular review of the distribution list is essential to ensure its accuracy and alignment with current roles and responsibilities. This ensures that key stakeholders are promptly informed about significant events occurring in AVS
 - Is a Service Management framework (e.g., ITIL/ISO) in place?
 
 
