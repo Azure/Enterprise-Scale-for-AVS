@@ -1,6 +1,6 @@
 # Azure VMware Solution Well-Architected Framework: Operational Procedures
 
-This section aims to establish the operational framework for the Azure VMware Solution, along with the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
+This section aims to establish the Azure VMware Solution's operational framework and the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
 
 ## Management & Monitoring & Analytics
 ### Application Performance Monitoring and Alerting 
@@ -18,7 +18,8 @@ This section aims to establish the operational framework for the Azure VMware So
 
 ### Data and Application Visualization
 
-Application Dashboards are a way to visualize and monitor an application's performance, health, and other metrics. They provide insights into how code and infrastructure changes impact application behavior and help customer support teams to understand the impact of change, performance, and availability issues on an application. Executive leadership and business stakeholders may also benefit from these products to track performance indicators to make informed decisions to align the applications performance with business objectives. 
+Application Dashboards are a way to visualize and monitor an application's performance, health, and other metrics. They provide insights into how code and infrastructure changes impact application behavior and help customer support teams to understand the impact of change, performance, and availability issues on an application. Executive leadership and business stakeholders may also benefit from these products to track performance indicators to make informed decisions to align the application's performance with business objectives. By granting the appropriate stakeholders access to application dashboards, you promote transparency, encourage collaboration, and cultivate a shared comprehension of the application's performance. This enables informed decision-making and facilitates prompt issue resolution.
+
 
 ### Recommendations
 - Build an application dashboard with Azure Application Insights or Grafana and connect it to relevant data sources that store metrics from the AVS environment
@@ -27,8 +28,7 @@ Application Dashboards are a way to visualize and monitor an application's perfo
 - Conduct periodic access reviews to ensure user access is up to date and aligned with current roles and responsibilities
 
 
-
-By granting the appropriate stakeholders access to application dashboards, you promote transparency, encourage collaboration, and cultivate a shared comprehension of the application's performance. This enables informed decision-making and facilitates prompt issue resolution.
+#### Assessment Questions
 
 - Are application state dashboards (e.g., Granfana) created and published?
 
