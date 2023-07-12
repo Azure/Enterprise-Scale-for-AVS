@@ -80,14 +80,17 @@ It's important to have a culture of continual improvement that focuses on effici
  - Lifecycle: Noting if the application is "Active," "Archived," or "Retired.
  - Criticality: Labeling resources based on their business impact and significance
 
+As part of your governance and compliance strategy, a group should be responsible for identifying resources without tags. Combining automation, auditing, and processes will help identify and remediate resources without proper tagging compliance. 
+
 These tagging considerations are general, and it's important that the tagging strategy used aids in effective resource categorization, resource lifecycle management, and reporting within AVS. 
 
 ### Recommendations 
 - Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.).
 - Use infrastructure as code to maintain and apply tags programmatically when provisioning
 - Use tags that align with the organizations' compliance and governance initiatives, such as SLA, Chargeback, and lifecycle management
-- 
- 
+- Have processes in place to identify and remedy resources that do not adhere to the tagging requirments 
+
+  
  #### Assessment Questions
  - Are there tags on the workloads services, and does the tagging strategy align with organizational needs?
   
