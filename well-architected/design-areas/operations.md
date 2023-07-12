@@ -140,7 +140,6 @@ Consider consolidating alerts to reduce the number of individual notifications. 
 - Leverage notification channels such as SMS, Email, Push Notifications and collaboration platforms such as teams to ensure alerts are delivered effectively 
   
 #### Assessment Questions
-- Are severity thresholds clearly defined?
 - Are alerts aggregated to focus on meaningful, actional, and critical issues?
 
 
