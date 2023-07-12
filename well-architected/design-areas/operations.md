@@ -42,11 +42,11 @@ IT teams continuously look to optimize the deployment, management, and maintenan
 ## Achieve Faster Time-To-Market with DevOps
 #### Impact _Operational Excellence_
 
-Organizations benefit from improved collaboration and software quality by adopting DevOps practices. For example, automation can expedite the deployment and maintenance of applications. Infrastructure as Code (IaC) can create several resources in AVS, such as the entire SDDC or individual components like clusters, network appliances, storage, and more. Using tools such as Azure Resource Manager, Bicep, Terraform, Azure CLI, or Powershell will automate the provisioning and configuration of resources in AVS. The outputs returned from deploying IaC can serve as documentation to help maintain and provide additional visibility in the state and configuration of provisioned resources. 
+Organizations benefit from improved collaboration and software quality by adopting DevOps practices. For example, automation can expedite the deployment and maintenance of applications. Infrastructure, as Code (IaC) can create several resources in AVS, such as the entire SDDC or individual components like clusters, network appliances, storage, etc. Using tools such as Azure Resource Manager, Bicep, Terraform, Azure CLI, or Powershell, will automate the provisioning and configuration of resources in AVS. The outputs returned from deploying IaC can serve as documentation to help maintain and provide additional visibility in the state and configuration of provisioned resources. 
 
 Managing the code with a version control system allows versioning to track and roll back changes as needed.  
 
-Suppose there is a need to update application code across servers, methods such as blue-green deployments aid in managing the lifecycle of an application from development to production. Blue-green deployments can help customers to have a consistent web experience when updates and patches are being performed by distributing traffic only to healthy servers during maintenance using weighted algorithms. AVS does not have the same methods for achieving Blue-Green as a cloud-native application would, but it is still achievable. Before making changes to the application configuration, take snapshots of the environment and use version control to ensure you return to the last known good state.  Consider creating a staging environment that mirrors production and deploys updates there before going live. From there, perform rolling updates to a subset of servers and test the application. 
+Suppose there is a need to update application code across servers, methods such as blue-green deployments aid in managing the lifecycle of an application from development to production. Blue-green deployments can help customers to have a consistent web experience when updates and patches are being performed by distributing traffic only to healthy servers during maintenance using weighted algorithms. AVS does not have the same methods for achieving Blue-Green as a cloud-native application would, but it is still achievable. Before making changes to the application configuration, take snapshots of the environment and use version control to ensure you return to the last known good state.  Consider creating a staging environment that mirrors production and deploys updates before going live. From there, perform rolling updates to a subset of servers and test the application. 
 
 In summary, organizations can reduce manual effort, minimize errors, and improve resource utilization by automating routine tasks like provisioning, scaling, and patching. DevOps methodologies are an important element of well-architected to streamline operations, save time, and allow teams to focus on value-added activities.
 
@@ -66,7 +66,15 @@ In summary, organizations can reduce manual effort, minimize errors, and improve
 
 Having well-defined roles and responsibilities helps ensure clarity, accountability, and effective management of a well-architected AVS workload. A defined set of standards and structured processes and knowing who will execute them leads to efficient operations, helping IT organizations align their technical offerings with business objectives and strategies. As the AVS environment grows and evolves, well-defined roles and responsibilities lead to easier task delegation and the potential to scale the solution without disruption, resulting in a better experience for the application's users. 
 
-It's important to have a culture of continual improvement that focuses on efficient day-to-day operations for applications in the SDDC, such as maintaining SLAs, maintaining availability, having the capacity to minimize service disruptions, and having a smooth delivery. For example, the Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. Also, someone should be responsible for identifying underutilized or idle resources and right-sizing VMs to reduce unnecessary costs.
+It's important to have a culture of continual improvement that focuses on efficient day-to-day operations for applications in the SDDC, such as maintaining SLAs, maintaining availability, having the capacity to minimize service disruptions, and having a smooth delivery. For example, the Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. For example, have individuals responsible for identifying underutilized or idle resources and having a process to right-size VMs to reduce unnecessary costs.
+
+Application teams and developers should define coding guidelines around code structure, exceptions, and error handling. There should also be methods for tracking changes, such as regular code reviews, API documentation, and regular code refactoring. When version control is used, enforce best practices such as branching, commit messages, and approval workflows. These practices can assist in consistent, easy-to-debug, and maintainable code. 
+
+### Recommendations
+- Establish a Cloud Center of Excellence (CCoE) to set standards and guidelines are compliance, security, application architecture, and operational processes
+- Have a Security and Compliance Team to focus on AVS-specific security policies, perform risks assessments, and ensure compliance with regulatory requirements
+- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
+-Define coding standards and implement security practices in the application development
 
 #### Assessment Questions
 - Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc.) and mapped to access controls based on least privilege?
@@ -88,7 +96,7 @@ These tagging considerations are general, and it's important that the tagging st
 - Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.).
 - Use infrastructure as code to maintain and apply tags programmatically when provisioning
 - Use tags that align with the organizations' compliance and governance initiatives, such as SLA, Chargeback, and lifecycle management
-- Have processes in place to identify and remedy resources that do not adhere to the tagging requirments 
+- Have processes in place to identify and remedy resources that do not adhere to the tagging requirements 
 
   
  #### Assessment Questions
@@ -118,12 +126,12 @@ An incident response team can effectively coordinate responses by maintaining a 
 Regularly reviewing the distribution list is essential to ensure its accuracy and alignment with current roles and responsibilities. This ensures that key stakeholders are promptly informed about significant events occurring in AVS.
 
 ### Recommendations
-- Define the appropriate recipients for AVS Alerts and Incidents:
+- Define the appropriate recipients for AVS Alerts and Incidents
 - Clearly define escalation contacts that should be reachable and authorized to make decisions or escalate issues
 - Identify key business stakeholders or representatives to ensure visibility into any potential impact and to provide guidance
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
 - Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
-- Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
+
 
 
 #### Assessment Questions
@@ -139,7 +147,7 @@ Consider consolidating alerts to reduce the number of individual notifications. 
 - Define relevant alert criteria such as thresholds, severity levels, or specific conditions
 - Use methods for reducing the number of individual notifications to reduce noise and effectively manage alerts.
 - Have a mechanism to ensure key stakeholders are notified about significant events to minimize alert fatigue.
-- Leverage notification channels such as SMS, Email, Push Notifications and collaboration platforms such as teams to ensure alerts are delivered effectively 
+- Leverage notification channels such as SMS, Email, Push Notifications, and collaboration platforms such as teams to ensure alerts are delivered effectively 
   
 #### Assessment Questions
 - Are alerts aggregated to focus on meaningful, actional, and critical issues?
