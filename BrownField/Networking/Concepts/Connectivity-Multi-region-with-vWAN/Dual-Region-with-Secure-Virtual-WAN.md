@@ -34,7 +34,7 @@ Each region has its own Azure VMWare Solution Private Cloud and an Azure Virtual
 **Pink Connections**: Azure VMWare Solution private cloud connection to its cross-regional hub.   
 **Orange Connection**: Azure VMWare Solution Region 1 Global Reach connection back to on-premise.   
 **Green Connection**: Azure VMWare Solution Region 2 Global Reach connection back to on-premise.   
-**Purple Connection**: Azure VMWare Solution Region 1 and Azure VMWare Solution Region 2 Global Reach connection back to each other's private cloud.   
+**Purple Connection**: Azure VMWare Solution Global Reach connection between the two private clouds' managed circuits.   
 **Black Connections**: On-premise connectivity via ExpressRoute to both regional hubs.  
 **Inter-Hub Connection**: When two hubs are deployed under the same Virtual WAN, they automatically form an inter-hub connection with one another. The purpose of the inter-hub is to transit cross-regional traffic between the two hubs.  
 
