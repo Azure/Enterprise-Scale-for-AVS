@@ -14,6 +14,7 @@ This section aims to establish the operational framework for the Azure VMware So
 - Use application performance monitoring (APM) tools to gain performance insights and the application code level.
 - Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
 - Integrate alerts with collaboration messaging tools such as Microsoft Teams
+- Are application state dashboards (e.g., Granfana) created and published?
 
 ## Assessment Questions 
  - Are thresholds defined for CPU, Memory, and disks?
@@ -21,7 +22,7 @@ This section aims to establish the operational framework for the Azure VMware So
  - Are notifications in place to alert the appropriate teams during an outage?
  - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
  - Are Log retention durations clearly defined?
- - Are application state dashboards (e.g., Granfana) created and published?
+
 
 ### Recommendation
 
