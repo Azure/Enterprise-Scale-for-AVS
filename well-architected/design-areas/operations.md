@@ -20,8 +20,7 @@ This section aims to establish the operational framework for the Azure VMware So
  - Are thresholds defined for CPU, Memory, and disks?
  - Is automation configured to alert responsible parties when thresholds are exceeded?
  - Are notifications in place to alert the appropriate teams during an outage?
- - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
- - Are Log retention durations clearly defined?
+
 
 
 ### Recommendation
