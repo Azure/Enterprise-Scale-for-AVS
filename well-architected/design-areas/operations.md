@@ -3,20 +3,14 @@
 This section aims to establish the Azure VMware Solution's operational framework and the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
 
 ## Management & Monitoring & Analytics
-### Application Performance Monitoring and Alerting 
-#### Impact _Operational Excellence_
 
 
 
-### Recommendation
 
-- Discuss and establish baselines based on performance data
-- Use application performance monitoring (APM) tools to gain performance insights and the application code level.
-- Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
-- Integrate alerts with collaboration messaging tools such as Microsoft Teams
 
 
 ### Data and Application Visualization
+#### Impact _Operational Excellence_
 
 Application Dashboards are a way to visualize and monitor an application's performance, health, and other metrics. They provide insights into how code and infrastructure changes impact application behavior and help customer support teams to understand the impact of change, performance, and availability issues on an application. Executive leadership and business stakeholders may also benefit from these products to track performance indicators to make informed decisions to align the application's performance with business objectives. By granting the appropriate stakeholders access to application dashboards, you promote transparency, encourage collaboration, and cultivate a shared comprehension of the application's performance. This enables informed decision-making and facilitates prompt issue resolution.
 
@@ -32,28 +26,17 @@ Application Dashboards are a way to visualize and monitor an application's perfo
 
 - Are application state dashboards (e.g., Granfana) created and published?
 
-## Assessment Questions 
- - Are thresholds defined for CPU, Memory, and disks?
- - Is automation configured to alert responsible parties when thresholds are exceeded?
- - Are notifications in place to alert the appropriate teams during an outage?
+
 
 
 
 ### Recommendation
 
-Discuss and document acceptable thresholds. 
 
 
-
- A tool such as Azure Monitor or Grafana is used to visualize the application health model and encompass logs and metrics. Dashboards are tailored to a specific audience, such as developers, security, or networking teams. A tool such as Azure Monitor or Splunk is used for alerting.
-
-Specific owners and processes are defined and documented  for each alert type. Consider prioritizing operational events based on business impact.
- Push notifications are used to inform responsible parties of alerts in real-time.
- Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
 
 #### Assessment Questions
- - Are there mappings between the application and platform layer (e.g., if you get a site down alert and there is an infra alert for high CPU)?
-- Is there monitoring for the application availability (e.g., up/down alerts)?
+ - Are there mappings between the application and platform layer (e.g., if you get a site down alert and there is an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
 
 ### Tracking Application Dependencies 
 #### Impact _Operational Excellence_
@@ -137,6 +120,8 @@ Regularly reviewing the distribution list is essential to ensure its accuracy an
 - Identify key business stakeholders or representatives to ensure visibility into any potential impact and to provide guidance
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
 - Leverage notification channels such as SMS, Email, and collaboration platforms such as teams to ensure alerts are delivered effectively
+- Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
+
 
 #### Assessment Questions
 
