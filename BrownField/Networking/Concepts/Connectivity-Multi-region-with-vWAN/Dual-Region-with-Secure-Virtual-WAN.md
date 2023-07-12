@@ -17,10 +17,10 @@ This article describes the best practices for connectivity, traffic flows, and h
 The document assumes readers have a basic understanding of Virtual WAN and Secure Virtual WAN with Routing Intent.
 
 **What is Azure Virtual WAN?**  
-[https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
+https://learn.microsoft.com/azure/virtual-wan/virtual-wan-about
 
 **How to configure Virtual WAN Hub routing intent and routing policies**  
-https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies
+https://learn.microsoft.com/azure/virtual-wan/how-to-routing-policies
 
 ## Dual-region with Secure Virtual WAN scenario  
 Secure Virtual WAN with Routing Intent provides the capability to send all Internet traffic and Private network traffic (RFC 1918) to a security solution like Azure Firewall, a third-party NVA, or SaaS. 
