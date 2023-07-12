@@ -74,7 +74,7 @@ Application teams and developers should define coding guidelines around code str
 - Establish a Cloud Center of Excellence (CCoE) to set standards and guidelines are compliance, security, application architecture, and operational processes
 - Have a Security and Compliance Team to focus on AVS-specific security policies, perform risks assessments, and ensure compliance with regulatory requirements
 - Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
--Define coding standards and implement security practices in the application development
+- Define coding standards and implement security practices in the application development
 
 #### Assessment Questions
 - Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc.) and mapped to access controls based on least privilege?
