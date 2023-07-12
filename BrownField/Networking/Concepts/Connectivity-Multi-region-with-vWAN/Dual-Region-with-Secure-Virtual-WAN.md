@@ -23,8 +23,7 @@ https://learn.microsoft.com/azure/virtual-wan/virtual-wan-about
 https://learn.microsoft.com/azure/virtual-wan/how-to-routing-policies
 
 ## Dual-region with Secure Virtual WAN scenario  
-Secure Virtual WAN with Routing Intent provides the capability to send all Internet traffic and Private network traffic (RFC 1918) to a security solution like Azure Firewall, a third-party NVA, or SaaS. 
-In the scenario, we have a network topology that spans two regions. There is one Virtual WAN with two Hubs, Hub1 and Hub2. Hub1 is in Region 1, and Hub2 is in Region 2.Each Hub in both regions has its instance of Azure Firewall deployed(Hub1Fw, Hub2Fw), essentially making them Secure Virtual WAN Hubs. Having Secure Virtual WAN hubs is a technical prerequisite to Routing Intent. Secure Virtual WAN Hub1 and Hub2 have Routing Intent enabled.  
+Secure Virtual WAN with Routing Intent is only supported with Virtual WAN Standard SKU. Secure Virtual WAN with Routing Intent provides the capability to send all Internet traffic and Private network traffic (RFC 1918) to a security solution like Azure Firewall, a third-party NVA, or SaaS. In the scenario, we have a network topology that spans two regions. There is one Virtual WAN with two Hubs, Hub1 and Hub2. Hub1 is in Region 1, and Hub2 is in Region 2.Each Hub in both regions has its instance of Azure Firewall deployed(Hub1Fw, Hub2Fw), essentially making them Secure Virtual WAN Hubs. Having Secure Virtual WAN hubs is a technical prerequisite to Routing Intent. Secure Virtual WAN Hub1 and Hub2 have Routing Intent enabled.  
 
 Each region has its own Azure VMWare Solution Private Cloud and an Azure Virtual Network. There is also an on-premise site connecting to both regions, which we will review in more detail later in this document.  
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/f02dfbde-e70b-4886-a986-e6029bdc4d30)
@@ -48,7 +47,7 @@ This section will focus on only the Azure VMWare Solution Cloud Region 1 and Azu
 
 Each Azure VMWare Solution Cloud Region connects back to on-premise via Global Reach. Azure VMWare Solution Cloud Region 1 Global Reach connection is shown in orange as "Global Reach (A)". Azure VMWare Solution Cloud Region 2 Global Reach connection is shown in green as "Global Reach (B)". Both Azure VMWare Solution private clouds are connected directly to each other via Global Reach shown in purple as Global Reach (C). Keep in mind that Global Reach traffic will never transit any hub firewalls. See traffic flow section below for more information.  
 
-The diagram also depicts how all routes in each Azure VMWare Solution Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1, and all red routes are from Region 2. 
+The diagram depicts how each Azure VMWare Solution Cloud will learn routes from their local and cross-regional hubs. All blue routes are from Region 1, and all red routes are from Region 2. 
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/e9659baf-ddc1-4e24-8a1b-1b3be5712cc3)
 
