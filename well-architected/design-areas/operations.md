@@ -138,7 +138,7 @@ An IT Service Management (ITSM) solution can map events to tasks. For example, A
 
 - Are practices and protocols in place to promptly address critical alerts and events?
  
-### Effective Manage alerts 
+### Efficiently Streamline Alert Handling 
 
 Consider consolidating alerts to reduce the number of individual notifications. For example, instead of alerting for every single machine low on space, consider consolidating them by hosts, resource groups,s or clusters. This can also be applied to host issues, CPU, and storage spikes. Also, you can streamline notifications and reduce noise by establishing alerts based on time windows. For example, if a host is alerting for a short time, you may want to suppress the alert based on defined time thresholds (e.g., only alert after 5mins). 
 
