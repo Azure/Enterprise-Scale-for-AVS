@@ -27,7 +27,8 @@ Secure Virtual WAN with Routing Intent provides the capability to send all Inter
 In the scenario, we have a network topology that spans two regions. There is one Virtual WAN with two Hubs, Hub1 and Hub2. Hub1 is in Region 1, and Hub2 is in Region 2.Each Hub in both regions has its instance of Azure Firewall deployed(Hub1Fw, Hub2Fw), essentially making them Secure Virtual WAN Hubs. Having Secure Virtual WAN hubs is a technical prerequisite to Routing Intent. Secure Virtual WAN Hub1 and Hub2 have Routing Intent enabled.  
 
 Each region has its own Azure VMWare Solution Private Cloud and an Azure Virtual Network. There is also an on-premise site connecting to both regions, which we will review in more detail later in this document.  
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/3ad9dfb8-9725-4b59-8096-14e6d1239ca0) 
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/f02dfbde-e70b-4886-a986-e6029bdc4d30)
+
 ### Understanding Topology Connectivity 
 **Brown Connections**: Azure VMWare Solution private cloud connection to its local regional hub.  
 **Pink Connections**: Azure VMWare Solution private cloud connection to its cross-regional hub.   
@@ -104,9 +105,7 @@ In conclusion, you will have Azure VMWare Solution Private Clouds using internet
 
 Another thing to keep note is with Routing Intent you have the option to disable advertising the default route over any ExpressRoute of your choosing. We recommend not to advertise the default route to your on-premise ExpressRoute connections. 
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/dc5f4618-7414-4413-abfe-9bcd1ca4bd80)
-
-
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/50c6541c-6f31-4560-bf09-f77de9ea280a)
 
 **Traffic Flow**
 | From |   To |  Primary Internet Route | Backup Internet Route
