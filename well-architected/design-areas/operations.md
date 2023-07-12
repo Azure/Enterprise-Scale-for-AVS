@@ -73,6 +73,9 @@ Having well-defined roles and responsibilities helps ensure clarity, accountabil
 
 It's important to have a culture of continual improvement that focuses on efficient day-to-day operations for applications in the SDDC, such as maintaining SLAs, maintaining availability, having the capacity to minimize service disruptions, and having a smooth delivery. For example, the Azure VMware solution makes it possible to expand the environment with minimal user input. If manually expanding the contract, it should be documented who will perform these activities and how to do it. AVS operators should ensure node reservation is available for growing the environment as needed. Also, someone should be responsible for identifying underutilized or idle resources and right-sizing VMs to reduce unnecessary costs.
 
+#### Assessment Questions
+- Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc) and mapped to roles based on least privilege?
+
 ### Tagging Strategies and Best Practices 
 
  A tagging strategy can be applied for chargeback and resource tracking. These tags are key-pair values defined at the resource level and can be applied during provisioning. Leveraging infrastructure as code can create, update, and destroy guest VM and work alongside a configuration management tool. Examples of tags include
@@ -90,8 +93,7 @@ These tagging considerations are general, and it's important that the tagging st
  #### Assessment Questions
  - Are there tags on the workloads services, and does the tagging strategy align with organizational needs?
 
-#### Assessment Questions
-- Are roles and responsibilities identified (e.g., Network Engineer, Security, Application Owners/Developers, etc) and mapped to roles based on least privilege?
+
 
 ## Incident Management
 
