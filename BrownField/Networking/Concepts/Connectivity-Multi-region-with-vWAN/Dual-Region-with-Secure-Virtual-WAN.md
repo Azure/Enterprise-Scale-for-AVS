@@ -61,7 +61,7 @@ The diagram depicts how each Azure VMWare Solution Cloud will learn routes from 
 
 This section will focus only on the on-premise site. As shown in the diagram below, the On-Premise site will have an ExpressRoute connection to both Region 1 and Region 2 hubs (black connections).
 
-On-Premise can communicate to Azure VMWare Solution Cloud Region 1 via orange connection "Global Reach (A)". On-Premise will also be able to communicate with Azure VMWare Solution Cloud Region 2 via green connection "Global Reach (B).
+On-Premise can communicate to Azure VMWare Solution Cloud Region 1 via orange connection "Global Reach (A)". On-Premise will also be able to communicate with Azure VMWare Solution Cloud Region 2 via green connection "Global Reach (B)".
 
 The diagram shows how On-Premise will learn routes from both regional hubs and both Azure VMWare Solution Private clouds. All blue routes are from Region 1, and all red routes are from Region 2. Black routes are on-premise routes and are advertised back to Azure.
 
@@ -76,7 +76,7 @@ The diagram shows how On-Premise will learn routes from both regional hubs and b
 
 This section will focus only on connectivity from an Azure Virtual Network perspective. As shown in the diagram below, both Virtual Network1 and Virtual Network2 will have a Virtual Network peering directly to its local regional hub. 
 
-The diagram shows how all Azure native resources in Virtual Network1 and Virtual Network2 will learn routes under their "Effective Routes". A Secure Hub with Routing Intent enabled will always send the default RFC 1918 addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to peered Virtual Networks. In our case, since Routing Intent is enabled, all resources within Virtual Network1 and Virtual Network2 will have the default RFC 1918 address with a next-hop of their local regional hub firewall. All traffic ingressing and egressing the Virtual Networks will always transit the Hub Firewalls. Please see the traffic flow below for more detailed information.
+The diagram shows how all Azure native resources in Virtual Network1 and Virtual Network2 will learn routes under their "Effective Routes". A Secure Hub with Routing Intent enabled will always send the default RFC 1918 addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to peered Virtual Networks, plus any additional prefixes that have been added as "Private Traffic Prefixes" - see https://learn.microsoft.com/azure/virtual-wan/how-to-routing-policies#azurefirewall. In our case, since Routing Intent is enabled, all resources within Virtual Network1 and Virtual Network2 will have the default RFC 1918 address with a next-hop of their local regional hub firewall. All traffic ingressing and egressing the Virtual Networks will always transit the Hub Firewalls. Please see the traffic flow below for more detailed information.
 
 ![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/c8c1fca3-2407-406a-a0e2-722a96a844c7)
 
