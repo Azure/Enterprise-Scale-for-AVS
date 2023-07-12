@@ -118,7 +118,6 @@ Regularly reviewing the distribution list is essential to ensure its accuracy an
 - Clearly define escalation contacts that should be reachable and authorized to make decisions or escalate issues
 - Identify key business stakeholders or representatives to ensure visibility into any potential impact and to provide guidance
 - Have a remediation team in place of administrators, infrastructure engineers, and personnel with the necessary expertise to address and resolve issues
-- Leverage notification channels such as SMS, Email, and collaboration platforms such as teams to ensure alerts are delivered effectively
 - Alerting is integrated with an IT Service Management (ITSM) system like ServiceNow.
 - Adopt a framework such as ITIL/ISO to map day-to-day operations, processes, and activities, faster knowledge transfers, continuous improvements, and change management.
 
@@ -135,7 +134,8 @@ Consider consolidating alerts to reduce the number of individual notifications. 
 - Prioritize alerts based on their impact on operations or the criticality of the affected systems. Fine-tune alerts to trigger only meaningful events
 - Define relevant alert criteria such as thresholds, severity levels, or specific conditions
 - Use methods for reducing the number of individual notifications to reduce noise and effectively manage alerts.
-- Have a mechanism to ensure key stakeholders are notified about significant events to minimize alert fatigue. 
+- Have a mechanism to ensure key stakeholders are notified about significant events to minimize alert fatigue.
+- Leverage notification channels such as SMS, Email, Push Notifications and collaboration platforms such as teams to ensure alerts are delivered effectively 
   
 #### Assessment Questions
 - Are severity thresholds clearly defined?
