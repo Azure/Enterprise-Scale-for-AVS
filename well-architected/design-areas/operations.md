@@ -4,11 +4,6 @@ This section aims to establish the Azure VMware Solution's operational framework
 
 ## Management, Monitoring & Analytics
 
-
-
-
-
-
 ### Data and Application Visualization
 #### Impact _Operational Excellence_
 
@@ -89,9 +84,13 @@ These tagging considerations are general, and it's important that the tagging st
 
 ### Recommendations 
 - Use Tags for resource management by identifying workloads and infrastructure based on an organizational taxonomy (e.g., host, business, owner, environment, etc.).
-
+- Use infrastructure as code to maintain and apply tags programmatically when provisioning
+- Use tags that align with the organizations' compliance and governance initiatives, such as SLA, Chargeback, and lifecycle management
+- 
+ 
  #### Assessment Questions
  - Are there tags on the workloads services, and does the tagging strategy align with organizational needs?
+  
 
 
 
