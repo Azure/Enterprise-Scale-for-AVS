@@ -2,7 +2,7 @@
 
 This section aims to establish the Azure VMware Solution's operational framework and the applications within the Software Defined Datacenter (SDDC). Standard operating procedures (SOPs) are documented processes for managing a workload, and each AVS workload should have SOPs to govern operations. A continuous cycle of assessment and health checks for your AVS workload utilizing the SOPs helps prevent drift from best practices and stay aligned with business objectives.
 
-## Management & Monitoring & Analytics
+## Management, Monitoring & Analytics
 
 
 
