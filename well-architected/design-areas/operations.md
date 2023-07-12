@@ -14,6 +14,22 @@ This section aims to establish the operational framework for the Azure VMware So
 - Use application performance monitoring (APM) tools to gain performance insights and the application code level.
 - Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
 - Integrate alerts with collaboration messaging tools such as Microsoft Teams
+
+
+### Data and Application Visualization
+
+Application Dashboards are a way to visualize and monitor an application's performance, health, and other metrics. They provide insights into how code and infrastructure changes impact application behavior and help customer support teams to understand the impact of change, performance, and availability issues on an application. Executive leadership and business stakeholders may also benefit from these products to track performance indicators to make informed decisions to align the applications performance with business objectives. 
+
+### Recommendations
+- Build an application dashboard with Azure Application Insights or Grafana and connect it to relevant data sources that store metrics from the AVS environment
+- Ensure the data source aligns with security and compliance requirements
+- Define access controls and permissions such as user authentication and RBAC so that each stakeholder has the appropriate access based on their role
+- Conduct periodic access reviews to ensure user access is up to date and aligned with current roles and responsibilities
+
+
+
+By granting the appropriate stakeholders access to application dashboards, you promote transparency, encourage collaboration, and cultivate a shared comprehension of the application's performance. This enables informed decision-making and facilitates prompt issue resolution.
+
 - Are application state dashboards (e.g., Granfana) created and published?
 
 ## Assessment Questions 
