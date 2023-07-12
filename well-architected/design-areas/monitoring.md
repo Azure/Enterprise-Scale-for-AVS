@@ -126,3 +126,12 @@ Have you identified common queries needed for troubleshooting and debugging?
  - Are thresholds defined for CPU, Memory, and disks?
  - Is automation configured to alert responsible parties when thresholds are exceeded?
  - Are notifications in place to alert the appropriate teams during an outage?
+
+
+### Recommendation
+
+
+
+
+#### Assessment Questions
+ - Are there mappings between the application and platform layer (e.g., if you get a site down alert and there is an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
