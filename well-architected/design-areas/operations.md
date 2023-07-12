@@ -25,19 +25,8 @@ Granting access to appropriate stakeholders to application dashboards promotes t
 
 #### Assessment Questions
 
-- Are application state dashboards (e.g., Granfana) created and published?
+- Are application state dashboards (e.g., Application Insights, Granfana) created and published?
 
-
-
-
-
-### Recommendation
-
-
-
-
-#### Assessment Questions
- - Are there mappings between the application and platform layer (e.g., if you get a site down alert and there is an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
 
 ### Tracking Application Dependencies 
 #### Impact _Operational Excellence_
