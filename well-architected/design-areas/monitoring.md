@@ -106,4 +106,8 @@ Have you created a single dashboard for all monitoring in a single pane?
 
 Have you identified common queries needed for troubleshooting and debugging? 
 
+### Logging
 
+ - Are application state dashboards (e.g., Granfana) created and published?
+ - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
+ - Are Log retention durations clearly defined?
