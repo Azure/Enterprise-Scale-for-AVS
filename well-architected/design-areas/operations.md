@@ -53,7 +53,7 @@ Managing the code with a version control system allows versioning to track and r
 
 Suppose there is a need to update application code across servers, methods such as blue-green deployments aid in managing the lifecycle of an application from development to production. Blue-green deployments can help customers to have a consistent web experience when updates and patches are being performed by distributing traffic only to healthy servers during maintenance using weighted algorithms. AVS does not have the same methods for achieving Blue-Green as a cloud-native application would, but it is still achievable. Before making changes to the application configuration, take snapshots of the environment and use version control to ensure you return to the last known good state.  Consider creating a staging environment that mirrors production and deploys updates there before going live. From there, perform rolling updates to a subset of servers and test the application. 
 
-In summary, organizations can reduce manual effort, minimize errors, and improve resource utilization by automating routine tasks like provisioning, scaling, and patching. This streamlines operations saves time, and allows teams to focus on value-added activities.
+In summary, organizations can reduce manual effort, minimize errors, and improve resource utilization by automating routine tasks like provisioning, scaling, and patching. DevOps methodologies are an important element of well-architected to streamline operations, save time, and allow teams to focus on value-added activities.
 
 ### Recommendations 
 
