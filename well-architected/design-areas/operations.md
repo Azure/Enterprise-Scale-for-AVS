@@ -40,9 +40,9 @@ IT teams continuously look to optimize the deployment, management, and maintenan
 - Use third-party tools (e.g., NewRelic, Datadog) to discover and map dependencies
 - Use custom scripts or third-party configuration management tools that track the automation and deployment of the dependencies 
 
-## Assessment Questions 
+#### Assessment Questions 
 
-- Are dependencies mappings available (e.g., flow chart, application diagram)?
+- Are dependency mappings available (e.g., flow chart, application diagram)?
 
 ## Achieve Faster Time-To-Market with DevOps
 #### Impact _Operational Excellence_
