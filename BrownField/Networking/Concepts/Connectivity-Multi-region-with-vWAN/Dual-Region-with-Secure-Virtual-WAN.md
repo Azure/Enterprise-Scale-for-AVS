@@ -26,8 +26,8 @@ https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies
 Secure Virtual WAN with Routing Intent provides the capability to send all Internet traffic and Private network traffic (RFC 1918) to a security solution like Azure Firewall, a third-party NVA, or SaaS. 
 In the scenario, we have a network topology that spans two regions. There is one Virtual WAN with two Hubs, Hub1 and Hub2. Hub1 is in Region 1, and Hub2 is in Region 2.Each Hub in both regions has its instance of Azure Firewall deployed(Hub1Fw, Hub2Fw), essentially making them Secure Virtual WAN Hubs. Having Secure Virtual WAN hubs is a technical prerequisite to Routing Intent. Secure Virtual WAN Hub1 and Hub2 have Routing Intent enabled.  
 
-Each region has its own Azure VMWare Solution Private Cloud and an Azure Virtual Network. There is also an on-premise site connecting to both regions, which we will review in more detail later in this document.
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-Azure VMWare Solution/assets/97964083/0d2d0b80-e550-4f69-a321-411658a066ab)
+Each region has its own Azure VMWare Solution Private Cloud and an Azure Virtual Network. There is also an on-premise site connecting to both regions, which we will review in more detail later in this document.  
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/3ad9dfb8-9725-4b59-8096-14e6d1239ca0) 
 ### Understanding Topology Connectivity 
 **Brown Connections**: Azure VMWare Solution private cloud connection to its local regional hub.  
 **Pink Connections**: Azure VMWare Solution private cloud connection to its cross-regional hub.   
@@ -49,7 +49,7 @@ Each Azure VMWare Solution Cloud Region connects back to on-premise via Global R
 
 The diagram also depicts how all routes in each Azure VMWare Solution Cloud region will learn routes from both the local and cross-regional hub. All blue routes are from Region 1, and all red routes are from Region 2. 
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-Azure VMWare Solution/assets/97964083/43d9ac83-d982-4cd1-8760-ff32b5dd6f76)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/e9659baf-ddc1-4e24-8a1b-1b3be5712cc3)
 
 **Traffic Flow**
 | From |   To |  Hub 1 Virtual Networks | On-Premise | Hub 2 Virtual Networks | Cross-Regional Azure VMWare Solution Private Cloud|
@@ -65,7 +65,7 @@ On-Premise can communicate to Azure VMWare Solution Cloud Region 1 via orange co
 
 The diagram shows how On-Premise will learn routes from both regional hubs and both Azure VMWare Solution Private clouds. All blue routes are from Region 1, and all red routes are from Region 2. Black routes are on-premise routes and are advertised back to Azure.
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-Azure VMWare Solution/assets/97964083/9ce15daf-f6a8-412a-8d5f-a01c68bd3df1)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/84ead324-399e-4c42-b99a-f553cc01929f)
 
 **Traffic Flow**
 | From |   To |  Hub 1 Virtual Networks | Hub 2 Virtual Networks | Azure VMWare Solution Region 1| Azure VMWare Solution Region 2| 
@@ -78,7 +78,7 @@ This section will focus only on connectivity from an Azure Virtual Network persp
 
 The diagram shows how all Azure native resources in Virtual Network1 and Virtual Network2 will learn routes under their "Effective Routes". A Secure Hub with Routing Intent enabled will always send the default RFC 1918 addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to peered Virtual Networks. In our case, since Routing Intent is enabled, all resources within Virtual Network1 and Virtual Network2 will have the default RFC 1918 address with a next-hop of their local regional hub firewall. All traffic ingressing and egressing the Virtual Networks will always transit the Hub Firewalls. Please see the traffic flow below for more detailed information.
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-Azure VMWare Solution/assets/97964083/5f153c7b-f683-44e7-b9ab-cebece766580)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/c8c1fca3-2407-406a-a0e2-722a96a844c7)
 
 **Traffic Flow**
 | From |   To |  On-Premise | Azure VMWare Solution Region 1 | Azure VMWare Solution Region 2| Cross-Region Virtual Network| 
@@ -104,7 +104,9 @@ In conclusion, you will have Azure VMWare Solution Private Clouds using internet
 
 Another thing to keep note is with Routing Intent you have the option to disable advertising the default route over any ExpressRoute of your choosing. We recommend not to advertise the default route to your on-premise ExpressRoute connections. 
 
-![image](https://github.com/jasonamedina/Enterprise-Scale-for-Azure VMWare Solution/assets/97964083/42be71ef-5416-41e7-8f8b-a0a177757ed8)
+![image](https://github.com/jasonamedina/Enterprise-Scale-for-AVS/assets/97964083/dc5f4618-7414-4413-abfe-9bcd1ca4bd80)
+
+
 
 **Traffic Flow**
 | From |   To |  Primary Internet Route | Backup Internet Route
