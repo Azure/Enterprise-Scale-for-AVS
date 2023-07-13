@@ -37,12 +37,12 @@ Archival of logs is a strategy for keeping your storage costs down. Azure Storag
 - Configure retention durations for sending logs to log term storage to reduce query time and save on storage costs. 
   
 #### Assessment question 
-- Do you have any centralized tool for logging with defined log retention durations? 
 
+Is there a defined approach for managing the lifecycle of logs, including specific retention durations?
 
 ### Monitoring the Guest Operating System
 
-Within the Guest Operating System are metrics around disk usage, application performance, system resource utilization, and user activity.  Consider using Azure Arc for Azure VMware Solution (Preview)
+Within the Guest Operating System are metrics around disk usage, application performance, system resource utilization, and user activity.  Consider using Azure Arc for Azure VMware Solution (Preview). For more information on, visit https://review.learn.microsoft.com/en-us/azure/azure-vmware/deploy-arc-for-azure-vmware-solution
 
 #### Recommendations
 
