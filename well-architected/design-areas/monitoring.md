@@ -74,7 +74,7 @@ Security monitoring is critical to detect and respond to anomalous activities. W
 
 ### Network Analysis
 
-Network monitoring inspects all the traffic coming into and going out of Azure VMware Solution private cloud. Network security with AVS operates and both the network and host layers. 
+Network monitoring inspects all the traffic coming into and going out of Azure VMware Solution private cloud. Network security with AVS operates at both the network and host layers. 
 
 
 ### Recommendations
