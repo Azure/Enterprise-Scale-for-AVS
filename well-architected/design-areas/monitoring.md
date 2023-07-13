@@ -22,7 +22,7 @@ vRealize Network Insight enables organizations to achieve comprehensive network 
 
 #### Assessment question 
 
-What tools do you use to monitor your Azure VMware Solution Private Cloud and clusters? 
+What tools are used to monitor your Azure VMware Solution Private Cloud and clusters? 
 
 ### Logging 
 
