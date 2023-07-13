@@ -138,6 +138,3 @@ Assessment question
 
 
 
-### Recommendation
-
-
