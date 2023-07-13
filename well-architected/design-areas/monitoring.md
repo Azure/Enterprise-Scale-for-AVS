@@ -7,13 +7,12 @@ Each option offers monitoring solutions with varying degrees of licensing costs,
 ## Collect infrastructure data 
 #### Impact: _Operational excellence_
 
-Monitoring the workload involves collecting data from various VMware components and Azure VMware Solution (AVS) infrastructure. Azure VMware Solution (AVS) is integrated with VMware Software-Defined Data Center (SDDC) that runs several VMware native components. vRealize is a suite of tools for managing various aspects of the infrastructure.  
+Monitoring the workload involves collecting data from various VMware components and Azure VMware Solution (AVS) infrastructure. Azure VMware Solution (AVS) is integrated with VMware Software-Defined Data Center (SDDC) that runs several VMware native components. vRealize Operations is a suite of tools for managing various aspects of the infrastructure, such as vRealize Network and vRealize Health.  
 
-vRealize Operations for Azure VMware Solution helps ensure that proactive issue detection and remediation are continually performed in the AVS environment, such as finding misconfiguration in the vSphere infrastructure or detecting performance bottlenecks. The solution also provides insight into resource utilization and overall environmental health performance.
+vRealize Health Status for Azure VMware Solution helps ensure proactive issue detection and remediation are continually performed in the AVS environment, such as finding misconfiguration in the vSphere infrastructure or detecting performance bottlenecks. The solution also provides insight into resource utilization and overall environmental health performance.
 
 vRealize Network Insight enables organizations to achieve comprehensive network visibility, streamline troubleshooting processes, and optimize network performance. 
 
-[vSphere Health Status](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-F957C1BB-A032-4648-9310-68A94733ABC8.html) 
 
 ### Recommendations 
 
