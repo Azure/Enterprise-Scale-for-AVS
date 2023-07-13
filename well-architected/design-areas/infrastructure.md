@@ -232,7 +232,17 @@ Has the workload been benchmarked and performance tested for metrics such as CPU
 * Use tools to benchmark the existing environment before migrating to Azure VMware Solution SDDC. [VMware vRealize Operations](/azure/azure-vmware/vrealize-operations-for-azure-vmware-solution), [Perfmon](/message-analyzer/perfmon-viewer), [iostat](https://linux.die.net/man/1/iostat) are some of the common utilities that can be used for establishing baseline performance.
 * Use [performance-based assessment](/azure/migrate/best-practices-assessment#sizing-criteria) when estimating Azure VMware Solution SDDC capacity.
 
+## Establish a security baseline
 
+The Microsoft cloud security benchmark provides recommendations on how you can secure your cloud solutions on Azure. This security baseline applies controls defined by Microsoft cloud security benchmark version 1.0 to Azure Policy.
+
+**Impact**: _Security_
+
+##### Recommendations
+
+Apply the recommendations given in the **security baseline** to protect your workload. 
+
+> [Azure security baseline for Azure VMware Solution](/security/benchmark/azure/baselines/azure-vmware-solution-security-baseline)
 ### Debugging and troubleshooting tools
 
 A systematic approach to identifying, troubleshooting, and fixing problems in the SDDC leads to faster resolution times. Operations teams must be able to define the problem or symptom the workload is experiencing, the scope of the issue, and the ability to collect information, including error messages, logs, and any specific conditions or actions that trigger the issue.
