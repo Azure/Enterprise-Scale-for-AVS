@@ -47,10 +47,9 @@ Within the Guest Operating System are metrics around disk usage, application per
 
 #### Recommendations
 
--
+- Enable guest management and install Azure extensions once the private cloud with [Azure ARC](https://learn.microsoft.com/en-us/azure/azure-vmware/deploy-arc-for-azure-vmware-solution).
 - install additional agents to collect data to enable guest management and monitoring on AVS guest VMs.  
 
-- There are third-party solutions available. Use Partner solutions for application performance monitoring. Such solutions enable operation teams to continue using the tool of their choice. 
 
 #### Assessment Question
  - Are there tools for alerting and remediating stale patches, OS versions, and software configurations? 
