@@ -24,6 +24,8 @@ Recovery time objective (RTO).
 - Document the business metrics in your strategy for backup and disaster recovery. 
 
 ## Choose a migration approach
+**Impact**: _Performance Efficiency, Cost Optimization_
+
 
 Common approaches for migrating or modernizing to the cloud are Rehost, Refactor, Rearchitect, and Rebuild. Each requires careful rationalization by evaluating the pros and cons. 
 Your workload might be better suited for IaaS or PaaS services. Those services might be more cost-effective and performant than migrating to Azure VMware Solution.
@@ -36,7 +38,6 @@ Infrastructure: Consider the cost of an Azure VMware Solution node against runni
 
 The application assessment results can help you understand where servers should be optimally placed.
 
-**Impact**: _Performance Efficiency, Cost Optimization_
 
 ##### Recommendations
 
