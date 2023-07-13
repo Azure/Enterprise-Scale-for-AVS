@@ -97,9 +97,9 @@ Configure alerts to notify the accountable teams when certain conditions are met
 
 - Use [vSphere events and alarms subsystem](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-9272E3B2-6A7F-427B-994C-B15FF8CADC25.html) for monitoring vSphere and setting up triggers. 
 
-- Configure [Azure Alerts in Azure VMware Solution](https://review.learn.microsoft.com/en-us/azure/azure-vmware/configure-alerts-for-azure-vmware-solution#supported-metrics-and-activities). Such alerts enable operation teams to respond to expected and unexpected events in real-time. 
+- Configure [Azure Alerts in Azure VMware Solution](https://review.learn.microsoft.com/en-us/azure/azure-vmware/configure-alerts-for-azure-vmware-solution#supported-metrics-and-activities) to respond to events in real-time. 
 
-- Ensure that alerts are configured so that [vSAN storage slack space](https://review.learn.microsoft.com/en-us/azure/azure-vmware/concepts-storage) is maintained at the levels mandated by the SLA agreement. 
+- Ensure that alerts are configured so that  [vSAN storage slack space](https://review.learn.microsoft.com/en-us/azure/azure-vmware/concepts-storage)  is maintained at the levels mandated by the SLA agreement. 
 
 - Configure Resource Health alerts to get the real-time health status of Azure VMware Solution SDDC. 
 
