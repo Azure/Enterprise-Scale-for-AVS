@@ -47,7 +47,7 @@ Within the Guest Operating System are metrics around disk usage, application per
 #### Recommendations
 
 - Enable guest management and install Azure extensions once the private cloud with Azure ARC
-- install additional agents to collect data to enable guest management and monitoring on AVS guest VMs.  
+- Install additional agents to collect data to enable guest management and monitoring on AVS guest VMs.  
 
 
 #### Assessment Question
