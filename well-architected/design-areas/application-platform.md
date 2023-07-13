@@ -102,7 +102,7 @@ The environment should be able to expand and contract based on load. Handle thos
 > [!NOTE]
 > ![GitHub logo](../_images/github.svg)For an example implementation, see [Auto-Scale function](https://github.com/Azure/azure-vmware-solution/tree/main/avs-autoscale).
 
-## Set affinity and anti-affinity policies
+## Set affinity and anti-affinity policies [MOVED TO INFRASTRUCTURE}
 **Impact**: _Performance Efficiency_
 
 An affinity rule specifies that the members of a selected virtual machine DRS group can or must run on the members of a specific host DRS group. An anti-affinity rule specifies that the members of a selected virtual machine DRS group cannot run on the members of a specific host DRS group.
