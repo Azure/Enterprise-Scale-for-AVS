@@ -35,7 +35,7 @@ Archival of logs is a strategy for keeping your storage costs down. Azure Storag
 
 - Collect **VMware Syslogs** to get health data from the VMware system components, such as ESXi, vSAN, NSX-T, and vCenter.
 - Configure [Azure Log Analytics](https://review.learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs) to collect those logs for querying, analyzing, and reporting capabilities.
-- Configure Azure Log Analytics to collect those logs for querying, analyzing, and reporting purposes.
+- Configure retention durations for sending logs to log term storage to reduce query time and save on storage costs. 
   
 #### Assessment question 
 - Do you have any centralized tool for logging with defined log retention durations? 
