@@ -46,7 +46,7 @@ High-traffic applications require optimal retrieval of content. Implementing opt
 
 
 ## Network Security
-The network is a crticial perimeter for controlling access, protecting data, and mitigating threats in the AVS environment. Robust network security measures ensure the availability and resiliency of the Azure VMware Solution workloads. 
+The network is a critical perimeter for controlling access, protecting data, and mitigating threats in the AVS environment. Robust network security measures ensure the availability and resiliency of the Azure VMware Solution workloads. 
 
 ### Internet Facing workloads 
 #### Impact: _Security_
