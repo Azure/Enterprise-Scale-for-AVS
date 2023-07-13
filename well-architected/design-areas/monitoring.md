@@ -11,7 +11,7 @@ Monitoring the workload involves collecting data from various VMware components 
 
 ### Recommendations 
 
-- Configure  vSphere Health Status to get a high-level overview of Azure VMware Solution SDDC's health status.
+- Configure  (vSphere Health Status)[https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-F957C1BB-A032-4648-9310-68A94733ABC8.html] to get a high-level overview of Azure VMware Solution SDDC's health status.
 - Use  vRealize Network Insight for enhanced visibility and analytics of Azure VMware Solution SDDC's network infrastructure.
 - Configure cost control for storing and managing costs associated with Azure Monitor.
 - For SQL Server, use the SQL Server assessment to support database monitoring on Azure VMware Solution SDDC. 
