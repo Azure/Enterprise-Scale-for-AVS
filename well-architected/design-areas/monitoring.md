@@ -95,7 +95,7 @@ Configure alerts to notify the accountable teams when certain conditions are met
 
 ### Recommendations 
 
-- Use (vSphere events and alarms subsystem)[https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-9272E3B2-6A7F-427B-994C-B15FF8CADC25.html] for monitoring vSphere and setting up triggers. 
+- Use [vSphere events and alarms subsystem](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.monitoring.doc/GUID-9272E3B2-6A7F-427B-994C-B15FF8CADC25.html) for monitoring vSphere and setting up triggers. 
 
 - Configure [Azure Alerts in Azure VMware Solution](https://review.learn.microsoft.com/en-us/azure/azure-vmware/configure-alerts-for-azure-vmware-solution#supported-metrics-and-activities). Such alerts enable operation teams to respond to expected and unexpected events in real-time. 
 
@@ -105,22 +105,34 @@ Configure alerts to notify the accountable teams when certain conditions are met
 
 Assessment question 
 
-- How do you obtain and utilize platform and workload data to create alerts? 
-- Are there mappings between the application and platform layer (e.g., if you get a site down alert and an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
-- Are thresholds defined for CPU, Memory, and disks?
-- Is automation configured to alert responsible parties when thresholds are exceeded?
-- Are notifications in place to alert the appropriate teams during an outage?
+- How are platform and workload data obtained and mapped to thresholds to create alerts? 
 
 
 ## Cost Management 
-#### Assessment Questions
+#### Impact: _Cost Optimization, Operational Excellence_
 
+Cost monitoring refers to the ability to keep track of costs associated with Azure VMware Solution private cloud.
+
+### Recommendations
+•	Use the vSphere events and alarms subsystem to monitor vSphere and set up triggers.
+•	Configure Azure Alerts in Azure VMware Solution. Such alerts enable operation teams to respond to expected and unexpected events in real time.
+
+
+#### Assessment Questions
 Are there Azure budgets and alerts on costs? 
 
 ### Troubleshooting and Debugging
 
+Efficient debugging and troubleshooting of the application necessitate logs, metrics, and associated information, such as event activities, to identify, analyze, and establish connections between events.
+
+### Recommendations
+
+•	Configure Azure VMware Solution syslog forwarding to Log Analytics. Configure it with all relevant logs, metrics, and diagnostic information.
+•	Configure Azure Arc-enabled Server agent on guest VMs running inside Azure VMware Solution private cloud.
+
 #### Assessment Questions
-Have you identified common queries needed for troubleshooting and debugging? 
+Have common queries for troubleshooting and debugging been identified and defined?
+
 
 ## Visualization 
 #### Impact: _Operational excellence_ 
@@ -146,7 +158,6 @@ For example, collecting logs to collect metrics, trace requests, and capture log
 - Use application performance monitoring (APM) tools to gain performance insights and the application code level.
 - Use a combination of monitoring techniques such as synthetic transactions, heartbeat monitoring, and endpoint monitoring
 - Integrate alerts with collaboration messaging tools such as Microsoft Teams
-
 
 #### Assessment Questions 
 
