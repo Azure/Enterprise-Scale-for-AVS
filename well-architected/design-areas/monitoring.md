@@ -114,8 +114,8 @@ Assessment question
 Cost monitoring refers to the ability to keep track of costs associated with Azure VMware Solution private cloud.
 
 ### Recommendations
-•	Use the vSphere events and alarms subsystem to monitor vSphere and set up triggers.
-•	Configure Azure Alerts in Azure VMware Solution. Such alerts enable operation teams to respond to expected and unexpected events in real time.
+- Use the vSphere events and alarms subsystem to monitor vSphere and set up triggers.
+- Configure Azure Alerts in Azure VMware Solution. Such alerts enable operation teams to respond to expected and unexpected events in real time.
 
 
 #### Assessment Questions
@@ -127,8 +127,8 @@ Efficient debugging and troubleshooting of the application necessitate logs, met
 
 ### Recommendations
 
-•	Configure Azure VMware Solution syslog forwarding to Log Analytics. Configure it with all relevant logs, metrics, and diagnostic information.
-•	Configure Azure Arc-enabled Server agent on guest VMs running inside Azure VMware Solution private cloud.
+- Configure Azure VMware Solution syslog forwarding to Log Analytics. Configure it with all relevant logs, metrics, and diagnostic information.
+- Configure Azure Arc-enabled Server agent on guest VMs running inside Azure VMware Solution private cloud.
 
 #### Assessment Questions
 Have common queries for troubleshooting and debugging been identified and defined?
