@@ -79,9 +79,9 @@ Network monitoring inspects all the traffic coming into and going out of Azure V
 
 ### Recommendations
 
-- Capture and monitor [Network Firewall](https://techcommunity.microsoft.com/t5/azure-migration-and/firewall-integration-in-azure-vmware-solution/ba-p/2254961) logs deployed in Azure VMware Solution SDDC or Azure.
+- Capture and monitor [Network Firewall](https://techcommunity.microsoft.com/t5/azure-migration-and/firewall-integration-in-azure-vmware-solution/ba-p/2254961) logs deployed in Azure VMware Solution SDDC or Azure where the application extends to Azure native devices such as Azure Firewall or Azure App Gateway.
 - Use [Azure Firewall Workbook](https://review.learn.microsoft.com/en-us/azure/firewall/firewall-workbook) or similar tools to monitor common metrics and logs related to firewall devices.
-- Correlate logs from multiple security vectors such as identity, networking and infrastructure.
+- Correlate logs from multiple security vectors such as identity, networking, and infrastructure.
 
 
 #### Assessment Questions
