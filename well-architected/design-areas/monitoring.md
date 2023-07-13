@@ -75,11 +75,17 @@ Security monitoring is critical to detect and respond to anomalous activities. W
 
 - How are you monitoring security-related events in Azure VMware Solution? 
 
-### Network Security
+### Network Anaylsis
+
+Network monitoring inspects all the traffic coming into and going out of Azure VMware Solution private cloud. Network security with AVS operates and both the network and host layers. 
+
 
 ### Recommendations
 
-- Use Azure Firewall Workbook or similar tools to monitor common metrics and logs related to firewall devices. 
+- Capture and monitor Network Firewall logs deployed in Azure VMware Solution SDDC or Azure.
+- Use Azure Monitor Workbook or similar tools to monitor common metrics and logs related to firewall devices.
+- Correlate logs from multiple security vectors such as identity, networking and infrastructure.
+
 
 #### Assessment Questions
 - How are you monitoring identity and networking events?
