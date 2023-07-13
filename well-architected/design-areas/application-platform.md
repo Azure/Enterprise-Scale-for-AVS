@@ -41,11 +41,11 @@ The application assessment results can help you understand where servers should 
 
 Your workload might be better suited for IaaS or PaaS services. Those services might be more cost-effective and performant than migrating to Azure VMware Solution.
 
-    The modernization approach or updating current apps and data to a cloud-first model, can meet your business needs at reduced costs. Evaluate the choices for application and at the Azure infrastructure level. 
+The modernization approach or updating current apps and data to a cloud-first model, can meet your business needs at reduced costs. Evaluate the choices for application and at the Azure infrastructure level. 
     
-    - **Application**: Choose modernization based on the purpose of the application, life expectancy, supportability, cost, and SLAs. 
+- **Application**: Choose modernization based on the purpose of the application, life expectancy, supportability, cost, and SLAs. 
 
-    - **Infrastructure**: Consider the cost of an Azure VMware Solution node against running applications in Azure native services. You can run as many workloads in Azure VMware Solution as you can fit in the static memory/storage/compute. However, porting applications to Azure native can be more cost-effective than instantiating another Azure VMware Solution node. 
+- **Infrastructure**: Consider the cost of an Azure VMware Solution node against running applications in Azure native services. You can run as many workloads in Azure VMware Solution as you can fit in the static memory/storage/compute. However, porting applications to Azure native can be more cost-effective than instantiating another Azure VMware Solution node. 
 
 
 ##### Recommendations
