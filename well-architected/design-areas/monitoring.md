@@ -24,7 +24,7 @@ vRealize Network Insight enables organizations to achieve comprehensive network 
 
 What tools are used to monitor your Azure VMware Solution Private Cloud and clusters? 
 
-### Logging 
+### Log Management and Archival Strategies
 
 You'll need logs collected by VMware Syslog to get health data from the VMware system components, such as ESXi, vSAN, NSX-T, vCenter, and others. These logs are available through Azure VMware Solution (AVS) infrastructure. Azure Log Analytics agent/extension sends guest VM-level logs to Azure Log Analytics. Within AVS, you can send the AVS logs to the Azure Native storage blob. Sending logs to a storage blob is possible by setting up forwarders from a centralized Syslog server or as a destination from Azure Monitor. It's also possible to use an Azure Native tool such as Azure Logic Apps or Azure Functions to create listeners for incoming logs from AVS and send them to the storage blobs as the destination. 
 
