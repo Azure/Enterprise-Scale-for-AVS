@@ -20,18 +20,27 @@ Azure provides Service Level Agreements (SLAs) for all its services. The composi
 - Define Service Level Agreements (SLAs) for the application and its key use cases.
 - Determine how much downtime is acceptable. Quantify that value as the 
 Recovery time objective (RTO). 
-- Determine the the maximum duration of data loss that's acceptable during outage. Quantify that value as the Recovery point objective (RPO).
+- Determine the maximum duration of data loss that's acceptable during an outage. Quantify that value as the Recovery point objective (RPO).
 - Document the business metrics in your strategy for backup and disaster recovery. 
 
 ## Choose a migration approach
 
-Common approaches for migrating or modernizing to the cloud are: Rehost, Refactor, Rearchitect, Rebuild. Each requires careful rationalization by evaluating the pros and cons. 
+Common approaches for migrating or modernizing to the cloud are Rehost, Refactor, Rearchitect, and Rebuild. Each requires careful rationalization by evaluating the pros and cons. 
+Your workload might be better suited for IaaS or PaaS services. Those services might be more cost-effective and performant than migrating to Azure VMware Solution.
+
+The modernization approach, or updating current apps and data to a cloud-first model, can meet your business needs at reduced costs. Evaluate the choices for application and at the Azure infrastructure level.
+
+Application: Choose modernization based on the purpose of the application, life expectancy, supportability, cost, and SLAs.
+
+Infrastructure: Consider the cost of an Azure VMware Solution node against running applications in Azure native services. You can run as many workloads in Azure VMware Solution as you can in the static memory/storage/compute. However, porting applications to Azure native can be more cost-effective than instantiating another Azure VMware Solution node.
+
+The application assessment results can help you understand where servers should be optimally placed.
 
 **Impact**: _Performance Efficiency, Cost Optimization_
 
 ##### Recommendations
 
-- **Use assessments** to get a complete picture of the impact to the application, infrastructure, and the adjustments needed in your business strategy. This exercise will help you  understand the workload, its dependencies, and system requirements. You will be better prepared for your migration wave planning.
+- **Use assessments** to get a complete picture of the impact on the application, infrastructure, and the adjustments needed in your business strategy. This exercise will help you  understand the workload, its dependencies, and system requirements. You will be better prepared for your migration wave planning.
 
     - [Strategic Migration Assessment and Readiness Tool (SMART)](/azure/cloud-adoption-framework/plan/smart-assessment)
     - [Tutorial: Assess VMware VMs for migration to Azure VMs](/azure/migrate/concepts-azure-vmware-solution-assessment-calculation)
