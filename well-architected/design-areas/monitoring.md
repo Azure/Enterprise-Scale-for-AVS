@@ -93,9 +93,11 @@ Configure alerts to notify the accountable teams when certain conditions are met
 
 Assessment question 
 
-How do you obtain and utilize platform and workload data to create alerts? 
-
-Are there mappings between the application and platform layer (e.g., if you get a site down alert and an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
+- How do you obtain and utilize platform and workload data to create alerts? 
+- Are there mappings between the application and platform layer (e.g., if you get a site down alert and an infra alert for high CPU), and do they map application availability (e.g., up/down alerts)?
+- Are thresholds defined for CPU, Memory, and disks?
+- Is automation configured to alert responsible parties when thresholds are exceeded?
+- Are notifications in place to alert the appropriate teams during an outage?
 
 
 ## Cost Management 
@@ -122,15 +124,6 @@ Assessment question
 - Have you created a single dashboard for all monitoring in a single pane?
 - Are application state dashboards (e.g., Granfana) created and published?
 
-
-
-
-### Logging
-
-
-
-
-
 ### Application Performance Monitoring and Alerting 
 
 ### Recommendation
@@ -142,15 +135,9 @@ Assessment question
 
 
 #### Assessment Questions 
- - Are thresholds defined for CPU, Memory, and disks?
- - Is automation configured to alert responsible parties when thresholds are exceeded?
- - Are notifications in place to alert the appropriate teams during an outage?
+
 
 
 ### Recommendation
 
-
-
-
-#### Assessment Questions
 
