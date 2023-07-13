@@ -8,10 +8,11 @@ This section aims to build the operating model for the Azure VMware Solution, an
 
 
 ## Align to business metrics
+**Impact**: _Reliability_
 
 Azure provides Service Level Agreements (SLAs) for all its services. The composite SLA of your workload should include [SLAs for Azure infrastructure]() and SLAs defined for the application.  
 
-**Impact**: _Reliability_
+
 
 
 ##### Recommendations
