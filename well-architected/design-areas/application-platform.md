@@ -62,9 +62,9 @@ The modernization approach or updating current apps and data to a cloud-first mo
 
     The application assessment results can help you understand where servers should be optimally placed.
 
-## Establish a security baseline
+## Establish a security baseline [MOVED TO INFRASTRUCTURE]
 
-The Microsoft cloud security benchmark provides recommendations on how you can secure your cloud solutions on Azure. This security baseline applies controls defined by Microsoft cloud security benchmark version 1.0 to Azure Policy.
+The Microsoft cloud security benchmark recommends securing your cloud solutions on Azure. This security baseline applies controls defined by Microsoft cloud security benchmark version 1.0 to Azure Policy.
 
 **Impact**: _Security_
 
