@@ -61,15 +61,15 @@ Security monitoring is critical to detect and respond to anomalous activities. W
 
 ### Recommendations 
 
-- Enable Azure Defender for Cloud on the Azure subscription for deploying Azure VMware Solution SDDC, ensuring the defender plan has "Cloud Workload Protection (CWP)" ON for Servers. 
+- Enable [Azure Defender for Cloud](https://review.learn.microsoft.com/en-us/azure/defender-for-cloud/get-started) on the Azure subscription for deploying Azure VMware Solution SDDC, ensuring the defender plan has "Cloud Workload Protection (CWP)" ON for Servers. 
 
 - Capture and monitor Network Firewall logs deployed in Azure VMware Solution SDDC or Azure for network security. 
 
-- Audit activities by privileged users on Azure VMware Solution SDDC. 
+- Audit activities by privileged users on Azure VMware Solution SDDC. For more information, see: https://review.learn.microsoft.com/en-us/azure/active-directory/privileged-identity-management/groups-audit 
 
-- Integrate Sentinel with Defender for Cloud  and Enable its data collector for security events and connect it with Microsoft Defender for Cloud. For more information, see these articles: 
+  - Integrate Sentinel with Defender for Cloud  and Enable its data collector for security events and connect it with Microsoft Defender for Cloud. For more information, see these articles: 
 
-- Use security monitoring solutions from pre-validated partners in Azure VMware Solution SDDC. 
+  - Use security monitoring solutions from pre-validated partners in Azure VMware Solution SDDC. 
 
 ### Assessment question 
 
@@ -122,18 +122,20 @@ Have you identified common queries needed for troubleshooting and debugging?
 ## Visualization 
 #### Impact: _Operational excellence_ 
 
-Visually representing the monitoring reports in dashboards helps drive effective operations. This will help the operations team to do root-cause analysis and troubleshooting quickly. Operation teams can use such a dashboard for a simplified view of all key resources that make up Azure VMware Solution in a single pane. 
+Visually representing the monitoring reports in dashboards helps drive effective operations to do root-cause analysis and troubleshooting quickly. Operation teams can use such a dashboard for a simplified view of all key resources that make up Azure VMware Solution in a single pane. 
 
 ### Recommendations
 - Configure the Monitoring dashboard. 
 - Create Azure Workbook as a central repository for commonly executed queries, metrics, and interactive reports. 
 
-Assessment question 
+#### Assessment question 
 
-- Have you created a single dashboard for all monitoring in a single pane?
-- Are application state dashboards (e.g., Granfana) created and published?
+-Have you created a single dashboard for all monitoring in a single pane? 
 
 ### Application Performance Monitoring and Alerting 
+
+Workloads running in Azure VMware Solution private cloud need effective performance monitoring and alerting to respond to any change in their performance baseline. 
+For example, collecting logs to collect metrics, trace requests, and capture logs for both the application and infrastructure layer. This mechanism for workloads running in Azure VMware Solution private cloud aids in creating proactive performance monitoring and alerting to respond to any change in their performance baseline. 
 
 ### Recommendation
 
@@ -145,5 +147,5 @@ Assessment question
 
 #### Assessment Questions 
 
-
+- What tools are in place for monitoring the health of the application?
 
