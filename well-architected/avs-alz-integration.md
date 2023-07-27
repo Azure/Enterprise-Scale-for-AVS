@@ -48,7 +48,7 @@ Both application and platform teams have roles in backup and disaster recovery. 
 
 #### Platform Backup and Disaster Recovery Responsibilities
 - **Infrastructure Backups:** Implement backups for AVS components, virtual machines, and core infrastructure
-- **Configuration VM Image backups:** - quickly recover infrastructure from formats such as VMDK's in the event of a failure
+- **Configuration of VM Image backups:** - quickly recover infrastructure from formats such as VMDK's in the event of a failure
 - **Disaster Recovery planning:** Define mechanisms for site failover, data replication, and maintaining RPO/RTO for the AVS infrastructure 
 
 #### Application Backup and Disaster Recovery Responsibilities
