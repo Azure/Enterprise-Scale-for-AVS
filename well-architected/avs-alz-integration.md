@@ -11,9 +11,11 @@ Key Benefits include
 - **Adaptability and flexibility** enabling the AVS environment to accommodate future growth
 
 ## Difference between CAF and WAF
-The difference between Cloud Adoption and Well-architected frameworks is the scope. CAF focuses on best practices and methodologies for adopting cloud services from the lens of the cloud footprint's business, people, governance, management, and security. 
+The difference between Cloud Adoption and Well-architected frameworks is the scope. CAF focuses on best practices and methodologies for adopting cloud services from the lens of the cloud footprint's entire portfolio including the business, people, governance, management, and security. 
 
 Well-architected focuses on efficiently managing the workloads and their assets in a secure, high-performing, and resilient way. 
+
+![figure1](images/caf-waf.png) 
 
 
 ## What is an Azure Landing Zone 
