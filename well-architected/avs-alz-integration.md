@@ -20,21 +20,23 @@ Well-architected focuses on efficiently managing the workloads and their assets 
 
 ## What is an Azure Landing Zone 
 
-Before a workload can land in AVS, a foundation must be established. While an AVS environment can be deployed independently of an Azure Landing Zone, there are many instances where AVS will either integrate into one existing landing zone or with a newly built one that supports workloads in  cloud. 
+Before a workload can land in AVS, a foundation must be established. While an AVS environment can be deployed independently of an Azure Landing Zone, there are many instances where AVS will either integrate into one existing landing zone or with a newly built one that supports workloads in  the cloud. 
 
 An Azure Landing Zone can significantly improve  standardized, consistent approaches to managing workloads, networking, security, and governance across the entire cloud platform. 
 
 **IMPORTANT** - AVS has specific considerations and requirements, especially around integration with Azure services. Both the AVS Landing Zone Accelerator and the Well-architected Guidance for AVS aim to highlight the necessary customizations
 while still incorporating CAF perspectives for a holistic approach to cloud readiness. 
 
+![figure1](images/azure-vmware-eslz-architecture.png) 
+
 ## Platform Responsibilities 
 
-The AVS platform team is responsible for ensuring the infrastructure is ready for application teams to build. Some common tasks include
+The AVS platform team ensures the infrastructure is ready for application teams to build. Some common tasks include:
 
-- Requesting Capacity: A platform team must ensure the AVS SDDC activation has taken place, specifying the regions, nodes, and network settings.  From there, the platform team allocates compute, resource pools, vSan storage, and clustering.
-- RPO/RTO: Make sure there is a strategy and infrastructure in place to meet SLAs
-- Ensure secure access to on-prem, Azure, and the internet. This includes routing, firewall entries, and managing centralized network appliances
-- Azure Integrations such as DNS, Backup, Monitoring and Log Analytics, Azure AD, and Key Vaults 
+- **Requesting Capacity** ensuring the AVS SDDC activation has occurred, specifying the regions, nodes, and network settings.  From there, the platform team allocates compute, resource pools, vSan storage, and clustering.
+- **Design to meet RPO/RTO** strategizing and building infrastructure to meet SLAs.
+- **Secure and Optimize Connectivity** to on-prem, Azure, and the internet. This includes routing, firewall entries, and managing centralized network appliances.
+- **Manage Azure Integrations** such as DNS, Backup, Monitoring and Log Analytics, Azure AD, and Key Vaults 
 
 ## Shared Responsibilities 
 While an application and Platform Landing Zone team have distinct responsibilities, both often will work closely to ensure the availability and recoverability, coordinating to align for the overall success of the workloads running in AVS, 
@@ -44,6 +46,35 @@ While an application and Platform Landing Zone team have distinct responsibiliti
 
 ### DNS 
 
+The DNS configuration in AVS involves mapping hostnames to IP addresses for establishing connectivity between virtual machines and services within  AVS and the broader network. DNS responsibilities may be divided by
+
+Platform DNS Responsibilities
+- Spinning up virtual machines as domain controllers
+- Creating Private DNS zones
+- Domain Name Management
+- Reverse DNS Lookup configuration 
+
+Application DNS Responsibilities
+- Hostname configuration
+- Application Time-To-Live (TTL) Management
+- Internal DNS Resolution
+- DNS monitoring to receive up-down alerts affecting the application
+
 ### Key Management 
+
+There are distinct differences between the application and platform team's key and password management responsibilities to ensure the security and access control of the applications running in AVS.
+
+#### **Platform Key and Password Management**
+- Infrastructure Key Management: Management of encryption key and infrastructure level data such as encrypted disks and virtual machine templates
+- Infrastructure Credentials: Manage AVS administrative credentials for AVS components like vCenter and ESXi hosts
+- Platform Access Control: Define user roles and permissions in the AVS environment
+- Setting up Key Vault: Create the instance, configure policies to protect the vault, manage infrastructure and platform secrets, and manage encryption/decryption operations
+
+#### **Application Key and Password Management**
+- Manage application-specific credentials and keys such as for accessing APIs, databases, and secrets
+- Implement regular password rotation and credential expiry policies to prevent unauthorized access
+- Ensure application credentials are stored securely and not hardcoded in the app code or config files
+- Define access policies for key vaults specific to the application or services that require access to those secrets
+
 
 ## Next Steps 
