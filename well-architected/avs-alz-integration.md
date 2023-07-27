@@ -36,7 +36,7 @@ The AVS platform team ensures the infrastructure is ready for application teams 
 - **Requesting Capacity** ensuring the AVS SDDC activation has occurred, specifying the regions, nodes, and network settings.  From there, the platform team allocates compute, resource pools, vSan storage, and clustering.
 - **Design to meet RPO/RTO** strategizing and building infrastructure to meet SLAs.
 - **Secure and Optimize Connectivity** to on-prem, Azure, and the internet. This includes routing, firewall entries, and managing centralized network appliances.
-- **Manage Azure Integrations** such as DNS, Backup, Monitoring and Log Analytics, Azure AD, and Key Vaults 
+- **Manage Azure Integrations** such as DNS, Backup, Monitoring, Log Analytics, Azure AD, and Key Vaults 
 
 ## Shared Responsibilities 
 While an application and Platform Landing Zone team have distinct responsibilities, both often will work closely to ensure the availability and recoverability, coordinating to align for the overall success of the workloads running in AVS. 
