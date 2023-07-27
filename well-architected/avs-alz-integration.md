@@ -89,7 +89,7 @@ There are distinct differences between the application and platform team's key a
 - Define access policies for key vaults specific to the application or services that require access to those secrets
 
 ## Key Takeaways
-"Key Takeaways: This section covers a comprehensive overview of WAF & CAF principles, highlighting their individual strengths and scope. Combining these frameworks can lead to substantial enhancements in Azure cloud adoption. Implementing an Azure Landing Zone simplifies cloud management while adhering to best practices.
+This section covers a comprehensive overview of WAF & CAF principles, highlighting their individual strengths and scope. Combining these frameworks can lead to substantial enhancements in Azure cloud adoption. Implementing an Azure Landing Zone simplifies cloud management while adhering to best practices.
 
 Effective collaboration between platform and application teams is vital for successfully deploying cloud-based applications.
 
