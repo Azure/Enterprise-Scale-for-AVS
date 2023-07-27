@@ -85,6 +85,14 @@ This section covers a comprehensive overview of WAF & CAF principles, highlighti
 
 Effective collaboration between platform and application teams is vital for successfully deploying cloud-based applications.
 
+## Identity and Access Management (IAM)
+
+There are different aspects for managing Identity and Access Management to align and  integrate access controls between the AVS infrastructure and its applications. 
+
+#### Platform Identity and Access Management 
+
+#### Application Identity and Access Management 
+
 ## Next Steps 
 
 The design principles incorporated into our comprehensive guidance cover specific design domains. Each design domain offers focused guidance, enabling you to quickly access the information you need for enhanced productivity within minimal time. Consider the headings as your navigational tool, guiding you toward the relevant direction for networking, core infrastructure, the application platform, monitoring, and operational procedures.
