@@ -58,7 +58,7 @@ Both application and platform teams have roles in backup and disaster recovery. 
 
 ### DNS 
 
-The DNS configuration in AVS involves mapping hostnames to IP addresses for establishing connectivity between virtual machines and services within  AVS and the broader network. DNS responsibilities may be divided by
+The DNS configuration in AVS involves mapping hostnames to IP addresses for establishing connectivity between virtual machines and services within  AVS and the broader network. DNS responsibilities may be divided by:
 
 #### Platform DNS Responsibilities
 - Spinning up virtual machines as domain controllers
