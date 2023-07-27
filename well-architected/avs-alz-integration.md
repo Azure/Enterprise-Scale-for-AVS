@@ -1,4 +1,4 @@
-# Align Azure VMware Solution with the Cloud Adoption Framework 
+# Deploy a VMware workload in an Azure landing zone 
 A solid foundation should be established before a workload can land in the Azure VMware Solution. Aligning an AVS design with the Cloud Adoption Framework (CAF) provides a well-structured approach to adopting AVS with the broader Azure environment for 
 successful cloud adoption. 
 
