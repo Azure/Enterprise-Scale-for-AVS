@@ -90,3 +90,10 @@ There are distinct differences between the application and platform team's key a
 
 
 ## Next Steps 
+
+These design principles are incorporated into our comprehensive guidance across specific design domains. Each design domain offers focused guidance, enabling you to quickly access the information you need for enhanced productivity within minimal time. Consider the headings as your navigational tool, guiding you toward the relevant direction for networking, core infrastructure, the application platform, monitoring, and operational procedures.
+
+Let's first take a look at the infrastructure components.
+
+> [!div class="nextstepaction"]
+> [Infrastructure](./infrastructure.md)
