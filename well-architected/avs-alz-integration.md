@@ -39,22 +39,34 @@ The AVS platform team ensures the infrastructure is ready for application teams 
 - **Manage Azure Integrations** such as DNS, Backup, Monitoring and Log Analytics, Azure AD, and Key Vaults 
 
 ## Shared Responsibilities 
-While an application and Platform Landing Zone team have distinct responsibilities, both often will work closely to ensure the availability and recoverability, coordinating to align for the overall success of the workloads running in AVS, 
+While an application and Platform Landing Zone team have distinct responsibilities, both often will work closely to ensure the availability and recoverability, coordinating to align for the overall success of the workloads running in AVS. 
 
 
 ### Backup and Disaster Recovery
+
+Both application and platform teams have roles in backup and disaster recovery. The AVS platform team sets up infrastructure-level backups and replication for virtual machines and AVS components while the AVS application team is responsible for application-level backups and data recovery procedures. Depending on the organization, some operations will be shared responsibilities. Some examples below include:
+
+#### Platform Backup and Disaster Recovery Responsibilities
+- **Infrastructure Backups:** Implement backups for AVS components, virtual machines, and core infrastructure
+- **Configuration VM Image backups:** - quickly recover infrastructure from formats such as VMDK's in the event of a failure
+- **Disaster Recovery planning:** Define mechanisms for site failover, data replication, and maintaining RPO/RTO for the AVS infrastructure 
+
+#### Application Backup and Disaster Recovery Responsibilities
+- **Data backup:** application-specific data and databases to a storage location using an agent-based, VMware Compatible backup solution
+- **Application Configurations:** App configs, settings, and libraries that the app needs operate
+- **Data restore and Recovery:** Restoring application data from backup periodically, ensuring the application returns to a functional state in real-world scenarios
 
 ### DNS 
 
 The DNS configuration in AVS involves mapping hostnames to IP addresses for establishing connectivity between virtual machines and services within  AVS and the broader network. DNS responsibilities may be divided by
 
-Platform DNS Responsibilities
+#### Platform DNS Responsibilities
 - Spinning up virtual machines as domain controllers
 - Creating Private DNS zones
 - Domain Name Management
 - Reverse DNS Lookup configuration 
 
-Application DNS Responsibilities
+#### Application DNS Responsibilities
 - Hostname configuration
 - Application Time-To-Live (TTL) Management
 - Internal DNS Resolution
@@ -65,8 +77,8 @@ Application DNS Responsibilities
 There are distinct differences between the application and platform team's key and password management responsibilities to ensure the security and access control of the applications running in AVS.
 
 #### **Platform Key and Password Management**
-- Infrastructure Key Management: Management of encryption key and infrastructure level data such as encrypted disks and virtual machine templates
-- Infrastructure Credentials: Manage AVS administrative credentials for AVS components like vCenter and ESXi hosts
+- **Infrastructure Key Management:** Management of encryption key and infrastructure level data such as encrypted disks and virtual machine templates
+- **Infrastructure Credentials:** Manage AVS administrative credentials for AVS components like vCenter and ESXi hosts
 - Platform Access Control: Define user roles and permissions in the AVS environment
 - Setting up Key Vault: Create the instance, configure policies to protect the vault, manage infrastructure and platform secrets, and manage encryption/decryption operations
 
