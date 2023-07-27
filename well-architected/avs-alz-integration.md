@@ -53,7 +53,7 @@ Both application and platform teams have roles in backup and disaster recovery. 
 
 #### Application Backup and Disaster Recovery Responsibilities
 - **Data backup:** application-specific data and databases to a storage location using an agent-based, VMware Compatible backup solution
-- **Application Configurations:** App configs, settings, and libraries that the app needs operate
+- **Application Configurations:** App configs, settings, and libraries that the app needs to operate
 - **Data restore and Recovery:** Restoring application data from backup periodically, ensuring the application returns to a functional state in real-world scenarios
 
 ### DNS 
