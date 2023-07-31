@@ -85,13 +85,6 @@ This section covers a comprehensive overview of WAF & CAF principles, highlighti
 
 Effective collaboration between platform and application teams is vital for successfully deploying cloud-based applications.
 
-## Identity and Access Management (IAM)
-
-There are different aspects for managing Identity and Access Management to align and  integrate access controls between the AVS infrastructure and its applications. 
-
-#### Platform Identity and Access Management 
-
-#### Application Identity and Access Management 
 
 ## Next Steps 
 
