@@ -12,7 +12,19 @@ This section's guide aims to provide developers, architects, and application own
 
 ## Scalability and Efficient Resource Distribution 
 
-### Performance Isolation with Affinity 
+### Colocate Application Interdependencies with VM-VM Anti-Affinity 
+
+The use case for VM-VM anti-affinity policies (e.g., in a three-tier app) in AVS revolves around enhancing the application tiers' high availability, fault tolerance, and resiliency by ensuring they are spread across different hosts within the AVS private cloud.
+
+You create a distributed and fault-tolerant architecture by using VM-VM anti-affinity policies across the three tiers. This setup improves the availability of the entire application and helps ensure that a failure of a single host does not disrupt the entire tier or the entire application. 
+
+For example, in the front-end web tier that serves user requests, you can apply VM-VM anti-affinity policies to spread the web servers across different physical hosts to improve high availability and fault tolerance. The same goes for protecting the business layer at the application servers and enhancing the data resiliency at the database layer. 
+
+As an illustration, VM-VM anti-affinity policies can be implemented within the user-facing front-end web tier to distribute the web servers across diverse physical hosts, enhancing both high availability and fault tolerance. Similarly, anti-affinity measures can be applied to safeguard the application servers in the business layer and bolster the data resiliency within the database layer.
+
+
+
+### Performance Isolation with VM-Host Affinity 
 
 Some workloads running virtual machines may perform better when co-located. This use case often occurs when applications require
 - **Performance Isolation and System Specifications** for resource-intensive, high-performance compute workloads
@@ -20,6 +32,22 @@ or mapping a VM to a specific set of cores to maintain license compliance (e.g, 
 - **Regulatory Compliance and Data Integrity** to ensure  VMs belonging to specific security domains or data classifications are confined to specific hosts or a subset of hosts within the cluster 
 
 If it is essential to maintain the co-location of application tiers, you may opt for **VM-Host** affinity policies to ensure their deployment on the same host and within the same availability zone. Subsequently, this configuration can be replicated across multiple availability zones to enhance data center resilience in the event of a loss.
+
+![three-tier app segmented with vm-host affinity](../images/rvandenbedem_7-1669229632229.png) 
+
+Application teams must conduct a comprehensive evaluation and meticulous planning regarding VM placement, as it can present potential challenges like resource imbalances and uneven workload distribution, leading to adverse effects on performance and resource optimization.
+
+### Recommendations 
+
+- Carefully plan the use of VM-host affinity and consider alternative solutions when possible such as load balancing, resource pools in vSphere, distributed databases, containerization, and availability zones
+- Regularly monitor resource utilization and performance to identify any imbalances or issues
+- Strive for a balanced and flexible VM placement strategy that maximizes resource utilization while maintaining high availability and ensuring compliance with licensing requirements
+- Test and validate your VM-host affinity configurations to ensure that they align with your application's specific requirements and that they do not negatively impact overall performance and resilience
+
+### Assessment Questions
+Does the application require co-location or performance isolation of it's components? 
+
+Placing all the workloads in one availability zone also may create a single point of failure in a disaster. 
 
 Load balancing is a critical component of modern application architectures that require high availability, scalability, and efficient distribution of traffic. 
 
