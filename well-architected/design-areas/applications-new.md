@@ -12,8 +12,14 @@ This section's guide aims to provide developers, architects, and application own
 
 ## Scalability and Efficient Resource Distribution 
 
-If an application tier must be kept together, consider using VM-Host affinity policies so that they live in the same host and availability zone. From there, you 
-can replicate this setup across multiple AZs for resiliency in a data center loss. 
+### Performance Isolation with Affinity 
+
+Some workloads running virtual machines may perform better when co-located. This use case often occurs when applications require
+- **Performance Isolation and System Specifications** for resource-intensive, high-performance compute workloads
+or mapping a VM to a specific set of cores to maintain license compliance (e.g, Windows and SQL Server Licensing)
+- **Regulatory Compliance and Data Integrity** to ensure  VMs belonging to specific security domains or data classifications are confined to specific hosts or a subset of hosts within the cluster 
+
+If it is essential to maintain the co-location of application tiers, you may opt for **VM-Host** affinity policies to ensure their deployment on the same host and within the same availability zone. Subsequently, this configuration can be replicated across multiple availability zones to enhance data center resilience in the event of a loss.
 
 Load balancing is a critical component of modern application architectures that require high availability, scalability, and efficient distribution of traffic. 
 
