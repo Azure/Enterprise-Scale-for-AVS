@@ -1,7 +1,6 @@
 # Design Well-Architected Applications for Azure VMware Solution 
 
-This section refers to specific tasks and responsibilities to deploy, configure and maintain applications hosted in the AVS environment. An application owner is an individual or team responsible 
-for various aspects related to the deployment, configuration and monitoring, and maintenance of applications inside the AVS environment. 
+,This section refers to specific tasks and responsibilities to deploy, configure and maintain applications hosted in the AVS environment. An application owner is an individual or team responsible for various aspects related to the deployment, configuration  monitoring, and maintenance of applications inside the AVS environment. 
 
 Key objectives of a well-architected application include:
 - **Designing for Scale** - Gracefully handle higher user demands and concurrent transactions without degradation or service interruption 
