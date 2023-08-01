@@ -22,7 +22,7 @@ For example, in the front-end web tier that serves user requests, you can apply 
 
 As an illustration, VM-VM anti-affinity policies can be implemented within the user-facing front-end web tier to distribute the web servers across diverse physical hosts, enhancing both high availability and fault tolerance. Similarly, anti-affinity measures can be applied to safeguard the application servers in the business layer and bolster the data resiliency within the database layer.
 
-
+![three-tier app segmented with vm-host affinity](../images/rvandenbedem_6-1669229632226.png) 
 
 ### Performance Isolation with VM-Host Affinity 
 
