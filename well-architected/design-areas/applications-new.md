@@ -8,7 +8,7 @@ Key objectives of a well-architected application include:
 - **Reliability and Resiliency** - Design redundant, fault-tolerant patterns to ensure the application remains responsive and recovers quickly from failures
 
 
-This section's guide aims to provide developers, architects, and application owners with AVS-specific ways to build robust, secure, scalable, and maintainable applications throughout their lifecycle. 
+This section's guide aims to provide developers, architects, and application owners with AVS-specific best practices to build robust, secure, scalable, and maintainable applications throughout their lifecycle. 
 
 ## Scalability and Efficient Resource Distribution 
 
