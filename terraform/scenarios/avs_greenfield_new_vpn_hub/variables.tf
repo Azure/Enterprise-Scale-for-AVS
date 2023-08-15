@@ -29,7 +29,7 @@ variable "expressroute_gateway_sku" {
 variable "sddc_sku" {
   type        = string
   description = "The sku value for the AVS SDDC management cluster nodes"
-  default     = "av36"
+  default     = "av36P"
 }
 
 variable "hcx_enabled" {

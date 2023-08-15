@@ -46,7 +46,7 @@
     },
     "PrivateCloudSKU": {
       "type": "string",
-      "defaultValue": "AV36",
+      "defaultValue": "AV36P",
       "allowedValues": [
         "AV36",
         "AV36T",

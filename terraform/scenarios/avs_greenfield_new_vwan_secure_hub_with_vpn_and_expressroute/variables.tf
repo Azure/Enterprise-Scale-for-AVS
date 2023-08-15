@@ -45,7 +45,7 @@ variable "vpn_scale_units" {
 variable "sddc_sku" {
   type        = string
   description = "The sku value for the AVS SDDC management cluster nodes"
-  default     = "av36"
+  default     = "av36P"
 }
 
 variable "management_cluster_size" {

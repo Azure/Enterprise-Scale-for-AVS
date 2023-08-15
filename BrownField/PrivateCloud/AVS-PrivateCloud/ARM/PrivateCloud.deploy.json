@@ -52,7 +52,7 @@
       "apiVersion": "2021-06-01",
       "name": "[parameters('PrivateCloudName')]",
       "sku": {
-        "name": "AV36"
+        "name": "AV36P"
       },
       "location": "[parameters('Location')]",
       "properties": {

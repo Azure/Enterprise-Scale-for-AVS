@@ -1,5 +1,5 @@
   sddc_name                             = "TestSDDC"
-  sddc_sku                              = "av36"
+  sddc_sku                              = "av36P"
   management_cluster_size               = 6
   rg_name                               = "Sample_resource_group_name"
   rg_location                           = "Southeast Asia"

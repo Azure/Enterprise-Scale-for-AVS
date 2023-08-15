@@ -7,7 +7,7 @@ region = "northeurope"
 
 #AVS requires a /22 CIDR range, this must not overlap with other networks to be used with AVS
 avs-networkblock = "10.1.0.0/22"
-avs-sku          = "AV36"
+avs-sku          = "AV36P"
 avs-hostcount    = 3
 hcx_key_names    = ["hcxsite1", "hcxsite2"]
 
