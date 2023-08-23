@@ -10,7 +10,7 @@ module "avs_vmware_create_new_segment_w_dhcp" {
   source          = "../avs_vmware_create_new_segment_w_dhcp"
   nsxt_root       = var.vmware_deployment.nsxt_root
   vm_segment      = var.vmware_deployment.vm_segment
-  t1_gateway_path = module.avs_vmware_create_new_t1_gateway.t1_gateway_path
+  t1_gateway_path = module.avs_vmware_create_new_t1_gateway_w_dhcp.t1_gateway_path
 
   depends_on = [
     module.avs_vmware_create_new_t1_gateway_w_dhcp
