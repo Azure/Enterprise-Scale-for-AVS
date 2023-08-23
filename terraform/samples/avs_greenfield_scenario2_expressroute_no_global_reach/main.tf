@@ -92,7 +92,7 @@ module "primary_hub_routeserver" {
   virtual_hub_pip_name   = local.hub_virtual_hub_pip_name
   route_server_name      = local.hub_route_server_name
   route_server_subnet_id = module.primary_hub_virtual_network.subnet_ids["RouteServerSubnet"].id
-  tags                   = local.tags
+  #tags                   = local.tags
 }
 
 #create Gateway route table with transit hub prefixes and AVS prefixes pointing to the firewall
@@ -254,7 +254,7 @@ module "transit_hub_routeserver" {
   virtual_hub_pip_name   = local.transit_hub_virtual_hub_pip_name
   route_server_name      = local.transit_hub_route_server_name
   route_server_subnet_id = module.transit_hub_virtual_network.subnet_ids["RouteServerSubnet"].id
-  tags                   = local.tags
+  #tags                   = local.tags
 }
 
 

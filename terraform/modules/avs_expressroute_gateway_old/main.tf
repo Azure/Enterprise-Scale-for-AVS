@@ -1,50 +1,37 @@
-terraform {
-  required_providers {
-    azapi = {
-      source = "azure/azapi"
-    }
+resource "azurerm_public_ip" "gatewaypip" {
+  name                = var.expressroute_pip_name
+  resource_group_name = var.rg_name
+  location            = var.rg_location
+  allocation_method   = "Dynamic"
+  sku                 = "Basic" #required for an ultraperformance gateway
+}
+
+resource "azurerm_virtual_network_gateway" "gateway" {
+  name                = var.expressroute_gateway_name
+  resource_group_name = var.rg_name
+  location            = var.rg_location
+
+  type = "ExpressRoute"
+  sku  = var.expressroute_gateway_sku
+
+  ip_configuration {
+    name                          = "default"
+    public_ip_address_id          = azurerm_public_ip.gatewaypip.id
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = var.gateway_subnet_id
   }
 }
 
-resource "azurerm_virtual_hub" "virtual_hub" {
-  name                = var.virtual_hub_name
-  resource_group_name = var.rg_name
-  location            = var.rg_location
-  sku                 = "Standard"
-  tags                = var.tags
-}
-
-resource "azurerm_public_ip" "routeserver_pip" {
-  name                = var.virtual_hub_pip_name
+resource "azurerm_virtual_network_gateway_connection" "avs" {
+  name                = var.express_route_connection_name
   location            = var.rg_location
   resource_group_name = var.rg_name
-  allocation_method   = "Static"
-  sku                 = "Standard"
-  tags                = var.tags
-}
+  enable_bgp          = true
 
-resource "azurerm_virtual_hub_ip" "routeserver" {
-  name                         = var.route_server_name
-  virtual_hub_id               = azurerm_virtual_hub.virtual_hub.id
-  private_ip_allocation_method = "Dynamic"
-  public_ip_address_id         = azurerm_public_ip.routeserver_pip.id
-  subnet_id                    = var.route_server_subnet_id
-}
-
-resource "azapi_update_resource" "routeserver_branch_to_branch" {
-  type        = "Microsoft.Network/virtualHubs@2021-05-01"
-  resource_id = azurerm_virtual_hub.virtual_hub.id
-
-  body = jsonencode({
-    properties = {
-      allowBranchToBranchTraffic = true
-    }
-  })
-
-  depends_on = [
-    azurerm_public_ip.routeserver_pip,
-    azurerm_virtual_hub_ip.routeserver
-  ]
+  type                       = "ExpressRoute"
+  virtual_network_gateway_id = azurerm_virtual_network_gateway.gateway.id
+  express_route_circuit_id   = var.express_route_id
+  authorization_key          = var.express_route_authorization_key
 }
 
 #############################################################################################
@@ -69,7 +56,7 @@ locals {
       }
     }
     TEMPLATE
-  module_identifier                       = lower("avs_routeserver")
+  module_identifier                       = lower("avs_expressroute_gateway")
   telem_arm_deployment_name               = "${lower(var.guid_telemetry)}.${substr(local.module_identifier, 0, 20)}.${random_string.telemetry.result}"
 }
 

@@ -11,7 +11,6 @@ resource "azurerm_virtual_hub" "virtual_hub" {
   resource_group_name = var.rg_name
   location            = var.rg_location
   sku                 = "Standard"
-  tags                = var.tags
 }
 
 resource "azurerm_public_ip" "routeserver_pip" {
@@ -20,7 +19,6 @@ resource "azurerm_public_ip" "routeserver_pip" {
   resource_group_name = var.rg_name
   allocation_method   = "Static"
   sku                 = "Standard"
-  tags                = var.tags
 }
 
 resource "azurerm_virtual_hub_ip" "routeserver" {
