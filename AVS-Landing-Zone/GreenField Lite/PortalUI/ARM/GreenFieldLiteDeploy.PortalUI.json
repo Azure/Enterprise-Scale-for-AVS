@@ -168,7 +168,7 @@
                                     "type": "Microsoft.Common.DropDown",
                                     "visible": true,
                                     "label": "AVS SKU",
-                                    "defaultValue": "AV36",
+                                    "defaultValue": "AV36P",
                                     "multiLine": true,
                                     "toolTip": "Ensure you select the correct SKU as per your quota request",
                                     "constraints": {

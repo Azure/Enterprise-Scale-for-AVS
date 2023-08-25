@@ -14,8 +14,11 @@ param PrivateCloudAddressSpace string
 @allowed([
   'AV36'
   'AV36T'
+  'AV36P'
+  'AV36PT'
+  'AV52'
 ])
-param PrivateCloudSKU string = 'AV36'
+param PrivateCloudSKU string = 'AV36P'
 @description('Optional: Connectivity to Internet through Managed SNAT Service')
 @allowed([
   'Disabled'

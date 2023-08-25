@@ -24,7 +24,7 @@
             "value": "10.20.0.0/22"
         },
         "PrivateCloudSKU": {
-            "value": "AV36"
+            "value": "AV36P"
         },
         "PrivateCloudHostCount": {
             "value": 3

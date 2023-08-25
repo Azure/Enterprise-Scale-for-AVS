@@ -18,7 +18,7 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   ]
 
   expressroute_gateway_sku = "Standard"
-  sddc_sku                 = "av36"
+  sddc_sku                 = "av36P"
   management_cluster_size  = 3
   avs_network_cidr         = "10.2.0.0/20"
   hcx_enabled              = true
