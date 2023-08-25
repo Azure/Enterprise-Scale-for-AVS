@@ -15,7 +15,7 @@ The options are presented in order of decreasing ability to meet the key require
 *Design phase #1. How to select a hybrid connectivity option for Azure VMware Solution.*
 
 ## ExpressRoute Global Reach
-ExpressRoute Global Reach is the default hybrid connectivity option supported by Azure VMware Solution. It provides plain layer-3 connectivity between a private cloud and a remote site connected to a customer-managed ExpressRoute circuit, with minimal complexity. The customer-managed ExpressRoute circuit can be used to connect to Azure native services too. However it is possible, for security or bandiwidth reservations purposes,  to deploy a separate customer-managed circuit exclusively dedicated to Azure VMware Solution traffic. 
+ExpressRoute Global Reach is the default hybrid connectivity option supported by Azure VMware Solution. It provides plain layer-3 connectivity between a private cloud and a remote site connected to a customer-managed ExpressRoute circuit, with minimal complexity. The customer-managed ExpressRoute circuit can be used to connect to Azure native services too. However it is possible, for security or bandwidth reservations purposes,  to deploy a separate customer-managed circuit exclusively dedicated to Azure VMware Solution traffic. 
 
 The figure below shows the network topology when Global Reach is used for connectivity with on-premises sites.
  
