@@ -1,4 +1,4 @@
-# Deploy a Photon test VM to a new DHCP enabled T1 and network segment
+# Deploy a pair of logstash VM's and configure AVS custom syslog filtering
 
 ## Table of contents
 

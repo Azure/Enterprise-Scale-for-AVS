@@ -1,16 +1,16 @@
 
 module "avs_vmware_create_new_t1_gateway_w_dhcp" {
-  source                  = "../avs_vmware_create_new_t1_gateway"
+  source                  = "../avs_vmware_create_new_t1_gateway_w_dhcp"
   nsxt_root               = var.vmware_deployment.nsxt_root
   t1_gateway_display_name = var.vmware_deployment.t1_gateway_display_name
   dhcp_profile            = var.vmware_deployment.dhcp_profile
 }
 
 module "avs_vmware_create_new_segment_w_dhcp" {
-  source          = "../avs_vmware_create_new_segment"
+  source          = "../avs_vmware_create_new_segment_w_dhcp"
   nsxt_root       = var.vmware_deployment.nsxt_root
   vm_segment      = var.vmware_deployment.vm_segment
-  t1_gateway_path = module.avs_vmware_create_new_t1_gateway.t1_gateway_path
+  t1_gateway_path = module.avs_vmware_create_new_t1_gateway_w_dhcp.t1_gateway_path
 
   depends_on = [
     module.avs_vmware_create_new_t1_gateway_w_dhcp
