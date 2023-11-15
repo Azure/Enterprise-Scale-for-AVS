@@ -6,6 +6,7 @@ param Username string
 param Password string
 param VMSize string
 param OSVersion string
+param HighPerformance bool
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
@@ -28,6 +29,7 @@ resource Nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
         }
       }
     ]
+    enableAcceleratedNetworking: HighPerformance ? true : false
   }
 }
 
@@ -57,6 +59,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Premium_LRS'
+          //Future Enhancement to save costs: storageAccountType: EnableHighPerformance ? 'Premium_LRS' : 'Standard_LRS'
         }
       }
     }
@@ -88,3 +91,4 @@ resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = i
 }
 
 output JumpboxResourceId string = VM.id
+output JumpboxSAMIPrincipalId string = VM.identity.principalId
