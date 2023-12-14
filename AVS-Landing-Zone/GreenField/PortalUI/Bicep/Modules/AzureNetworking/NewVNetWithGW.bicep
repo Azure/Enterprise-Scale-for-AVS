@@ -35,10 +35,10 @@ resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = {
   name: '${NewVnetNewGatewayName}-pip'
   location: Location
   properties: {
-    publicIPAllocationMethod: 'Dynamic'
+    publicIPAllocationMethod: 'Static'
   }
   sku: {
-    name: 'Basic'
+    name: 'Standard'
     tier: 'Regional'
   }
 }

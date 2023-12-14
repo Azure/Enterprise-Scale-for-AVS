@@ -549,10 +549,10 @@
                       "name": "[format('{0}-PIP', variables('GatewayName'))]",
                       "location": "[parameters('Location')]",
                       "properties": {
-                        "publicIPAllocationMethod": "Dynamic"
+                        "publicIPAllocationMethod": "Static"
                       },
                       "sku": {
-                        "name": "Basic",
+                        "name": "Standard",
                         "tier": "Regional"
                       }
                     },

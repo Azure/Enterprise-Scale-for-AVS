@@ -761,10 +761,10 @@
                       "name": "[format('{0}-pip', variables('NewVnetNewGatewayName'))]",
                       "location": "[parameters('Location')]",
                       "properties": {
-                        "publicIPAllocationMethod": "Dynamic"
+                        "publicIPAllocationMethod": "Static"
                       },
                       "sku": {
-                        "name": "Basic",
+                        "name": "Standard",
                         "tier": "Regional"
                       }
                     },
