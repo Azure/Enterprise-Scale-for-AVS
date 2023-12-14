@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.23.1.45101",
-      "templateHash": "17842021019656709960"
+      "templateHash": "6260898678163486446"
     }
   },
   "parameters": {
@@ -144,13 +144,6 @@
       ],
       "metadata": {
         "description": "The OS Version for the Jumpbox VM. By default, it is Microsoft Windows Server 2012 Azure Edition with small disk for storage to reduce costs."
-      }
-    },
-    "HighPerformance": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Enable high performance attributes for VM, such as storageAccountType=Premium_LRS and enableAcceleratedNetworking=true"
       }
     },
     "BootstrapJumpboxVM": {
@@ -1094,9 +1087,6 @@
           "OSVersion": {
             "value": "[parameters('OSVersion')]"
           },
-          "HighPerformance": {
-            "value": "[parameters('HighPerformance')]"
-          },
           "BootstrapJumpboxVM": {
             "value": "[parameters('BootstrapJumpboxVM')]"
           },
@@ -1114,7 +1104,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.23.1.45101",
-              "templateHash": "9589630317316205047"
+              "templateHash": "2942895614395123839"
             }
           },
           "parameters": {
@@ -1144,9 +1134,6 @@
             },
             "OSVersion": {
               "type": "string"
-            },
-            "HighPerformance": {
-              "type": "bool"
             },
             "BootstrapJumpboxVM": {
               "type": "bool"
@@ -1363,9 +1350,6 @@
                   "OSVersion": {
                     "value": "[parameters('OSVersion')]"
                   },
-                  "HighPerformance": {
-                    "value": "[parameters('HighPerformance')]"
-                  },
                   "BootstrapVM": {
                     "value": "[parameters('BootstrapJumpboxVM')]"
                   },
@@ -1383,7 +1367,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.23.1.45101",
-                      "templateHash": "17382725524503990940"
+                      "templateHash": "8416323575921278169"
                     }
                   },
                   "parameters": {
@@ -1407,9 +1391,6 @@
                     },
                     "OSVersion": {
                       "type": "string"
-                    },
-                    "HighPerformance": {
-                      "type": "bool"
                     },
                     "BootstrapVM": {
                       "type": "bool",
@@ -1445,8 +1426,7 @@
                               }
                             }
                           }
-                        ],
-                        "enableAcceleratedNetworking": "[if(parameters('HighPerformance'), true(), false())]"
+                        ]
                       }
                     },
                     {
