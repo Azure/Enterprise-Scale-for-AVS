@@ -88,3 +88,4 @@ resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = i
 }
 
 output JumpboxResourceId string = VM.id
+output JumpboxSAMIPrincipalId string = VM.identity.principalId

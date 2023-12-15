@@ -27,6 +27,8 @@ param PrivateCloudSKU string = 'AV36P'
 param Internet string = 'Disabled'
 @description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')
 param PrivateCloudHostCount int = 3
+@description('Optional: Assign Jumpbox VM as Contributor on AVS Private Cloud')
+param AssignJumpboxAsAVSContributor bool = false
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param VNetExists bool = false
@@ -150,6 +152,15 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+  }
+}
+
+module JumpboxAVSContributor 'Modules/AVSRBAC.bicep' = if(AssignJumpboxAsAVSContributor) {
+  name: '${deploymentPrefix}-Contributor-Assignment'
+  params: {
+    PrivateCloudName: AVSCore.outputs.PrivateCloudName
+    PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
+    JumpboxSAMIPrincipalId: Jumpbox.outputs.JumpboxSAMIPrincipalId
   }
 }
 
