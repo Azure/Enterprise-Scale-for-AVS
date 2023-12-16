@@ -61,6 +61,8 @@ param JumpboxSku string = 'Standard_D2s_v3'
   '2022-datacenter-azure-edition-smalldisk'
 ])
 param OSVersion string  = '2022-datacenter-azure-edition-smalldisk'
+@description('Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking')
+param HighPerformance bool = true
 @description('Should run a bootstrap PowerShell script on the Jumpbox VM or not')
 param BootstrapJumpboxVM bool = false
 @description('The path for Jumpbox VM bootstrap PowerShell script file (expecting "bootstrap.ps1" file)')
@@ -149,6 +151,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
     OSVersion: OSVersion
+    HighPerformance: HighPerformance
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
