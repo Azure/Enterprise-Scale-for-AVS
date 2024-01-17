@@ -1398,7 +1398,7 @@
                             "elements": [
                                 {
                                     "name": "avsResourceTaggingInfo1",
-                                    "type": "Microsoft.Common.InfoBo",
+                                    "type": "Microsoft.Common.InfoBox",
                                     "visible": true,
                                     "options": {
                                         "text": "The AVS accelerator will create the following tags by default: <br/> - Service Workload (ServiceWorkload): defaults to Azure VMware Solution. <br/> <br/> - Service Workload Short (ServiceWorkload): defaults to AVS. <br/> - Creation time (CreationTimeUTC): deployment time in UTC. <br/> <br/> - Creation time Short (CreationTimeUTC): deployment time in UTC in mm/dd/yyyy format.",
