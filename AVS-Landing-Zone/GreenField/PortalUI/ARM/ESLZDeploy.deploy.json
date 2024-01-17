@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "18322484893977904815"
+      "templateHash": "11283091591253568844"
     }
   },
   "parameters": {
@@ -4689,7 +4689,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "9847272853903743438"
+              "templateHash": "5936140949057678560"
             }
           },
           "parameters": {
@@ -4756,6 +4756,7 @@
           },
           "resources": [
             {
+              "condition": "[or(parameters('DeployWorkspace'), parameters('DeployStorageAccount'))]",
               "type": "Microsoft.Resources/resourceGroups",
               "apiVersion": "2021-04-01",
               "name": "[parameters('LoggingResourceGroupName')]",
