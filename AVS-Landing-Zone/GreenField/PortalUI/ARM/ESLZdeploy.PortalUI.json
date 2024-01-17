@@ -1544,7 +1544,7 @@
                 "NewNetworkName": "[steps('ResourceNaming').NetworkNaming.CustomNetworkName]",
                 "MonitoringResourceGroupName": "[steps('ResourceNaming').MonitoringNaming.MonitoringResourceGroup]",
                 "LoggingResourceGroupName": "[steps('ResourceNaming').LoggingNaming.LoggingResourceGroup]",
-                "createResourceTags": "[steps('ResourceTagging').CustomTagging]",
+                "avsUseCustomTagging": "[steps('ResourceTagging').CustomTagging]",
                 "environmentTag": "[steps('ResourceTagging').resourceTags.tagsEnvironmentName]",
                 "departmentTag": "[steps('ResourceTagging').resourceTags.tagsDepartmentTag]",
                 "ownerTag": "[steps('ResourceTagging').resourceTags.tagsOwnerTag]",

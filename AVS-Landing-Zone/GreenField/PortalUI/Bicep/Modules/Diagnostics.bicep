@@ -19,7 +19,7 @@ param tags object
 
 var PrivateCloudResourceGroupName = split(PrivateCloudResourceId,'/')[4]
 
-resource LoggingResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource LoggingResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = if ((DeployWorkspace) || (DeployStorageAccount)) {
   name: LoggingResourceGroupName
   location: Location
   tags: tags
