@@ -1034,21 +1034,6 @@
                                     "visible": "[equals(steps('Diagnostics').StorageAccount.DeployStorageAccount, false)]",
                                     "label": "Select the Existing Storage Account",
                                     "resourceType": "Microsoft.Storage/storageAccounts"
-                                },
-                                {
-                                    "name": "storageRetention",
-                                    "type": "Microsoft.Common.Slider",
-                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageLogCollection, true)]",
-                                    "label": "Storage Account Retention Days",
-                                    "subLabel": "",
-                                    "toolTip": "Retention only applies to storage account. Retention policy ranges from 1 to 365 days. If you do not want to apply any retention policy and retain data forever, set retention (days) to 0.",
-                                    "min": 0,
-                                    "max": 365,
-                                    "defaultValue": 1,
-                                    "showStepMarkers": true,
-                                    "constraints": {
-                                        "required": true
-                                    }
                                 }
                             ]
                         }
@@ -1532,7 +1517,6 @@
                 "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
                 "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.DeployStorageAccount]",
                 "NewStorageAccountName": "[steps('ResourceNaming').LoggingNaming.CustomStorageAccountName]",
-                "StorageRetentionDays": "[steps('Diagnostics').StorageAccount.storageRetention]",
                 "DeployHCX": "[steps('Addons').deployHCX]",
                 "DeploySRM": "[steps('Addons').deploySRM]",
                 "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",

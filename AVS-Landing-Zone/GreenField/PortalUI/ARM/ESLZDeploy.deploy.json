@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "11283091591253568844"
+      "templateHash": "16533568776344812649"
     }
   },
   "parameters": {
@@ -301,10 +301,6 @@
     "ExistingStorageAccountId": {
       "type": "string",
       "defaultValue": ""
-    },
-    "StorageRetentionDays": {
-      "type": "int",
-      "defaultValue": 1
     },
     "DeployHCX": {
       "type": "bool",
@@ -4677,9 +4673,6 @@
           "ExistingStorageAccountId": {
             "value": "[parameters('ExistingStorageAccountId')]"
           },
-          "StorageRetentionDays": {
-            "value": "[parameters('StorageRetentionDays')]"
-          },
           "tags": "[if(parameters('avsUseCustomTagging'), createObject('value', union(variables('varCustomResourceTags'), variables('varAVSDefaultTags'))), createObject('value', variables('varAVSDefaultTags')))]"
         },
         "template": {
@@ -4689,7 +4682,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "5936140949057678560"
+              "templateHash": "8917032050059887904"
             }
           },
           "parameters": {
@@ -4734,9 +4727,6 @@
             },
             "ExistingStorageAccountId": {
               "type": "string"
-            },
-            "StorageRetentionDays": {
-              "type": "int"
             },
             "DeployWorkspace": {
               "type": "bool"
@@ -4930,9 +4920,6 @@
                   },
                   "EnableAVSLogsStorageSetting": {
                     "value": "[parameters('EnableAVSLogsStorageSetting')]"
-                  },
-                  "StorageRetentionDays": {
-                    "value": "[parameters('StorageRetentionDays')]"
                   }
                 },
                 "template": {
@@ -4942,7 +4929,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.24.24.22086",
-                      "templateHash": "2984034320370870557"
+                      "templateHash": "12440865007524563068"
                     }
                   },
                   "parameters": {
@@ -4957,9 +4944,6 @@
                     "StorageAccountid": {
                       "type": "string",
                       "defaultValue": ""
-                    },
-                    "StorageRetentionDays": {
-                      "type": "int"
                     },
                     "EnableAVSLogsWorkspaceSetting": {
                       "type": "bool"
@@ -5002,21 +4986,13 @@
                         "metrics": [
                           {
                             "category": "AllMetrics",
-                            "enabled": true,
-                            "retentionPolicy": {
-                              "days": "[parameters('StorageRetentionDays')]",
-                              "enabled": true
-                            }
+                            "enabled": true
                           }
                         ],
                         "logs": [
                           {
                             "category": "VMwareSyslog",
-                            "enabled": true,
-                            "retentionPolicy": {
-                              "days": "[parameters('StorageRetentionDays')]",
-                              "enabled": true
-                            }
+                            "enabled": true
                           }
                         ]
                       }

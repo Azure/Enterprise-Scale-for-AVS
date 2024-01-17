@@ -11,7 +11,6 @@ param DeployActivityLogDiagnostics bool = false
 param EnableAVSLogsStorageSetting bool = false
 param ExistingWorkspaceId string
 param ExistingStorageAccountId string
-param StorageRetentionDays int
 param DeployWorkspace bool
 param DeployStorageAccount bool
 @sys.description('Tags to be applied to resources')
@@ -58,7 +57,6 @@ module AVSDiagnostics 'Diagnostics/AVSDiagnostics.bicep' = if ((EnableAVSLogsWor
     StorageAccountid : DeployStorageAccount ? Storage.outputs.StorageAccountid : ExistingStorageAccountId
     EnableAVSLogsWorkspaceSetting : EnableAVSLogsWorkspaceSetting
     EnableAVSLogsStorageSetting : EnableAVSLogsStorageSetting
-    StorageRetentionDays : StorageRetentionDays
   }
 }
 

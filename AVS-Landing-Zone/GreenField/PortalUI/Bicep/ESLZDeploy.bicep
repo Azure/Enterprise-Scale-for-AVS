@@ -106,7 +106,6 @@ param NewStorageAccountName string = ''
 param DeployStorageAccount bool = false
 param ExistingWorkspaceId string = ''
 param ExistingStorageAccountId string = ''
-param StorageRetentionDays int = 1
 
 //Addons
 @description('Should HCX be deployed as part of the deployment')
@@ -262,7 +261,6 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
     PrivateCloudResourceId: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
     ExistingWorkspaceId: ExistingWorkspaceId
     ExistingStorageAccountId: ExistingStorageAccountId
-    StorageRetentionDays: StorageRetentionDays
     tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  }
 }
 
