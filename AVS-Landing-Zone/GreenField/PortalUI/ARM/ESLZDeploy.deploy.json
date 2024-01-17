@@ -4,16 +4,16 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.17.1.54307",
-      "templateHash": "17223389515857261662"
+      "version": "0.24.24.22086",
+      "templateHash": "18322484893977904815"
     }
   },
   "parameters": {
     "Prefix": {
       "type": "string",
       "defaultValue": "AVS",
-      "maxLength": 20,
       "minLength": 1,
+      "maxLength": 20,
       "metadata": {
         "description": "The prefix to use on resources inside this template"
       }
@@ -330,11 +330,11 @@
     "VRServerCount": {
       "type": "int",
       "defaultValue": 1,
+      "minValue": 1,
+      "maxValue": 10,
       "metadata": {
         "description": "Number of vSphere Replication Servers to be created if SRM is deployed"
-      },
-      "maxValue": 10,
-      "minValue": 1
+      }
     },
     "TelemetryOptOut": {
       "type": "bool",
@@ -353,6 +353,37 @@
       "metadata": {
         "description": "Optional. AVS resources custom naming. (Default: false)"
       }
+    },
+    "time": {
+      "type": "string",
+      "defaultValue": "[utcNow()]",
+      "metadata": {
+        "description": "Optional. AVS resources custom tagging. (Default: false)"
+      }
+    },
+    "timeShort": {
+      "type": "string",
+      "defaultValue": "[utcNow('d')]"
+    },
+    "avsUseCustomTagging": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "environmentTag": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "departmentTag": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "ownerTag": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "costCenterTag": {
+      "type": "string",
+      "defaultValue": ""
     }
   },
   "variables": {
@@ -367,7 +398,13 @@
     "customMonitoringResourceGroupName": "[if(parameters('avsUseCustomNaming'), parameters('MonitoringResourceGroupName'), format('{0}-Operational', parameters('Prefix')))]",
     "customLoggingResourceGroupName": "[if(parameters('avsUseCustomNaming'), parameters('LoggingResourceGroupName'), format('{0}-Operational', parameters('Prefix')))]",
     "customWorkspaceName": "[if(parameters('avsUseCustomNaming'), parameters('NewWorkspaceName'), format('{0}-log', parameters('Prefix')))]",
-    "customStorageAccountName": "[if(parameters('avsUseCustomNaming'), parameters('NewStorageAccountName'), variables('uniquestorageaccountname'))]"
+    "customStorageAccountName": "[if(parameters('avsUseCustomNaming'), parameters('NewStorageAccountName'), variables('uniquestorageaccountname'))]",
+    "varAVSDefaultTags": {
+      "ServiceWorkload": "AVS",
+      "CreationTimeUTC": "[parameters('time')]",
+      "CreationTimeUTCShort": "[parameters('timeShort')]"
+    },
+    "varCustomResourceTags": "[if(parameters('avsUseCustomTagging'), createObject('Environment', parameters('environmentTag'), 'Department', parameters('departmentTag'), 'Owner', parameters('ownerTag'), 'CostCenter', parameters('costCenterTag')), createObject())]"
   },
   "resources": [
     {
@@ -415,8 +452,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "6423280983881110944"
+              "version": "0.24.24.22086",
+              "templateHash": "9756863023770852398"
             }
           },
           "parameters": {
@@ -494,8 +531,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "3323240199873287003"
+                      "version": "0.24.24.22086",
+                      "templateHash": "2234730685956260162"
                     }
                   },
                   "parameters": {
@@ -617,8 +654,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "6750519813958726152"
+              "version": "0.24.24.22086",
+              "templateHash": "6534273006985720145"
             }
           },
           "parameters": {
@@ -704,8 +741,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "12898970524859809814"
+                      "version": "0.24.24.22086",
+                      "templateHash": "10307127275166334888"
                     }
                   },
                   "parameters": {
@@ -877,8 +914,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "8733824284955261278"
+              "version": "0.24.24.22086",
+              "templateHash": "2649791918300920024"
             }
           },
           "parameters": {
@@ -930,8 +967,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "2084347355474392542"
+                      "version": "0.24.24.22086",
+                      "templateHash": "12730407191150352598"
                     }
                   },
                   "parameters": {
@@ -995,8 +1032,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "4227771434895757106"
+                      "version": "0.24.24.22086",
+                      "templateHash": "338732927853540385"
                     }
                   },
                   "parameters": {
@@ -1116,8 +1153,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "16888524851700627214"
+              "version": "0.24.24.22086",
+              "templateHash": "11931465556588476914"
             }
           },
           "parameters": {
@@ -1191,8 +1228,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "10803492013476551901"
+                      "version": "0.24.24.22086",
+                      "templateHash": "3645652890400228238"
                     }
                   },
                   "parameters": {
@@ -1267,8 +1304,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "4591214727688624959"
+                      "version": "0.24.24.22086",
+                      "templateHash": "15542403464319145909"
                     }
                   },
                   "parameters": {
@@ -1374,8 +1411,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "16604172763263319486"
+                      "version": "0.24.24.22086",
+                      "templateHash": "11369458762006631172"
                     }
                   },
                   "parameters": {
@@ -1612,8 +1649,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "10884563567507190868"
+              "version": "0.24.24.22086",
+              "templateHash": "8766236274587544768"
             }
           },
           "parameters": {
@@ -1689,8 +1726,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "9504771076438264907"
+                      "version": "0.24.24.22086",
+                      "templateHash": "4368139761753968116"
                     }
                   },
                   "parameters": {
@@ -1767,8 +1804,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "11429393484551850219"
+                      "version": "0.24.24.22086",
+                      "templateHash": "10814418326746263879"
                     }
                   },
                   "parameters": {
@@ -1938,8 +1975,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "1715653971352183522"
+                      "version": "0.24.24.22086",
+                      "templateHash": "6771272556520237531"
                     }
                   },
                   "parameters": {
@@ -2031,8 +2068,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "12554239775848367894"
+                      "version": "0.24.24.22086",
+                      "templateHash": "2194922399679609395"
                     }
                   },
                   "parameters": {
@@ -2386,8 +2423,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "10266370870084661319"
+                      "version": "0.24.24.22086",
+                      "templateHash": "1830375054037813367"
                     }
                   },
                   "parameters": {
@@ -4642,7 +4679,8 @@
           },
           "StorageRetentionDays": {
             "value": "[parameters('StorageRetentionDays')]"
-          }
+          },
+          "tags": "[if(parameters('avsUseCustomTagging'), createObject('value', union(variables('varCustomResourceTags'), variables('varAVSDefaultTags'))), createObject('value', variables('varAVSDefaultTags')))]"
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
@@ -4650,8 +4688,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "16979767492724151285"
+              "version": "0.24.24.22086",
+              "templateHash": "9847272853903743438"
             }
           },
           "parameters": {
@@ -4705,6 +4743,12 @@
             },
             "DeployStorageAccount": {
               "type": "bool"
+            },
+            "tags": {
+              "type": "object",
+              "metadata": {
+                "description": "Tags to be applied to resources"
+              }
             }
           },
           "variables": {
@@ -4715,7 +4759,8 @@
               "type": "Microsoft.Resources/resourceGroups",
               "apiVersion": "2021-04-01",
               "name": "[parameters('LoggingResourceGroupName')]",
-              "location": "[parameters('Location')]"
+              "location": "[parameters('Location')]",
+              "tags": "[parameters('tags')]"
             },
             {
               "condition": "[parameters('DeployWorkspace')]",
@@ -4734,6 +4779,9 @@
                   },
                   "NewWorkspaceName": {
                     "value": "[parameters('NewWorkspaceName')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -4742,8 +4790,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "5957379967404932156"
+                      "version": "0.24.24.22086",
+                      "templateHash": "16974942857296665741"
                     }
                   },
                   "parameters": {
@@ -4752,6 +4800,12 @@
                     },
                     "NewWorkspaceName": {
                       "type": "string"
+                    },
+                    "tags": {
+                      "type": "object",
+                      "metadata": {
+                        "description": "Tags to be applied to resources"
+                      }
                     }
                   },
                   "resources": [
@@ -4759,7 +4813,8 @@
                       "type": "Microsoft.OperationalInsights/workspaces",
                       "apiVersion": "2022-10-01",
                       "name": "[parameters('NewWorkspaceName')]",
-                      "location": "[parameters('Location')]"
+                      "location": "[parameters('Location')]",
+                      "tags": "[parameters('tags')]"
                     }
                   ],
                   "outputs": {
@@ -4791,6 +4846,9 @@
                   },
                   "NewStorageAccountName": {
                     "value": "[parameters('NewStorageAccountName')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -4799,8 +4857,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "3108895310060585977"
+                      "version": "0.24.24.22086",
+                      "templateHash": "7771121048702855542"
                     }
                   },
                   "parameters": {
@@ -4809,6 +4867,12 @@
                     },
                     "NewStorageAccountName": {
                       "type": "string"
+                    },
+                    "tags": {
+                      "type": "object",
+                      "metadata": {
+                        "description": "Tags to be applied to resources"
+                      }
                     }
                   },
                   "resources": [
@@ -4823,7 +4887,8 @@
                       "kind": "StorageV2",
                       "properties": {
                         "accessTier": "Hot"
-                      }
+                      },
+                      "tags": "[parameters('tags')]"
                     }
                   ],
                   "outputs": {
@@ -4875,8 +4940,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "8932610096631103718"
+                      "version": "0.24.24.22086",
+                      "templateHash": "2984034320370870557"
                     }
                   },
                   "parameters": {
@@ -4983,8 +5048,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "14123100145688502758"
+                      "version": "0.24.24.22086",
+                      "templateHash": "6947806775385453446"
                     }
                   },
                   "parameters": {
@@ -5085,8 +5150,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "8494439326510212530"
+              "version": "0.24.24.22086",
+              "templateHash": "11960748730171207024"
             }
           },
           "parameters": {
@@ -5107,8 +5172,8 @@
             },
             "VRServerCount": {
               "type": "int",
-              "maxValue": 10,
-              "minValue": 1
+              "minValue": 1,
+              "maxValue": 10
             }
           },
           "resources": [
@@ -5134,8 +5199,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "13991033642722677763"
+                      "version": "0.24.24.22086",
+                      "templateHash": "10392797652933285068"
                     }
                   },
                   "parameters": {
@@ -5185,8 +5250,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.17.1.54307",
-                      "templateHash": "14959005421890283473"
+                      "version": "0.24.24.22086",
+                      "templateHash": "9901385815055500514"
                     }
                   },
                   "parameters": {
@@ -5198,8 +5263,8 @@
                     },
                     "VRServerCount": {
                       "type": "int",
-                      "maxValue": 10,
-                      "minValue": 1
+                      "minValue": 1,
+                      "maxValue": 10
                     }
                   },
                   "resources": [
@@ -5253,8 +5318,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.17.1.54307",
-              "templateHash": "17879022738573177975"
+              "version": "0.24.24.22086",
+              "templateHash": "2976306977123719457"
             }
           },
           "resources": []

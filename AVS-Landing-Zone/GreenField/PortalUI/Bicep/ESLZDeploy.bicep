@@ -143,7 +143,28 @@ var customLoggingResourceGroupName = avsUseCustomNaming ? LoggingResourceGroupNa
 var customWorkspaceName = avsUseCustomNaming ? NewWorkspaceName : '${Prefix}-log'
 var customStorageAccountName = avsUseCustomNaming ? NewStorageAccountName : uniquestorageaccountname
 
+//Custom Tagging
+@description('Optional. AVS resources custom tagging. (Default: false)')
+param time string = utcNow()
+param timeShort string = utcNow('d')
+param avsUseCustomTagging bool = false
+param environmentTag string = ''
+param departmentTag string = ''
+param ownerTag string = ''
+param costCenterTag string = ''
 
+var varAVSDefaultTags = {
+  ServiceWorkload: 'AVS'
+  CreationTimeUTC: time
+  CreationTimeUTCShort: timeShort
+}
+
+var varCustomResourceTags = avsUseCustomTagging ? {
+  Environment: environmentTag
+  Department: departmentTag
+  Owner: ownerTag
+  CostCenter: costCenterTag
+} : {}
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -242,7 +263,7 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
     ExistingWorkspaceId: ExistingWorkspaceId
     ExistingStorageAccountId: ExistingStorageAccountId
     StorageRetentionDays: StorageRetentionDays
-  }
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  }
 }
 
 module Addons 'Modules/AVSAddons.bicep' = if ((DeployHCX) || (DeploySRM)) {
