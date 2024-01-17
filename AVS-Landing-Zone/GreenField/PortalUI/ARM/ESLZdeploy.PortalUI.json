@@ -1386,7 +1386,7 @@
                                     "type": "Microsoft.Common.InfoBox",
                                     "visible": true,
                                     "options": {
-                                        "text": "The AVS accelerator will create the following tags by default: <br/> - Service Workload (ServiceWorkload): defaults to Azure VMware Solution. <br/> <br/> - Service Workload Short (ServiceWorkload): defaults to AVS. <br/> - Creation time (CreationTimeUTC): deployment time in UTC. <br/> <br/> - Creation time Short (CreationTimeUTC): deployment time in UTC in mm/dd/yyyy format.",
+                                        "text": "The AVS accelerator will create the following tags by default: <br/> - Service Workload (ServiceWorkload): defaults to Azure VMware Solution. <br/> - Service Workload Short (ServiceWorkload): defaults to AVS. <br/> - Creation time (CreationTimeUTC): deployment time in UTC. <br/> - Creation time Short (CreationTimeUTC): deployment time in UTC in mm/dd/yyyy format.",
                                         "link": {
                                             "label": "",
                                             "uri": "",
@@ -1442,7 +1442,7 @@
                                     "toolTip": "This input will be the value of a tag named Department, reference the department that owns the deployment.",
                                     "placeholder": "Example: Contoso-AVS",
                                     "constraints": {
-                                        "required": true,
+                                        "required": false,
                                         "regex": "^[a-z0-9A-Z-]{1,256}$",
                                         "validationMessage": "Value must be 1-256 characters."
                                     }
@@ -1454,7 +1454,7 @@
                                     "toolTip": "This input will be the value of a tag named Owner, reference to the organizational owner of the Azure Virtual Desktop deployment.",
                                     "placeholder": "Example: workload-owner@contoso.com",
                                     "constraints": {
-                                        "required": true
+                                        "required": false
                                     }
                                 },
                                 {
@@ -1464,7 +1464,7 @@
                                     "toolTip": "This input will be the value of a tag named CostCenter, reference to the cost center of owner team.",
                                     "placeholder": "Example: Contoso-CC",
                                     "constraints": {
-                                        "required": true,
+                                        "required": false,
                                         "regex": "^[a-z0-9A-Z-]{1,256}$",
                                         "validationMessage": "Value must be 1-256 characters."
                                     }
