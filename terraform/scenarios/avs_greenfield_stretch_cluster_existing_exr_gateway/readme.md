@@ -1,4 +1,4 @@
-# Implement AVS Stretch Cluster with intergration to existing ExpressRoute Gateway
+# Implement AVS Stretch Cluster with integration to existing ExpressRoute Gateway
 
 ## Table of contents
 

@@ -22,7 +22,7 @@ This folder contains subfolders for each sample module.  A summary of each scena
 az account show
 ```
 
-5. Change directory to the root Terraform module folder for your deployement
+5. Change directory to the root Terraform module folder for your deployment
 
 
 1. Run `terraform init` to initialize this directory

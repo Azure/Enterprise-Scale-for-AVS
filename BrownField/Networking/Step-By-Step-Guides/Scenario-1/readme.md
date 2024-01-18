@@ -29,7 +29,7 @@ Names and IP ranges used in this guide are examples, and you may need to customi
 
 2. A secured vWAN hub
 
-3. An AVS environment with 2 servers running a web site (Instructions provided below)
+3. An AVS environment with 2 servers running a web site (We will walk through how to create a vNet and add two servers running IIS).
 
 4. A connection to on-premises network via ExpressRoute. Alternatively, this can be simulated with an ExpressRoute (ExR) connection from another vNet to
    the vWAN hub. This will use the optional virtual network gateway mentioned above.
@@ -134,7 +134,7 @@ In this section we will connect the Scenario-1-Jumpbox-vNet and AVS to the vWAN 
 
 If no AVS environment is available, then you can (sort of) simulate the connection by adding an ExpressRoute gateway to the "GatewaySubnet" subnet created in part 1 and another vNet with two IIS (or other web servers) attached. See the appendix for a high level overview of the process.
 
-There is a video on configuring AVS located here: <https://youtu.be/F6ZMsZHDTtE>.
+There is a video on configuring AVS located on [YouTube](https://youtu.be/F6ZMsZHDTtE).
 
 1. Connect the Scenario-1-Jumpbox-vNet to the vWAN Hub.
 

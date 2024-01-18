@@ -2,10 +2,16 @@
 
 ## Table of contents
 
-- [Scenario Details](#scenario-details)
-- [Scenario Implementation - Automation Options](#automation-implementation)
-- [Scenario Implementation - Manual Steps](#scenario-implementation-with-manual-steps)
-- [Appendix](#appendix)
+- [Implement AVS with an existing VWAN hub](#implement-avs-with-an-existing-vwan-hub)
+  - [Table of contents](#table-of-contents)
+  - [Scenario Details](#scenario-details)
+    - [Overview](#overview)
+    - [Naming](#naming)
+    - [Internet Ingress/Egress](#internet-ingressegress)
+    - [Assumptions](#assumptions)
+  - [Automation implementation](#automation-implementation)
+  - [Scenario implementation with manual steps](#scenario-implementation-with-manual-steps)
+  - [Appendix](#appendix)
 
 
 ## Scenario Details
@@ -20,7 +26,7 @@ This scenario is meant for customers who want to implement a new AVS private clo
 Resource naming is configured by using local variables at the top of the root module.  Each name is configured to use a static prefix value that is provided via an input variable and a randomly generated 4 character suffix for uniqueness. It is expected that many customers will find this naming to be inconsistent with their unique corporate naming conventions, so all the names are maintained in the locals for simplicity in modifying the naming during deployment. 
 
 ### Internet Ingress/Egress
-Internet ingress and egress to AVS will leverage the existing customer VWAN configuration. This requires that the existing VWAN routing tables will manage the 0.0.0.0/0 route being propogated to AVS. This scenario does not create any additional routing table associations on the AVS expressRoute connection, so if any additional VWAN route tables need to be associated beyond the default route table those will need to be added to the expressRoute connection resource.
+Internet ingress and egress to AVS will leverage the existing customer VWAN configuration. This requires that the existing VWAN routing tables will manage the 0.0.0.0/0 route being propagated to AVS. This scenario does not create any additional routing table associations on the AVS expressRoute connection, so if any additional VWAN route tables need to be associated beyond the default route table those will need to be added to the expressRoute connection resource.
 
 ### Assumptions
 
@@ -51,8 +57,8 @@ These steps represent deploying a configuration using the portal and vcenter.
     - Do not enable the internet access toggle as this will be managed in the existing VWAN hub
     - Upon deployment completion, create an initial expressroute authorization key for attaching to the Hub ExpressRoute Gateway
 - Create a new **ExpressRoute connection** linking AVS to the existing ExpressRoute Gateway in the VWAN hub
-    - Configure any addtional route table associations if required to ensure the 0.0.0.0/0 route gets propogated to AVS
-    - Enable the **Propogate Default Route** on the AVS expressRoute connection
+    - Configure any additional route table associations if required to ensure the 0.0.0.0/0 route gets propagated to AVS
+    - Enable the **Propagate Default Route** on the AVS expressRoute connection
 - Create **Service Health Alerts** for the AVS SLA related items
     Name    | Description | Metric | SplitDimension | Threshold | Severity 
     ---     | :---:       | :---:  | :---:          | :---:     | :---:

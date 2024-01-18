@@ -57,7 +57,7 @@ _The JumpboxPassword can be removed from this file, as we will be passing it in 
   - `azureServiceConnectionName` - This should be set to match the name of service connection setup as part of the prerequisites.
   - `location` - This should be modified to match the region you wish to deploy to.
   - `pool: name` - This should be modified to match the build agent pool you wish to use for deployment.
-  - `environment` - This should be modified to represent the name of the enviroment you are deploying to, this will be used to add a deployment gate.
+  - `environment` - This should be modified to represent the name of the environment you are deploying to, this will be used to add a deployment gate.
 
 - Once completed, ensure the files are saved and push all changes via your Git client. It is recommended to check within Azure DevOps to ensure the files have successfully been pushed.
 _For this example, we have pushed straight to the main branch, but you do have the option to push to a feature branch and then merge changes in via Pull Requests._
@@ -81,7 +81,7 @@ _For this example, we have pushed straight to the main branch, but you do have t
 
 - Before running the pipeline we need to add a secret variable for the jumpbox password. Select the Variables button in the top right, click "add a new variable", and add a new variable named `JumpboxPassword`. Select the "Keep this value secret" option before clicking ok. Click Save.  
 __Important: You will need ensure this password meets the [minimum requirements for VM passwords](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/faq#what-are-the-password-requirements-when-creating-a-vm-)__  
-_If you are not deploying a jumpbox as part of this process, you can either skip this step and remove the jumpboxPassword parameter from the pipeline yml file or configure it with a blank value._
+_If you are not deploying a jumpbox as part of this process, you can either skip this step and remove the jumpboxPassword parameter from the pipeline YAML file or configure it with a blank value._
 
 - In the top right corner, select click "Run" to create the pipeline and kick off execution. If you want to save the pipeline but not run it, use the drop-down next to Run and select Save.
 
