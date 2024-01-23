@@ -390,6 +390,7 @@
                             "defaultValue": "",
                             "toolTip": "",
                             "constraints": {
+                                "required": true,
                                 "allowedValues": "[map(filter(steps('azureNetwork').virtualNetworkGatewaysApi.value, (item) => contains(first(item.properties.ipConfigurations).properties.subnet.id, steps('azureNetwork').VnetSelectorId.name)), (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                             }
                         },
