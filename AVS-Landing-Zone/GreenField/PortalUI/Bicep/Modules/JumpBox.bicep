@@ -11,6 +11,7 @@ param VNetName string
 param JumpboxSubnet string
 param JumpboxSku string
 param operatingSystemSKU string = ''
+param HighPerformance bool
 param BastionSubnet string
 param BootstrapJumpboxVM bool = false
 param BootstrapPath string
@@ -49,6 +50,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     Password: Password
     VMSize: JumpboxSku
     operatingSystemSKU: operatingSystemSKU
+    HighPerformance: HighPerformance
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand

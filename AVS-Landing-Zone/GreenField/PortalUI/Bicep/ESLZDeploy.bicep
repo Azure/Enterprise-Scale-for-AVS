@@ -72,6 +72,8 @@ param JumpboxSku string = 'Standard_B2ms'
 ])
 param operatingSystemSKU string = 'win2019'
 
+@description('Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking')
+param HighPerformance bool
 
 //Jumpbox Bootstrap OS
 param BootstrapJumpboxVM bool = false
@@ -219,6 +221,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
+    HighPerformance: HighPerformance
     operatingSystemSKU: operatingSystemSKU
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath

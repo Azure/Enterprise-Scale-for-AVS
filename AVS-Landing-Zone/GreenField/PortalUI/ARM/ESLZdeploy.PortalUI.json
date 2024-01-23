@@ -1185,7 +1185,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "visible": true,
                                     "options": {
-                                        "text": "The AVS accelerator uses the Prefix below to provide automated resource naming based on Microsoft best practices. To set specific names for certain resources as per your own naming standards, select Yes to Custom Naming below. Note, custom naming fields will appear based on selections in other tabs",
+                                        "text": "The AVS accelerator uses the Prefix below to provide automated resource naming based on Microsoft best practices. To set specific names for certain resources as per your own naming standards, select Yes to Custom Naming below. Note, custom naming fields will appear below based on selections in other tabs",
                                         "link": {
                                             "label": "",
                                             "uri": ""
