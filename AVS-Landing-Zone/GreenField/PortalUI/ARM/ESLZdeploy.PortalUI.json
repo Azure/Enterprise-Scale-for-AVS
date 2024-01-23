@@ -54,6 +54,7 @@
                                 {
                                     "name": "avsPrerequisites2",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "visible": false,
                                     "options": {
                                         "text": "Before you start, you must request AVS quota allocation for your subscription",
                                         "link": {
@@ -65,6 +66,7 @@
                                 {
                                     "name": "avsPrerequisites3",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "visible": false,
                                     "options": {
                                         "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
                                         "link": {
@@ -76,6 +78,7 @@
                                 {
                                     "name": "avsPrerequisites4",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "visible": false,
                                     "options": {
                                         "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
                                         "link": {
@@ -87,6 +90,7 @@
                                 {
                                     "name": "avsPrerequisites5",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "visible": false,
                                     "options": {
                                         "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
                                         "link": {
