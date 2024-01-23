@@ -94,7 +94,25 @@
                                             "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
                                         }
                                     }
-                                }
+                                },
+                                {
+                                    "name": "avsPrerequisites6",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "options": {
+                                        "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are a CSP customer, use Microsoft Partner Center to make this available for your customers.",
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
+                                        "style": "Info"
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites7",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "options": {
+                                        "text": "Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion..",
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist",
+                                        "style": "Info"
+                                    }
+                                }        
                             ]
                         },
                         {
