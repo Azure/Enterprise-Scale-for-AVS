@@ -179,6 +179,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     PrivateCloudSKU: PrivateCloudSKU
     DeployPrivateCloud : DeployPrivateCloud
     ExistingPrivateCloudResourceId : ExistingPrivateCloudResourceId
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -194,6 +195,7 @@ module AzureNetworking 'Modules/AzureNetworking.bicep' = if (DeployNetworking) {
     ExistingGatewayName : ExistingGatewayName
     NewVNetAddressSpace: NewVNetAddressSpace
     NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -264,7 +266,8 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
     PrivateCloudResourceId: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
     ExistingWorkspaceId: ExistingWorkspaceId
     ExistingStorageAccountId: ExistingStorageAccountId
-    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  }
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  
+  }
 }
 
 module Addons 'Modules/AVSAddons.bicep' = if ((DeployHCX) || (DeploySRM)) {

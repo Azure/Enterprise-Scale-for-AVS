@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "16897679980748182137"
+      "templateHash": "11192972379703892129"
     }
   },
   "parameters": {
@@ -446,7 +446,8 @@
           },
           "ExistingPrivateCloudResourceId": {
             "value": "[parameters('ExistingPrivateCloudResourceId')]"
-          }
+          },
+          "tags": "[if(parameters('avsUseCustomTagging'), createObject('value', union(variables('varCustomResourceTags'), variables('varAVSDefaultTags'))), createObject('value', variables('varAVSDefaultTags')))]"
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
@@ -455,7 +456,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "9756863023770852398"
+              "templateHash": "8514603870887010528"
             }
           },
           "parameters": {
@@ -486,6 +487,9 @@
             },
             "ExistingPrivateCloudResourceId": {
               "type": "string"
+            },
+            "tags": {
+              "type": "object"
             }
           },
           "resources": [
@@ -494,7 +498,8 @@
               "type": "Microsoft.Resources/resourceGroups",
               "apiVersion": "2021-04-01",
               "name": "[parameters('PrivateCloudResourceGroupName')]",
-              "location": "[parameters('Location')]"
+              "location": "[parameters('Location')]",
+              "tags": "[parameters('tags')]"
             },
             {
               "condition": "[parameters('DeployPrivateCloud')]",
@@ -525,6 +530,9 @@
                   },
                   "ManagementClusterSize": {
                     "value": "[parameters('PrivateCloudHostCount')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -534,7 +542,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.24.24.22086",
-                      "templateHash": "2234730685956260162"
+                      "templateHash": "9309159906237048806"
                     }
                   },
                   "parameters": {
@@ -556,6 +564,9 @@
                     },
                     "Location": {
                       "type": "string"
+                    },
+                    "tags": {
+                      "type": "object"
                     }
                   },
                   "resources": [
@@ -573,7 +584,8 @@
                         "managementCluster": {
                           "clusterSize": "[parameters('ManagementClusterSize')]"
                         }
-                      }
+                      },
+                      "tags": "[parameters('tags')]"
                     }
                   ],
                   "outputs": {
@@ -648,7 +660,8 @@
           },
           "NewVnetNewGatewaySubnetAddressPrefix": {
             "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
-          }
+          },
+          "tags": "[if(parameters('avsUseCustomTagging'), createObject('value', union(variables('varCustomResourceTags'), variables('varAVSDefaultTags'))), createObject('value', variables('varAVSDefaultTags')))]"
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
@@ -657,7 +670,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "6534273006985720145"
+              "templateHash": "8817063218673557070"
             }
           },
           "parameters": {
@@ -696,6 +709,9 @@
             "ExistingGatewayName": {
               "type": "string",
               "defaultValue": "AVS-SEA-gw"
+            },
+            "tags": {
+              "type": "object"
             }
           },
           "variables": {
@@ -707,7 +723,8 @@
               "type": "Microsoft.Resources/resourceGroups",
               "apiVersion": "2021-04-01",
               "name": "[parameters('NewNetworkResourceGroupName')]",
-              "location": "[parameters('Location')]"
+              "location": "[parameters('Location')]",
+              "tags": "[parameters('tags')]"
             },
             {
               "condition": "[not(parameters('VNetExists'))]",
@@ -735,6 +752,9 @@
                   },
                   "NewVnetNewGatewaySubnetAddressPrefix": {
                     "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -744,7 +764,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.24.24.22086",
-                      "templateHash": "10307127275166334888"
+                      "templateHash": "17158836313627762431"
                     }
                   },
                   "parameters": {
@@ -767,6 +787,9 @@
                     "NewNetworkName": {
                       "type": "string",
                       "defaultValue": ""
+                    },
+                    "tags": {
+                      "type": "object"
                     }
                   },
                   "variables": {
@@ -792,7 +815,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "tags": "[parameters('tags')]"
                     },
                     {
                       "type": "Microsoft.Network/publicIPAddresses",
@@ -805,7 +829,8 @@
                       "sku": {
                         "name": "Standard",
                         "tier": "Regional"
-                      }
+                      },
+                      "tags": "[parameters('tags')]"
                     },
                     {
                       "type": "Microsoft.Network/virtualNetworkGateways",
@@ -833,6 +858,7 @@
                           }
                         ]
                       },
+                      "tags": "[parameters('tags')]",
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]",
                         "[resourceId('Microsoft.Network/virtualNetworks', parameters('NewNetworkName'))]"

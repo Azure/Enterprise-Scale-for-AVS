@@ -5,7 +5,7 @@ param NewVNetAddressSpace string
 param NewVnetNewGatewaySubnetAddressPrefix string
 param NewGatewaySku string = 'Standard'
 param NewNetworkName string = ''
-
+param tags object
 
 //var NewVNetName = '${Prefix}-vnet'
 var NewVnetNewGatewayName = '${Prefix}-vgw'
@@ -29,6 +29,7 @@ resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
     }
     ]
   }
+  tags: tags
 }
 
 resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = {
@@ -41,6 +42,7 @@ resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = {
     name: 'Standard'
     tier: 'Regional'
   }
+  tags: tags
 }
 
 //New Gateway Workflow
@@ -68,6 +70,7 @@ resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01'
       }
     ]
   }
+  tags: tags
 }
 
 output VNetName string = NewVNet.name

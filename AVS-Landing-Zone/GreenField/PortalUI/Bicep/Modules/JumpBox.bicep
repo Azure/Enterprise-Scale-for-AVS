@@ -17,8 +17,6 @@ param BootstrapJumpboxVM bool = false
 param BootstrapPath string
 param BootstrapCommand string
 
-
-
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'
   scope: resourceGroup(VNetResourceGroup)

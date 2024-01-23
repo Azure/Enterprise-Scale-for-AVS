@@ -9,12 +9,14 @@ param PrivateCloudSKU string
 param PrivateCloudHostCount int
 param DeployPrivateCloud bool
 param ExistingPrivateCloudResourceId string
+param tags object
 
 //var DeployNew = empty(ExistingPrivateCloudId)
 
 resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = if (DeployPrivateCloud) {
   name: PrivateCloudResourceGroupName
   location: Location
+  tags: tags
 }
 
 module PrivateCloud 'AVSCore/PrivateCloud.bicep' = if (DeployPrivateCloud) {
@@ -27,6 +29,7 @@ module PrivateCloud 'AVSCore/PrivateCloud.bicep' = if (DeployPrivateCloud) {
     NetworkBlock: PrivateCloudAddressSpace
     SKUName: PrivateCloudSKU
     ManagementClusterSize: PrivateCloudHostCount
+    tags: tags
   }
 }
 
