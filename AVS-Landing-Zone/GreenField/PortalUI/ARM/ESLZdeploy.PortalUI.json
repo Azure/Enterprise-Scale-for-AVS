@@ -7,7 +7,7 @@
             "steps": [
                 {
                     "name": "basics",
-                    "label": "Azure core setup",
+                    "label": "Azure Core setup",
                     "subLabel": {
                         "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
                         "postValidation": "Done"
@@ -1386,7 +1386,7 @@
                                     "type": "Microsoft.Common.InfoBox",
                                     "visible": true,
                                     "options": {
-                                        "text": "The AVS accelerator will create the following tags by default: <br/> - Service Workload (ServiceWorkload): defaults to Azure VMware Solution. <br/> - Service Workload Short (ServiceWorkload): defaults to AVS. <br/> - Creation time (CreationTimeUTC): deployment time in UTC. <br/> - Creation time Short (CreationTimeUTC): deployment time in UTC in mm/dd/yyyy format.",
+                                        "text": "The AVS accelerator will create the following tags by default: <br/> - Service Workload (ServiceWorkload): defaults to Azure VMware Solution. <br/> - Creation time (CreationTimeUTC): deployment time in UTC. <br/> - Creation time Short (CreationTimeUTC): deployment time in UTC in mm/dd/yyyy format.",
                                         "link": {
                                             "label": "",
                                             "uri": "",
@@ -1400,7 +1400,7 @@
                             "name": "CustomTagging",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Custom Tagging",
+                            "label": "Custom Additional Tags",
                             "defaultValue": "No",
                             "toolTip": "Create additional common tags with your custom inputs",
                             "constraints": {
