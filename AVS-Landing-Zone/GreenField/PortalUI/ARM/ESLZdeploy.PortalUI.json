@@ -1109,7 +1109,7 @@
                             "type": "Microsoft.Common.TextBlock",
                             "visible": "[equals(steps('Addons').deploySRM, true)]",
                             "options": {
-                                "text": "Placeholder for SRM info.",
+                                "text": "Install SRM in your private cloud to enable disaster recovery. SRM requires a 'BYOL' license key as part of the install.",
                                 "link": {
                                     "label": "Learn more",
                                     "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
