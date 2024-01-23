@@ -558,7 +558,14 @@
                             "name": "BootstrapJumpboxVM",
                             "type": "Microsoft.Common.CheckBox",
                             "label": "BootStrap VM",
-                            "toolTip": "Bootstrap VM and install PowerCLI, VMRC, Powershell. This will only work for Windows based VMs, not Linux",
+                            "toolTip": "Optional: Bootstrap VM and install PowerCLI, VMRC, Powershell. This will only work for Windows based VMs, not Linux",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]"
+                        },
+                        {
+                            "name": "HighPerformanceVM",
+                            "type": "Microsoft.Common.CheckBox",
+                            "label": "HighPerformance VM",
+                            "toolTip": "Optional: Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking",
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]"
                         },
                         {
@@ -1520,6 +1527,7 @@
                 "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
                 "JumpboxPassword": "[steps('azureNetwork').jumpboxCredentials.JumpboxPassword.password]",
                 "operatingSystemSKU": "[steps('azureNetwork').operatingSystemSKU]",
+                "HighPerformance": "[steps('azureNetwork').HighPerformanceVM]",
                 "BootstrapJumpboxVM": "[steps('azureNetwork').BootstrapJumpboxVM]",
                 "DeployMonitoring": "[steps('Monitoring').DeployMonitoring]",
                 "DeployWorkbook": "[steps('Monitoring').AVSWorkbook.DeployAVSWorkbook]",
