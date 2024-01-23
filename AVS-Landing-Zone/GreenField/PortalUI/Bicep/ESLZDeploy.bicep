@@ -73,7 +73,7 @@ param JumpboxSku string = 'Standard_B2ms'
 param operatingSystemSKU string = 'win2019'
 
 @description('Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking')
-param HighPerformance bool
+param HighPerformance bool = false
 
 //Jumpbox Bootstrap OS
 param BootstrapJumpboxVM bool = false

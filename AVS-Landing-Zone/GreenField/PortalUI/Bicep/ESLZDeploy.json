@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "11192972379703892129"
+      "templateHash": "12120459696499889783"
     }
   },
   "parameters": {
@@ -195,6 +195,7 @@
     },
     "HighPerformance": {
       "type": "bool",
+      "defaultValue": false,
       "metadata": {
         "description": "Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking"
       }
