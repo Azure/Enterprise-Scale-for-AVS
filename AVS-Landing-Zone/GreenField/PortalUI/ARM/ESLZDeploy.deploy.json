@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "13171790574912873909"
+      "templateHash": "1990099298317708582"
     }
   },
   "parameters": {
@@ -1712,7 +1712,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "17835921223904315805"
+              "templateHash": "13516352872998781238"
             }
           },
           "parameters": {
@@ -1784,6 +1784,9 @@
                   },
                   "ActionGroupEmails": {
                     "value": "[parameters('AlertEmails')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -1793,7 +1796,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.24.24.22086",
-                      "templateHash": "4368139761753968116"
+                      "templateHash": "59088036161112938"
                     }
                   },
                   "parameters": {
@@ -1802,6 +1805,9 @@
                     },
                     "ActionGroupEmails": {
                       "type": "string"
+                    },
+                    "tags": {
+                      "type": "object"
                     }
                   },
                   "resources": [
@@ -1820,7 +1826,8 @@
                             "useCommonAlertSchema": false
                           }
                         ]
-                      }
+                      },
+                      "tags": "[parameters('tags')]"
                     }
                   ],
                   "outputs": {
