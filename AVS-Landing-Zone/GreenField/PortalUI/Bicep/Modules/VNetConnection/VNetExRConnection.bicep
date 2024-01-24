@@ -6,6 +6,7 @@ param Location string
 param ExpressRouteAuthorizationKey string
 @secure()
 param ExpressRouteId string
+param tags object
 
 resource Gateway 'Microsoft.Network/virtualNetworkGateways@2021-02-01' existing = {
   name: GatewayName
@@ -26,6 +27,7 @@ resource Connection 'Microsoft.Network/connections@2021-02-01' = {
     }
     authorizationKey: ExpressRouteAuthorizationKey
   }
+  tags: tags
 }
 
 output ExRConnectionResourceId string = Connection.id

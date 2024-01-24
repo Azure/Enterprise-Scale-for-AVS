@@ -42,6 +42,7 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = if (DeployMetricAle
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
+    tags: tags
   }
 }
 
@@ -52,6 +53,7 @@ module ServiceHealth 'Monitoring/ServiceHealth.bicep' = if (DeployServiceHealth)
     ActionGroupResourceId: ((DeployMetricAlerts) || (DeployServiceHealth)) ? ActionGroup.outputs.ActionGroupResourceId : ''
     AlertPrefix: PrivateCloudName
     PrivateCloudResourceId: PrivateCloudResourceId
+    tags: tags
   }
 }
 

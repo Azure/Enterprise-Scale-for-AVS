@@ -120,6 +120,7 @@ resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = i
       commandToExecute: BootstrapCommand
     }
   }
+  tags: tags
 }
 
 output JumpboxResourceId string = VM.id

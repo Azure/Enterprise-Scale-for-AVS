@@ -7,6 +7,7 @@ param StorageUsageThreshold int
 param CPUCriticalThreshold int = 80
 param MemoryCriticalThreshold int = 80
 param StorageCriticalThreshold int = 75
+param tags object
 
 var Alerts = [
   {
@@ -100,4 +101,5 @@ resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert i
       }
     ]
   }
+  tags: tags
 }]

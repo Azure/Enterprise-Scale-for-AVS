@@ -208,6 +208,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking) {
     PrivateCloudName: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName 
     Location: Location
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 

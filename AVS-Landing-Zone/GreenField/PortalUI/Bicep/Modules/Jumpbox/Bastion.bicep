@@ -12,6 +12,7 @@ resource BastionPIP 'Microsoft.Network/publicIpAddresses@2020-05-01' = {
   properties: {
     publicIPAllocationMethod: 'Static'
   }
+  tags: tags
 }
 
 resource bastionHost 'Microsoft.Network/bastionHosts@2020-05-01' = {

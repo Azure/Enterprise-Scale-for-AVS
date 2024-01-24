@@ -1,6 +1,7 @@
 param AlertPrefix string
 param ActionGroupResourceId string
 param PrivateCloudResourceId string
+param tags object
 
 // Deploy service health alerts
 resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
@@ -41,4 +42,5 @@ resource ServiceHealthAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = 
       ]
     }
   }
+  tags: tags
 }
