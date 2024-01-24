@@ -28,6 +28,7 @@ module ActionGroup 'Monitoring/ActionGroup.bicep' = if ((DeployMetricAlerts) || 
   params: {
     Prefix: Prefix
     ActionGroupEmails: AlertEmails
+    tags: tags
   }
 }
 
