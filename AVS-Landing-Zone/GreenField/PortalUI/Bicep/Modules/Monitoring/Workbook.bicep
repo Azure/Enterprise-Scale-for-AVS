@@ -1,5 +1,6 @@
 param Location string
 param Prefix string
+param tags object
 
 @description('The unique guid for this workbook instance')
 param workbookId string = newGuid()
@@ -2169,6 +2170,7 @@ resource workbookId_resource 'microsoft.insights/workbooks@2021-03-08' = {
     category: 'workbook'
   }
   dependsOn: []
+  tags: tags
 }
 
 output workbookId string = workbookId_resource.id

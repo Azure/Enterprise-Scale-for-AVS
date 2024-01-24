@@ -16,6 +16,7 @@ param BastionSubnet string
 param BootstrapJumpboxVM bool = false
 param BootstrapPath string
 param BootstrapCommand string
+param tags object
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'
@@ -34,6 +35,7 @@ module Bastion 'JumpBox/Bastion.bicep' = {
     Prefix: Prefix
     SubnetId: Subnet.outputs.BastionSubnetId
     Location: Location
+    tags: tags
   }
 }
 
@@ -52,6 +54,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    tags: tags
   }
 }
 

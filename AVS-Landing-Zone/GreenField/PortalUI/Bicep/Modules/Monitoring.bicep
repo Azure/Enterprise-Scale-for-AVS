@@ -13,11 +13,13 @@ param PrivateCloudResourceId string
 param CPUUsageThreshold int
 param MemoryUsageThreshold int
 param StorageUsageThreshold int
+param tags object
 
 
 resource MonitoringResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: MonitoringResourceGroupName
   location: Location
+  tags: tags
 }
 
 module ActionGroup 'Monitoring/ActionGroup.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth)) {
@@ -68,5 +70,6 @@ module Workbook 'Monitoring/Workbook.bicep' = if (DeployWorkbook) {
   params:{
     Location: Location
     Prefix: Prefix
+    tags: tags
   }
 }

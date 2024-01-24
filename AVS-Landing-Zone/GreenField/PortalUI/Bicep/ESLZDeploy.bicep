@@ -228,6 +228,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -247,6 +248,7 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMonitoring)
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 

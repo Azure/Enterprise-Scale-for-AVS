@@ -10,6 +10,7 @@ param HighPerformance bool
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
+param tags object
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'
@@ -64,6 +65,7 @@ resource Nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
     ]
     enableAcceleratedNetworking: HighPerformance
   }
+  tags: tags
 }
 
 resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
@@ -100,6 +102,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
       ]
     }
   }
+  tags: tags
 }
 
 resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = if(BootstrapVM) {
