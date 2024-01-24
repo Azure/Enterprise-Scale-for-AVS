@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "1990099298317708582"
+      "templateHash": "7706842430603381050"
     }
   },
   "parameters": {
@@ -1712,7 +1712,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "13516352872998781238"
+              "templateHash": "12315812551371092777"
             }
           },
           "parameters": {
@@ -2133,6 +2133,9 @@
                   },
                   "PrivateCloudName": {
                     "value": "[parameters('PrivateCloudName')]"
+                  },
+                  "tags": {
+                    "value": "[parameters('tags')]"
                   }
                 },
                 "template": {
@@ -2142,7 +2145,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.24.24.22086",
-                      "templateHash": "2194922399679609395"
+                      "templateHash": "17368684049664092558"
                     }
                   },
                   "parameters": {
@@ -2154,6 +2157,9 @@
                     },
                     "PrivateCloudResourceId": {
                       "type": "string"
+                    },
+                    "tags": {
+                      "type": "object"
                     }
                   },
                   "variables": {
@@ -2460,9 +2466,7 @@
                           }
                         }
                       },
-                      "tags": {
-                        "hidden-title": "AVS-Dashboard"
-                      }
+                      "tags": "[parameters('tags')]"
                     }
                   ]
                 }

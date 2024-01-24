@@ -62,6 +62,7 @@ module Dashboard 'Monitoring/Dashboard.bicep' = if (DeployDashboard) {
     Location: Location
     PrivateCloudResourceId: PrivateCloudResourceId
     PrivateCloudName: PrivateCloudName
+    tags: tags
   }
 }
 

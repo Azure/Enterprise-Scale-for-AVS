@@ -1,6 +1,7 @@
 param Location string
 param PrivateCloudName string
 param PrivateCloudResourceId string
+param tags object
 
 var DashboardHeading = {
   position: {
@@ -307,7 +308,5 @@ resource Dashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
       }
     }
   }
-  tags:{
-    'hidden-title': 'AVS-Dashboard'
-  }
+  tags: tags
 }
