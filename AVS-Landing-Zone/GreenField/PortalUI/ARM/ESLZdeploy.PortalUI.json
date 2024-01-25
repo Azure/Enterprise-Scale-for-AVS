@@ -1460,9 +1460,7 @@
                                     "toolTip": "Specify the environment type such as Prod, Non Prod etc.",
                                     "placeholder": "Example: Production",
                                     "constraints": {
-                                        "required": false,
-                                        "regex": "^[a-z0-9A-Z-]{1,256}$",
-                                        "validationMessage": "Value must be 1-256 characters."
+                                        "required": false
                                     }
                                 },
                                 {
@@ -1472,9 +1470,7 @@
                                     "toolTip": "This input will be the value of a tag named Department, reference the department that owns the deployment.",
                                     "placeholder": "Example: Contoso-AVS",
                                     "constraints": {
-                                        "required": false,
-                                        "regex": "^[a-z0-9A-Z-]{1,256}$",
-                                        "validationMessage": "Value must be 1-256 characters."
+                                        "required": false
                                     }
                                 },
                                 {
@@ -1494,9 +1490,7 @@
                                     "toolTip": "This input will be the value of a tag named CostCenter, reference to the cost center of owner team.",
                                     "placeholder": "Example: Contoso-CC",
                                     "constraints": {
-                                        "required": false,
-                                        "regex": "^[a-z0-9A-Z-]{1,256}$",
-                                        "validationMessage": "Value must be 1-256 characters."
+                                        "required": false
                                     }
                                 }
                             ]
