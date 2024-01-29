@@ -11,12 +11,12 @@ param VNetName string
 param JumpboxSubnet string
 param JumpboxSku string
 param operatingSystemSKU string = ''
+param HighPerformance bool
 param BastionSubnet string
 param BootstrapJumpboxVM bool = false
 param BootstrapPath string
 param BootstrapCommand string
-
-
+param tags object
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   name: 'Jumpbox-Subnet'
@@ -35,6 +35,7 @@ module Bastion 'JumpBox/Bastion.bicep' = {
     Prefix: Prefix
     SubnetId: Subnet.outputs.BastionSubnetId
     Location: Location
+    tags: tags
   }
 }
 
@@ -49,9 +50,11 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     Password: Password
     VMSize: JumpboxSku
     operatingSystemSKU: operatingSystemSKU
+    HighPerformance: HighPerformance
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    tags: tags
   }
 }
 

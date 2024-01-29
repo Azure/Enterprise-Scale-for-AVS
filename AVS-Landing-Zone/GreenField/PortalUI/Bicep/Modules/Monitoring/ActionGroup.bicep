@@ -1,5 +1,6 @@
 param Prefix string
 param ActionGroupEmails string
+param tags object
 
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   name: '${Prefix}-ActionGroup'
@@ -15,6 +16,7 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
       }
   ]
   }
+  tags: tags
 }
 
 output ActionGroupResourceId string = ActionGroup.id

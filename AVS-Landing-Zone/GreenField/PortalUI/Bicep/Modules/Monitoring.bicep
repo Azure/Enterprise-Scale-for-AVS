@@ -13,11 +13,13 @@ param PrivateCloudResourceId string
 param CPUUsageThreshold int
 param MemoryUsageThreshold int
 param StorageUsageThreshold int
+param tags object
 
 
 resource MonitoringResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: MonitoringResourceGroupName
   location: Location
+  tags: tags
 }
 
 module ActionGroup 'Monitoring/ActionGroup.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth)) {
@@ -26,6 +28,7 @@ module ActionGroup 'Monitoring/ActionGroup.bicep' = if ((DeployMetricAlerts) || 
   params: {
     Prefix: Prefix
     ActionGroupEmails: AlertEmails
+    tags: tags
   }
 }
 
@@ -39,6 +42,7 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = if (DeployMetricAle
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
+    tags: tags
   }
 }
 
@@ -49,6 +53,7 @@ module ServiceHealth 'Monitoring/ServiceHealth.bicep' = if (DeployServiceHealth)
     ActionGroupResourceId: ((DeployMetricAlerts) || (DeployServiceHealth)) ? ActionGroup.outputs.ActionGroupResourceId : ''
     AlertPrefix: PrivateCloudName
     PrivateCloudResourceId: PrivateCloudResourceId
+    tags: tags
   }
 }
 
@@ -59,6 +64,7 @@ module Dashboard 'Monitoring/Dashboard.bicep' = if (DeployDashboard) {
     Location: Location
     PrivateCloudResourceId: PrivateCloudResourceId
     PrivateCloudName: PrivateCloudName
+    tags: tags
   }
 }
 
@@ -68,5 +74,6 @@ module Workbook 'Monitoring/Workbook.bicep' = if (DeployWorkbook) {
   params:{
     Location: Location
     Prefix: Prefix
+    tags: tags
   }
 }

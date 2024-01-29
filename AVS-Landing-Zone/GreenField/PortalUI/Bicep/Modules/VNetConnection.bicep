@@ -7,6 +7,7 @@ param PrivateCloudName string
 param NetworkResourceGroup string
 param GatewayName string
 param Location string
+param tags object
 
 module AVSExRAuthorization 'VNetConnection/AVSAuthorization.bicep' = {
   scope: resourceGroup(PrivateCloudResourceGroup)
@@ -26,6 +27,7 @@ module VNetExRConnection 'VNetConnection/VNetExRConnection.bicep' = {
     ExpressRouteAuthorizationKey: AVSExRAuthorization.outputs.ExpressRouteAuthorizationKey
     ExpressRouteId: AVSExRAuthorization.outputs.ExpressRouteId
     Location: Location
+    tags: tags
   }
 }
 

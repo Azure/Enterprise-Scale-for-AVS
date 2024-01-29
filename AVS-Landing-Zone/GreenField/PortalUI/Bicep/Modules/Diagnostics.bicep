@@ -11,16 +11,17 @@ param DeployActivityLogDiagnostics bool = false
 param EnableAVSLogsStorageSetting bool = false
 param ExistingWorkspaceId string
 param ExistingStorageAccountId string
-param StorageRetentionDays int
 param DeployWorkspace bool
 param DeployStorageAccount bool
-
+@sys.description('Tags to be applied to resources')
+param tags object
 
 var PrivateCloudResourceGroupName = split(PrivateCloudResourceId,'/')[4]
 
-resource LoggingResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource LoggingResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = if ((DeployWorkspace) || (DeployStorageAccount)) {
   name: LoggingResourceGroupName
   location: Location
+  tags: tags
 }
 
 resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing = {
@@ -33,6 +34,7 @@ module Workspace 'Diagnostics/Workspace.bicep' = if ((DeployWorkspace)) {
   params: {
     Location: Location
     NewWorkspaceName: NewWorkspaceName
+    tags: tags
   }
 }
 
@@ -42,6 +44,7 @@ module Storage 'Diagnostics/Storage.bicep' = if (DeployStorageAccount) {
   params: {
     Location: Location
     NewStorageAccountName: NewStorageAccountName
+    tags: tags
   }
 }
 
@@ -54,7 +57,6 @@ module AVSDiagnostics 'Diagnostics/AVSDiagnostics.bicep' = if ((EnableAVSLogsWor
     StorageAccountid : DeployStorageAccount ? Storage.outputs.StorageAccountid : ExistingStorageAccountId
     EnableAVSLogsWorkspaceSetting : EnableAVSLogsWorkspaceSetting
     EnableAVSLogsStorageSetting : EnableAVSLogsStorageSetting
-    StorageRetentionDays : StorageRetentionDays
   }
 }
 

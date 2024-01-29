@@ -72,6 +72,8 @@ param JumpboxSku string = 'Standard_B2ms'
 ])
 param operatingSystemSKU string = 'win2019'
 
+@description('Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking')
+param HighPerformance bool = false
 
 //Jumpbox Bootstrap OS
 param BootstrapJumpboxVM bool = false
@@ -106,7 +108,6 @@ param NewStorageAccountName string = ''
 param DeployStorageAccount bool = false
 param ExistingWorkspaceId string = ''
 param ExistingStorageAccountId string = ''
-param StorageRetentionDays int = 1
 
 //Addons
 @description('Should HCX be deployed as part of the deployment')
@@ -143,7 +144,28 @@ var customLoggingResourceGroupName = avsUseCustomNaming ? LoggingResourceGroupNa
 var customWorkspaceName = avsUseCustomNaming ? NewWorkspaceName : '${Prefix}-log'
 var customStorageAccountName = avsUseCustomNaming ? NewStorageAccountName : uniquestorageaccountname
 
+//Custom Tagging
+@description('Optional. AVS resources custom tagging. (Default: false)')
+param time string = utcNow()
+param timeShort string = utcNow('d')
+param avsUseCustomTagging bool = false
+param environmentTag string = ''
+param departmentTag string = ''
+param ownerTag string = ''
+param costCenterTag string = ''
 
+var varAVSDefaultTags = {
+  ServiceWorkload: 'AVS'
+  CreationTimeUTC: time
+  CreationTimeUTCShort: timeShort
+}
+
+var varCustomResourceTags = avsUseCustomTagging ? {
+  Environment: environmentTag
+  Department: departmentTag
+  Owner: ownerTag
+  CostCenter: costCenterTag
+} : {}
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
@@ -157,6 +179,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     PrivateCloudSKU: PrivateCloudSKU
     DeployPrivateCloud : DeployPrivateCloud
     ExistingPrivateCloudResourceId : ExistingPrivateCloudResourceId
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -172,6 +195,7 @@ module AzureNetworking 'Modules/AzureNetworking.bicep' = if (DeployNetworking) {
     ExistingGatewayName : ExistingGatewayName
     NewVNetAddressSpace: NewVNetAddressSpace
     NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -184,6 +208,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking) {
     PrivateCloudName: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName 
     Location: Location
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -199,10 +224,12 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
+    HighPerformance: HighPerformance
     operatingSystemSKU: operatingSystemSKU
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -222,6 +249,7 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMonitoring)
     CPUUsageThreshold: CPUUsageThreshold
     MemoryUsageThreshold: MemoryUsageThreshold
     StorageUsageThreshold: StorageUsageThreshold
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -241,7 +269,7 @@ module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
     PrivateCloudResourceId: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
     ExistingWorkspaceId: ExistingWorkspaceId
     ExistingStorageAccountId: ExistingStorageAccountId
-    StorageRetentionDays: StorageRetentionDays
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  
   }
 }
 

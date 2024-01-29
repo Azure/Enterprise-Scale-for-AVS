@@ -1,6 +1,7 @@
 param Prefix string
 param SubnetId string
 param Location string
+param tags object
 
 resource BastionPIP 'Microsoft.Network/publicIpAddresses@2020-05-01' = {
   name: '${Prefix}-bastion-pip'
@@ -11,6 +12,7 @@ resource BastionPIP 'Microsoft.Network/publicIpAddresses@2020-05-01' = {
   properties: {
     publicIPAllocationMethod: 'Static'
   }
+  tags: tags
 }
 
 resource bastionHost 'Microsoft.Network/bastionHosts@2020-05-01' = {
@@ -31,4 +33,5 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2020-05-01' = {
       }
     ]
   }
+  tags: tags
 }

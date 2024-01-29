@@ -6,9 +6,11 @@ param Username string
 param Password string
 param VMSize string
 param operatingSystemSKU string = ''
+param HighPerformance bool
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
+param tags object
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'
@@ -61,7 +63,9 @@ resource Nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
         }
       }
     ]
+    enableAcceleratedNetworking: HighPerformance
   }
+  tags: tags
 }
 
 resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
@@ -86,7 +90,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
-          storageAccountType: 'Standard_LRS'
+          storageAccountType: HighPerformance ? 'Premium_LRS' : 'Standard_LRS'
         }
       }
     }
@@ -98,6 +102,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
       ]
     }
   }
+  tags: tags
 }
 
 resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = if(BootstrapVM) {
@@ -115,6 +120,7 @@ resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = i
       commandToExecute: BootstrapCommand
     }
   }
+  tags: tags
 }
 
 output JumpboxResourceId string = VM.id

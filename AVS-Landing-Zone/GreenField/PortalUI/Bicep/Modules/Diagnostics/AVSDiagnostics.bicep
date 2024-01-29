@@ -1,7 +1,6 @@
 param PrivateCloudName string = ''
 param Workspaceid string = ''
 param StorageAccountid string = ''
-param StorageRetentionDays int
 
 param EnableAVSLogsWorkspaceSetting bool
 param EnableAVSLogsStorageSetting bool
@@ -40,20 +39,12 @@ resource StorageAccountDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-0
       {
         category: 'AllMetrics'
         enabled: true
-        retentionPolicy: {
-          days: StorageRetentionDays
-          enabled: true
-        }
       }
     ]
     logs: [
       {
         category: 'VMwareSyslog'
         enabled: true
-        retentionPolicy: {
-          days: StorageRetentionDays
-          enabled: true
-        }
       }
     ]
   }
