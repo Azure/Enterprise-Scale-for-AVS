@@ -1211,8 +1211,8 @@
                             "placeholder": "Example: AVS",
                             "constraints": {
                                 "required": true,
-                                "regex": "^[a-z0-9A-Z-]{1,8}$",
-                                "validationMessage": "The prefix must be 1-8 characters."
+                                "regex": "^[a-z0-9A-Z-]{1,16}$",
+                                "validationMessage": "The prefix must be 1-16 characters."
                             }
                         },
                         {
