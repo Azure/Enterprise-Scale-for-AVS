@@ -35,6 +35,8 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-Monitoring-Workbook -c 
 ## Next Steps
 
 [Configure Alerts](../AVS-Utilization-Alerts/)
+[AVS Quota for a single region](../AVS-Workbook/avsquotaSingleRegion.md)
+[AVS Quota for multiple regions](../AVS-Workbook/avsquotaMultiRegion.md)
 
 ## Screenshots
 

@@ -1,0 +1,254 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "type": "string",
+            "defaultValue": "AVS Quota Workbook",
+            "metadata": {
+                "description": "Azure VMware Solution Workbook - Quota"
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('resourceName')]",
+            "type": "microsoft.insights/workbooktemplates",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-10-17-preview",
+            "dependsOn": [],
+            "properties": {
+                "galleries": [
+                    {
+                        "name": "AVS Quota Workbook",
+                        "category": "Azure VMware Solution",
+                        "order": 100,
+                        "type": "workbook",
+                        "resourceType": "Azure Monitor"
+                    }
+                ],
+                "templateData": {
+                    "version": "Notebook/1.0",
+                    "items": [
+                        {
+                        "type": 9,
+                        "content": {
+                            "version": "KqlParameterItem/1.0",
+                            "parameters": [
+                            {
+                                "id": "34a66395-c681-44be-9143-e428c91613ca",
+                                "version": "KqlParameterItem/1.0",
+                                "name": "Subscription",
+                                "type": 6,
+                                "isRequired": true,
+                                "isGlobal": true,
+                                "multiSelect": true,
+                                "quote": "'",
+                                "delimiter": ",",
+                                "typeSettings": {
+                                "additionalResourceOptions": [
+                                    "value::all"
+                                ],
+                                "includeAll": true,
+                                "showDefault": false
+                                },
+                                "timeContext": {
+                                "durationMs": 86400000
+                                },
+                                "defaultValue": "value::all",
+                                "value": [
+                                "/subscriptions/d52f9c4a-5468-47ec-9641-da4ef1916bb5"
+                                ]
+                            },
+                            {
+                                "id": "c5bf2746-649d-437e-839b-8346608fde5c",
+                                "version": "KqlParameterItem/1.0",
+                                "name": "Location",
+                                "type": 8,
+                                "isRequired": true,
+                                "isGlobal": true,
+                                "typeSettings": {
+                                "additionalResourceOptions": [],
+                                "includeAll": true,
+                                "showDefault": false
+                                },
+                                "timeContext": {
+                                "durationMs": 86400000
+                                },
+                                "value": "uksouth"
+                            },
+                            {
+                                "id": "a13d58f0-d558-43ad-af5b-f1d84d9c5c5c",
+                                "version": "KqlParameterItem/1.0",
+                                "name": "Regions",
+                                "type": 8,
+                                "isRequired": true,
+                                "isGlobal": true,
+                                "multiSelect": true,
+                                "quote": "'",
+                                "delimiter": ",",
+                                "isHiddenWhenLocked": true,
+                                "typeSettings": {
+                                "additionalResourceOptions": [
+                                    "value::all"
+                                ],
+                                "includeAll": true,
+                                "showDefault": false
+                                },
+                                "defaultValue": "value::all"
+                            },
+                            {
+                                "id": "ac48a649-43c1-4bee-8cc9-f1ca31a2a0d1",
+                                "version": "KqlParameterItem/1.0",
+                                "name": "HideGetDataStep",
+                                "type": 1,
+                                "isGlobal": true,
+                                "isHiddenWhenLocked": true
+                            }
+                            ],
+                            "style": "pills",
+                            "queryType": 0,
+                            "resourceType": "microsoft.operationalinsights/workspaces"
+                        },
+                        "name": "parameters - 3"
+                        },
+                        {
+                        "type": 11,
+                        "content": {
+                            "version": "LinkItem/1.0",
+                            "style": "tabs",
+                            "links": [
+                            {
+                                "id": "acef9155-699c-44d3-9297-fc05b59c8a07",
+                                "cellValue": "selTab",
+                                "linkTarget": "parameter",
+                                "linkLabel": "General",
+                                "subTarget": "General",
+                                "style": "link"
+                            }
+                            ]
+                        },
+                        "name": "links - 0"
+                        },
+                        {
+                        "type": 12,
+                        "content": {
+                            "version": "NotebookGroup/1.0",
+                            "groupType": "editable",
+                            "items": [
+                            {
+                                "type": 12,
+                                "content": {
+                                "version": "NotebookGroup/1.0",
+                                "groupType": "editable",
+                                "items": [
+                                    {
+                                    "type": 3,
+                                    "content": {
+                                        "version": "KqlItem/1.0",
+                                        "query": "Resources\r\n| where type =~ 'Microsoft.AVS/privateClouds'\r\n",
+                                        "size": 0,
+                                        "queryType": 1,
+                                        "resourceType": "microsoft.resourcegraph/resources",
+                                        "crossComponentResources": [
+                                        "value::all"
+                                        ]
+                                    },
+                                    "name": "query - 0"
+                                    }
+                                ]
+                                },
+                                "conditionalVisibility": {
+                                "parameterName": "paramGeneral",
+                                "comparison": "isEqualTo",
+                                "value": "General"
+                                },
+                                "name": "group - 1"
+                            },
+                            {
+                                "type": 3,
+                                "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "{\"version\":\"ARMEndpoint/1.0\",\"data\":null,\"headers\":[],\"method\":\"POST\",\"path\":\"/subscriptions/{Subscription:id}/providers/Microsoft.AVS/locations/{Location:value}/checkQuotaAvailability\",\"urlParams\":[{\"key\":\"api-version\",\"value\":\"2023-09-01-preview\"}],\"batchDisabled\":true,\"transformers\":[{\"type\":\"jsonpath\",\"settings\":{\"tablePath\":\"\",\"columns\":[{\"path\":\"$.hostsRemaining\",\"columnid\":\"Region\",\"substringRegexMatch\":\"^.+$\",\"substringReplace\":\"{Location:value}\"},{\"path\":\"$.quotaEnabled\",\"columnid\":\"QuotaStatus\",\"columnType\":\"string\"},{\"path\":\"$.hostsRemaining.he\",\"columnid\":\"AV36\",\"columnType\":\"long\"},{\"path\":\"$.hostsRemaining.he2\",\"columnid\":\"AV36P\",\"columnType\":\"long\"},{\"path\":\"$.hostsRemaining.gp\",\"columnid\":\"AV36T\",\"columnType\":\"long\"},{\"path\":\"$.hostsRemaining.hv\",\"columnid\":\"AV52\",\"columnType\":\"long\"},{\"path\":\"$.hostsRemaining.av64\",\"columnid\":\"AV64\",\"columnType\":\"long\"}]}}]}",
+                                "size": 4,
+                                "title": "Quota Information for {Location:label}",
+                                "queryType": 12,
+                                "gridSettings": {
+                                    "labelSettings": [
+                                    {
+                                        "columnId": "QuotaStatus",
+                                        "label": "Quota Status"
+                                    }
+                                    ]
+                                },
+                                "sortBy": []
+                                },
+                                "conditionalVisibility": {
+                                "parameterName": "HideGetDataStep",
+                                "comparison": "isEqualTo",
+                                "value": "0"
+                                },
+                                "name": "Get Data"
+                            },
+                            {
+                                "type": 3,
+                                "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "{\"version\":\"Merge/1.0\",\"merges\":[{\"id\":\"db6cd177-6c52-48f7-b057-551fecf300ce\",\"mergeType\":\"table\",\"leftTable\":\"Get Data\"}],\"projectRename\":[{\"originalName\":\"[Get Data].Region\",\"mergedName\":\"Region\",\"fromId\":\"unknown\"},{\"originalName\":\"[Get Data].QuotaStatus\",\"mergedName\":\"Quota Status\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Get Data].AV36\",\"mergedName\":\"AV36\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Get Data].AV36P\",\"mergedName\":\"AV36P\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Get Data].AV36T\",\"mergedName\":\"AV36T\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Get Data].AV52\",\"mergedName\":\"AV52\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Get Data].AV64\",\"mergedName\":\"AV64\",\"fromId\":\"db6cd177-6c52-48f7-b057-551fecf300ce\"},{\"originalName\":\"[Added column]\",\"mergedName\":\"Total\",\"fromId\":null,\"isNewItem\":true,\"newItemData\":[{\"criteriaContext\":{\"leftOperand\":\"AV36\",\"operator\":\"isNotNull\",\"rightValType\":\"static\",\"rightVal\":\"0\",\"resultValType\":\"expression\",\"resultVal\":\"[\\\"AV36\\\"] + [\\\"AV36P\\\"] + [\\\"AV36T\\\"] + [\\\"AV52\\\"] + [\\\"AV64\\\"]\"}},{\"criteriaContext\":{\"operator\":\"Default\",\"rightValType\":\"column\",\"resultValType\":\"column\"}}]},{\"originalName\":\"[Get Data].Region\",\"mergedName\":\"Region\",\"fromId\":\"unknown\"}]}",
+                                "size": 4,
+                                "title": "Quota Information for {Location:label}",
+                                "queryType": 7,
+                                "visualization": "table",
+                                "sortBy": []
+                                },
+                                "showPin": false,
+                                "name": "Merge Data"
+                            },
+                            {
+                                "type": 3,
+                                "content": {
+                                "version": "KqlItem/1.0",
+                                "query": "{\"version\":\"Merge/1.0\",\"merges\":[{\"id\":\"8b4d290a-0215-49a5-9787-4cb038861186\",\"mergeType\":\"table\",\"leftTable\":\"Merge Data\"}],\"projectRename\":[{\"originalName\":\"[Merge Data].Region\",\"mergedName\":\"Region\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].Quota Status\",\"mergedName\":\"Quota Status\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].AV36\",\"mergedName\":\"AV36\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].AV36P\",\"mergedName\":\"AV36P\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].AV36T\",\"mergedName\":\"AV36T\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].AV52\",\"mergedName\":\"AV52\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].AV64\",\"mergedName\":\"AV64\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"},{\"originalName\":\"[Merge Data].Total\",\"mergedName\":\"Total\",\"fromId\":\"8b4d290a-0215-49a5-9787-4cb038861186\"}]}",
+                                "size": 0,
+                                "queryType": 7,
+                                "visualization": "map",
+                                "mapSettings": {
+                                    "locInfo": "AzureLoc",
+                                    "locInfoColumn": "Region",
+                                    "sizeSettings": "Total",
+                                    "sizeAggregation": "Sum",
+                                    "minSize": 1,
+                                    "minData": 0,
+                                    "defaultSize": 1,
+                                    "legendMetric": "Total",
+                                    "legendAggregation": "Sum",
+                                    "itemColorSettings": {
+                                    "nodeColorField": "Total",
+                                    "colorAggregation": "Sum",
+                                    "type": "heatmap",
+                                    "heatmapPalette": "greenRed"
+                                    }
+                                }
+                                },
+                                "showPin": false,
+                                "name": "Display Map"
+                            }
+                            ]
+                        },
+                        "conditionalVisibility": {
+                            "parameterName": "selTab",
+                            "comparison": "isEqualTo",
+                            "value": "General"
+                        },
+                        "name": "GeneralGroup"
+                        }
+                    ],
+                    "fallbackResourceIds": [
+                        "Azure Monitor"
+                    ],
+                    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+                    }
+            }
+        }
+    ]
+}
