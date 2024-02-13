@@ -32,8 +32,9 @@ $pipSKU = $jumpbox.bastion.pip.sku
 $pipAllocationMethod = $jumpbox.bastion.pip.pipallocationmethod
 $pipIpAddressVersion = $jumpbox.bastion.pip.ipaddressversion
 $bastionName = $jumpbox.bastion.name
-$vnetName = $networking.hubAndSpoke.hubvnetname
-$vnetLocation = $networking.hubAndSpoke.location
+
+$vnetName = $jumpbox.bastion.vnetname
+$vnetLocation = $jumpbox.bastion.location
 
 $ip = @{
     Name = $pipName

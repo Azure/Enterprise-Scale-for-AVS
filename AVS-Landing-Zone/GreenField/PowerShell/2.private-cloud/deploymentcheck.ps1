@@ -1,8 +1,10 @@
 # get variables
-Write-Output "Reading variables"
-$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
+#Write-Output "Reading variables"
+#$variables = Get-Content ..\variables\variables.json | ConvertFrom-Json
 
-
+$variablesPath = $rootFolder + "\variables\variables.json"
+$variables = Get-Content -path $variablesPath | ConvertFrom-Json
+$variables
 ## private cloud variables
 $privateCloud = $variables.PrivateCloud
 $privateCloudRgName = $privateCloud.resourcegroupname
