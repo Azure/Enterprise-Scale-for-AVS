@@ -6,7 +6,7 @@ data "azurerm_vmware_private_cloud" "hcx_private_cloud" {
 
 #deploy the hcx addon
 resource "azapi_resource" "hcx_addon" {
-  type = "Microsoft.AVS/privateClouds/addons@2021-12-01"
+  type = "Microsoft.AVS/privateClouds/addons@2022-05-01"
   #Resource Name must match the addonType
   name      = "HCX"
   parent_id = data.azurerm_vmware_private_cloud.hcx_private_cloud.id

@@ -1,0 +1,76 @@
+Section: IOS configuration
+!Configure Interfaces
+interface GigabitEthernet1
+ no shutdown
+ ip address dhcp
+ no mop enabled
+ no mop sysid
+ speed 10000
+!
+interface GigabitEthernet2
+ no shutdown
+ ip address dhcp
+ no mop enabled
+ no mop sysid
+ speed 10000
+!
+router bgp ${asn}
+ bgp router-id ${router_id}
+ bgp log-neighbor-changes
+ neighbor ${fw_ars_ip_0} remote-as 65515
+ neighbor ${fw_ars_ip_0} ebgp-multihop 8
+ neighbor ${fw_ars_ip_1} remote-as 65515
+ neighbor ${fw_ars_ip_1} ebgp-multihop 8
+ neighbor ${avs_ars_ip_0} remote-as 65515
+ neighbor ${avs_ars_ip_0} ebgp-multihop 8
+ neighbor ${avs_ars_ip_1} remote-as 65515
+ neighbor ${avs_ars_ip_1} ebgp-multihop 8
+!
+ address-family ipv4 
+  aggregate-address ${avs_network_subnet} ${avs_network_mask} as-set summary-only
+  neighbor ${fw_ars_ip_0} activate
+  neighbor ${fw_ars_ip_0} route-map FROMHUB in
+  neighbor ${fw_ars_ip_0} route-map BLOCKHUBROUTE out
+  neighbor ${fw_ars_ip_1} activate
+  neighbor ${fw_ars_ip_1} route-map FROMHUB in
+  neighbor ${fw_ars_ip_1} route-map BLOCKHUBROUTE out
+  neighbor ${avs_ars_ip_0} activate
+  neighbor ${avs_ars_ip_0} route-map FROMAVS in
+  neighbor ${avs_ars_ip_0} route-map BLOCKAVSROUTE out
+  neighbor ${avs_ars_ip_1} activate
+  neighbor ${avs_ars_ip_1} route-map FROMAVS in
+  neighbor ${avs_ars_ip_1} route-map BLOCKAVSROUTE out
+exit-address-family
+!
+ip as-path access-list 22 permit ${avs_hub_replacement_asn}
+ip as-path access-list 22 permit ${avs_hub_replacement_asn}_
+ip as-path access-list 33 permit ${fw_hub_replacement_asn}
+ip as-path access-list 33 permit ${fw_hub_replacement_asn}_
+!
+route-map FROMHUB permit 10
+  set as-path replace 65515
+  set as-path replace 12076
+  !!! The following line can be removed in customer scenarios without two connecting AVS environments
+  ${onprem_avs} set as-path replace 398656
+  set as-path prepend ${fw_hub_replacement_asn}
+!
+route-map BLOCKHUBROUTE deny 10
+match as-path 33
+route-map BLOCKHUBROUTE permit 20
+!
+route-map FROMAVS permit 10
+  set as-path replace 65515
+  set as-path replace 12076
+  !!! The following line can be removed in customer scenarios without two connecting AVS environments
+  ${onprem_avs} set as-path replace 398656
+  set as-path prepend ${avs_hub_replacement_asn}
+!
+route-map BLOCKAVSROUTE deny 10
+match as-path 22  
+route-map BLOCKAVSROUTE permit 20
+!
+ip route ${fw_ars_ip_0} 255.255.255.255 ${csr_fw_facing_subnet_gw}
+ip route ${fw_ars_ip_1} 255.255.255.255 ${csr_fw_facing_subnet_gw}
+ip route ${avs_ars_ip_0} 255.255.255.255 ${csr_avs_facing_subnet_gw}
+ip route ${avs_ars_ip_1} 255.255.255.255 ${csr_avs_facing_subnet_gw}
+!

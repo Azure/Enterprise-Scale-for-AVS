@@ -10,6 +10,10 @@ param Location string = deployment().location
 //Private Cloud
 @description('Set this to false if the Private Cloud already exists')
 param DeployPrivateCloud bool = false
+@description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
+param PrivateCloudName string = '${Prefix}-sddc'
+@description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
+param PrivateCloudResourceGroupName string = '${Prefix}-PrivateCloud'
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string = ''
 @description('The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying')
@@ -20,7 +24,7 @@ param PrivateCloudAddressSpace string = ''
   'AV36PT'
   'AV52'
 ])
-param PrivateCloudSKU string = 'AV36'
+param PrivateCloudSKU string = 'AV36P'
 @description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')
 param PrivateCloudHostCount int = 3
 @description('Existing Private Cloud Name')
@@ -29,26 +33,22 @@ param ExistingPrivateCloudName string = ''
 param ExistingPrivateCloudResourceId string = ''
 
 //Azure Networking
-@description('Set this to true if you are redeploying, and the VNet already exists')
-param VNetExists bool = false
 @description('A string value to skip the networking deployment')
 param DeployNetworking bool = false
 @description('Set this to true if you are redeploying, and the VNet already exists')
-param GatewayExists bool = false
-@description('Does the GatewaySubnet Exist')
-param GatewaySubnetExists bool = false
+param VNetExists bool = false
+@description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
+param NewNetworkResourceGroupName string = '${Prefix}-Network'
+@description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
+param NewNetworkName string = '${Prefix}-vnet'
 @description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
 param NewVNetAddressSpace string = ''
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param NewVnetNewGatewaySubnetAddressPrefix string = ''
-@description('The Existing VNet name')
-param ExistingVnetName string = ''
+@description('The Existing Gateway name')
+param ExistingNetworkResourceId string = ''
 @description('The Existing Gateway name')
 param ExistingGatewayName string = ''
-@description('The existing vnet gatewaysubnet id')
-param ExistingGatewaySubnetId string = ''
-@description('The existing vnet new gatewaysubnet prefix')
-param ExistingVnetNewGatewaySubnetPrefix string = ''
 
 //Jumpbox
 @description('Should a Jumpbox & Bastion be deployed to access the Private Cloud')
@@ -61,35 +61,57 @@ param JumpboxPassword string = ''
 @description('The subnet CIDR used for the Jumpbox VM Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param JumpboxSubnet string = ''
 @description('The sku to use for the Jumpbox VM, must have quota for this within the target region')
-param JumpboxSku string = 'Standard_D2s_v3'
+param JumpboxSku string = 'Standard_B2ms'
+@description('Set the OS version to use')
+@allowed([
+  'win2022'
+  'win2019'
+  'win11'
+  'win11ms'
+  'ubuntu2004gen2'
+])
+param operatingSystemSKU string = 'win2019'
+
+@description('Optional: Enable high performance attributes for VM, such as setting Storage to Premium and enabling Accelerated Networking')
+param HighPerformance bool = false
+
+//Jumpbox Bootstrap OS
+param BootstrapJumpboxVM bool = false
+@description('The path for Jumpbox VM bootstrap PowerShell script file (expecting "bootstrap.ps1" file)')
+param BootstrapPath string = 'https://raw.githubusercontent.com/shaunjacob/AVSLevelUpFY23/master/LevelUp/LZwtihAVS/Bicep/Bootstrap.ps1'
+@description('The command to trigger running the bootstrap script. If was not provided, then the expected script file name must be "bootstrap.ps1")')
+param BootstrapCommand string = 'powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1'
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
 
-//On-premise Networking
-@description('A boolean flag to deploy a Route Serrver or skip')
-param DeployRouteServer bool = false
-@description('A boolean flag to deploy a Route Serrver or skip')
-param RouteServerVNetName string = ''
-@description('Does a RouteServerSubnet exists?')
-param RouteServerSubnetExists bool = false
-@description('Flag to check onpremise connectivity method, ExpressRoute or VPN')
-param OnPremConnectivity string = ''
-@description('The subnet CIDR used for the RouteServer Subnet')
-param RouteServerSubnetPrefix string = ''
-
-//Monitoring
-@description('Deploy AVS Dashboard')
+// Monitoring Module Parameters
+param MonitoringResourceGroupName string = '${Prefix}-Operational'
+param DeployMonitoring bool = false
 param DeployDashboard bool = false
-@description('Deploy Azure Monitor metric alerts for your AVS Private Cloud')
 param DeployMetricAlerts bool = false
-@description('Deploy Service Health Alerts for AVS')
 param DeployServiceHealth bool = false
-@description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
 param AlertEmails string = ''
+param CPUUsageThreshold int = 60
+param MemoryUsageThreshold int = 60
+param StorageUsageThreshold int = 60
+
+//Diagnostic Module Parameters
+param LoggingResourceGroupName string = '${Prefix}-Operational'
+param DeployDiagnostics bool = false
+param EnableAVSLogsWorkspaceSetting bool = false
+param DeployActivityLogDiagnostics bool = false
+param EnableAVSLogsStorageSetting bool = false
+param DeployWorkbook bool = false
+param DeployWorkspace bool = false
+param NewWorkspaceName string = '${Prefix}-log'
+param NewStorageAccountName string = ''
+param DeployStorageAccount bool = false
+param ExistingWorkspaceId string = ''
+param ExistingStorageAccountId string = ''
 
 //Addons
 @description('Should HCX be deployed as part of the deployment')
-param DeployHCX bool = true
+param DeployHCX bool = false
 @description('Should SRM be deployed as part of the deployment')
 param DeploySRM bool = false
 @description('License key to be used if SRM is deployed')
@@ -102,20 +124,62 @@ param VRServerCount int = 1
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+param utc string = utcNow()
+
 //Variables
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 var varCuaid = '1cf4a3e3-529c-4fb2-ba6a-63dff7d71586'
+
+//Custom Naming
+@description('Optional. AVS resources custom naming. (Default: false)')
+param avsUseCustomNaming bool = true
+var PrefixLowercase = toLower(Prefix)
+var uniquestorageaccountname  = '${PrefixLowercase}${uniqueString(utc)}'
+var customPrivateCloudResourceGroupName = avsUseCustomNaming ? PrivateCloudResourceGroupName : '${Prefix}-PrivateCloud'
+var customSDDCName = avsUseCustomNaming ? PrivateCloudName : '${Prefix}-sddc'
+var customNetworkResourceGroupName = avsUseCustomNaming ? NewNetworkResourceGroupName : '${Prefix}-Network'
+var customNetworkName = avsUseCustomNaming ? NewNetworkName : '${Prefix}-vnet'
+var customMonitoringResourceGroupName = avsUseCustomNaming ? MonitoringResourceGroupName : '${Prefix}-Operational'
+var customLoggingResourceGroupName = avsUseCustomNaming ? LoggingResourceGroupName : '${Prefix}-Operational'
+var customWorkspaceName = avsUseCustomNaming ? NewWorkspaceName : '${Prefix}-log'
+var customStorageAccountName = avsUseCustomNaming ? NewStorageAccountName : uniquestorageaccountname
+
+//Custom Tagging
+@description('Optional. AVS resources custom tagging. (Default: false)')
+param time string = utcNow()
+param timeShort string = utcNow('d')
+param avsUseCustomTagging bool = false
+param environmentTag string = ''
+param departmentTag string = ''
+param ownerTag string = ''
+param costCenterTag string = ''
+
+var varAVSDefaultTags = {
+  ServiceWorkload: 'AVS'
+  CreationTimeUTC: time
+  CreationTimeUTCShort: timeShort
+}
+
+var varCustomResourceTags = avsUseCustomTagging ? {
+  Environment: environmentTag
+  Department: departmentTag
+  Owner: ownerTag
+  CostCenter: costCenterTag
+} : {}
 
 module AVSCore 'Modules/AVSCore.bicep' = {
   name: '${deploymentPrefix}-AVS'
   params: {
     Prefix: Prefix
     Location: Location
+    PrivateCloudName: customSDDCName
+    PrivateCloudResourceGroupName: customPrivateCloudResourceGroupName
     PrivateCloudAddressSpace: PrivateCloudAddressSpace
     PrivateCloudHostCount: PrivateCloudHostCount
     PrivateCloudSKU: PrivateCloudSKU
     DeployPrivateCloud : DeployPrivateCloud
     ExistingPrivateCloudResourceId : ExistingPrivateCloudResourceId
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -125,14 +189,13 @@ module AzureNetworking 'Modules/AzureNetworking.bicep' = if (DeployNetworking) {
     Prefix: Prefix
     Location: Location
     VNetExists: VNetExists
-    ExistingVnetName : ExistingVnetName
-    GatewayExists : GatewayExists
+    NewNetworkName: customNetworkName
+    NewNetworkResourceGroupName: customNetworkResourceGroupName
+    ExistingNetworkResourceId : ExistingNetworkResourceId
     ExistingGatewayName : ExistingGatewayName
-    GatewaySubnetExists : GatewaySubnetExists
-    ExistingGatewaySubnetId : ExistingGatewaySubnetId
-    ExistingVnetNewGatewaySubnetPrefix : ExistingVnetNewGatewaySubnetPrefix
     NewVNetAddressSpace: NewVNetAddressSpace
     NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
@@ -145,20 +208,9 @@ module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking) {
     PrivateCloudName: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName 
     Location: Location
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
-
-module RouteServer 'Modules/RouteServer.bicep' = if ((OnPremConnectivity == 'VPN') && (DeployRouteServer)) {
-  name: '${deploymentPrefix}-RouteServer'
-  params: {
-    Prefix: Prefix
-    Location: Location
-    VNetName: DeployNetworking ? AzureNetworking.outputs.VNetName : RouteServerVNetName
-    RouteServerSubnetPrefix : RouteServerSubnetPrefix
-    RouteServerSubnetExists : RouteServerSubnetExists
-  }
-}
-
 
 module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
   name: '${deploymentPrefix}-Jumpbox'
@@ -172,21 +224,52 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
     JumpboxSku: JumpboxSku
+    HighPerformance: HighPerformance
+    operatingSystemSKU: operatingSystemSKU
+    BootstrapJumpboxVM: BootstrapJumpboxVM
+    BootstrapPath: BootstrapPath
+    BootstrapCommand: BootstrapCommand
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
   }
 }
 
-module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth) || (DeployDashboard)) {
+module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMonitoring)) {
   name: '${deploymentPrefix}-Monitoring'
   params: {
     AlertEmails: AlertEmails
     Prefix: Prefix
-    PrimaryLocation: Location
+    Location: Location
+    MonitoringResourceGroupName : customMonitoringResourceGroupName
     DeployMetricAlerts : DeployMetricAlerts
     DeployServiceHealth : DeployServiceHealth
     DeployDashboard : DeployDashboard
-    PrimaryPrivateCloudName : DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
-    PrimaryPrivateCloudResourceId : DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
-    ExRConnectionResourceId : DeployNetworking ? VNetConnection.outputs.ExRConnectionResourceId : ''
+    DeployWorkbook : DeployWorkbook
+    PrivateCloudName : DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
+    PrivateCloudResourceId : DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
+    CPUUsageThreshold: CPUUsageThreshold
+    MemoryUsageThreshold: MemoryUsageThreshold
+    StorageUsageThreshold: StorageUsageThreshold
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags
+  }
+}
+
+module Diagnostics 'Modules/Diagnostics.bicep' = if ((DeployDiagnostics)) {
+  name: '${deploymentPrefix}-Diagnostics'
+  params: {
+    Location: Location
+    LoggingResourceGroupName: customLoggingResourceGroupName
+    EnableAVSLogsWorkspaceSetting: EnableAVSLogsWorkspaceSetting
+    DeployActivityLogDiagnostics: DeployActivityLogDiagnostics
+    EnableAVSLogsStorageSetting: EnableAVSLogsStorageSetting
+    DeployWorkspace: DeployWorkspace
+    NewWorkspaceName: customWorkspaceName
+    DeployStorageAccount: DeployStorageAccount
+    NewStorageAccountName: customStorageAccountName
+    PrivateCloudName: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudName : ExistingPrivateCloudName
+    PrivateCloudResourceId: DeployPrivateCloud ? AVSCore.outputs.PrivateCloudResourceId : ExistingPrivateCloudResourceId
+    ExistingWorkspaceId: ExistingWorkspaceId
+    ExistingStorageAccountId: ExistingStorageAccountId
+    tags: avsUseCustomTagging ? union(varCustomResourceTags, varAVSDefaultTags) : varAVSDefaultTags  
   }
 }
 

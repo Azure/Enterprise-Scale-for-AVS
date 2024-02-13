@@ -1,0 +1,11 @@
+  #This is a template file for the module
+  #Items that are bracketed are typically resource links to other module output
+  expressroute_pip_name           = "AVS_EXR_PIP"
+  expressroute_gateway_name       = "AVS_EXR_GW"
+  expressroute_gateway_sku        = "Standard"
+  rg_name                         = "AVS_Sample_RG"
+  rg_location                     = "Southeast Asia"
+  gateway_subnet_id               = "<resource_id_of_the_gateway_subnet>"
+  express_route_connection_name   = "AVS_EXR_Connection"
+  express_route_id                = "<resource_id_of_the_AVS_expressroute>"
+  express_route_authorization_key = "<authorization_key_of_the_AVS>"

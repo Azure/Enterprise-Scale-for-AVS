@@ -31,6 +31,11 @@ variable "route_server_subnet_id" {
   description = "The full resource id for the route server subnet"
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "List of the tags that will be assigned to each resource"
+}
+
 #################################################################
 # telemetry variables
 #################################################################

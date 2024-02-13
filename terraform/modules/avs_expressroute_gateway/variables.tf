@@ -29,19 +29,9 @@ variable "gateway_subnet_id" {
   description = "The full resource id for the subnet where the bastion will be deployed"
 }
 
-variable "express_route_connection_name" {
-  type        = string
-  description = "Azure resource name for the express_route connection to the AVS private cloud"
-}
-
-variable "express_route_id" {
-  type        = string
-  description = "Azure resource id for the AVS express_route"
-}
-
-variable "express_route_authorization_key" {
-  type        = string
-  description = "AVS private cloud express route authorization key"
+variable "tags" {
+  type        = map(string)
+  description = "List of the tags that will be assigned to each resource"
 }
 
 #################################################################

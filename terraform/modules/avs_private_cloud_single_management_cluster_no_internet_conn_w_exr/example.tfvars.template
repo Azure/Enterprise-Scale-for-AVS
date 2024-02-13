@@ -1,0 +1,12 @@
+  sddc_name                           = "TestSDDC"
+  sddc_sku                            = "av36"
+  management_cluster_size             = 3
+  rg_name                             = "Sample_resource_group_name"
+  rg_location                         = "Southeast Asia"
+  avs_network_cidr                    = "10.0.0.0/22"
+  expressroute_authorization_key_name = "TestSDDC-ExR-AuthKey"
+  tags                                = {Sample_key = "Sample_value"}
+  internet_enabled                    = false
+  hcx_enabled                         = true
+  hcx_key_names                       = ["keyname1", "keyname2"]
+  expressoute_gateway_id              = "<resource ID of the gateway>"

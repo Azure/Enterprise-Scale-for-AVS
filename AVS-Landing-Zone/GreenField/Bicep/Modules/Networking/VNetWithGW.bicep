@@ -36,10 +36,10 @@ resource GatewayPIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if (!VNet
   name: '${GatewayName}-PIP'
   location: Location
   properties: {
-    publicIPAllocationMethod: 'Dynamic'
+    publicIPAllocationMethod: 'Static'
   }
   sku: {
-    name: 'Basic'
+    name: 'Standard'
     tier: 'Regional'
   }
 }

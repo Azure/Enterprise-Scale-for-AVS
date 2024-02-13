@@ -1,50 +1,41 @@
 targetScope = 'subscription'
 
-param Location string
-param Prefix string
-param VNetExists bool
-param ExistingVnetName string
-param GatewayExists bool
-param ExistingGatewayName string
-param NewVNetAddressSpace string
-param NewVnetNewGatewaySubnetAddressPrefix string
-param GatewaySubnetExists bool
-param ExistingVnetNewGatewaySubnetPrefix string
-param ExistingGatewaySubnetId string
+param Location string = 'southeastasia'
+param Prefix string = 'SJTEST1'
+param VNetExists bool = true
+param NewNetworkResourceGroupName string = 'SJTESTNET1'
+param NewNetworkName string = 'SJTESTNET1-vnet'
+param NewVNetAddressSpace string = '10.111.0.0/16'
+param NewVnetNewGatewaySubnetAddressPrefix string = '10.111.0.0/24'
+param ExistingNetworkResourceId string = '/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/AVS-SEA-Network/providers/Microsoft.Network/virtualNetworks/AVS-SEA-vnet'
+param ExistingGatewayName string = 'AVS-SEA-gw'
+param tags object
 
+var ExistingNetworkResourceGroupName = split(ExistingNetworkResourceId,'/')[4]
 
-resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: '${Prefix}-Network'
+resource NewNetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = if (!VNetExists) {
+  name: NewNetworkResourceGroupName
   location: Location
+  tags: tags
 }
 
 module NewNetwork 'AzureNetworking/NewVNetWithGW.bicep' = if (!VNetExists) {
-  scope: NetworkResourceGroup
+  scope: NewNetworkResourceGroup
   name: '${deployment().name}-NewNetwork'
   params: {
     Prefix: Prefix
     Location: Location
+    NewNetworkName: NewNetworkName
     NewVNetAddressSpace: NewVNetAddressSpace
     NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+    tags: tags
   }
 }
 
-module ExistingNetwork 'AzureNetworking/ExistingVNetWithGW.bicep' = if (VNetExists) {
-  scope: NetworkResourceGroup
-  name: '${deployment().name}-ExistingNetwork'
-  params: {
-    Prefix: Prefix
-    Location: Location
-    ExistingVnetName : ExistingVnetName
-    GatewayExists : GatewayExists
-    ExistingGatewayName : ExistingGatewayName
-    GatewaySubnetExists : GatewaySubnetExists
-    ExistingGatewaySubnetId : ExistingGatewaySubnetId
-    ExistingVnetNewGatewaySubnetPrefix : ExistingVnetNewGatewaySubnetPrefix
-  }
-}
 
-output GatewayName string = (!VNetExists) ? NewNetwork.outputs.GatewayName : ExistingNetwork.outputs.GatewayName
-output VNetName string = (!VNetExists) ? NewNetwork.outputs.VNetName : ExistingNetwork.outputs.VNetName
-output VNetResourceId string = (!VNetExists) ? NewNetwork.outputs.VNetResourceId : ExistingNetwork.outputs.VNetResourceId
-output NetworkResourceGroup string = NetworkResourceGroup.name
+output GatewayName string = (!VNetExists) ? NewNetwork.outputs.GatewayName : ExistingGatewayName
+output VNetName string = (!VNetExists) ? NewNetwork.outputs.VNetName : 'none'
+output VNetResourceId string = (!VNetExists) ? NewNetwork.outputs.VNetResourceId : 'none'
+output NetworkResourceGroup string = (!VNetExists) ? NewNetworkResourceGroup.name : ExistingNetworkResourceGroupName
+output NetworkResourceGroupLocation string = (!VNetExists) ? NewNetworkResourceGroup.location : 'none'
+

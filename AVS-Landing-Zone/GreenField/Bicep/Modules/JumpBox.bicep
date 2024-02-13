@@ -11,7 +11,8 @@ param VNetName string
 param JumpboxSubnet string
 param JumpboxSku string
 param OSVersion string
-param BootstrapJumpboxVM bool = false
+param HighPerformance bool
+param BootstrapJumpboxVM bool
 param BootstrapPath string
 param BootstrapCommand string
 param BastionSubnet string
@@ -53,6 +54,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     Password: Password
     VMSize: JumpboxSku
     OSVersion: OSVersion
+    HighPerformance: HighPerformance
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
@@ -60,3 +62,4 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
 }
 
 output JumpboxResourceId string = VM.outputs.JumpboxResourceId
+output JumpboxSAMIPrincipalId string = VM.outputs.JumpboxSAMIPrincipalId

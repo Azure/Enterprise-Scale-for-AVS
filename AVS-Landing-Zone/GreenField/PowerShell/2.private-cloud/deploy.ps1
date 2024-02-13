@@ -25,7 +25,7 @@ $resourceGroupLocation = "germanywestcentral"
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## private cloud variables
-$sku = "av36"
+$sku = "av36P"
 $networkBlock = "192.168.48.0/22"
 $managementClusterSize = "3"
 $cloudName = "azps_test_cloud"

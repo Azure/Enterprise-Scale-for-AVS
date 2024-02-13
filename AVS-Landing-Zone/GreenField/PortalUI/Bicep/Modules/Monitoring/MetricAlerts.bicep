@@ -1,6 +1,13 @@
 param AlertPrefix string
 param ActionGroupResourceId string
 param PrivateCloudResourceId string
+param CPUUsageThreshold int
+param MemoryUsageThreshold int
+param StorageUsageThreshold int
+param CPUCriticalThreshold int = 80
+param MemoryCriticalThreshold int = 80
+param StorageCriticalThreshold int = 75
+param tags object
 
 var Alerts = [
   {
@@ -8,7 +15,7 @@ var Alerts = [
     Description: 'CPU Usage per Cluster'
     Metric: 'EffectiveCpuAverage'
     SplitDimension: 'clustername'
-    Threshold: 80
+    Threshold: CPUUsageThreshold
     Severity: 2
   }
   {
@@ -16,7 +23,7 @@ var Alerts = [
     Description: 'Memory Usage per Cluster'
     Metric: 'UsageAverage'
     SplitDimension: 'clustername'
-    Threshold: 80
+    Threshold: MemoryUsageThreshold
     Severity: 2
   }
   {
@@ -24,15 +31,31 @@ var Alerts = [
     Description: 'Storage Usage per Datastore'
     Metric: 'DiskUsedPercentage'
     SplitDimension: 'dsname'
-    Threshold: 70
+    Threshold: StorageUsageThreshold
     Severity: 2
   }
   {
+    Name: 'CPUCritical'
+    Description: 'CPU Critical Usage per Cluster'
+    Metric: 'EffectiveCpuAverage'
+    SplitDimension: 'clustername'
+    Threshold: CPUCriticalThreshold
+    Severity: 0
+  }
+  {
+    Name: 'MemoryCritical'
+    Description: 'Memory Critical Usage per Cluster'
+    Metric: 'UsageAverage'
+    SplitDimension: 'clustername'
+    Threshold: MemoryCriticalThreshold
+    Severity: 0
+  }
+  {
     Name: 'StorageCritical'
-    Description: 'Storage Usage per Datastore'
+    Description: 'Storage Critical Usage per Datastore'
     Metric: 'DiskUsedPercentage'
     SplitDimension: 'dsname'
-    Threshold: 75
+    Threshold: StorageCriticalThreshold
     Severity: 0
   }
 ]
@@ -78,4 +101,5 @@ resource MetricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = [for Alert i
       }
     ]
   }
+  tags: tags
 }]
