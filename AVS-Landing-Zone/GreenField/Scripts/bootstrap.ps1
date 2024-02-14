@@ -10,10 +10,10 @@ function Install-Applications {
     choco install powershell-core -y
     choco install 7zip -y
     choco install VMRC -y
+    choco install azure-cli -y
 
     #Optional
     #choco install vscode -y
-    #choco install azure-cli -y
     #choco install microsoftazurestorageexplorer -y
     
 }
