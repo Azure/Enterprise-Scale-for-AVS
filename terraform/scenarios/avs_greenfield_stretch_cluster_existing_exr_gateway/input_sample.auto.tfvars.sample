@@ -4,7 +4,7 @@
 
 prefix                  = "SDDC1"
 region                  = "Southeast Asia"
-sddc_sku                = "av36"
+sddc_sku                = "av36P"
 #the cluster size should be a minimum of 6 for the two 3 node clusters to build
 management_cluster_size = 6
 avs_network_cidr        = "192.168.0.0/22"

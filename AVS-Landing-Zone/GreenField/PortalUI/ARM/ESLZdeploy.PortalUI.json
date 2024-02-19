@@ -25,39 +25,8 @@
                             "name": "avsSharedServices",
                             "type": "Microsoft.Common.InfoBox",
                             "options": {
-                                "text": "The subscription and location selected in this step will be used to deploy the AVS Workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "text": "The subscription and location (Region) selected in this step will be used to deploy the AVS Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.)",
                                 "style": "Info"
-                            }
-                        },
-                        {
-                            "name": "avsWorkloadSubscription",
-                            "type": "Microsoft.Common.Section",
-                            "visible": true,
-                            "label": "Deployment Prefix",
-                            "elements": [
-                                {
-                                    "name": "info",
-                                    "type": "Microsoft.Common.TextBlock",
-                                    "options": {
-                                        "text": "This AVS Landing Zone Accelerator will create a defined resource group hierarchy in the chosen subscription with the prefix provided at this step. Each resource created as part of the deployment will also utilize this prefix in the name. For more details, click the link below ",
-                                        "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/AVS-Landing-Zone/GreenField"
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "name": "avsDeploymentPrefix",
-                            "type": "Microsoft.Common.TextBox",
-                            "label": "Deployment prefix",
-                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
-                            "placeholder": "Example: AVS",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^[a-z0-9A-Z-]{1,8}$",
-                                "validationMessage": "The prefix must be 1-8 characters."
                             }
                         },
                         {
@@ -65,7 +34,7 @@
                             "type": "Microsoft.Common.InfoBox",
                             "visible": true,
                             "options": {
-                                "text": "Azure AVS Landing Zones ARM deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "text": "Azure VMware Solution (AVS) AVS Landing Zone deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
                                 "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
                                 "style": "Warning"
                             }
@@ -132,18 +101,18 @@
                             "name": "DeployPrivateCloud",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Deploy Private Cloud",
+                            "label": "Deploy a new or choose an existing Private Cloud",
                             "defaultValue": "Yes",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
                                     {
-                                        "label": "Yes",
+                                        "label": "New",
                                         "value": true
                                     },
                                     {
-                                        "label": "No",
+                                        "label": "Existing",
                                         "value": false
                                     }
                                 ]
@@ -173,7 +142,7 @@
                                     "type": "Microsoft.Common.DropDown",
                                     "visible": true,
                                     "label": "AVS SKU",
-                                    "defaultValue": "AV36",
+                                    "defaultValue": "AV36P",
                                     "multiLine": true,
                                     "toolTip": "Ensure you select the correct SKU as per your quota request",
                                     "constraints": {
@@ -185,7 +154,7 @@
                                                 "value": "AV36"
                                             },
                                             {
-                                                "label": "AV36T",
+                                                "label": "AV36T (Trial SKU)",
                                                 "description": "",
                                                 "value": "AV36T"
                                             },
@@ -195,7 +164,7 @@
                                                 "value": "AV36P"
                                             },
                                             {
-                                                "label": "AV36PT",
+                                                "label": "AV36PT (Trial SKU)",
                                                 "description": "",
                                                 "value": "AV36PT"
                                             },
@@ -220,8 +189,17 @@
                                     "constraints": {
                                         "required": true
                                     }
-                                }
-                                
+                                },
+                                {
+                                    "name": "avsQuotaInfo",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": true,
+                                    "options": {
+                                        "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail.",
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
+                                        "style": "Warning"
+                                    }
+                                }                                
                             ]
                         },
                         {
@@ -241,6 +219,18 @@
                                             "subscription": "onBasics",
                                             "location": "onBasics"
                                         }
+                                    },
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "existingavsInfo",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "",
+                                    "options": {
+                                        "text": "The Private Cloud chosen in this step will be used for all the following modules",
+                                        "style": "Info"
                                     }
                                 }
                             ]
@@ -286,8 +276,8 @@
                             "name": "DeployNetworking",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Connect AVS to Azure VNet",
-                            "defaultValue": "Yes",
+                            "label": "Connect AVS to an Azure VNet",
+                            "defaultValue": "No (Skip)",
                             "toolTip": "Select Yes to continue with this step, or No to Skip",
                             "constraints": {
                                 "required": true,
@@ -308,7 +298,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').DeployNetworking, true)]",
                             "label": "Virtual Network",
-                            "defaultValue": "New",
+                            "defaultValue": "None",
                             "toolTip": "Select New to deploy a new virtual network, or choose an existing VNet",
                             "constraints": {
                                 "required": true,
@@ -363,102 +353,30 @@
                             }
                         },
                         {
-                            "name": "GatewayExists",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
-                            "label": "ExpressRoute Gateway",
-                            "defaultValue": "None",
-                            "toolTip": "Deploy a new ExpressRoute Gateway or choose an existing gateway. Gateway must be of type ExpressRoute",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "New",
-                                        "value": false
-                                    },
-                                    {
-                                        "label": "Existing",
-                                        "value": true
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "gatewaySelectorId",
-                            "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
-                            "label": "Select Existing ExpressRoute Gateway",
-                            "resourceType": "Microsoft.Network/virtualNetworkGateways",
-                            "constraints": {
-                                "required": true
-                            }
-                        },
-                        {
-                            "name": "GatewaySubnetExists",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').GatewayExists, false)]",
-                            "label": "Does a GatewaySubnet Exist?",
-                            "defaultValue": "none",
-                            "toolTip": "Ensure that the virtual network has a GatewaySubnet, otherwise the deployment will fail",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes",
-                                        "value": true
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": false
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "gatewaySubnetApi",
+                            "name": "virtualNetworkGatewaysApi",
                             "type": "Microsoft.Solutions.ArmApiControl",
                             "request": {
                                 "method": "GET",
-                                "path": "[concat(steps('azureNetwork').VnetSelectorId.id, '/subnets?api-version=2021-03-01')]"
+                                "path": "[concat(steps('basics').avsDeploymentScope.subscription.id, '/providers/Microsoft.Network/virtualNetworkGateways?api-version=2022-11-01')]"
                             }
                         },
                         {
-                            "name": "gatewaySubnetSubnetSelectorName",
-                            "label": "Subnet",
+                            "name": "virtualNetworkGateway",
                             "type": "Microsoft.Common.DropDown",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "Select Existing ExpressRoute Gateway",
                             "defaultValue": "",
-                            "toolTip": "Select the existing GatewaySubnet",
-                            "multiselect": false,
-                            "selectAll": false,
-                            "filter": true,
-                            "filterPlaceholder": "Filter items ...",
-                            "multiLine": true,
+                            "toolTip": "",
                             "constraints": {
-                                "allowedValues": "[map(steps('azureNetwork').gatewaySubnetApi.value,(item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.id, '\",\"description\":\"', 'Resource Group: ', last(take(split(item.id, '/'), 5)), '\"}')))]",
-                                "required": true
+                                "allowedValues": "[map(filter(steps('azureNetwork').virtualNetworkGatewaysApi.value, (item) => contains(first(item.properties.ipConfigurations).properties.subnet.id, steps('azureNetwork').VnetSelectorId.name)), (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                             }
                         },
                         {
-                            "name": "ExistingVnetNewGatewaySubnetPrefix",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
-                            "label": "Gateway Subnet Prefix",
-                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
-                            "defaultValue": "",
-                            "placeholder": "Example: 192.168.0.0/27",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
-                            }
-                        },
-                        {
-                            "name": "GWSubnetExistsTrue",
+                            "name": "GWSubnetExistsFalse",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "options": {
-                                "text": "Ensure subnet prefix is correct and available in your virtual network.",
+                                "text": "An ExpressRoute Gateway is required to connect your virtual network to AVS. If one does not exist, select Skip. You can come back and repeat this step once the ExpressRoute Gateway has been deployed.",
                                 "style": "Warning"
                             }
                         },                    
@@ -547,6 +465,7 @@
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Jumpbox SKU",
                             "toolTip": "Select a VM SKU for the Jumpbox",
+                            "defaultValue": "Standard_B2ms",
                             "recommendedSizes": [
                                 "Standard_D1",
                                 "Standard_D2",
@@ -566,6 +485,58 @@
                                 "offer": "Windows-11",
                                 "sku": "21h2-avd"
                             }
+                        },
+                        {
+                            "name": "operatingSystemSKU",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "Jumpbox Operating System",
+                            "placeholder": "",
+                            "defaultValue": ["Windows Server 2022"],
+                            "toolTip": "Choose the operating system for the Jumpbox",
+                            "multiselect": false,
+                            "selectAll": true,
+                            "filter": true,
+                            "filterPlaceholder": "Filter items ...",
+                            "multiLine": true,
+                            "defaultDescription": "Jumpbox Operating System",
+                            "constraints": {
+                              "allowedValues": [
+                                {
+                                    "label": "Windows Server 2022",
+                                    "description": "Windows Server 2022",
+                                    "value": "Win2022"
+                                },
+                                {
+                                  "label": "Windows Server 2019",
+                                  "description": "Windows Server 2019",
+                                  "value": "Win2019"
+                                },
+                                {
+                                    "label": "Windows 11",
+                                    "description": "Windows 11",
+                                    "value": "Win11"
+                                },
+                                {
+                                    "label": "Windows 11 Multisession",
+                                    "description": "Windows 11 Multisession",
+                                    "value": "Win11ms"
+                                },
+                                {
+                                    "label": "Ubuntu 20.04",
+                                    "description": "Ubuntu 20.04",
+                                    "value": "ubuntu2004gen2"
+                                }
+                              ],
+                              "required": true
+                            },
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]"
+                        },
+                        {
+                            "name": "BootstrapJumpboxVM",
+                            "type": "Microsoft.Common.CheckBox",
+                            "label": "BootStrap VM",
+                            "toolTip": "Bootstrap VM and install PowerCLI, VMRC, Powershell. This will only work for Windows based VMs, not Linux",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]"
                         },
                         {
                             "name": "jumpboxCredentials",
@@ -610,78 +581,36 @@
                     ]
                 },
                 {
-                    "name": "onpremises",
-                    "label": "On-premises Connectivity",
-                    "bladeTitle": "onpremisesconnectivity",
+                    "name": "Monitoring",
+                    "label": "Monitoring",
                     "elements": [
                         {
-                            "name": "Info",
+                            "name": "AVSBaseAlerts",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "On-Premise Connectivity",
+                            "label": "AVS Monitoring and Alerts",
                             "elements": [
                                 {
-                                    "name": "onpreminfo1",
+                                    "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Monitoring and Alerts",
                                     "options": {
-                                        "text": "On-premise connectivity is also typically required especially for any migrations of workloads via HCX. There are a few ways for connectivity - ExpressRoute, vWAN or VPN. In the previous section we connected AVS to Azure using an ExpressRoute Gateway. When a VPN is used for connectivity, a VPN Gateway is used instead. However, in order for the VPN traffic to flow from the VPN Gateway to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. See diagram in the link below. See diagram in the link below:",
+                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted for any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
                                         "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/docs/images/AVS-RouteServer.png"
-                                        }
-                                    }
-                                },
-                                {
-                                    "name": "onpreminfo2",
-                                    "type": "Microsoft.Common.TextBlock",
-                                    "options": {
-                                        "text": "If you choose to deploy the Route Server below, this deployment will create a RouteServer Subnet and the Route Server itself if they don't exist. It will also enable the Branch-to-Branch feature for route sharing. See link below for more details:",
-                                        "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support"
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 }
                             ]
                         },
                         {
-                            "name": "OnpremiseConnect",
+                            "name": "DeployMonitoring",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
-                            "label": "How does Azure connect to On-premises?",
-                            "defaultValue": "ExpressRoute",
-                            "toolTip": "Choose the method of Azure to On-premise connectivity",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "ExpressRoute (Skip)",
-                                        "value": "ExpressRoute"
-                                    },
-                                    {
-                                        "label": "VPN",
-                                        "value": "VPN"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "OnpremiseConnectInfo",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'ExpressRoute')]",
-                            "options": {
-                                "text": "This option does not make any changes and does not deploy any resources. When ExpressRoute is used for Azure connectivity, you will need to request an ExpressRoute authorization key from the existing circuit to create the AVS Global Reach connection This is a manual step and must be performed separately. Click here to learn more.",
-                                "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud",
-                                "style": "Info"
-                            }
-                        },
-                        {
-                            "name": "DeployRouteServer",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'VPN')]",
-                            "label": "Deploy an Azure Route Server",
-                            "defaultValue": "Null",
-                            "toolTip": "Deploy an Azure Route Server or Skip to come back to this step later",
+                            "visible": true,
+                            "label": "Deploy Monitoring Module",
+                            "toolTip": "Deploy or Skip this Monitoring Module",
+                            "defaultValue": "No (Skip)",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -697,113 +626,258 @@
                             }
                         },
                         {
-                            "name": "RouteServerVnetSelector",
-                            "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
-                            "label": "Existing Virtual Network with the VPN Gateway",
-                            "toolTip": "Choose the existing Virtual Network that contains the VPN Gateway",
-                            "resourceType": "Microsoft.Network/virtualNetworks",
-                            "constraints": {
-                                "required": true
-                            }
-                        },
-                        {
-                            "name": "DeployRouteServerInfo",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
-                            "options": {
-                                "text": "Existing Azure VPN gateway must be configured in active-active mode, this is usually not done by default. If not set to active-active, this deployment will fail",
-                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support",
-                                "style": "Info"
-                            }
-                        },
-                        {
-                            "name": "RouteServerSubnetExists",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
-                            "label": "RouteServer Subnet",
-                            "toolTip": "Deploy new RouteServerSubnet or choose Existing",
-                            "defaultValue": "No",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "New",
-                                        "value": false
-                                    },
-                                    {
-                                        "label": "Existing",
-                                        "value": true
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "RouteServerSubnetPrefix",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
-                            "label": "RouteServer Subnet Prefix",
-                            "toolTip": "Subnet for the Azure RouteServer",
-                            "defaultValue": "192.168.2.0/24",
-                            "placeholder": "Example: 192.168.2.0/24",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-7]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 27."
-                            }
-                        },
-                        {
-                            "name": "RouteServerSubnetPrefixInfo",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
-                            "options": {
-                                "text": "Ensure that the subnet prefix is valid and is in the range of the chosen VNet above ",
-                                "uri": "",
-                                "style": "Info"
-                            }
-                        },
-                        {
-                            "name": "RouteServerSubnetExistsInfo",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, true)]",
-                            "options": {
-                                "text": "Ensure that a subnet called RouteServerSubnet exists in the chosen Virtual Network or else the deployment will fail. Click here for more information",
-                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/quickstart-configure-route-server-portal#create-a-route-server",
-                                "style": "Warning"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Monitoring",
-                    "label": "Monitoring",
-                    "elements": [
-                        {
-                            "name": "AVSBaseAlerts",
+                            "name": "AVSWorkbook",
                             "type": "Microsoft.Common.Section",
-                            "visible": true,
-                            "label": "AVS Monitoring and Alerts",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "AVS Workbook",
                             "elements": [
                                 {
-                                    "name": "AVSAlertInfo1",
+                                    "name": "WorkbookInfo1",
                                     "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Workbook",
                                     "options": {
-                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted of any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
+                                        "text": "Workbooks provide a flexible canvas for data analysis and the creation of rich visual reports within the Azure portal. We have created an AVS specific Workbook which will show you all the information you need to monitor and view all your AVS Private Clouds. This Workbook includes a Dasbboard, Alerts, Syslog, Virtual Machines, Usage and Quota information. For more details of this workbook, click the link below",
                                         "link": {
-                                            "label": "",
-                                            "uri": ""
+                                            "label": "Learn more",
+                                            "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/tree/main/BrownField/Monitoring/AVS-Workbook"
                                         }
+                                    }
+                                },
+                                {
+                                    "name": "DeployAVSWorkbook",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Deploy an Azure Workbook for AVS",
+                                    "toolTip": "Deploy an AVS Workbook that provides a Dashboard, Logging, Monitoring, Quota etc",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "WorkbookInfo2",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSWorkbook.DeployAVSWorkbook, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "Some elements of the Workbook require logging to be enabled for the Subscription and Private Cloud. Head over to the Logging tab in the next screen to turn this on, or perform this task manually after this deployment",
+                                        "style": "Info"
                                     }
                                 }
                             ]
                         },
                         {
-                            "name": "DeployDashboard",
+                            "name": "AVSDashboard",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "AVS Dashboard and Alerts",
+                            "elements": [
+                                {
+                                    "name": "DashboardInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "label": "AVS Dashboard",
+                                    "options": {
+                                        "text": "In addition to the workbook above, we have provided the ability to also deploy a dedicated Azure dashboard for your Private Cloud. Also, optionally select to enable AVS Service Health alerts and Metric alerts to be sent to an email address",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DeployDashboard",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Deploy an Azure Dashboard for AVS",
+                                    "toolTip": "Deploy a dedicated AVS Dashboard for the Private Cloud selected",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployServiceHealth",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                                    "label": "Enable Service Health alerts for AVS",
+                                    "defaultValue": "No",
+                                    "toolTip": "Enable Service Health alerts for AVS on this subscription",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployAVSAlerts",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Enable Azure Monitor alerts for AVS",
+                                    "toolTip": "Enable AVS Metric alerts for your Private Cloud, use the sliders below to define your alert thresholds",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "MonitoringInputs",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                            "label": "",
+                            "elements": [
+                                {
+                                    "name": "ActionGroupEmails",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Email address to send the alerts to",
+                                    "visible": "[or(equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true), equals(steps('Monitoring').AVSDashboard.DeployServiceHealth, true))]",
+                                    "toolTip": "Provide an email address to send the service health alerts to",
+                                    "placeholder": "Example: alerts@contoso.com",
+                                    "defaultValue": "",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+                                        "validationMessage": "Please provide a valid email address"
+                                    }
+                                },
+                                {
+                                    "name": "MetricAlertInfo1",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "The default values below are set as a reference only, use the sliders to adjust as required",
+                                        "style": "Info"
+                                    }
+                                },
+                                {
+                                    "name": "cpuUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "CPU Usage % per Cluster (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the CPU Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "memoryUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "Memory Usage % Threshold (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the Memory Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "storageUsageThreshold",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "label": "Storage Usage % Threshold (Sev 2 Alert)",
+                                    "subLabel": "",
+                                    "toolTip": "Set the Storage Usage Threshold to be alerted on per Cluster",
+                                    "min": 1,
+                                    "max": 100,
+                                    "defaultValue": 60,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "MonitoringInputsInfo1",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('Monitoring').AVSDashboard.DeployAVSAlerts, true)]",
+                                    "options": {
+                                        "icon": "None",
+                                        "text": "In addition to the alerts above, we will create Sev 0 alerts based on VMware recommended thresholds. These will be set as 80% for CPU and Memory, 75% for Storage",
+                                        "style": "Info"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Diagnostics",
+                    "label": "Logging",
+                    "elements": [
+                        {
+                            "name": "DiagnosticInfo1",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Diagnostic Settings",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Diagnostic settings in Azure allow for the collection of resource and activity logs to either be stored to a storage account, to a Log Analytics Workspace or streamed to an Event Hub. This provides the ability to store and retrieve logs for future diagnosis or troubleshooting. In this deployment, you will select the Private Cloud you would like to enable Diagnostic Settings, and send these to a New or Existing Log Analytics Workspace or Storage Account",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs"
+                                        }        
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployDiagnostics",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
-                            "label": "Deploy AVS Dashboard",
-                            "defaultValue": "Yes",
-                            "toolTip": "Deploy AVS Dashboard",
+                            "label": "Deploy Diagnostic Settings",
+                            "toolTip": "Deploy Diagnostic Settings",
+                            "defaultValue": "No (Skip)",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -812,67 +886,171 @@
                                         "value": true
                                     },
                                     {
-                                        "label": "No",
+                                        "label": "No (Skip)",
                                         "value": false
                                     }
                                 ]
                             }
                         },
                         {
-                            "name": "DeployAVSAlerts",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
-                            "label": "Enable AVS Metric Alerts",
-                            "defaultValue": "Yes",
-                            "toolTip": "Enable AVS Metric Alerts (CPU, Memory, Storage etc)",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes",
-                                        "value": true
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": false
-                                    }
-                                ]
+                            "name": "DiagnosticInfo2",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "options": {
+                                "text": "Collecting logs and enabling diagnostic settings may incur additional charges such as storage, ingestion and retention. Click here for more information",
+                                "uri": "https://learn.microsoft.com/en-us/azure/azure-monitor/usage-estimated-costs",
+                                "style": "Warning"
                             }
                         },
                         {
-                            "name": "DeployServiceHealth",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "Enable AVS Service Health Alerts",
-                            "label": "Enable Service Health alerts",
-                            "defaultValue": "Yes",
-                            "toolTip": "Enable Service Health alerts for AVS",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes",
-                                        "value": true
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": false
+                            "name": "Workspace",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "label": "Log Analytics Workspace Settings",
+                            "elements": [
+                                {
+                                    "name": "AVSLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send AVS Logs to a Log Analytics Workspace",
+                                    "toolTip": "Send AVS Logs to a Log Analytics Workspace",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
+                                },
+                                {
+                                    "name": "ActivityLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send Subscription Activity Logs to a Log Analytics Workspace",
+                                    "toolTip": "Send Subscription Activity Logs to a Log Analytics Workspace",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployWorkspace",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[or(equals(steps('Diagnostics').Workspace.AVSLogCollection, true), equals(steps('Diagnostics').Workspace.ActivityLogCollection, true))]",
+                                    "label": "Deploy New or Choose Existing Workspace",
+                                    "toolTip": "Deploy New or Choose Existing Workspace",
+                                    "defaultValue": "New",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "New",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "Existing",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "existingWorkspaceSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "[equals(steps('Diagnostics').Workspace.DeployWorkspace, false)]",
+                                    "label": "Select the Existing Log Analytics Workspace",
+                                    "resourceType": "Microsoft.OperationalInsights/workspaces"
+                                }
+                            ]
                         },
                         {
-                            "name": "ActionGroupEmails",
-                            "type": "Microsoft.Common.TextBox",
-                            "label": "Action Group Email",
-                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
-                            "toolTip": "Provide an email address to send the service health alerts to",
-                            "placeholder": "Example: alerts@company.com",
-                            "defaultValue": "alerts@company.com",
-                            "constraints": {
-                                "required": true,
-                                "regex": "",
-                                "validationMessage": "Please provide a valid email address"
-                            }
+                            "name": "StorageAccount",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                            "label": "Storage Account Settings",
+                            "elements": [
+                                {
+                                    "name": "StorageLogCollection",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').DeployDiagnostics, true)]",
+                                    "label": "Send AVS Logs to a storage account",
+                                    "toolTip": "Send AVS Logs to a storage account",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "DeployStorageAccount",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageLogCollection, true)]",
+                                    "label": "Deploy New or Choose Existing Storage Account",
+                                    "toolTip": "Deploy New or Choose Existing Storage Account",
+                                    "defaultValue": "New",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "New",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "Existing",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "existingStorageAccountSelector",
+                                    "type": "Microsoft.Solutions.ResourceSelector",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.DeployStorageAccount, false)]",
+                                    "label": "Select the Existing Storage Account",
+                                    "resourceType": "Microsoft.Storage/storageAccounts"
+                                },
+                                {
+                                    "name": "storageRetention",
+                                    "type": "Microsoft.Common.Slider",
+                                    "visible": "[equals(steps('Diagnostics').StorageAccount.StorageLogCollection, true)]",
+                                    "label": "Storage Account Retention Days",
+                                    "subLabel": "",
+                                    "toolTip": "Retention only applies to storage account. Retention policy ranges from 1 to 365 days. If you do not want to apply any retention policy and retain data forever, set retention (days) to 0.",
+                                    "min": 0,
+                                    "max": 365,
+                                    "defaultValue": 1,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
@@ -885,14 +1063,26 @@
                             "type": "Microsoft.Common.Section",
                             "visible": true,
                             "label": "AVS Addons",
-                            "elements": []
+                            "elements": [
+                                {
+                                    "name": "AddonsInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "In addition to the Private Cloud deployment, you may choose to install optional addons such as HCX and SRM. Please select the ones you need from the options below",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }        
+                                    }
+                                }
+                            ]
                         },
                         {
                             "name": "deployHCX",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Deploy HCX",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -971,12 +1161,235 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "ResourceNaming",
+                    "label": "Resource Naming",
+                    "elements": [
+                        {
+                            "name": "namingInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Resource Naming",
+                            "elements": [
+                                {
+                                    "name": "avsResourceNamingInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "visible": true,
+                                    "options": {
+                                        "text": "The AVS accelerator uses the Prefix below to provide automated resource naming based on Microsoft best practices. To set specific names for certain resources as per your own naming standards, select Yes to Custom Naming below. Note, custom naming fields will appear based on selections in other tabs",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "avsDeploymentPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Naming prefix",
+                            "visible": true,
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
+                            "defaultValue": "",
+                            "placeholder": "Example: AVS",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-z0-9A-Z-]{1,8}$",
+                                "validationMessage": "The prefix must be 1-8 characters."
+                            }
+                        },
+                        {
+                            "name": "CustomNaming",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Custom Naming",
+                            "defaultValue": "No",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "customnamingInfo1",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Click here to see the resource group and resource names that will be created with the Prefix above. This Prefix is still required even when custom naming is selected as it will be used for the deployment tasks and for naming other resources",
+                                "uri": "https://raw.githubusercontent.com/Azure/Enterprise-Scale-for-AVS/main/docs/images/AVSLZ-CustomNaming.png",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "customnamingInfo2",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('ResourceNaming').CustomNaming, true)]",
+                            "options": {
+                                "text": "Entering an existing resource group name will not have any impact to any other resources in the resource group",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "PrivateCloudNaming",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('PrivateCloud').DeployPrivateCloud, true))]",
+                            "label": "Private Cloud Naming",
+                            "elements": [
+                                {
+                                    "name": "AVSResourceGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('PrivateCloud').DeployPrivateCloud, true))]",
+                                    "label": "AVS Resource Group Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-PrivateCloud",
+                                    "toolTip": "Name of a resource group to host the AVS Resources. This can also be an existing resource group name",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your Resource Group"
+                                    }
+                                },
+                                {
+                                    "name": "AVSName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('PrivateCloud').DeployPrivateCloud, true))]",
+                                    "label": "AVS Private Cloud Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-SDDC",
+                                    "toolTip": "Name of your AVS Private Cloud resource, e.g. AVS-SDDC",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your Private Cloud"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "NetworkNaming",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('azureNetwork').VNetExists, false))]",
+                            "label": "Azure Connectivity Naming",
+                            "elements": [
+                                {
+                                    "name": "CustomNetworkResourceGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('azureNetwork').VNetExists, false))]",
+                                    "label": "New Virtual Network Resource Group Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-Network",
+                                    "toolTip": "Name of the new virtual network resource group",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your new virtual network"
+                                    }
+                                },
+                                {
+                                    "name": "CustomNetworkName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('azureNetwork').VNetExists, false))]",
+                                    "label": "New Virtual Network Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-vnet",
+                                    "toolTip": "Name of the new virtual network",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Provide a name for your New Virtual Network"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "MonitoringNaming",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('Monitoring').DeployMonitoring, true))]",
+                            "label": "Monitoring Naming",
+                            "elements": [
+                                {
+                                    "name": "MonitoringResourceGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('Monitoring').DeployMonitoring, true))]",
+                                    "label": "Monitoring Resource Group Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-Operational",
+                                    "toolTip": "Name of the new Monitoring resource group",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": ""
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "LoggingNaming",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), or(equals(steps('Diagnostics').Workspace.DeployWorkspace, true),equals(steps('Diagnostics').StorageAccount.DeployStorageAccount, true)))]",
+                            "label": "Logging Naming",
+                            "elements": [
+                                {
+                                    "name": "LoggingResourceGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), or(equals(steps('Diagnostics').Workspace.DeployWorkspace, true),equals(steps('Diagnostics').StorageAccount.DeployStorageAccount, true)))]",
+                                    "label": "Logging Resource Group Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-Operational",
+                                    "toolTip": "Name of the new Logging resource group",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": ""
+                                    }
+                                },
+                                {
+                                    "name": "CustomWorkspaceName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('Diagnostics').Workspace.DeployWorkspace, true))]",
+                                    "label": "New Workspace Name",
+                                    "defaultValue": "",
+                                    "placeholder": "Example: Prefix-log",
+                                    "toolTip": "Name of the new Log Analytics Workspace",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": ""
+                                    }
+                                },
+                                {
+                                    "name": "CustomStorageAccountName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[and(equals(steps('ResourceNaming').CustomNaming, true), equals(steps('Diagnostics').StorageAccount.DeployStorageAccount, true))]",
+                                    "label": "New Storage Account Name",
+                                    "defaultValue": "",
+                                    "placeholder": "",
+                                    "toolTip": "Name of the new Storage account",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^[a-z0-9]{3,24}$",
+                                        "validationMessage": "The name must be unique across all existing storage account names in Azure. It must be 3 to 24 characters long, and can contain only lowercase letters and numbers."
+                                    }
+                                }
+                            ]
+                        }         
+                    ]
                 }
             ]
         },
         "outputs": {
             "parameters": {
-                "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "DeployPrivateCloud": "[steps('PrivateCloud').DeployPrivateCloud]",
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
@@ -986,34 +1399,50 @@
                 "ExistingPrivateCloudResourceId": "[if(equals(steps('PrivateCloud').DeployPrivateCloud, false), steps('PrivateCloud').existingAVSPrivateCloudSettings.existingAVSSelector.id, 'none')]",
                 "VNetExists": "[steps('azureNetwork').VNetExists]",
                 "DeployNetworking": "[steps('azureNetwork').DeployNetworking]",
-                "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId.name]",
-                "GatewayExists": "[steps('azureNetwork').GatewayExists]",
-                "ExistingGatewayName": "[steps('azureNetwork').gatewaySelectorId.name]",
-                "GatewaySubnetExists": "[if(equals(steps('azureNetwork').GatewayExists, true), true, steps('azureNetwork').GatewaySubnetExists)]",
-                "ExistingGatewaySubnetId": "[steps('azureNetwork').gatewaySubnetSubnetSelectorName]",
+                "ExistingNetworkResourceId": "[if(equals(steps('azureNetwork').VNetExists, true), steps('azureNetwork').VnetSelectorId.id, '/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/TESTRG/providers/Microsoft.Network/virtualNetworks/TESTVNET')]",
+                "ExistingGatewayName": "[steps('azureNetwork').virtualNetworkGateway]",
                 "NewVNetAddressSpace": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').vNetAddressSpace, 'none')]",
                 "NewVnetNewGatewaySubnetAddressPrefix": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]",
-                "ExistingVnetNewGatewaySubnetPrefix": "[if(equals(steps('azureNetwork').GatewaySubnetExists, false), steps('azureNetwork').ExistingVnetNewGatewaySubnetPrefix, 'none')]",
                 "BastionSubnet": "[steps('azureNetwork').BastionSubnet]",
                 "JumpboxSubnet": "[steps('azureNetwork').JumpboxSubnet]",
                 "DeployJumpbox": "[steps('azureNetwork').createJumpbox]",
                 "JumpboxSku": "[steps('azureNetwork').vmSkuSelector]",
                 "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
                 "JumpboxPassword": "[steps('azureNetwork').jumpboxCredentials.JumpboxPassword.password]",
-                "VNetName": "[steps('azureNetwork').VnetSelectorId.name]",
-                "OnPremConnectivity": "[steps('onpremises').OnpremiseConnect]",
-                "DeployRouteServer": "[steps('onpremises').DeployRouteServer]",
-                "RouteServerVNetName": "[steps('onpremises').RouteServerVnetSelector.name]",
-                "RouteServerSubnetExists": "[steps('onpremises').RouteServerSubnetExists]",
-                "RouteServerSubnetPrefix": "[if(equals(steps('onpremises').RouteServerSubnetExists, false), steps('onpremises').RouteServerSubnetPrefix, 'none')]",
-                "DeployDashboard": "[steps('Monitoring').DeployDashboard]",
-                "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
-                "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
-                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
+                "operatingSystemSKU": "[steps('azureNetwork').operatingSystemSKU]",
+                "BootstrapJumpboxVM": "[steps('azureNetwork').BootstrapJumpboxVM]",
+                "DeployMonitoring": "[steps('Monitoring').DeployMonitoring]",
+                "DeployWorkbook": "[steps('Monitoring').AVSWorkbook.DeployAVSWorkbook]",
+                "DeployDashboard": "[steps('Monitoring').AVSDashboard.DeployDashboard]",
+                "DeployServiceHealth": "[steps('Monitoring').AVSDashboard.DeployServiceHealth]",
+                "DeployMetricAlerts": "[steps('Monitoring').AVSDashboard.DeployAVSAlerts]",
+                "AlertEmails": "[steps('Monitoring').MonitoringInputs.ActionGroupEmails]",
+                "CPUUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.cpuUsageThreshold, '0')]",
+                "MemoryUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.memoryUsageThreshold, '0')]",
+                "StorageUsageThreshold": "[if(equals(steps('Monitoring').DeployMonitoring, true), steps('Monitoring').MonitoringInputs.storageUsageThreshold, '0')]",
+                "DeployDiagnostics": "[steps('Diagnostics').DeployDiagnostics]",
+                "EnableAVSLogsWorkspaceSetting": "[steps('Diagnostics').Workspace.AVSLogCollection]",
+                "DeployActivityLogDiagnostics": "[steps('Diagnostics').Workspace.ActivityLogCollection]",
+                "EnableAVSLogsStorageSetting": "[steps('Diagnostics').StorageAccount.StorageLogCollection]",
+                "DeployWorkspace": "[steps('Diagnostics').Workspace.DeployWorkspace]",
+                "NewWorkspaceName": "[steps('ResourceNaming').LoggingNaming.CustomWorkspaceName]",
+                "ExistingWorkspaceId": "[steps('Diagnostics').Workspace.existingWorkspaceSelector.id]",
+                "ExistingStorageAccountId": "[steps('Diagnostics').StorageAccount.existingStorageAccountSelector.id]",
+                "DeployStorageAccount": "[steps('Diagnostics').StorageAccount.DeployStorageAccount]",
+                "NewStorageAccountName": "[steps('ResourceNaming').LoggingNaming.CustomStorageAccountName]",
+                "StorageRetentionDays": "[steps('Diagnostics').StorageAccount.storageRetention]",
                 "DeployHCX": "[steps('Addons').deployHCX]",
                 "DeploySRM": "[steps('Addons').deploySRM]",
                 "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
                 "VRServerCount": "[steps('Addons').srmVRCount]",
+                "avsUseCustomNaming": "[steps('ResourceNaming').CustomNaming]",
+                "Prefix": "[steps('ResourceNaming').avsDeploymentPrefix]",
+                "PrivateCloudResourceGroupName": "[steps('ResourceNaming').PrivateCloudNaming.AVSResourceGroup]",
+                "PrivateCloudName": "[steps('ResourceNaming').PrivateCloudNaming.AVSName]",
+                "NewNetworkResourceGroupName": "[steps('ResourceNaming').NetworkNaming.CustomNetworkResourceGroup]",
+                "NewNetworkName": "[steps('ResourceNaming').NetworkNaming.CustomNetworkName]",
+                "MonitoringResourceGroupName": "[steps('ResourceNaming').MonitoringNaming.MonitoringResourceGroup]",
+                "LoggingResourceGroupName": "[steps('ResourceNaming').LoggingNaming.LoggingResourceGroup]",
                 "TelemetryOptOut": "false"
             },
             "kind": "Subscription",

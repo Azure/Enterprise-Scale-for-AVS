@@ -31,7 +31,7 @@
         "prefix": "fk-avs",
         "location":"southeastasia",
         "resourcegroupname": "fk-avs-southeastasia-private-cloud-rg",
-        "sku": "av36",
+        "sku": "av36P",
         "privatecloudnetworkcidr": "192.168.48.0/22",
         "clusternodecount": "3",
         "privatecloudname": "fk-avs-fta-sea",

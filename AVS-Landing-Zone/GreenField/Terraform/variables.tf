@@ -17,7 +17,7 @@ variable "avs-networkblock" {
 
 variable "avs-sku" {
   type    = string
-  default = "AV36"
+  default = "AV36P"
 }
 
 variable "avs-hostcount" {

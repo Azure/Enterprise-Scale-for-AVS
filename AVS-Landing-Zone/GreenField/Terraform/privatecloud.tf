@@ -35,6 +35,17 @@ resource "azurerm_vmware_private_cloud" "privatecloud" {
   internet_connection_enabled = false
   nsxt_password               = random_password.nsxt.result
   vcenter_password            = random_password.vcenter.result
+
+  timeouts {
+    create = "10h"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      nsxt_password,
+      vcenter_password
+    ]
+  }
 }
 
 resource "azurerm_vmware_express_route_authorization" "expressrouteauthkey" {

@@ -20,7 +20,7 @@ var varCuaid = 'fe003615-ca8e-412f-8091-43e1e42ebfd8'
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   name: PrivateCloudName
   sku: {
-    name: 'AV36'
+    name: 'AV36P'
   }
   location: Location
   properties: {

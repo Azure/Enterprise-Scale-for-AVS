@@ -374,8 +374,8 @@
         }%{ if exRConnectionResourceId != "" },
         "5": {
           "position": {
-            "x": 6,
-            "y": 5,
+            "x": 0,
+            "y": 8,
             "colSpan": 6,
             "rowSpan": 4
           },
@@ -441,6 +441,145 @@
                 "isOptional": true
               }
             ]
+          }
+        }
+        %{endif} %{ if vwanExrGatewayResourceId != "" },
+        "5": {
+          "position": {
+            "x": 0,
+            "y": 8,
+            "colSpan": 6,
+            "rowSpan": 4
+          },
+          "metadata": {
+            "inputs": [
+              {
+                "name": "sharedTimeRange",
+                "isOptional": true
+              },
+              {
+                "name": "options",
+                "value": {
+                  "chart": {
+                    "metrics": [
+                      {
+                        "resourceMetadata": {
+                          "id": "${vwanExrGatewayResourceId}"
+                        },
+                        "name": "ErGatewayConnectionBitsInPerSecond",
+                        "aggregationType": 4,
+                        "namespace": "microsoft.network/expressroutegateways",
+                        "metricVisualization": {
+                          "displayName": "Bits In Per Second"
+                        }
+                      },
+                      {
+                        "resourceMetadata": {
+                          "id": "${vwanExrGatewayResourceId}"
+                        },
+                        "name": "ErGatewayConnectionBitsOutPerSecond",
+                        "aggregationType": 4,
+                        "namespace": "microsoft.network/expressroutegateways",
+                        "metricVisualization": {
+                          "displayName": "Bits Out Per Second"
+                        }
+                      }
+                    ],
+                    "title": "Private Cloud to VNet Utilization",
+                    "titleKind": 1,
+                    "visualization": {
+                      "chartType": 2,
+                      "legendVisualization": {
+                        "isVisible": true,
+                        "position": 2,
+                        "hideSubtitle": false
+                      },
+                      "axisVisualization": {
+                        "x": {
+                          "isVisible": true,
+                          "axisType": 2
+                        },
+                        "y": {
+                          "isVisible": true,
+                          "axisType": 1
+                        }
+                      }
+                    },
+                    "timespan": {
+                      "relative": {
+                        "duration": 86400000
+                      },
+                      "showUTCTime": false,
+                      "grain": 1
+                    }
+                  }
+                },
+                "isOptional": true
+              }
+            ],
+            "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+            "settings": {
+              "content": {
+                "options": {
+                  "chart": {
+                    "metrics": [
+                      {
+                        "resourceMetadata": {
+                          "id": "${vwanExrGatewayResourceId}"
+                        },
+                        "name": "ErGatewayConnectionBitsInPerSecond",
+                        "aggregationType": 4,
+                        "namespace": "microsoft.network/expressroutegateways",
+                        "metricVisualization": {
+                          "displayName": "Bits In Per Second"
+                        }
+                      },
+                      {
+                        "resourceMetadata": {
+                          "id": "${vwanExrGatewayResourceId}"
+                        },
+                        "name": "ErGatewayConnectionBitsOutPerSecond",
+                        "aggregationType": 4,
+                        "namespace": "microsoft.network/expressroutegateways",
+                        "metricVisualization": {
+                          "displayName": "Bits Out Per Second"
+                        }
+                      }
+                    ],
+                    "title": "Private Cloud to VNet Utilization",
+                    "titleKind": 1,
+                    "visualization": {
+                      "chartType": 2,
+                      "legendVisualization": {
+                        "isVisible": true,
+                        "position": 2,
+                        "hideSubtitle": false
+                      },
+                      "axisVisualization": {
+                        "x": {
+                          "isVisible": true,
+                          "axisType": 2
+                        },
+                        "y": {
+                          "isVisible": true,
+                          "axisType": 1
+                        }
+                      },
+                      "disablePinning": true
+                    }
+                  }
+                }
+              }
+            },
+            "filters": {
+              "MsPortalFx_TimeRange": {
+                "model": {
+                  "format": "local",
+                  "granularity": "auto",
+                  "relative": "1440m"
+                }
+              }
+            }
           }
         }
         %{endif}

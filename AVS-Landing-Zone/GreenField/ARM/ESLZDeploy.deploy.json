@@ -33,10 +33,13 @@
     },
     "PrivateCloudSKU": {
       "type": "string",
-      "defaultValue": "AV36",
+      "defaultValue": "AV36P",
       "allowedValues": [
         "AV36",
-        "AV36T"
+        "AV36T",
+        "AV36P",
+        "AV36PT",
+        "AV52"
       ],
       "metadata": {
         "description": "The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying"
