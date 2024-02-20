@@ -25,7 +25,7 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 |4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
 |5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
 |6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivity between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
 |8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
 |9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
 |10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
@@ -56,7 +56,7 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 |4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
 |5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
 |6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivity between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
 |8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
 |9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
 |10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
@@ -90,7 +90,7 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 |4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
 |5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
 |6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivity between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
 |8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
 |9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
 |10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
@@ -123,7 +123,7 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 |4|On-Prem|**ON**|Customer's on-prem environment, with ER connected to their Azure VNET.|
 |5|ER Global Reach|**ON**|Explain ER Global Reach connection from AVS.|
 |6|ER to VNET|**ON**|Explain ER to VNET connection from AVS.|
-|7|Interconnection|**ON**|Explain this is only there to show the interconnectivy between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
+|7|Interconnection|**ON**|Explain this is only there to show the interconnectivity between on-prem and AVS and to use the space to make the diagram look less busy and more readable.|
 |8|HCX On-Prem|**ON**|Explain HCX Connector needs to be deployed on-premises.|
 |9|HCX Site Pairing|**ON**|Explain the next step is to establish the HCX Site Pairing.|
 |10|HCX-IX|**ON**|Next step is to deploy the HCX Service Mesh which will deploy the appliances in pairs, starting with the Interconnect appliance (IX).|
@@ -137,8 +137,8 @@ As shown in the above picture, you can see an *eye* either turned on or off. Cli
 |18|HCX vMotion or RAV Migration|**OFF**|Demonstrates the initialization of the VMs migrations.|
 |19|L2 Flow OnPrem|**ON**|Demonstrates the communication flow between the migrated VMs and on-premises for the migrated VMs over the stretched network.|
 |20|L2 Flow OnPrem|**OFF**|Demonstrates the communication flow between the migrated VMs and on-premises for the migrated VMs over the stretched network.|
-|21|L2 Flow AVS w/o MON|**ON**|Demonstrates the communication flow between the migrated VMs and the AVS VMs over a stretched network withouth MON.|
-|22|L2 Flow AVS w/o MON|**OFF**|Demonstrates the communication flow between the migrated VMs and the AVS VMs over a stretched network withouth MON.|
+|21|L2 Flow AVS w/o MON|**ON**|Demonstrates the communication flow between the migrated VMs and the AVS VMs over a stretched network without MON.|
+|22|L2 Flow AVS w/o MON|**OFF**|Demonstrates the communication flow between the migrated VMs and the AVS VMs over a stretched network without MON.|
 |23|L2 Flow VNET wo/MON|**ON**|Demonstrates the communication flow between the migrated VMs and the VNET VMs on a stretched network without MON.|
 |24|L2 Flow VNET wo/MON|**OFF**|Demonstrates the communication flow between the migrated VMs and the VNET VMs on a stretched network without MON.|
 |25|MON enabled|**ON**|Here MON is enabled on the L2 stretched network from the Source Site.|

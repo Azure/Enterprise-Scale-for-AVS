@@ -80,6 +80,6 @@ The purpose of this writing is to explain how to connect to an AVS private cloud
 ![.](./media/nsx-t-nat-snat-rule.png)
 1. You will also create a "No NAT" rule or rules as needed for private to private connectivity to prevent translation of private IP address spaces using the NSX-T Public IP from the ones that were created in early steps.
 ![.](./media/nsx-t-nat-no-nat-rule.png)
-1. It is important to note that the SNAT rule will need to be processed after the No NAT rules. Yuu accomplish this by adding a higher priority number to the Nat rule. The lowest value indicates higher weight of processing.
+1. It is important to note that the SNAT rule will need to be processed after the No NAT rules. You accomplish this by adding a higher priority number to the Nat rule. The lowest value indicates higher weight of processing.
 1. At the end your rules may look something like below.
 ![.](./media/nsx-t-nat-rules.png)

@@ -38,7 +38,7 @@ The VMware HCX Network Extension service provides layer 2 connectivity between s
 
 VMware HCX Enterprise also includes a service called OS Assisted Migration (OSAM). With OSAM you can migrate guest (non-vSphere) virtual machines from an on-premises data center to Azure VMware Solution. The OSAM service has several components: the VMware HCX Sentinel software that is installed on each virtual machine to be migrated, a Sentinel Gateway (SGW) appliance for connecting and forwarding guest workloads in the source environment, and a Sentinel Data Receiver (SDR) in the destination (AVS) environment.
 
-## VMware HCX-SDR - Sentinel Data Receiver Apppliance
+## VMware HCX-SDR - Sentinel Data Receiver Appliance
 
 ![VMware HCX Sentinel Data Reciever Appliance](./images/hcx-sdr.png)
 

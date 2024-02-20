@@ -1,7 +1,7 @@
 # AVS Networking Secured Virtual WAN hub with default route propagation
 
 This lab shows you how to build out **Scenario 1: Secured Virtual WAN hub
-with default route propagation** as described in the Mirosoft Cloud Adoption Framework [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-1-secured-virtual-wan-hub-with-default-route-propagation).
+with default route propagation** as described in the Microsoft Cloud Adoption Framework [here](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-network-topology-connectivity#scenario-1-secured-virtual-wan-hub-with-default-route-propagation).
 
 Scenario 1 Connectivity: ExpressRoute & Global Reach
 
@@ -280,7 +280,7 @@ We need to add two machines with web services installed in the AVS environment. 
 
    8. Click on the "SET DHCP CONFIG" on the right hand side (see screenshot above bottom right)
     
-   9. Set the DCHP type to "Local DHCP Server"
+   9. Set the DHCP type to "Local DHCP Server"
     
    10. On the right-hand side, select the three vertical dots next to the DHCP profile and click "Create New"
 
@@ -294,11 +294,11 @@ We need to add two machines with web services installed in the AVS environment. 
 
    13. Click "Save" in the bottom right-hand corner
     
-   14. Back on the "Set DHCP Config" screen, enable the DCHP Config
+   14. Back on the "Set DHCP Config" screen, enable the DHCP Config
     
-   15. Add in the address of the DCHP server created above 10.2.107.2/24
+   15. Add in the address of the DHCP server created above 10.2.107.2/24
     
-   16. DCHP range 10.2.104.100-10.2.104.200
+   16. DHCP range 10.2.104.100-10.2.104.200
     
    17. DNS server enter the default Azure DNS IP 168.63.129.16
 
