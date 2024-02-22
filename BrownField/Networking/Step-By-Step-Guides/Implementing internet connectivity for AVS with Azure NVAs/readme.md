@@ -86,7 +86,7 @@ arsRgName="ARSRG"
 # Address prefix of the RouteServerSubnet. 
 # It must be /27, or larger, and included in the pre-existing Firewall VNet's address space.
 # It can be carved out of unused ranges in the VNet's address space, 
-# or it can be added as a non-contagious prefix.
+# or it can be added as a non-contiguous prefix.
 # In the latter case, you must add this prefix to the Firewall VNet's address space 
 # before moving to the next steps.
 #

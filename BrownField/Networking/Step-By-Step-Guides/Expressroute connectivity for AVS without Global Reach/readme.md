@@ -40,7 +40,7 @@ The following address prefixes must be allocated for the Transit VNet:
  - a /27 (or larger) prefix for the GatewaySubnet (the subnet that hosts the Expressroute Gateway).
  - a /27 (or larger) prefix for the RouteServerSubnet (the subnet that hosts Azure Route Server).
  - two /28 (or larger) prefixes for the two subnets to which the BGP-capable NVAs will be attached.
-The Transit VNet's address space can be defined as the union of four non-contagious prefixes (two /27 prefixes and two /28 prefixes) to minimize address space utilization. It is also possible to allocate a single /25 prefix for the Transit VNet, in which case a /27 prefix remains unused.
+The Transit VNet's address space can be defined as the union of four non-contiguous prefixes (two /27 prefixes and two /28 prefixes) to minimize address space utilization. It is also possible to allocate a single /25 prefix for the Transit VNet, in which case a /27 prefix remains unused.
 
 A /27 (or larger) prefix must be allocated for the RouteServerSubnet in the Firewall VNet. It can be carved out of unused ranges in the VNet's address space, or it can be added as a non-contiguous prefix. 
 

@@ -124,7 +124,7 @@ These steps represent deploying a configuration using the portal and vcenter.
 - Test the connectivity
     - Validate the VPN is showing connected on each side of the tunnel
     - From an On-prem system ensure that it can connect to the AVS VM and Jump VM
-    - Ensure the AVS and Jump VMs can reach the on-premise VMs
+    - Ensure the AVS and Jump VMs can reach the on-premises VMs
     - Check the firewall logs to ensure traffic is seen on the firewall for each test
 
 [(Back to top)](#table-of-contents)

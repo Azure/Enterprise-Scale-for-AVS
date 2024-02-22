@@ -308,6 +308,7 @@ egressing
 ergw
 ergwSku
 eventhub
+failback
 fi
 firewallVip
 firewallVnetPrefixes
