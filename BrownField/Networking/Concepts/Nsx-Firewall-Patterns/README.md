@@ -8,7 +8,7 @@ The intention of this document is NOT to elaborate on all the different scenario
 
 ## Problem Statement
 
-Enterprises exclusively on Azure VMware Solutions environment, with no or minimal footprint on Azure, requiring firewall'ing capability to inspect east-west or north-south traffic. NSX-T does support "Distributed Firewall and Gateway Firewall", which are native capabilities. However, in this scenario the customer wants to use a 3rd party next generation firewall in AVS.
+Enterprises exclusively on Azure VMware Solutions environment, with no or minimal footprint on Azure, requiring firewalling capability to inspect east-west or north-south traffic. NSX-T does support "Distributed Firewall and Gateway Firewall", which are native capabilities. However, in this scenario the customer wants to use a 3rd party next generation firewall in AVS.
 
 
 ## Business Scenario
@@ -64,12 +64,12 @@ In this section we discuss about different security patterns for traffic inspect
 
 ###### Source Network Address Translation:
 
-Source NAT'ting on the following patterns can be performed at different layers. Following are the options:
+Source NATting on the following patterns can be performed at different layers. Following are the options:
 
 1. Source NAT on default Tier-1 gateway.
    1. In this scenario the default Tier-1 gateway has static routes for each of the segments pointing to NVAs virtual IP address.
 2. Source NAT on NVA/firewall.
-   1. In this scenario default Tier-1 gateway has static routes for the source NAT'ted virtual IP of the NVA. This is the scenario we are going to discuss in this document.
+   1. In this scenario default Tier-1 gateway has static routes for the source NATted virtual IP of the NVA. This is the scenario we are going to discuss in this document.
 
 ##### Security pattern #1
 
@@ -90,12 +90,12 @@ Default routes on workload VMs has next hop as the virtual IP address of NVA and
 
 ![firewall-directly-connected-01](./assets/firewall-directly-connected-01.jpg)
 
-_Figure 1.0: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web and DB) and transit segment (default Tier-1 gateway). Source NAT'ting is done on the default Tier-1 Gateway._
+_Figure 1.0: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web and DB) and transit segment (default Tier-1 gateway). Source NATting is done on the default Tier-1 Gateway._
 
 ![firewall-directly-connected-02](./assets/firewall-directly-connected-01.jpg)
 
 
-_Figure 1.1: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web, and DB) and transit segment (default Tier-1 gateway). Source NAT'ting is done on the NVA._
+_Figure 1.1: The above figure shows an example of AVS environment with default NSX gateways (Tier-0 and Tier-1), a 3__rd_ _party firewall / NVA and three isolated segments. NVA is directly connected to the three workload segments (App, Web, and DB) and transit segment (default Tier-1 gateway). Source NATting is done on the NVA._
 
 ##### Security pattern #2
 
@@ -105,7 +105,7 @@ In this security pattern a 3rd party firewall/NVA intercepts all north-south (op
 
 Default routes on isolated Tier-1 gateways have a next hop as virtual IP address of NVA. NVAs default route has next hop as default Tier-1 gateway and default Tier-1 gateway has static routes for each of the segments pointing to NVAs IP address.
 
-In this pattern, default Tier-1 gateway performs source NAT. Please note that some customers like to NAT on the Firewall/NVA. A variant of this pattern would be NAT'ting on the NVA/firewall.
+In this pattern, default Tier-1 gateway performs source NAT. Please note that some customers like to NAT on the Firewall/NVA. A variant of this pattern would be NATting on the NVA/firewall.
 
 _P.S: This is the pattern we are going to elaborate on in this document. For simplicity, we are going to use single NVA instead of a redundant pair. The rest of the sections in this document provide details on setting up security pattern #2._
 
@@ -131,7 +131,7 @@ _Figure 2.1: The above figure shows an example of AVS environment with default N
 
 In this section configuration details for setup pattern #2 option #2 are summarized. In this pattern firewall/NVA is connected to default Tier-1 gateway on one end and isolated Tier-1 gateways on the other. Please refer to figure 2.1 for a visual depiction.
 
-Source NAT'ting can be done at either default Tier-1 gateway or NVA. This document explicitly focuses on source NAT on NVA/firewall.
+Source NATting can be done at either default Tier-1 gateway or NVA. This document explicitly focuses on source NAT on NVA/firewall.
 
 
 
@@ -140,10 +140,10 @@ Source NAT'ting can be done at either default Tier-1 gateway or NVA. This docume
 - Red, Green, and Blue Tier-1 gateways are isolated. Meaning, they are not connected to default Tier-0 gateway.
 - Each of the Isolated gateways has two workload segments (Web, and App) and a transit segment.
 - The default route next hop for all the three isolated Tier-1 gateway is NVA's virtual IP address.
-- A highly available pair of NVA/firewall in Active/Standby configuration with source NAT to public IP. NAT'ting can also be performed using public IP range, but this configuration is not elaborated here.
-- Static route on default Tier-1 gateway for traffic travelling towards the public IP (used for NAT'ting) with next hop as the IP address of NVA/firewall.
+- A highly available pair of NVA/firewall in Active/Standby configuration with source NAT to public IP. NATting can also be performed using public IP range, but this configuration is not elaborated here.
+- Static route on default Tier-1 gateway for traffic travelling towards the public IP (used for NATting) with next hop as the IP address of NVA/firewall.
 - The default router for NVA is the default Tier-1 gateway.
-- Azure allocated public IP addresses are used for NAT'ting on the NVA/firewall.
+- Azure allocated public IP addresses are used for NATting on the NVA/firewall.
 
 
 
@@ -221,7 +221,7 @@ In this section you will create two workloads and one transit segment as shown i
 
 #### Create Firewall/NVA in Active/Standby configuration
 
-In this section you will create a pair of highly available Linux based NVAs/firewalls. In this case Ubuntu Linux is used, but you can achive the same with any Linux Distro (exact command will differ).
+In this section you will create a pair of highly available Linux based NVAs/firewalls. In this case Ubuntu Linux is used, but you can achieve the same with any Linux distribution (exact command will differ).
 
 You can also replace it with the firewall of your choice.
 
@@ -280,7 +280,7 @@ In this section you will set up a pair of Ubuntu Linux VMs as our NVA/firewall. 
 ```
 # sudo apt-get install keepalived
 ```
-3. Allow nonlocal IP bind
+3. Allow non-local IP bind
 ```
 # sudo sysctl -w net.ipv4.ip_nonlocal_bind=1
 # sudo vi /etc/sysctl.conf
@@ -294,7 +294,7 @@ net.ipv4.ip_nonlocal_bind=1
 # sudo sysctl -p
 ```
 6. Setup VRRP
-   1. Edit keepalived conf file.
+   1. Edit keepalived configuration file.
    ```
    # sudo vi /etc/keepalived/keepalived.conf
    ```
@@ -353,7 +353,7 @@ net.ipv4.ip_nonlocal_bind=1
 
 #### Setup static route on default Tier-1 gateway
 
-In this section you will set up a static route on default Tier-1 gateway to divert all traffic towards the source NAT'ted public IP towards the NVA/firewalls IP.
+In this section you will set up a static route on default Tier-1 gateway to divert all traffic towards the source NATted public IP towards the NVA/firewalls IP.
 
 1. Login to NSX-T manager.
 2. Click on "Networking".
@@ -399,7 +399,7 @@ In this section, you will repeat the above steps for "Green-T1-Gateway" and "Blu
 In this section you will test your setup. You will ping to a server on internet from your VM in Red, Green and Blue segments. Refer to Microsoft documentation on how to create a VM in AVS environment.
 
 1. Login to a VM in Red-App segment.
-2. Run following command to check routing and source NAT'ting. Make sure DNS is setup correctly on your client VM.
+2. Run following command to check routing and source NATting. Make sure DNS is setup correctly on your client VM.
    1. Check HTTP connectivity and SNAT
    ```
    # curl ip.me

@@ -2,16 +2,24 @@
 
 ## Table of contents
 
-- [Scenario Details](#scenario-details)
-- [Scenario Implementation - Manual Steps](#scenario-implementation-with-manual-steps)
-- [Scenario Implementation - Automation Options](#automation-implementation)
-- [Appendix](#appendix)
+- [Implement AVS with new VPN hub/spoke with 3rd Party NVA](#implement-avs-with-new-vpn-hubspoke-with-3rd-party-nva)
+  - [Table of contents](#table-of-contents)
+  - [Scenario Details](#scenario-details)
+    - [Overview](#overview)
+    - [Naming](#naming)
+    - [Internet Ingress/Egress](#internet-ingressegress)
+    - [Network Inspection](#network-inspection)
+    - [Assumptions](#assumptions)
+  - [Scenario implementation with manual steps](#scenario-implementation-with-manual-steps)
+  - [Automation implementation](#automation-implementation)
+  - [Appendix](#appendix)
+    - [On-Prem VPN without BGP capability](#on-prem-vpn-without-bgp-capability)
 
 
 ## Scenario Details
 
 ### Overview
-This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for Azure workloads. This configuration allows for inclusion of custom subnets for adding your choice of 3rd party NVA's in the hub, but does not deploy the Firewall resources. AVS Landing Zone concepts can be explored in more detail via the [official documentation page](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/ready). 
+This scenario is meant for customers who want to implement a greenfield AVS environment using a VPN to make the hybrid connection. The solution implements a new hub/spoke topology with VPN and ExpressRoute gateways and one or more hub subnets for Azure workloads. This configuration allows for inclusion of custom subnets for adding your choice of 3rd party NVAs in the hub, but does not deploy the Firewall resources. AVS Landing Zone concepts can be explored in more detail via the [official documentation page](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/ready). 
 
 A spoke subnet with a Jumpbox VM and Azure Bastion is included in this deployment for initial configuration and troubleshooting.  If you determine that these aren't desired or needed in your deployment, you can remove the last module in main.tf and leave the defaults for the input values. The initial random password is stored as a secret in the key vault deployed in the jumpbox resource group. An initial access policy is created for the deployment user, but any additional users will need to first update the key vault access policy prior to being able to access the secret.
 
@@ -23,7 +31,7 @@ Resource naming is configured by using local variables at the top of the root mo
 
 
 ### Internet Ingress/Egress
-Internet ingress and egress to AVS and Azure VM's will be enabled through one or more public IPs attached to the 3rd party firewall NVA in the hub. On-premises ingress/egress is expected to use existing internet routing configurations and would not send internet traffic via the VPN. (Although this can be permitted by removing any route filters for 0/0 routes on-prem.) If the firewall is excluded, internet Internet and Egress can be enabled using the managed VWAN resource options included with the AVS private cloud.   
+Internet ingress and egress to AVS and Azure VMs will be enabled through one or more public IPs attached to the 3rd party firewall NVA in the hub. On-premises ingress/egress is expected to use existing internet routing configurations and would not send internet traffic via the VPN. (Although this can be permitted by removing any route filters for 0/0 routes on-prem.) If the firewall is excluded, internet Internet and Egress can be enabled using the managed VWAN resource options included with the AVS private cloud.   
 
 ### Network Inspection
 The solution enables network inspection with the 3rd party NVA on the following flows: 
@@ -39,7 +47,7 @@ Source                    | Azure VMWare Solution | Internet | On-Premises | Spo
 
 - Any AVS guest-to-guest inspection will occur in the private cloud using NSX-T's firewall capability 
 - Traffic inspection between on-premises sites will be managed by existing equipment and configurations
-- If subnet to subnet traffic inspection is required then UDR's will need to be configured for the traffic sources.
+- If subnet to subnet traffic inspection is required then UDRs will need to be configured for the traffic sources.
 
 [(Back to top)](#table-of-contents)
 
@@ -116,7 +124,7 @@ These steps represent deploying a configuration using the portal and vcenter.
 - Test the connectivity
     - Validate the VPN is showing connected on each side of the tunnel
     - From an On-prem system ensure that it can connect to the AVS VM and Jump VM
-    - Ensure the AVS and Jump VM's can reach the on-premises VM's
+    - Ensure the AVS and Jump VMs can reach the on-premises VMs
     - Check the firewall logs to ensure traffic is seen on the firewall for each test
 
 [(Back to top)](#table-of-contents)

@@ -25,7 +25,7 @@ This folder is laid out hierarchically so that different levels of modules may b
 az account show
 ```
 
-5. Change directory to the root Terraform module folder for your deployement
+5. Change directory to the root Terraform module folder for your deployment
 
 
 1. Run `terraform init` to initialize this directory

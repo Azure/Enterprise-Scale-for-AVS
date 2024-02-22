@@ -1,10 +1,12 @@
-# Deploy a scenario 2 architecture with Cisco 8kv's
+# Deploy a scenario 2 architecture with Cisco 8kvs
 
 ## Table of contents
 
-- [Sample Details](#sample-details)
-- [Sample Implementation - Automation Options](#automation-implementation)
-- [Appendix](#appendix)
+- [Deploy a scenario 2 architecture with Cisco 8kvs](#deploy-a-scenario-2-architecture-with-cisco-8kvs)
+  - [Table of contents](#table-of-contents)
+  - [Sample Details](#sample-details)
+  - [Automation implementation](#automation-implementation)
+  - [Appendix](#appendix)
 
 
 ## Sample Details

@@ -48,7 +48,7 @@ When creating a Compute Profile within VMware HCX, customers will need to define
 
 ### Possible Scenarios for Compute Profiles
 
-> These diagrams can be accessed here (Use "Save Link As" to downlaod and save diagram): [VMware HCX Compute Profile.](./diagrams/computeprofile1.drawio)
+> These diagrams can be accessed here (Use "Save Link As" to download and save diagram): [VMware HCX Compute Profile.](./diagrams/computeprofile1.drawio)
 
 VMware HCX has a 1-1 relationship with vCenter Server on-premises, meaning, if you have 2 vCenter Servers, each managing a separate cluster or set of clusters let's say in 2 different cities, then VMware HCX Connector will need to be installed in each vCenter Server, each vCenter Server will have at least 1 Compute Profile, at least 1 Service Mesh, and each will have at least its own set of Interconnect Appliances deployed with their Service Mesh.
 

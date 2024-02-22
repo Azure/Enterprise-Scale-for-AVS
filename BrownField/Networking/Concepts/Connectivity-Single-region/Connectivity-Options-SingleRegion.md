@@ -7,19 +7,19 @@
   * [Public IP](Connectivity-Options-SingleRegion.md#public-ip-at-the-nsx-t-data-center-edge)
 * [Internet Breakout - Azure Native ]()
   * [Secured VWAN Hub](Connectivity-Options-SingleRegion.md#secured-vwan-hub)
-  * [Hub & Spoke VNET's](Connectivity-Options-SingleRegion.md#hub--spoke-with-next-gen-firewall)
+  * [Hub & Spoke VNETs](Connectivity-Options-SingleRegion.md#hub--spoke-with-next-gen-firewall)
 
 
 ## Overview 
 
 Azure VMware Solution has many options for connectivity. This includes Azure VMware Solution native services like Managed SNAT, Public IP, and Azure native services such as Azure vWAN Hub and Azure Firewall for default route advertisement. Traversing back to on-premises is also an option for establishing internet connectivity from the Azure VMware Solution. 
 
-This article will discuss the different tools and servies available to implement internet traffic from Azure VMware Solution in a hybrid environment consisting of the Azure VMware Solution private cloud, Azure, and an On-premises data center. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
+This article will discuss the different tools and services available to implement internet traffic from Azure VMware Solution in a hybrid environment consisting of the Azure VMware Solution private cloud, Azure, and an On-premises data center. Also, this document also discuss how to increase network security, resiliency, and design for scale using Azure Landing Zone best practices.  
 
 ## Internet Breakout -  On-Premises 
 
 
-Lets first look at a basic setup. In Azure VMware Solution, you create a segment(s) and under that segment, you have some VM's that you want to install some packages on from the internet. 
+Lets first look at a basic setup. In Azure VMware Solution, you create a segment(s) and under that segment, you have some VMs that you want to install some packages on from the internet. 
 
 Your segments are attached to the default tier-1 gateway which as a direct path out to the tier-0 edge gateway. 
 
@@ -81,7 +81,7 @@ Which gives you flexibility in your design patterns.
 
 - Use this option to have a low-latency connection to Azure and need to scale number of outbound connections.
 - Leverage firewall for granular rule creation, URL filtering, and TLS Inspection.
-- Consider using loadbalancer to evenly distribute traffic to workloads.
+- Consider using a load balancer to evenly distribute traffic to workloads.
 - Enable DDoS protection.
 
 ## Secured vWAN HUB
@@ -100,7 +100,7 @@ In this scenario, if you want HTTP/HTTPS traffic to go through this hub and out 
 
 ![vWANandwaf.png](./images/vwanandwaf.png)
 
-In the diagram above, Layer 7 can occur either with the NSX-T Data Center loadbalancer or using the WAF/App Gateway in Azure.
+In the diagram above, Layer 7 can occur either with the NSX-T Data Center load balancer or using the WAF/App Gateway in Azure.
 
 **Note:** Azure Firewall is not a BGP capable device, so you can't route traffic to it through Azure VMware Solution natively. 
 

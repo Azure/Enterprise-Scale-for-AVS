@@ -1,5 +1,5 @@
 # Create a sample Linux VM with networking in Azure VMware Solution SDDC
-This project is to POC a sample Linux virtual machine on Azure VMware Solution SDDC. Once you have created SDDC on Azure using ALZ-Accelarator or Azure portal, the next step is to configure basic networking. This terraform script does the networking bootstrapping for you. Post that it creates a linux VM using VMware provided OVA(PhotonOS)
+This project is to POC a sample Linux virtual machine on Azure VMware Solution SDDC. Once you have created SDDC on Azure using ALZ-Accelerator or Azure portal, the next step is to configure basic networking. This terraform script does the networking bootstrapping for you. Post that it creates a linux VM using VMware provided OVA(PhotonOS)
 ## Here are the tasks it does:
 1. Create DHCP Profile
 2. Create NSX-T T1 Gateway
@@ -14,11 +14,11 @@ This project is to POC a sample Linux virtual machine on Azure VMware Solution S
 ## Topology Diagram
 ![Network Topology](assets/AVS.jpg)
 ## Usage
-1. Copy sample.tfvars.bck to variables.tfvar. You can also use terraform.lup01.tfvars as a starting point for populating your tfvars.
+1. Copy `sample.tfvars.bck` to `variables.tfvar`. You can also use `terraform.lup01.tfvars` as a starting point for populating your tfvars.
 ```dotnetcli
 cp sample.tfvars.bck variables.tfvars
 ```
-2. Replace sample values in variables.tfvars with your environment values
+2. Replace sample values in `variables.tfvars` with your environment values
 3. Initialize terraform
 ```dotnetcli
 terraform init

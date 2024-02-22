@@ -5,7 +5,7 @@ This article walks through the implementation of network connectivity between an
 - Traffic between AVS private clouds and on-prem sites must be inspected by a firewall running in an Azure VNet (typically, in the hub VNet of a hub&spoke network). 
 - The Expressroute circuit that connects the on-prem site(s) with Azure has been deployed in a peering location that does not support Global Reach. For more information on Global Reach availability, please refer to the official [Expressroute documentation](https://docs.microsoft.com/en-us/azure/expressroute/expressroute-global-reach#availability).  
 
-Azure Virtual WAN users should not implement the topology covered in this article and consider Virtal WAN's Routing Policy/Routing Intent features instead. For more details and feature availability see [the official Virtual WAN documentation](https://docs.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies). 
+Azure Virtual WAN users should not implement the topology covered in this article and consider Virtual WAN's Routing Policy/Routing Intent features instead. For more details and feature availability see [the official Virtual WAN documentation](https://docs.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies). 
 
 ## Prerequisites
 This step-by-step guide assumes that the following resources have been already deployed and configured:
@@ -40,7 +40,7 @@ The following address prefixes must be allocated for the Transit VNet:
  - a /27 (or larger) prefix for the GatewaySubnet (the subnet that hosts the Expressroute Gateway).
  - a /27 (or larger) prefix for the RouteServerSubnet (the subnet that hosts Azure Route Server).
  - two /28 (or larger) prefixes for the two subnets to which the BGP-capable NVAs will be attached.
-The Transit VNet's address space can be defined as the union of four non-contiguos prefixes (two /27 prefixes and two /28 prefixes) to minimize address space utilization. It is also possible to allocate a single /25 prefix for the Transit VNet, in which case a /27 prefix remains unused.
+The Transit VNet's address space can be defined as the union of four non-contiguous prefixes (two /27 prefixes and two /28 prefixes) to minimize address space utilization. It is also possible to allocate a single /25 prefix for the Transit VNet, in which case a /27 prefix remains unused.
 
 A /27 (or larger) prefix must be allocated for the RouteServerSubnet in the Firewall VNet. It can be carved out of unused ranges in the VNet's address space, or it can be added as a non-contiguous prefix. 
 
@@ -130,7 +130,7 @@ nva1FwFacingIp="10.10.10.101"
 nva1AvsFacingIp="10.10.10.69"
 
 #
-# ASN number announced by the BGP-capable NVA's. Choose any ASN not included in Azure's reserved range (65515-65520) and not used in your network.
+# ASN number announced by the BGP-capable NVAs. Choose any ASN not included in Azure's reserved range (65515-65520) and not used in your network.
 #
 nvaAsn="65111"
 
@@ -161,7 +161,7 @@ fwArsSubnetPrefix="10.57.0.32/27"
 #
 # The internal IP address of the (existing) firewall running in the firewall VNet.
 # If you are using Azure Firewall, this is your Firewall instance's private IP address.
-# If you are running 3rd party firewall NVAs behind an Azure Internal Load Balancer, this is the Load Balanacer's frontend IP.
+# If you are running 3rd party firewall NVAs behind an Azure Internal Load Balancer, this is the Load Balancer's front-end IP.
 #
 firewallVip="10.57.0.70"
 ```
@@ -448,7 +448,7 @@ routeServerIps=($(az network routeserver show \
         --resource-group $fwRgName \
         --query virtualRouterIps --output tsv))
 ```
-Without closing the shell wherw you executed the code snippet above, set the context to the Transit VNet's subscription and run the command below. 
+Without closing the shell where you executed the code snippet above, set the context to the Transit VNet's subscription and run the command below. 
 
 ```Azure CLI
 for i in ${!routeServerIps[@]}; do \
@@ -467,7 +467,7 @@ At the end of this step, your environment will look as shown in the figure below
 ![figure7](./media/azure-vmware-eslz-network-scenario-2-stepbystep-fig2.PNG) 
 
 ## Step #6 - Add AVS routes to the Firewall VNet's GatewaySubnet
-In this step, you will configure the custom route table associated to the Firewall VNet's GatewaySubnet. This is needed to route traffic originating from the on-prem site(s) and destined to the AVS private cloud via the firewall hosted in the Firewall VNet. The custom route table must contain routes for the AVS private cloud /22 network block and for each IP subnet associated to NSX-T segments. The next hop must be the firewalling solution's IP (for Azure Firewall, this is the instance's private IP; For firewall clusters based on third-party NVAs, it is typically the frontend IP of the cluster's Azure Internal Load Balancer). These routes are meant to override the ones automatically injected in the Firewall VNet's route table by Route Server, in such a way to steer traffic destined to AVS to the firewall, instead of directly to the BGP-capable NVAs.
+In this step, you will configure the custom route table associated to the Firewall VNet's GatewaySubnet. This is needed to route traffic originating from the on-prem site(s) and destined to the AVS private cloud via the firewall hosted in the Firewall VNet. The custom route table must contain routes for the AVS private cloud /22 network block and for each IP subnet associated to NSX-T segments. The next hop must be the firewalling solution's IP (for Azure Firewall, this is the instance's private IP; For firewall clusters based on third-party NVAs, it is typically the front-end IP of the cluster's Azure Internal Load Balancer). These routes are meant to override the ones automatically injected in the Firewall VNet's route table by Route Server, in such a way to steer traffic destined to AVS to the firewall, instead of directly to the BGP-capable NVAs.
 
 To retrieve the IP prefixes used in your AVS Private Cloud, set the context to the subscription that contain it and execute the following snippet.
 
@@ -528,7 +528,7 @@ In this step you will finalize the routing configuration of your BGP-capable NVA
 Irrespective of what BGP-capable NVAs (Linux VMs vs. commercial routing products available in the Azure marketplace) you will deploy in your environment, the following configuration guidelines apply.
 
 - Azure Route Servers always use the reserved ASN 65515. The BGP capable NVAs must use a different ASN (not included in the Azure-reserved range 65515-65520). As such, all sessions between NVAs and Route servers are external BGP (eBGP) sessions.
-- Azure Route Servers are attached to dedicated subnets in their respective VNets. As such, BGP sessions with the BGP capable NVAs are established between interfaces that do not share a common subnet. Therefore, eBGP multihop must be supported and enabled on the NVAs.
+- Azure Route Servers are attached to dedicated subnets in their respective VNets. As such, BGP sessions with the BGP capable NVAs are established between interfaces that do not share a common subnet. Therefore, eBGP multi-hop must be supported and enabled on the NVAs.
 - Static routes must be defined in the NVAs' guest OS route tables to ensure reachability of the Route Servers (which are non-directly-connected external BGP peers). It is recommended to define static routes for the entire prefix of the RouteServerSubnets.
 - As Route Servers in both the Firewall and the Transit VNet use ASN 65515, propagating routes between AVS and the on-prem sites requires removing ASN 65515 from the AS Path - to prevent the BGP loop detection mechanisms to drop routes. Route maps can be used for this purpose on most commercially available BGP routing solutions. 
 -  As ASN 65515 is removed, a different mechanism than the default BGP loop detection must be used to avoid reflecting routes learned by each Route Server instance to the same instance. BGP communities or AS Path manipulation can be used. See next section for an example.
@@ -590,7 +590,7 @@ sudo ip route add $transitArsSubnetPrefix via $transitAvsFacingSubnetGateway dev
 ### BGP configuration
 The general routing requirements described in the previous section can be addressed, when running [FRRouting](https://frrouting.org/) on Linux VMs, with the following BGP configuration:
 
-- Ingress route maps used to (1) remove ASN 65515 from the AS Path and (2) manipulate the AS Path in such a way to track where each route originates from (AVS private cloud or Azure native/on-prem sites). In the example below, two route maps (FROMAVS, FROMHUB) are used to prepend ASN 65444 to all routes learned from Azure/on-prem sites and ASN 65333 to all routes orginated by AVS.
+- Ingress route maps used to (1) remove ASN 65515 from the AS Path and (2) manipulate the AS Path in such a way to track where each route originates from (AVS private cloud or Azure native/on-prem sites). In the example below, two route maps (FROMAVS, FROMHUB) are used to prepend ASN 65444 to all routes learned from Azure/on-prem sites and ASN 65333 to all routes originated by AVS.
 - Egress route maps used to prevent reflecting routes back to the speakers from which they were received. In the example below, two route maps (BLOCKAVSROUTE and BLOCKHUBROUTE) are used to prevent routes with ASN 65444 in their AS Path (i.e. routes learned from Azure native/on-prem sites) to be re-advertised to the Route Server instance in the Firewall VNet; and to prevent routes with ASN 65333 in their AS Path (i.e. routes learned from AVS) to be re-advertised to the Route Server instance in the Transit VNet.
 - Routes for prefixes included in the AVS Private Cloud's network block are suppressed. A single route for the entire /22 prefix is announced instead.
 
@@ -668,7 +668,7 @@ write file
 !
 ```
 
-After updating the commands with the addresses and ASN's that fit your environment, log into FRR's CLI y running
+After updating the commands with the addresses and ASNs that fit your environment, log into FRR's CLI by running
 
 ```Bash
 sudo vtysh

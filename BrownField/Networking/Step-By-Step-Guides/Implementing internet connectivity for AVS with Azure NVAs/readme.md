@@ -22,7 +22,7 @@ By following the steps in this article, the following new resources will be depl
 - An Azure Route Server hosted in the Firewall VNet. 
 - Two BGPv4-capable Linux NVAs.
 
-At the end of this step-by-step guide, your environemnt will look like the one in the picture below.
+At the end of this step-by-step guide, your environment will look like the one in the picture below.
 
 ![figure2](./media/figure2.PNG)
 
@@ -51,14 +51,14 @@ In the code snippet below, change the example values provided for each variable 
 
 ```Azure CLI
 # 
-# Name of the (existing) VNet where the internet edge/firewall NVA's run.
+# Name of the (existing) VNet where the internet edge/firewall NVAs run.
 # Typically, it is the hub VNet of a hub&spoke network in an Azure region.
 # 
 fwVnetName="firewall-vnet"
 
 #
-# Name of the Firewall VNet's resource gruop.
-# This is assumed to exist already in your environemnt.
+# Name of the Firewall VNet's resource group.
+# This is assumed to exist already in your environment.
 #
 fwRgName="HUBRG"
 
@@ -86,21 +86,21 @@ arsRgName="ARSRG"
 # Address prefix of the RouteServerSubnet. 
 # It must be /27, or larger, and included in the pre-existing Firewall VNet's address space.
 # It can be carved out of unused ranges in the VNet's address space, 
-# or it can be added as a non-contigous prefix.
+# or it can be added as a non-contiguous prefix.
 # In the latter case, you must add this prefix to the Firewall VNet's address space 
 # before moving to the next steps.
 #
 routeServerSubnetPrefix="10.57.10.0/27"
 
 #
-# ASN number announced by the internet edge devices (if they run BGP) or by the BGP-capable NVA's (if they are deployed becasue the pre-existing internet edge devices do not run BGP) . Choose any ASN not included in Azure's reserved range (65515-65520) and not used in your network.
+# ASN number announced by the internet edge devices (if they run BGP) or by the BGP-capable NVAs (if they are deployed because the pre-existing internet edge devices do not run BGP) . Choose any ASN not included in Azure's reserved range (65515-65520) and not used in your network.
 #
 nvaAsn="65111"
 
 #
 # The internal IP address of the (existing) firewall running in the firewall VNet.
 # If you are using Azure Firewall, this is your Firewall instance's private IP address.
-# If you are running 3rd party firewall NVAs behind an Azure Internal Load Balancer, this is the Load Balanacer's frontend IP.
+# If you are running 3rd party firewall NVAs behind an Azure Internal Load Balancer, this is the Load Balancer's front-end IP.
 #
 firewallVip="10.57.0.70"
 
@@ -251,7 +251,7 @@ fwLocation=$(az network vnet show --name $fwVnetName --resource-group $fwRgName 
 # Create resource group for BGP-capable NVAs
 az group create --name $bgpNvaRgName --location $fwLocation
 
-# Create subnet for BGP-capable NVA's 
+# Create subnet for BGP-capable NVAs 
 bgpNvaSubnetId=$(az network vnet subnet create \
         --name $bgpNvaSubnetName \
         --address-prefixes $bgpNvaSubnetPrefix \
@@ -392,7 +392,7 @@ write file
 !
 ```
 
-After updating the commands with the addresses and ASN's that fit your environment, log into FRR's CLI by running
+After updating the commands with the addresses and ASNs that fit your environment, log into FRR's CLI by running
 
 ```Bash
 sudo vtysh
@@ -412,7 +412,7 @@ Note: When announcing a default route from Azure, DNS queries against public DNS
 
 ## Verification
 
-To verify that your environment has been properly configured, log into each one of the BGP-capable NVAs and lanch the FRR CLI, by running:
+To verify that your environment has been properly configured, log into each one of the BGP-capable NVAs and launch the FRR CLI, by running:
 
 ```Bash
 sudo vtysh
