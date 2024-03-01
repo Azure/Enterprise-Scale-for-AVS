@@ -3,16 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Prefix": {
-            "value": "ESLZ"
+            "value": "LZA"
         },
         "PrivateCloudAddressSpace": {
             "value": "10.0.0.0/22"
         },
         "PrivateCloudSKU": {
             "value": "AV36P"
-        },
-        "Internet": {
-            "value": "Disabled"
         },
         "PrivateCloudHostCount": {
             "value": 3
@@ -42,6 +39,9 @@
         },
         "OSVersion": {
             "value": "2022-datacenter-azure-edition-smalldisk"
+        },
+        "AssignJumpboxAsAVSContributor": {
+            "value": false
         },
         "BootstrapJumpboxVM": {
             "value": false
