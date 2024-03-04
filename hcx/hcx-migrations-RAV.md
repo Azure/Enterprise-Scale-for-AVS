@@ -4,5 +4,7 @@ Replicated Assisted vMotion is a combination of two types of HCX migrations, Bul
 ## How RAV works 
 RAV is a combination of Bulk migration and vMotion. Just like in bulk migrations, a large set of VMs can be identified for a migration wave into AVS. These migration waves can be scheduled have the cutover process happen at a predefined maintence windows of the customers choosing. During intial replication RAV uses the bulk migration process to replicate the VMs from on-prem into AVS. Once the VMs have been replicated and the predefined maintenance window has occurred a delta vMotion cycle is initiated to a live cutover of the VM. Similar to vMotion migrations, the cutover of the VM occurs in a serial fashion. 
 
+![HCX RAV](./images/hcx-RAV.gif)
+
 ## When to use RAV
 RAV is great option for customers that are looking to migrate a large number of VMs quickly into AVS and without incurring any downtime. Please remember, that the repliction process of RAV occurs concurrently but the cutovers of the VMs happen serially. At the time of thie writing their is no way to select the order of when the VMs are cutover. 
