@@ -4,8 +4,19 @@ Perhaps the most popular HCX migration type is vMotion. HCX vMotion allows you t
 
 ![HCX vMotion](../images/hcx-vMotion.gif)
 
+### vMotion Migration Steps
+1. VM is in a powered on state on-prem 
+2. vMotion migration is selceted from the on-prem HCX connector
+3. vMotion uses VMware NFC (Network File Copy)
+4. When vMotion is selected, vCenter verifies that the VM is in a stable state with the on-prem host
+5. The VM state information (memory, registers and network connections) is copied to the AVS host
+6. VM is then migrated over to the new host and resumes its activites from the AVS side. 
+7. Please note, this migration option cannot be scheduled or delayed
+8. vMotion migration is a serial process. 
+
+
 ## vMotion limitations
-As staed above, HCX vMotion is a great option for workloads that cannot tolerate any downtime. HCX vMotion does support concurrent migrations, up to the limit of vSphere, but each cutover occurs in a serial fashion. Parellel migration cutovers of vMotion is not supported. 
+As stated above, HCX vMotion is a great option for workloads that cannot tolerate any downtime. HCX vMotion does support concurrent migrations, up to the limit of vSphere, but each cutover occurs in a serial fashion. Parellel migration cutovers of vMotion is not supported. 
 
 ## When to use HCX vMotion migrations
 Customers that have specific workloads that cannot tolerate any downtime can use vMotion as an option within HCX to migrate their workloads to AVS. Just be sure to understand, vMotion is not the best migration option in HCX for those looking to migrate a large number of VMs to AVS in relativily short period of time. Other options such as Bulk migration should be considered first. 
