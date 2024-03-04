@@ -3,5 +3,12 @@ This is pretty self explainatory. Perfect for migrations where the VM is powered
 
 ![HCX Cold Migration](../images/hcx-cold.gif)
 
+### Cold Migration Steps
+1. VM is powered off in the on-prem environment
+2. Initiate repllication from the on-prem HCX Connector 
+3. Replication occurs via VMware NFC (Network File Copy)
+4. Once replication completes the VM is migrated over to AVS, there is no option to schedule or delay this type of migration. 
+
+
 ## When to use Cold Migration 
 Perfect for VMS that are powered off and will remain off during the migration. 
