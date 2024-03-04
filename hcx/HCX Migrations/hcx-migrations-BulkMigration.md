@@ -11,7 +11,7 @@ The process of a Bulk migration is as follows, once the VM is selected for virtu
 Once the VM is scheduled to migrate to AVS the cutover process begins. The HCX cutover process is as follows, First the source side VM will be powered off. Please note, the call to power off the VM on the source side is dependent on VMware tools, make sure your VMware tools is up to date or use the 'Force Power Off' option in HCX to power off the VM forcefully. 
 After the VM has powered off, HCX performs one last final data sync. While the VM is powered off HCX can perform some optional maintance on your VM and upgrade the hardware version of the VM. Once the final data sync and optional VM maintenance is completed The VM will be powered on in the AVS environment. Upon the VM powering up in AVS, another optional maintenance can occur, the VM can have its vmtools upgraded. Finally the VM is up and running in AVS and ready for user validation. 
 
-![HCX Bulk Migration](./images/hcx-bulk.gif)
+![HCX Bulk Migration](../images/hcx-bulk.gif)
 
 
 ## Bulk Migration Advantages
