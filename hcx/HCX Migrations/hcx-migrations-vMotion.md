@@ -21,4 +21,4 @@ As stated above, HCX vMotion is a great option for workloads that cannot tolerat
 ## When to use HCX vMotion migrations
 Customers that have specific workloads that cannot tolerate any downtime can use vMotion as an option within HCX to migrate their workloads to AVS. Just be sure to understand, vMotion is not the best migration option in HCX for those looking to migrate a large number of VMs to AVS in relativily short period of time. Other options such as Bulk migration should be considered first. 
 
->**Note:** vMotions for no downtime will require Network Extension appliances in place, so the VM retains the IP address. Cutover of the Network from on-prem to AVS will incur downtime. 
+>**Note:** vMotions for no downtime will require Network Extension appliances in place, so the VM retains the IP address during the migration process. When cutting over of the Network from on-prem to AVS downtime will occur.  

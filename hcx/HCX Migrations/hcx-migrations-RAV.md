@@ -8,3 +8,5 @@ RAV is a combination of Bulk migration and vMotion. Just like in bulk migrations
 
 ## When to use RAV
 RAV is great option for customers that are looking to migrate a large number of VMs quickly into AVS and without incurring any downtime. Please remember, that the repliction process of RAV occurs concurrently but the cutovers of the VMs happen serially. At the time of thie writing their is no way to select the order of when the VMs are cutover. 
+
+>**Note:** RAV for no downtime will require Network Extension appliances in place, so the VM retains the IP address during the migration process. When cutting over of the Network from on-prem to AVS downtime will occur. 
