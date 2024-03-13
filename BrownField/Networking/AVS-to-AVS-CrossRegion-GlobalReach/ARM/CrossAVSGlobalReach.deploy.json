@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.14.46.61228",
-      "templateHash": "7802388426997655973"
+      "version": "0.25.53.49325",
+      "templateHash": "5358975160429876587"
     }
   },
   "parameters": {
@@ -37,7 +37,7 @@
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "SecondaryAuthKey",
       "resourceGroup": "[parameters('SecondaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -59,8 +59,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.14.46.61228",
-              "templateHash": "9196308408937528262"
+              "version": "0.25.53.49325",
+              "templateHash": "18261292448007048752"
             }
           },
           "parameters": {
@@ -88,7 +88,7 @@
             },
             {
               "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-10-01",
+              "apiVersion": "2022-09-01",
               "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -102,8 +102,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.14.46.61228",
-                      "templateHash": "8359988288953583068"
+                      "version": "0.25.53.49325",
+                      "templateHash": "11408007220382628824"
                     }
                   },
                   "resources": []
@@ -126,7 +126,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "GlobalReach",
       "resourceGroup": "[parameters('PrimaryPrivateCloudResourceGroup')]",
       "properties": {
@@ -139,10 +139,10 @@
             "value": "[parameters('PrimaryPrivateCloudName')]"
           },
           "ExpressRouteId": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteId.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2022-09-01').outputs.ExpressRouteId.value]"
           },
           "ExpressRouteAuthorizationKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('SecondaryPrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'SecondaryAuthKey'), '2022-09-01').outputs.ExpressRouteAuthorizationKey.value]"
           }
         },
         "template": {
@@ -151,8 +151,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.14.46.61228",
-              "templateHash": "3727816572482763114"
+              "version": "0.25.53.49325",
+              "templateHash": "17318721577724739338"
             }
           },
           "parameters": {
@@ -190,7 +190,7 @@
             },
             {
               "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-10-01",
+              "apiVersion": "2022-09-01",
               "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -204,8 +204,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.14.46.61228",
-                      "templateHash": "8359988288953583068"
+                      "version": "0.25.53.49325",
+                      "templateHash": "11408007220382628824"
                     }
                   },
                   "resources": []

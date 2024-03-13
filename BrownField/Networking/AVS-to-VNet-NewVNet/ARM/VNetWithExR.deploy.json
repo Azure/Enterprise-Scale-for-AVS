@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.14.46.61228",
-      "templateHash": "8021635974732412133"
+      "version": "0.25.53.49325",
+      "templateHash": "16337073152315250614"
     }
   },
   "parameters": {
@@ -159,9 +159,9 @@
           "properties": {}
         },
         "peer": {
-          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteId.value]"
+          "id": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2022-09-01').outputs.ExpressRouteId.value]"
         },
-        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2020-10-01').outputs.ExpressRouteAuthorizationKey.value]"
+        "authorizationKey": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization'), '2022-09-01').outputs.ExpressRouteAuthorizationKey.value]"
       },
       "dependsOn": [
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', parameters('PrivateCloudSubscriptionId'), parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', 'AVSAuthorization')]",
@@ -170,7 +170,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "AVSAuthorization",
       "subscriptionId": "[parameters('PrivateCloudSubscriptionId')]",
       "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
@@ -193,8 +193,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.14.46.61228",
-              "templateHash": "9475837945359188808"
+              "version": "0.25.53.49325",
+              "templateHash": "4293339604031667308"
             }
           },
           "parameters": {
@@ -233,7 +233,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -247,8 +247,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.14.46.61228",
-              "templateHash": "8359988288953583068"
+              "version": "0.25.53.49325",
+              "templateHash": "11408007220382628824"
             }
           },
           "resources": []

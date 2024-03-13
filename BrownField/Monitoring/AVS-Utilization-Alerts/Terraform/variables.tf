@@ -53,12 +53,26 @@ locals {
       Threshold      = 80
       Severity       = 2
     },
+    "CPUCritical" = {
+      Description    = "CPU Usage per Cluster (Critical)"
+      Metric         = "EffectiveCpuAverage"
+      SplitDimension = "clustername"
+      Threshold      = 95
+      Severity       = 0
+    },
     "Memory" = {
       Description    = "Memory Usage per Cluster"
       Metric         = "UsageAverage"
       SplitDimension = "clustername"
       Threshold      = 80
       Severity       = 2
+    },
+    "MemoryCritical" = {
+      Description    = "Memory Usage per Cluster (Critical)"
+      Metric         = "UsageAverage"
+      SplitDimension = "clustername"
+      Threshold      = 95
+      Severity       = 0
     },
     "Storage" = {
       Description    = "Storage Usage per Datastore"
