@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.14.46.61228",
-      "templateHash": "11509858991434574809"
+      "version": "0.25.53.49325",
+      "templateHash": "17982048352479020008"
     }
   },
   "parameters": {
@@ -49,12 +49,28 @@
         "Severity": 2
       },
       {
+        "Name": "CPUCritical",
+        "Description": "CPU Usage per Cluster (Critical)",
+        "Metric": "EffectiveCpuAverage",
+        "SplitDimension": "clustername",
+        "Threshold": 95,
+        "Severity": 0
+      },
+      {
         "Name": "Memory",
         "Description": "Memory Usage per Cluster",
         "Metric": "UsageAverage",
         "SplitDimension": "clustername",
         "Threshold": 80,
         "Severity": 2
+      },
+      {
+        "Name": "MemoryCritical",
+        "Description": "Memory Usage per Cluster (Critical)",
+        "Metric": "UsageAverage",
+        "SplitDimension": "clustername",
+        "Threshold": 95,
+        "Severity": 0
       },
       {
         "Name": "Storage",
@@ -193,7 +209,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2022-09-01",
       "name": "[format('pid-{0}-{1}', variables('varCuaid'), uniqueString(resourceGroup().location))]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -207,8 +223,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.14.46.61228",
-              "templateHash": "8359988288953583068"
+              "version": "0.25.53.49325",
+              "templateHash": "11408007220382628824"
             }
           },
           "resources": []
