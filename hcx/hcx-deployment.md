@@ -6,7 +6,9 @@ For the purposes of this article, VPN will also include connections via 3rd part
 
 HCX over a VPN connection is fully supported on Azure VMware Solution. VMware has a set of minimum requirements for support which can be found here: [Network Underlay Minimum Requirements](https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-8128EB85-4E3F-4E0C-A32C-4F9B15DACC6D.html).
 
-A minimum MTU size of 1150 is required. Microsoft recommends setting the MTU to 1300 in the Uplink Network Profile.
+A minimum MTU size of 1150 is required. Per Microsoft’s official documentation, for Azure VMware Solution connected via VPN, it is recommended to set the Uplink Network Profile MTU to 1350 to account for IPSec overhead. While an MTU of 1300 is a safe default, 1350 MTU will work in most cases. 
+
+Verify your MTU setting using an MTU tool to ensure optimal configuration.
 
 ![VMware HCX over VPN](./images/hcx-vpn.png)
 
