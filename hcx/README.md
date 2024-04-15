@@ -14,3 +14,4 @@ You can find official VMware HCX documentation in VMware documentation page: [VM
 | [HCX Service Mesh](hcx-servicemesh.md) | Explanation of HCX Service Mesh and its components. |
 | [HCX Deployment Scenarios](hcx-deployment.md) | Different possible HCX Deployment Scenarios and recommendations. |
 | [Networking and Network Extension Considerations](netextconsiderations.md) | Options for networking setups for migrations and HCX Network Extension considerations. |
+| [HCX Migrations](./HCX-Migrations/README.md) | Explanation of HCX Migration types. |
