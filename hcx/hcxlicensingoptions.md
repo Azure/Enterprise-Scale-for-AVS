@@ -4,9 +4,7 @@ VMware HCX comes in 2 different licensing versions:
 1.	VMware HCX Advanced
 2.	VMware HCX Enterprise
 
-Licenses for VMware HCX Advanced version is included as part of Azure VMware Solution (AVS).
-
-Customers can upgrade to VMware HCX Enterprise via the Azure Portal at no additional cost.
+Licenses for VMware HCX **Enterprise** version is included as part of Azure VMware Solution (AVS).
 
 ## VMware HCX Advanced vs. VMware HCX Enterprise
 
@@ -35,4 +33,10 @@ OS Assisted Migration (OSAM)|This migration service moves Linux or Windows-based
 |Replication Assisted vMotion (RAV) |This service uses both VMware vSphere Replication and vMotion technologies for large-scale, parallel migrations with no service interruption.|
 |Traffic Engineering  <p style="padding-left: 20px;">- Application Path Resiliency</p><p style="padding-left: 20px;">- TCP Flow Conditioning</p> | VMware HCX provides settings for optimizing network traffic for HCX Interconnect and Network Extension services. <p style="padding-left: 20px;">- The Application Path Resiliency service creates multiple tunnel flows, for both Interconnect and Network Extension traffic, those may follow multiple paths across the network infrastructure from the source to the destination data centers. The service then intelligently forwards traffic through the tunnel over the optimal path and dynamically switches between tunnels depending on traffic conditions.</p><p style="padding-left: 20px;">-	The TCP Flow Conditioning service adjusts the segment size during the TCP connection handshake between end points across the Network Extension. This optimizes the average packet size to reduce fragmentation and lower the overall packet rate.</p>|
 
+## Upgrade Existing VMware HCX 
 
+If Azure VMware Solution private cloud was deployed with HCX Advanced edition, you can can choose to upgrade to Enterprise with no additional cost through Azure Portal.
+
+If you have a pre-existing VMware HCX Connector on-premises that is licensed for VMware HCX Advanced, please be sure to upgrade the connector to the Enterprise version. To upgrade VMware HCX navigate to the HCX Connector at https://<hcx_connector_fqdn>:9443, under the Configuration section select Licensing and Activation, edit the current license and enter the VMware HCX enterprise license key obtained from the Azure VMware Solution portal. Verify that the License is showing Enterprise.
+
+Once you have updated the VMware HCX Connector, be sure to update/edit the VMware HCX Compute Profile and Service Mesh to include the updated VMware HCX services that you would like to take advantage of, such as Replicated Assisted vMotion and OS Assisted Migration.
