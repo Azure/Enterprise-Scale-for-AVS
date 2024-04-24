@@ -80,7 +80,9 @@ These steps represent deploying a configuration using the portal and vcenter.
     Name    | Description | Metric | SplitDimension | Threshold | Severity 
     ---     | :---:       | :---:  | :---:          | :---:     | :---:
     **CPU**     | CPU Usage per Cluster | EffectiveCpuAverage | clustername | 80 | 2
-    **Memory**  | Memory Usage per Cluster | UsageAverage     | clustername | 80 | 2 
+    **CPUCritical**     | CPU Usage per Cluster (Critical) | EffectiveCpuAverage | clustername | 95 | 0
+    **Memory**  | Memory Usage per Cluster | UsageAverage     | clustername | 80 | 2
+    **MemoryCritical**  | Memory Usage per Cluster (Critical) | UsageAverage     | clustername | 95 | 0 
     **Storage** | Storage Usage per Datastore | DiskUsedPercentage | dsname | 70 | 2 
     **StorageCritical** | Storage Usage per Datastore| DiskUsedPercentage | dsname | 75 | 0 
 

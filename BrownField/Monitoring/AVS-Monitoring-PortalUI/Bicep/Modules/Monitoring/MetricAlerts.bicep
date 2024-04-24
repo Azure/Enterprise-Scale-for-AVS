@@ -1,11 +1,11 @@
 param AlertPrefix string
 param ActionGroupResourceId string
 param PrivateCloudResourceId string
-param CPUUsageThreshold int
-param MemoryUsageThreshold int
-param StorageUsageThreshold int
-param CPUCriticalThreshold int = 80
-param MemoryCriticalThreshold int = 80
+param CPUUsageThreshold int = 80
+param MemoryUsageThreshold int = 80
+param StorageUsageThreshold int = 70
+param CPUCriticalThreshold int = 95
+param MemoryCriticalThreshold int = 95
 param StorageCriticalThreshold int = 75
 
 
