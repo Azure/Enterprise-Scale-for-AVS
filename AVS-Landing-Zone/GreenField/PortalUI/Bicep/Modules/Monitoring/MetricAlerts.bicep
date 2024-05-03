@@ -5,6 +5,7 @@ param CPUUsageThreshold int
 param MemoryUsageThreshold int
 param StorageUsageThreshold int
 param CPUCriticalThreshold int = 80
+param CPUVeryCriticalThreshold int = 95
 param MemoryCriticalThreshold int = 80
 param StorageCriticalThreshold int = 75
 param tags object
@@ -17,6 +18,14 @@ var Alerts = [
     SplitDimension: 'clustername'
     Threshold: CPUUsageThreshold
     Severity: 2
+  }
+  {
+    Name: 'CPU'
+    Description: 'CPU Usage per Cluster (Critical)'
+    Metric: 'EffectiveCpuAverage'
+    SplitDimension: 'clustername'
+    Threshold: CPUVeryCriticalThreshold
+    Severity: 0
   }
   {
     Name: 'Memory'

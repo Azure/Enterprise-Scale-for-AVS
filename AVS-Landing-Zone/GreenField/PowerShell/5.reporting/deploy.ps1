@@ -72,13 +72,17 @@ $clusternameDim1 = New-AzMetricAlertRuleV2DimensionSelection -DimensionName "clu
 
 ## EffectiveCpuAverage
 $criteria1 = New-AzMetricAlertRuleV2Criteria -MetricName "EffectiveCpuAverage" -DimensionSelection $clusternameDim1 -TimeAggregation Average -Operator GreaterThan -Threshold 80
+$criticalCriteria1 = New-AzMetricAlertRuleV2Criteria -MetricName "EffectiveCpuAverage" -DimensionSelection $clusternameDim1 -TimeAggregation Average -Operator GreaterThan -Threshold 95
 $targetResourceID = "/subscriptions/$subID/resourceGroups/$privateCloudRgName/providers/Microsoft.AVS/privateClouds/$privateCloudName"
 Add-AzMetricAlertRuleV2 -Name "EffectiveCpuAverage" -ResourceGroupName $actionGroupRgName -WindowSize 0:30 -Frequency 0:5 -TargetResourceId $targetResourceID -Condition $criteria1 -ActionGroup $act -Severity 2 -Description "CPU Usage per Cluster"
+Add-AzMetricAlertRuleV2 -Name "EffectiveCpuAverage" -ResourceGroupName $actionGroupRgName -WindowSize 0:30 -Frequency 0:5 -TargetResourceId $targetResourceID -Condition $criticalCriteria1 -ActionGroup $act -Severity 0 -Description "CPU Usage per Cluster (Critical)"
 
 ## UsageAverage
 $criteria2 = New-AzMetricAlertRuleV2Criteria -MetricName "UsageAverage" -DimensionSelection $clusternameDim1 -TimeAggregation Average -Operator GreaterThan -Threshold 80
+$criticalCriteria2 = New-AzMetricAlertRuleV2Criteria -MetricName "UsageAverage" -DimensionSelection $clusternameDim1 -TimeAggregation Average -Operator GreaterThan -Threshold 95
 $targetResourceID = "/subscriptions/$subID/resourceGroups/$privateCloudRgName/providers/Microsoft.AVS/privateClouds/$privateCloudName"
 Add-AzMetricAlertRuleV2 -Name "UsageAverage" -ResourceGroupName $actionGroupRgName -WindowSize 0:30 -Frequency 0:5 -TargetResourceId $targetResourceID -Condition $criteria2 -ActionGroup $act -Severity 2 -Description "Memory Usage per Cluster"
+Add-AzMetricAlertRuleV2 -Name "UsageAverage" -ResourceGroupName $actionGroupRgName -WindowSize 0:30 -Frequency 0:5 -TargetResourceId $targetResourceID -Condition $criticalcriteria2 -ActionGroup $act -Severity 0 -Description "Memory Usage per Cluster (Critical)"
 
 ## Dimension variables
 $dsnameDim1 = New-AzMetricAlertRuleV2DimensionSelection -DimensionName "dsname" -ValuesToInclude "*"
