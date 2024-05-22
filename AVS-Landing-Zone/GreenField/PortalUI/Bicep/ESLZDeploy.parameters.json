@@ -60,10 +60,10 @@
             "value": true
         },
         "JumpboxUsername": {
-            "value": "avsjump"
+            "value": ""
         },
         "JumpboxPassword": {
-            "value": "ChangeM3!"
+            "value": ""
         },
         "JumpboxSubnet": {
             "value": "10.111.2.0/24"

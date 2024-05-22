@@ -12,8 +12,8 @@ avs-hostcount    = 3
 hcx_key_names    = ["hcxsite1", "hcxsite2"]
 
 #Input the Jumpbox local username, password and SKU of your choice
-adminusername = "replace me"
-adminpassword = "replace me"
+adminusername = ""
+adminpassword = ""
 jumpboxsku    = "Standard_D2as_v4"
 
 #Virtual network address space and required subnets, can be any CIDR range
