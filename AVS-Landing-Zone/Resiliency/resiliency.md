@@ -28,7 +28,7 @@ To test this scenario, disable the Global Reach connection and validate that you
 
 ### Enable cross-region replication with ANF datastores
 
-Enable cross-region replication of your ANF datastores to have a copy of your data. This will also provide ANF datastores to your secondary AVS site. For performance, ANF data stores should be kept in the same region as AVS. In a disaster, failover to the secondary AVS site and ANF datastore. 
+Enable [cross-region replication](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cross-region-replication-introduction) of your ANF datastores to have a copy of your data. This will also provide ANF datastores to your secondary AVS site. For performance, ANF data stores should be kept in the same region as AVS. In a disaster, failover to the secondary AVS site and ANF datastore. 
 
 ### Additional information 
 
