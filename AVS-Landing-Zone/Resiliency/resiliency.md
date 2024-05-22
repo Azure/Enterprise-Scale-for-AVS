@@ -1,8 +1,5 @@
 ## Steps for Achieving Resiliency in the Azure VMware Solution
-
 ![Dual Region AVS](../Resiliency/dual-region-azure-netapp-highres.png)
-
-
 ### Multi-homed AVS Circuits with cross-region connectivity to Azure
 
 ExpressRoute from on-premises should connect to two meet-me locations. You can add weights to the circuits. They should connect two gateways in separate regions. To test a loss of connectivity to Azure in one region, [disconnect the circuit](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-howto-reset-peering-portal) and test.
