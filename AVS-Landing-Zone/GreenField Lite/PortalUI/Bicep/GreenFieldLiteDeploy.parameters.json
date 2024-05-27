@@ -6,7 +6,7 @@
             "value": "SJLITE-SDDC"
         },
         "PrivateCloudAddressSpace": {
-            "value": "10.55.0.0/22"
+            "value": ""
         },
         "PrivateCloudSKU": {
             "value": "AV36P"
@@ -16,7 +16,7 @@
         },
         "AlertEmails": {
             "value": [
-                "example@microsoft.com"
+                "example@contoso.com"
             ]
         }
     }

@@ -6,7 +6,7 @@ prefix = "AVS"
 region = "northeurope"
 
 #AVS requires a /22 CIDR range, this must not overlap with other networks to be used with AVS
-avs-networkblock = "10.1.0.0/22"
+avs-networkblock = ""
 avs-sku          = "AV36P"
 avs-hostcount    = 3
 hcx_key_names    = ["hcxsite1", "hcxsite2"]
@@ -17,10 +17,10 @@ adminpassword = ""
 jumpboxsku    = "Standard_D2as_v4"
 
 #Virtual network address space and required subnets, can be any CIDR range
-vnetaddressspace   = "192.168.1.0/24"
-gatewaysubnet      = "192.168.1.0/27"
-azurebastionsubnet = "192.168.1.64/26"
-jumpboxsubnet      = "192.168.1.128/25"
+vnetaddressspace   = ""
+gatewaysubnet      = ""
+azurebastionsubnet = ""
+jumpboxsubnet      = ""
 
 #Enable or Disable telemetry
 telemetry_enabled = true
