@@ -6,7 +6,7 @@
             "value": "ESLZ"
         },
         "PrivateCloudAddressSpace": {
-            "value": "10.0.0.0/22"
+            "value": ""
         },
         "PrivateCloudSKU": {
             "value": "AV36P"
@@ -15,30 +15,30 @@
             "value": 3
         },
         "VNetAddressSpace": {
-            "value": "10.1.0.0/16"
+            "value": ""
         },
         "VNetGatewaySubnet": {
-            "value": "10.1.0.0/24"
+            "value": ""
         },
         "AlertEmails": {
             "value": [
-                "example@microsoft.com"
+                "example@contoso.com"
             ]
         },
         "DeployJumpbox": {
             "value": true
         },
         "JumpboxUsername": {
-            "value": "avsjump"
+            "value": ""
         },
         "JumpboxPassword": {
-            "value": "ChangeM3!"
+            "value": ""
         },
         "JumpboxSubnet": {
-            "value": "10.1.1.0/25"
+            "value": ""
         },
         "BastionSubnet": {
-            "value": "10.1.1.128/25"
+            "value": ""
         },
         "VNetExists": {
             "value": false
