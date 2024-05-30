@@ -82,6 +82,12 @@ variable "vpn_pip_name_1" {
   description = "Azure resource name assigned to the vpn public ip"
 }
 
+variable "zone" {
+  type = number
+  description = "zone where this resource should be located."
+  default = 1
+}
+
 #################################################################
 # telemetry variables
 #################################################################

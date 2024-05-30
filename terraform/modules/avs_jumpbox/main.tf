@@ -31,6 +31,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username      = var.admin_username
   admin_password      = random_password.userpass.result
   tags                = var.tags
+  zone                = var.zone
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]

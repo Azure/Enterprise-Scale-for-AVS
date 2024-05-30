@@ -3,8 +3,9 @@ resource "azurerm_public_ip" "gatewaypip" {
   resource_group_name = var.rg_name
   location            = var.rg_location
   allocation_method   = "Dynamic"
-  sku                 = "Basic" #required for an ultraperformance gateway
+  sku                 = "Standard" 
   tags                = var.tags
+  zones               = ["1","2","3"]
 }
 
 resource "azurerm_virtual_network_gateway" "gateway" {

@@ -6,12 +6,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.0.0"
+      version = "~>3.105"
     }
 
     azapi = {
-      source  = "azure/azapi"
-      version = "~>1.1.0"
+      source  = "Azure/azapi"
+      version = "~> 1.13, != 1.13.0"
     }
   }
 }
@@ -19,6 +19,10 @@ terraform {
 provider "azurerm" {
   features {}
   partner_id = "754599a0-0a6f-424a-b4c5-1b12be198ae8"
+}
+
+provider "azapi" {
+  enable_hcl_output_for_data_source = true
 }
 
 ## Optional settings to setup a terraform backend in Azure storage

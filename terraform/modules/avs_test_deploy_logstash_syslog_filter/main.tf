@@ -101,10 +101,6 @@ resource "azurerm_monitor_diagnostic_setting" "private_cloud_syslog" {
 
   enabled_log {
     category = "VMwareSyslog"
-
-    retention_policy {
-      enabled = false
-    }
   }
 }
 

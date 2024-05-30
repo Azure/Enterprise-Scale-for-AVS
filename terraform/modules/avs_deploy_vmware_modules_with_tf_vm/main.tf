@@ -149,6 +149,7 @@ resource "azurerm_linux_virtual_machine" "vmware_terraform_host" {
   admin_password                  = random_password.admin_password.result
   disable_password_authentication = false
   custom_data                     = data.template_cloudinit_config.config.rendered
+  zone                            = var.zone
 
   identity {
     type         = "UserAssigned"

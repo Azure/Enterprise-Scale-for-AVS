@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    azapi = {
-      source = "azure/azapi"
-    }
-  }
-}
-
 resource "azurerm_virtual_hub" "virtual_hub" {
   name                = var.virtual_hub_name
   resource_group_name = var.rg_name
@@ -35,11 +27,11 @@ resource "azapi_update_resource" "routeserver_branch_to_branch" {
   type        = "Microsoft.Network/virtualHubs@2021-05-01"
   resource_id = azurerm_virtual_hub.virtual_hub.id
 
-  body = jsonencode({
+  body = {
     properties = {
       allowBranchToBranchTraffic = true
     }
-  })
+  }
 
   depends_on = [
     azurerm_public_ip.routeserver_pip,

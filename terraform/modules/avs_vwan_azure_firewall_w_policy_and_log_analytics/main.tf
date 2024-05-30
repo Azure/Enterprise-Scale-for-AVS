@@ -32,7 +32,6 @@ resource "azurerm_firewall" "firewall" {
     virtual_hub_id  = var.virtual_hub_id
     public_ip_count = var.public_ip_count
   }
-
 }
 
 #configure the firewall to send logs to a log analytics workspace
@@ -42,130 +41,60 @@ resource "azurerm_monitor_diagnostic_setting" "firewall_metrics" {
   log_analytics_workspace_id     = azurerm_log_analytics_workspace.simple.id
   log_analytics_destination_type = "AzureDiagnostics"
 
-  log {
+  enabled_log {
     category = "AzureFirewallApplicationRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AzureFirewallNetworkRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AzureFirewallDnsProxy"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNetworkRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWApplicationRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNatRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWThreatIntel"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWIdpsSignature"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWDnsQuery"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWFqdnResolveFailure"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWApplicationRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNetworkRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNatRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
   metric {
     category = "AllMetrics"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 }
 

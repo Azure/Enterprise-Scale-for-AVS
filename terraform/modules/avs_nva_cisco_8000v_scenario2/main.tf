@@ -70,6 +70,7 @@ resource "azurerm_linux_virtual_machine" "csr1000v_node0" {
   disable_password_authentication = false
   custom_data                     = base64encode(data.template_file.node_config.rendered)
   tags                            = var.tags
+  zone                            = var.zone_0
 
   network_interface_ids = [
     azurerm_network_interface.node0_csr_nic0.id, azurerm_network_interface.node0_csr_nic1.id,
@@ -152,6 +153,7 @@ resource "azurerm_linux_virtual_machine" "csr1000v_node1" {
   disable_password_authentication = false
   custom_data                     = base64encode(data.template_file.node_config.rendered)
   tags                            = var.tags
+  zone                            = var.zone_1
 
   network_interface_ids = [
     azurerm_network_interface.node1_csr_nic0.id, azurerm_network_interface.node1_csr_nic1.id,

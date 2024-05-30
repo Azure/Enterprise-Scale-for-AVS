@@ -18,13 +18,14 @@ resource "azurerm_windows_virtual_machine" "vm" {
   size                = var.jumpboxsku
   admin_username      = var.adminusername
   admin_password      = var.adminpassword
+  zone                = 1
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
 
   os_disk {
     caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    storage_account_type = "Premium_LRS"
   }
 
   source_image_reference {

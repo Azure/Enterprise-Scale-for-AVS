@@ -57,6 +57,12 @@ variable "nva_subnet_prefix" {
   description = "The prefix of the nva subnet"
 }
 
+variable "zone" {
+  type = number
+  description = "zone where this resource should be located."
+  default = 1
+}
+
 #################################################################
 # telemetry variables
 #################################################################

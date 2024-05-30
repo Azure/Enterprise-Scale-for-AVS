@@ -15,6 +15,7 @@ resource "azurerm_public_ip" "firewall_pip" {
   name                = var.firewall_pip_name
   location            = var.rg_location
   resource_group_name = var.rg_name
+  zones               = var.zones
 
   allocation_method = "Static"
   sku               = "Standard"
@@ -30,6 +31,7 @@ resource "azurerm_firewall" "firewall" {
   private_ip_ranges   = ["IANAPrivateRanges", ]
   tags                = var.tags
   firewall_policy_id  = azurerm_firewall_policy.avs_base_policy.id
+  zones               = var.zones
 
   ip_configuration {
     name                 = "${var.firewall_name}-ipconfiguration1"
@@ -54,130 +56,60 @@ resource "azurerm_monitor_diagnostic_setting" "firewall_metrics" {
   log_analytics_workspace_id     = azurerm_log_analytics_workspace.simple.id
   log_analytics_destination_type = "AzureDiagnostics"
 
-  log {
+  enabled_log {
     category = "AzureFirewallApplicationRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AzureFirewallNetworkRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AzureFirewallDnsProxy"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNetworkRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWApplicationRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNatRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWThreatIntel"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWIdpsSignature"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWDnsQuery"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWFqdnResolveFailure"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWApplicationRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNetworkRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
-  log {
+  enabled_log {
     category = "AZFWNatRuleAggregation"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 
   metric {
     category = "AllMetrics"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-    }
   }
 }
 

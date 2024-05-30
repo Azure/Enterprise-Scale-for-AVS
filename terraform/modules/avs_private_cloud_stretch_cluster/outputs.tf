@@ -4,40 +4,40 @@ output "sddc_id" {
 
 output "sddc_express_route_id" {
   value = [
-    jsondecode(data.azapi_resource.stretch_cluster.output).properties.circuit.expressRouteID,
-    jsondecode(data.azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRouteID
+    data.azapi_resource.stretch_cluster.output.properties.circuit.expressRouteID,
+    data.azapi_resource.stretch_cluster.output.properties.secondaryCircuit.expressRouteID
   ]
 }
 
 output "sddc_express_route_authorization_key" {
   value = [
-    jsondecode(azapi_resource.authkey_circuit1.output).properties.expressRouteAuthorizationKey,
-    jsondecode(azapi_resource.authkey_circuit2.output).properties.expressRouteAuthorizationKey
+    azapi_resource.authkey_circuit1.output.properties.expressRouteAuthorizationKey,
+    azapi_resource.authkey_circuit2.output.properties.expressRouteAuthorizationKey
   ]
 }
 
 output "sddc_express_route_private_peering_id" {
   value = [
-    jsondecode(data.azapi_resource.stretch_cluster.output).properties.circuit.expressRoutePrivatePeeringID,
-    jsondecode(data.azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRoutePrivatePeeringID
+    data.azapi_resource.stretch_cluster.output.properties.circuit.expressRoutePrivatePeeringID,
+    data.azapi_resource.stretch_cluster.output.properties.secondaryCircuit.expressRoutePrivatePeeringID
   ]
 }
 
 
 output "sddc_vcsa_endpoint" {
-  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.vcsa
+  value = data.azapi_resource.stretch_cluster.output.properties.endpoints.vcsa
 }
 
 output "sddc_nsxt_manager_endpoint" {
-  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.nsxtManager
+  value = data.azapi_resource.stretch_cluster.output.properties.endpoints.nsxtManager
 }
 
 output "sddc_hcx_cloud_manager_endpoint" {
-  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.endpoints.hcxCloudManager
+  value = data.azapi_resource.stretch_cluster.output.properties.endpoints.hcxCloudManager
 }
 
 output "sddc_provisioning_subnet_cidr" {
-  value = jsondecode(data.azapi_resource.stretch_cluster.output).properties.provisioningNetwork
+  value = data.azapi_resource.stretch_cluster.output.properties.provisioningNetwork
 }
 
 /*
