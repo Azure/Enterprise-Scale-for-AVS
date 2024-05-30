@@ -66,10 +66,8 @@ module "avs_expressroute_gateway" {
   rg_name                         = azurerm_resource_group.greenfield_network.name
   rg_location                     = azurerm_resource_group.greenfield_network.location
   gateway_subnet_id               = module.avs_virtual_network.subnet_ids["GatewaySubnet"].id
-  express_route_connection_name   = local.express_route_connection_name
-  express_route_id                = module.avs_private_cloud.sddc_express_route_id
-  express_route_authorization_key = module.avs_private_cloud.sddc_express_route_authorization_key
   module_telemetry_enabled        = false
+  tags                            = var.tags
 
   depends_on = [
     module.avs_vpn_gateway
@@ -120,6 +118,7 @@ module "avs_routeserver" {
   route_server_name        = local.route_server_name
   route_server_subnet_id   = module.avs_virtual_network.subnet_ids["RouteServerSubnet"].id
   module_telemetry_enabled = false
+  tags                     = var.tags
 }
 
 #deploy the default service health and azure monitor alerts

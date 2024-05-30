@@ -23,21 +23,6 @@ locals {
     key_name            = "testkey.${random_string.namestring.result}"
   }
 
-  #Map of values containing the credentials for authenticating to the VMware management components of the private cloud
-  vmware_creds = {
-    nsx = {
-      ip       = split("/", data.azurerm_vmware_private_cloud.sddc.nsxt_manager_endpoint)[2]
-      user     = jsondecode(data.azapi_resource_action.sddc_creds.output).nsxtUsername
-      password = jsondecode(data.azapi_resource_action.sddc_creds.output).nsxtPassword
-    }
-    vsphere = {
-      ip       = split("/", data.azurerm_vmware_private_cloud.sddc.vcsa_endpoint)[2]
-      user     = jsondecode(data.azapi_resource_action.sddc_creds.output).vcenterUsername
-      password = jsondecode(data.azapi_resource_action.sddc_creds.output).vcenterPassword
-    }
-  }
-
-
   ##########################################################################################################
   # These values control the module being deployed to the private cloud.  
   # This is where changes would be made if deploying a different TF module to the private cloud
@@ -130,7 +115,6 @@ module "deploy_tf_vm" {
   tf_vm_subnet_id           = local.tf_vm_subnet_id
   tf_vm_name                = local.tf_vm_name
   key_vault_id              = local.key_vault_id
-  vmware_creds              = local.vmware_creds
   vmware_state_storage      = local.vmware_state_storage
   vmware_deployment         = local.vmware_deployment
   tf_template_github_source = local.tf_template_github_source

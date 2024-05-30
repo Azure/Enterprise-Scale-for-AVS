@@ -38,7 +38,7 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
     environment = "Dev"
     CreatedBy   = "Terraform"
   }
-  module_telemetry_enabled = false
+  #module_telemetry_enabled = false
 }
 
 ######## Create a pre-shared key for the VPN ######

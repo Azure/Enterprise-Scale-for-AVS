@@ -5,8 +5,8 @@ terraform {
       version = "~>3.00"
     }
     azapi = {
-      source  = "azure/azapi"
-      version = "~>1.1.0"
+      source  = "Azure/azapi"
+      version = "~> 1.13, != 1.13.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -31,4 +31,8 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "azapi" {
+  enable_hcl_output_for_data_source = true
 }
