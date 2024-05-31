@@ -31,6 +31,9 @@ param Internet string = 'Disabled'
 @description('The number of nodes to be deployed in the first/default cluster, ensure you have quota before deploying')
 param PrivateCloudHostCount int = 3
 
+@description('Optional: Add a Resource Lock to the AVS Private Cloud.')
+param AddResourceLock bool = true
+
 @description('Optional: Assign Jumpbox VM as Contributor on AVS Private Cloud')
 param AssignJumpboxAsAVSContributor bool = false
 
@@ -133,6 +136,7 @@ module AVSCore 'Modules/AVSCore.bicep' = {
     PrivateCloudHostCount: PrivateCloudHostCount
     PrivateCloudSKU: PrivateCloudSKU
     Internet: Internet
+    AddResourceLock: AddResourceLock
   }
 }
 

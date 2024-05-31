@@ -4,6 +4,7 @@ param ManagementClusterSize int
 param SKUName string
 param Location string
 param Internet string
+param AddResourceLock bool
 
 resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
   name: '${Prefix}-SDDC'
@@ -21,6 +22,15 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
       clusterSize: ManagementClusterSize
     }
   }
+}
+
+resource AVSLock 'Microsoft.Authorization/locks@2020-05-01' = if (AddResourceLock) {
+  name: '${Prefix}-SDDCLock'
+  properties: {
+    level: 'CanNotDelete'
+    notes: 'Lock to prevent accidental deletion of the AVS Private Cloud'
+  }
+  scope: PrivateCloud
 }
 
 output PrivateCloudName string = PrivateCloud.name

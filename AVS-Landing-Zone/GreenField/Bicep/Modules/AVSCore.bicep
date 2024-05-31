@@ -6,6 +6,7 @@ param PrivateCloudAddressSpace string
 param PrivateCloudSKU string
 param PrivateCloudHostCount int
 param Internet string
+param AddResourceLock bool
 
 resource PrivateCloudResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-PrivateCloud'
@@ -22,6 +23,7 @@ module PrivateCloud 'AVSCore/PrivateCloud.bicep' = {
     SKUName: PrivateCloudSKU
     ManagementClusterSize: PrivateCloudHostCount
     Internet: Internet
+    AddResourceLock: AddResourceLock
   }
 }
 
