@@ -16,6 +16,7 @@ param BootstrapJumpboxVM bool
 param BootstrapPath string
 param BootstrapCommand string
 param BastionSubnet string
+param JumpboxAvailabilityZone string
 
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
@@ -58,6 +59,7 @@ module VM 'JumpBox/JumpBoxVM.bicep' = {
     BootstrapVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    JumpboxAvailabilityZone: JumpboxAvailabilityZone
   }
 }
 

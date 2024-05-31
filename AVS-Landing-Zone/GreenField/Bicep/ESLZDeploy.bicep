@@ -43,6 +43,12 @@ param VNetAddressSpace string
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetGatewaySubnet string
 
+@description('The availability zones to deploy the ExpressRoute Gateway Public IP.')
+param GatewayPIPAvailabilityZones array = ['1', '2', '3']
+
+@description('The SKU of the ExpressRoute Gateway.')
+param GatewaySku string = 'ErGw1AZ'
+
 @description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
 param AlertEmails array = []
 
@@ -84,6 +90,14 @@ param BootstrapPath string = 'https://raw.githubusercontent.com/Azure/Enterprise
 
 @description('The command to trigger running the bootstrap script. If was not provided, then the expected script file name must be "bootstrap.ps1")')
 param BootstrapCommand string = 'powershell.exe -ExecutionPolicy Unrestricted -File bootstrap.ps1'
+
+@description('The availability zone for the JumpBox VM.')
+@allowed([
+  '1'
+  '2'
+  '3'
+])
+param JumpboxAvailabilityZone string = '1'
 
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
@@ -130,6 +144,8 @@ module Networking 'Modules/Networking.bicep' = {
     VNetExists: VNetExists
     VNetAddressSpace: VNetAddressSpace
     VNetGatewaySubnet: VNetGatewaySubnet
+    GatewayPIPAvailabilityZones: GatewayPIPAvailabilityZones
+    GatewaySku: GatewaySku
   }
 }
 
@@ -174,6 +190,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
     BootstrapJumpboxVM: BootstrapJumpboxVM
     BootstrapPath: BootstrapPath
     BootstrapCommand: BootstrapCommand
+    JumpboxAvailabilityZone: JumpboxAvailabilityZone
   }
 }
 

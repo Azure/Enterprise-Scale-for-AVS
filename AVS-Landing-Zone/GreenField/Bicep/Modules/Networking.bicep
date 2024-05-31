@@ -5,6 +5,8 @@ param Prefix string
 param VNetExists bool
 param VNetAddressSpace string
 param VNetGatewaySubnet string
+param GatewaySku string
+param GatewayPIPAvailabilityZones array
 
 resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-Network'
@@ -20,6 +22,8 @@ module Network 'Networking/VNetWithGW.bicep' = {
     VNetExists: VNetExists
     VNetAddressSpace: VNetAddressSpace
     VNetGatewaySubnet: VNetGatewaySubnet
+    GatewayPIPAvailabilityZones: GatewayPIPAvailabilityZones
+    GatewaySku: GatewaySku
   }
 }
 

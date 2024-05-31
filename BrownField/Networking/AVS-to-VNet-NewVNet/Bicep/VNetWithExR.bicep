@@ -35,7 +35,7 @@ var varCuaid = '938cd838-e22a-47da-8a6f-bdda923e3edb'
   'ErGw2AZ'
   'ErGw3AZ'
 ])
-param GatewaySku string = 'UltraPerformance'
+param GatewaySku string = 'ErGw3AZ'
 
 // Create the Virtual Network with the gateway subnet
 resource VNet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
@@ -67,8 +67,8 @@ resource GatewayPIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   }
   sku: {
     name: 'Standard'
-    tier: 'Regional'
   }
+  zones: ['1', '2', '3']
 }
 
 // Create the virtual network gateway
