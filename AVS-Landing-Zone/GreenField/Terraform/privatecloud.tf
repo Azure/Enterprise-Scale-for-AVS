@@ -52,3 +52,9 @@ resource "azurerm_vmware_express_route_authorization" "expressrouteauthkey" {
   name             = "${var.prefix}-AVS"
   private_cloud_id = azurerm_vmware_private_cloud.privatecloud.id
 }
+
+resource "azurerm_management_lock" "this_private_cloud" {
+  lock_level = "CanNotDelete"
+  name       = "${var.prefix}-lock"
+  scope      = azurerm_vmware_private_cloud.privatecloud.id
+}

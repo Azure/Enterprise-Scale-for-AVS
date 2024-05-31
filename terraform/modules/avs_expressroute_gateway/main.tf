@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "gatewaypip" {
   name                = var.expressroute_pip_name
   resource_group_name = var.rg_name
   location            = var.rg_location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
   sku                 = "Standard" 
   tags                = var.tags
   zones               = ["1","2","3"]

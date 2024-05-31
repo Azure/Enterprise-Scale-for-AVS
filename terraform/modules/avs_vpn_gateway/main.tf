@@ -2,7 +2,7 @@ resource "azurerm_public_ip" "gatewaypip_1" {
   name                = var.vpn_pip_name_1
   resource_group_name = var.rg_name
   location            = var.rg_location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
   sku                 = "Standard"
   zones               = ["1","2","3"]
 }
@@ -11,7 +11,7 @@ resource "azurerm_public_ip" "gatewaypip_2" {
   name                = var.vpn_pip_name_2
   resource_group_name = var.rg_name
   location            = var.rg_location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
   sku                 = "Standard"
   zones               = ["1","2","3"]
 }

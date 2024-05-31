@@ -2,8 +2,9 @@ resource "azurerm_public_ip" "gatewaypip" {
   name                = var.expressroute_pip_name
   resource_group_name = var.rg_name
   location            = var.rg_location
-  allocation_method   = "Dynamic"
-  sku                 = "Basic" #required for an ultraperformance gateway
+  allocation_method   = "Static"
+  sku                 = "Standard" #required for an ultraperformance gateway
+  zones               = ["1","2","3"]
 }
 
 resource "azurerm_virtual_network_gateway" "gateway" {

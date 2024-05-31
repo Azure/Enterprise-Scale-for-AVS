@@ -82,6 +82,12 @@ module "hcx_addon" {
   ]
 }
 
+resource "azurerm_management_lock" "this_private_cloud" {
+  lock_level = "CanNotDelete"
+  name       = "${azurerm_vmware_private_cloud.privatecloud.name}-lock"
+  scope      = azurerm_vmware_private_cloud.privatecloud.id
+}
+
 #############################################################################################
 # Telemetry Section - Toggled on and off with the telemetry variable
 # This allows us to get deployment frequency statistics for deployments
