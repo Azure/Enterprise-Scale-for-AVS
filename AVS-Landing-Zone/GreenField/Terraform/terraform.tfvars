@@ -12,6 +12,7 @@ avs-hostcount    = 3
 hcx_key_names    = ["hcxsite1", "hcxsite2"]
 
 #Input the Jumpbox local username, password and SKU of your choice
+
 key_vault_name = "jumpkeyvault"
 adminusername = "testuser"
 jumpboxsku    = "Standard_D2as_v4"
