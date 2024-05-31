@@ -3,25 +3,25 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Prefix": {
-            "value": "SJTEST2"
+            "value": ""
         },
         "DeployPrivateCloud": {
             "value": false
         },
         "PrivateCloudName": {
-            "value": "SA-SDDC-1"
+            "value": ""
         },
         "ExistingPrivateCloudName": {
-            "value": "SA-SDDC-1"
+            "value": ""
         },
         "ExistingPrivateCloudResourceId": {
-            "value": "/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/SA-SDDC-1/providers/Microsoft.AVS/privateClouds/SA-SDDC-1"
+            "value": ""
         },
         "PrivateCloudResourceGroupName": {
-            "value": "SA-SDDC-1"
+            "value": ""
         },
         "PrivateCloudAddressSpace": {
-            "value": "10.20.0.0/22"
+            "value": ""
         },
         "PrivateCloudSKU": {
             "value": "AV36P"
@@ -36,40 +36,40 @@
             "value": false
         },
         "NewNetworkName": {
-            "value": "SJTESTNET2-vnet"
+            "value": ""
         },
         "NewNetworkResourceGroupName": {
-            "value": "SJTESTNET2"
+            "value": ""
         },
         "NewVNetAddressSpace": {
-            "value": "10.111.0.0/16"
+            "value": ""
         },
         "NewVnetNewGatewaySubnetAddressPrefix": {
-            "value": "10.111.0.0/24"
+            "value": ""
         },
         "ExistingNetworkResourceId": {
-            "value": "/subscriptions/1caa5ab4-523f-4851-952b-1b689c48fae9/resourceGroups/SJTESTNET1/providers/Microsoft.Network/virtualNetworks/SJTESTNET1-vnet"
+            "value": ""
         },
         "ExistingGatewayName": {
-            "value": "SJTEST2-gw"
+            "value": ""
         },
         "AlertEmails": {
-            "value": "example@microsoft.com"
+            "value": "example@contoso.com"
         },
         "DeployJumpbox": {
             "value": true
         },
         "JumpboxUsername": {
-            "value": "avsjump"
+            "value": ""
         },
         "JumpboxPassword": {
-            "value": "ChangeM3!"
+            "value": ""
         },
         "JumpboxSubnet": {
-            "value": "10.111.2.0/24"
+            "value": ""
         },
         "BastionSubnet": {
-            "value": "10.111.1.0/24"
+            "value": ""
         }
     }
 }
