@@ -16,7 +16,7 @@ param BootstrapJumpboxVM bool
 param BootstrapPath string
 param BootstrapCommand string
 param BastionSubnet string
-param JumpboxAvailabilityZone string
+param JumpboxAvailabilityZone string[]
 
 
 module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
@@ -24,6 +24,7 @@ module Subnet 'JumpBox/JumpBoxSubnet.bicep' = {
   scope: resourceGroup(VNetResourceGroup)
   params:{
     VNetName: VNetName
+    Location: Location
     BastionSubnet: BastionSubnet
     JumpboxSubnet: JumpboxSubnet
   }

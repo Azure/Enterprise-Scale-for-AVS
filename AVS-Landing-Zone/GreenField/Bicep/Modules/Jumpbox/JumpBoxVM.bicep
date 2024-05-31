@@ -10,7 +10,7 @@ param HighPerformance bool
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
-param JumpboxAvailabilityZone string
+param JumpboxAvailabilityZone string[]
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'

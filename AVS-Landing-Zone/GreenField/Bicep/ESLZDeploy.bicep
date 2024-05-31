@@ -100,7 +100,7 @@ param BootstrapCommand string = 'powershell.exe -ExecutionPolicy Unrestricted -F
   '2'
   '3'
 ])
-param JumpboxAvailabilityZone string = '1'
+param JumpboxAvailabilityZone string[] = ['1']
 
 @description('The subnet CIDR used for the Bastion Subnet. Must be a /26 or greater within the VNetAddressSpace')
 param BastionSubnet string = ''
