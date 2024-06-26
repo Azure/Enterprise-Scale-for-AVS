@@ -60,7 +60,7 @@ param GatewayName string = VNetName
   'ErGw2AZ'
   'ErGw3AZ'
 ])
-param GatewaySku string = 'UltraPerformance'
+param GatewaySku string = 'ErGw3AZ'
 
 // Customer Usage Attribution Id
 var varCuaid = '20f60d5e-587f-4145-aa6d-4901171eb752'
@@ -123,8 +123,8 @@ resource GatewayPIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   }
   sku: {
     name: 'Standard'
-    tier: 'Regional'
   }
+  zones: ['1', '2', '3']
 }
 
 // Create the virtual network gateway
@@ -230,6 +230,9 @@ resource netappVolume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@202
     subnetId: netappDelegatedSubnet.id
     usageThreshold: netappVolumeSize
   }
+  zones: [
+    '1'
+  ]
 }
 
 @description('create AVS datastore from ANF volume')
