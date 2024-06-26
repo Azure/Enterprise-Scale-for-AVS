@@ -10,6 +10,7 @@ param HighPerformance bool
 param BootstrapVM bool = false
 param BootstrapPath string = ''
 param BootstrapCommand string = ''
+param JumpboxAvailabilityZone string[]
 
 var Name = '${Prefix}-jumpbox'
 var Hostname = 'avsjumpbox'
@@ -70,6 +71,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2021-03-01' = {
       ]
     }
   }
+  zones: JumpboxAvailabilityZone
 }
 
 resource Bootstrap 'Microsoft.Compute/virtualMachines/extensions@2015-06-15' = if(BootstrapVM) {

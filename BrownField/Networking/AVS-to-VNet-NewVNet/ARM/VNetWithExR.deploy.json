@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.26.170.59819",
-      "templateHash": "4671209063506360483"
+      "version": "0.27.1.19265",
+      "templateHash": "14478878175221541698"
     }
   },
   "parameters": {
@@ -63,7 +63,7 @@
     },
     "GatewaySku": {
       "type": "string",
-      "defaultValue": "UltraPerformance",
+      "defaultValue": "ErGw3AZ",
       "allowedValues": [
         "Standard",
         "HighPerformance",
@@ -111,9 +111,13 @@
         "publicIPAllocationMethod": "Static"
       },
       "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      }
+        "name": "Standard"
+      },
+      "zones": [
+        "1",
+        "2",
+        "3"
+      ]
     },
     {
       "type": "Microsoft.Network/virtualNetworkGateways",
@@ -193,8 +197,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "11981266253094397945"
+              "version": "0.27.1.19265",
+              "templateHash": "14310373085422398053"
             }
           },
           "parameters": {
@@ -247,8 +251,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "9728838765300640554"
+              "version": "0.27.1.19265",
+              "templateHash": "1329502019101845773"
             }
           },
           "resources": []

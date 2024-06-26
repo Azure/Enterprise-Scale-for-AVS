@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.26.170.59819",
-      "templateHash": "6097283439363293862"
+      "version": "0.27.1.19265",
+      "templateHash": "14939627422961477977"
     }
   },
   "parameters": {
@@ -117,7 +117,7 @@
     },
     "GatewaySku": {
       "type": "string",
-      "defaultValue": "UltraPerformance",
+      "defaultValue": "ErGw3AZ",
       "allowedValues": [
         "Standard",
         "HighPerformance",
@@ -187,9 +187,13 @@
         "publicIPAllocationMethod": "Static"
       },
       "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      }
+        "name": "Standard"
+      },
+      "zones": [
+        "1",
+        "2",
+        "3"
+      ]
     },
     {
       "type": "Microsoft.Network/virtualNetworkGateways",
@@ -302,6 +306,9 @@
         "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'ANFDelegatedSubnet')]",
         "usageThreshold": "[parameters('netappVolumeSize')]"
       },
+      "zones": [
+        "1"
+      ],
       "dependsOn": [
         "[resourceId('Microsoft.NetApp/netAppAccounts/capacityPools', parameters('netappAccountName'), parameters('netappCapacityPoolName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'ANFDelegatedSubnet')]"
@@ -352,8 +359,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "11981266253094397945"
+              "version": "0.27.1.19265",
+              "templateHash": "14310373085422398053"
             }
           },
           "parameters": {
@@ -406,8 +413,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "9728838765300640554"
+              "version": "0.27.1.19265",
+              "templateHash": "1329502019101845773"
             }
           },
           "resources": []

@@ -13,6 +13,9 @@ param Location string = resourceGroup().location
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
 
+@description('Optional: Add a Resource Lock to the AVS Private Cloud.')
+param AddResourceLock bool = true
+
 // Customer Usage Attribution Id
 var varCuaid = '99f18c8b-1767-4302-9cee-ecc0d135dd52'
 
@@ -40,6 +43,15 @@ resource HCX 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
     offer: 'VMware MaaS Cloud Provider'
   }
 }
+
+resource AVSLock 'Microsoft.Authorization/locks@2020-05-01' = if (AddResourceLock) {
+  name: '${PrivateCloudName}-SDDCLock'
+  properties: {
+    level: 'CanNotDelete'
+    notes: 'Lock to prevent accidental deletion of the AVS Private Cloud'
+  }
+  scope: PrivateCloud
+} 
 
 resource Telemetry 'Microsoft.Resources/deployments@2021-04-01' = if (!TelemetryOptOut) {
   name: 'pid-754599a0-0a6f-424a-b4c5-1b12be198ae8-${uniqueString(resourceGroup().id, PrivateCloudName, Location)}'

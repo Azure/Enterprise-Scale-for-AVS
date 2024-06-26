@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.26.170.59819",
-      "templateHash": "9240206883041763395"
+      "version": "0.27.1.19265",
+      "templateHash": "14023551912494198051"
     }
   },
   "parameters": {
@@ -41,6 +41,13 @@
       "metadata": {
         "description": "Opt-out of deployment telemetry"
       }
+    },
+    "AddResourceLock": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Optional: Add a Resource Lock to the AVS Private Cloud."
+      }
     }
   },
   "variables": {
@@ -61,6 +68,20 @@
           "clusterSize": "[parameters('ManagementClusterSize')]"
         }
       }
+    },
+    {
+      "condition": "[parameters('AddResourceLock')]",
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2020-05-01",
+      "scope": "[format('Microsoft.AVS/privateClouds/{0}', parameters('PrivateCloudName'))]",
+      "name": "[format('{0}-SDDCLock', parameters('PrivateCloudName'))]",
+      "properties": {
+        "level": "CanNotDelete",
+        "notes": "Lock to prevent accidental deletion of the AVS Private Cloud"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName'))]"
+      ]
     },
     {
       "condition": "[not(parameters('TelemetryOptOut'))]",
@@ -92,8 +113,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "9728838765300640554"
+              "version": "0.27.1.19265",
+              "templateHash": "1329502019101845773"
             }
           },
           "resources": []
