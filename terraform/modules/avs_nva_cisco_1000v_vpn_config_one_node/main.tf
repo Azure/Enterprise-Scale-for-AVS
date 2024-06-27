@@ -68,6 +68,7 @@ resource "azurerm_linux_virtual_machine" "csr1000v_node0" {
   admin_password                  = random_password.admin_password.result
   disable_password_authentication = false
   custom_data                     = data.template_cloudinit_config.config.rendered
+  zone                            = var.zone
 
   network_interface_ids = [
     azurerm_network_interface.node0_csr_nic0.id,

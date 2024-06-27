@@ -14,7 +14,7 @@ resource "azapi_resource" "law_table" {
   name      = var.custom_table_name
   parent_id = azurerm_log_analytics_workspace.avs_log_workspace.id
   type      = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
-  body = jsonencode(
+  body = jsondecode(
     {
       "properties" : {
         "plan" : "Analytics"

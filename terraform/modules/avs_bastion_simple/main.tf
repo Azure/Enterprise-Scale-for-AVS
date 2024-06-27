@@ -4,6 +4,7 @@ resource "azurerm_public_ip" "bastionpip" {
   resource_group_name = var.rg_name
   allocation_method   = "Static"
   sku                 = "Standard"
+  zones               = ["1","2","3"]
 }
 
 resource "azurerm_bastion_host" "bastion" {

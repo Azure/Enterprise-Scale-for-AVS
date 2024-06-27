@@ -34,6 +34,12 @@ variable "tags" {
   description = "List of the tags that will be assigned to each resource"
 }
 
+variable "zones" {
+  type = list(string)
+  description = "List of zones where this resource should be located."
+  default = ["1","2","3"]
+}
+
 #################################################################
 # telemetry variables
 #################################################################

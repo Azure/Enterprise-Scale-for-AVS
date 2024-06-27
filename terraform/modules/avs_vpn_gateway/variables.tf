@@ -18,7 +18,7 @@ variable "vpn_gateway_name" {
 variable "vpn_gateway_sku" {
   type        = string
   description = "The sku for the AVS vpn gateway"
-  default     = "VpnGw2"
+  default     = "VpnGw2AZ"
 }
 
 variable "asn" {

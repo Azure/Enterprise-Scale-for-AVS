@@ -1,10 +1,13 @@
 terraform {
+  required_version = "~> 1.6"
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
+      version = "~> 3.105"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "Azure/azapi"
+      version = "~> 1.13, != 1.13.0"
     }
   }
 }
@@ -18,6 +21,7 @@ provider "azurerm" {
 
 provider "azapi" {
   skip_provider_registration = "true"
+  enable_hcl_output_for_data_source = true
 }
 
 resource "azurerm_resource_group" "deploymentRG" {
@@ -61,9 +65,11 @@ resource "azurerm_public_ip" "gatewayIP" {
   name                = "${var.GatewayName}-PIP"
   resource_group_name = azurerm_resource_group.deploymentRG.name
   location            = azurerm_resource_group.deploymentRG.location
-  allocation_method   = "Dynamic"
-  sku                 = "Basic"
+  allocation_method   = "Static"
+  sku                 = "Standard"
   sku_tier            = "Regional"
+  zones               = ["1","2","3"]
+  
 }
 
 resource "azurerm_virtual_network_gateway" "ERGateway" {
@@ -129,6 +135,38 @@ resource "azurerm_netapp_pool" "avs_anf_pool" {
   size_in_tb          = var.netappCapacityPoolSize
 }
 
+resource "azurerm_netapp_volume" "anf_volume" {
+  name                            = var.netappVolumeName
+  location                        = azurerm_resource_group.deploymentRG.location
+  resource_group_name             = azurerm_resource_group.deploymentRG.name
+  account_name                    = azurerm_netapp_account.avs_anf_account.name
+  pool_name                       = azurerm_netapp_pool.avs_anf_pool.name
+  volume_path                     = var.netappVolumeName
+  service_level                   = "Standard"
+  subnet_id                       = azurerm_subnet.ANFDelegatedSubnet.id
+  protocols                       = ["NFSv3"]
+  security_style                  = "unix"
+  storage_quota_in_gb             = var.netappVolumeSize
+  snapshot_directory_visible      = true
+  zone                            = var.anf_zone_number
+  azure_vmware_data_store_enabled = true
+
+  export_policy_rule {
+    rule_index          = 1
+    allowed_clients     = ["0.0.0.0/0"]
+    protocols_enabled   = ["NFSv3"]
+    root_access_enabled = true
+    unix_read_only      = false
+    unix_read_write     = true
+  }
+
+  lifecycle {
+    ignore_changes = [zone]
+  }
+}
+
+
+/*
 resource "azapi_resource" "avs_anf_volume_avsdatastoreenabled" {
   depends_on = [
     azurerm_netapp_pool.avs_anf_pool
@@ -160,6 +198,8 @@ resource "azapi_resource" "avs_anf_volume_avsdatastoreenabled" {
     }
   })
 }
+*/
+
 
 data "azurerm_vmware_private_cloud" "avs_privatecloud" {
   provider            = azurerm.AVS-to-ANFdatastore-NewVnet
@@ -169,9 +209,7 @@ data "azurerm_vmware_private_cloud" "avs_privatecloud" {
 
 data "azurerm_netapp_volume" "anf_datastorevolume" {
   provider = azurerm.AVS-to-ANFdatastore-NewVnet
-  depends_on = [
-    azapi_resource.avs_anf_volume_avsdatastoreenabled
-  ]
+
   name                = var.netappVolumeName
   account_name        = var.netappAccountName
   pool_name           = var.netappCapacityPoolName
@@ -185,11 +223,11 @@ resource "azapi_resource" "avs_datastore_attach_anfvolume" {
   ]
   name      = var.netappVolumeName
   parent_id = "${data.azurerm_vmware_private_cloud.avs_privatecloud.id}/clusters/Cluster-1"
-  body = jsonencode({
+  body = {
     properties = {
       netAppVolume = {
-        id = data.azurerm_netapp_volume.anf_datastorevolume.id
+        id = azurerm_netapp_volume.anf_volume.id
       }
     }
-  })
+  }
 }

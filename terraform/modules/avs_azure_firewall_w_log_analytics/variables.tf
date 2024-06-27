@@ -52,6 +52,12 @@ variable "firewall_policy_name" {
   description = "Azure resource name assigned to the lfirewall policy"
 }
 
+variable "zones" {
+  type = list(string)
+  description = "List of zones where firewall should be located."
+  default = ["1","3","2"]
+}
+
 #################################################################
 # telemetry variables
 #################################################################

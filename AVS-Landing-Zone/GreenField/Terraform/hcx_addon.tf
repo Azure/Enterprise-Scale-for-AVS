@@ -4,12 +4,12 @@ resource "azapi_resource" "hcx_addon" {
   #Resource Name must match the addonType
   name      = "HCX"
   parent_id = azurerm_vmware_private_cloud.privatecloud.id
-  body = jsonencode({
+  body = {
     properties = {
       addonType = "HCX"
       offer     = "VMware MaaS Cloud Provider"
     }
-  })
+  }
 
   #adding lifecycle block to handle replacement issue with parent_id
   lifecycle {

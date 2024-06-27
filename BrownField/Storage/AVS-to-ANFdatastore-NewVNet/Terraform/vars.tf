@@ -81,5 +81,9 @@ variable "GatewayName" {
 variable "GatewaySku" {
   type        = string
   description = "Virtual network gateway SKU to be created"
+}
 
+variable "anf_zone_number" {
+  type        = number
+  description = "The zone where the ANF volume should be deployed."
 }

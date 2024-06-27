@@ -50,6 +50,11 @@ variable "sddc_rg_name" {
   description = "the resource group name of the sddc where the vmware tf module will be deployed"
 }
 
+variable "zone" {
+  type = number
+  description = "zone where this resource should be located."
+  default = 1
+}
 #################################################################
 # telemetry variables
 #################################################################

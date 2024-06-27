@@ -38,6 +38,11 @@ variable "key_vault_id" {
   description = "azure resource id for the keyvault used to store logstash vm passwords"
 }
 
+variable "zone" {
+  type = number
+  description = "zone where this resource should be located."
+  default = 1
+}
 #################################################################
 # telemetry variables
 #################################################################

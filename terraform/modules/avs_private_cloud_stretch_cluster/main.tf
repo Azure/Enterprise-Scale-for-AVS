@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    azapi = {
-      source = "azure/azapi"
-    }
-  }
-}
-
 data "azurerm_resource_group" "avs" {
   name = var.rg_name
 }
@@ -43,7 +35,7 @@ resource "azapi_resource" "stretch_cluster" {
   tags      = var.tags
 
 
-  body = jsonencode({
+  body = {
     properties = {
       availability = {
         strategy = "DualZone"
@@ -61,7 +53,7 @@ resource "azapi_resource" "stretch_cluster" {
     sku = {
       name = lower(var.sddc_sku)
     }
-  })
+  }
 
   response_export_values = [
     "properties.circuit.expressRouteID",
@@ -95,11 +87,11 @@ resource "azapi_resource" "authkey_circuit1" {
   type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
   name      = var.expressroute_authorization_key_name_1
   parent_id = data.azapi_resource.stretch_cluster.id
-  body = jsonencode({
+  body = {
     properties = {
-      expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.circuit.expressRouteID
+      expressRouteId = azapi_resource.stretch_cluster.output.properties.circuit.expressRouteID
     }
-  })
+  }
   response_export_values    = ["properties.expressRouteAuthorizationKey"]
   schema_validation_enabled = false
 }
@@ -108,11 +100,11 @@ resource "azapi_resource" "authkey_circuit2" {
   type      = "Microsoft.AVS/privateClouds/authorizations@2022-05-01"
   name      = var.expressroute_authorization_key_name_2
   parent_id = data.azapi_resource.stretch_cluster.id
-  body = jsonencode({
+  body = {
     properties = {
-      expressRouteId = jsondecode(azapi_resource.stretch_cluster.output).properties.secondaryCircuit.expressRouteID
+      expressRouteId = azapi_resource.stretch_cluster.output.properties.secondaryCircuit.expressRouteID
     }
-  })
+  }
   response_export_values    = ["properties.expressRouteAuthorizationKey"]
   schema_validation_enabled = false
 }

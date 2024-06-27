@@ -48,6 +48,12 @@ variable "tags" {
   description = "List of the tags that will be assigned to each resource"
 }
 
+variable "zone" {
+  type = number
+  description = "zone where this resource should be located."
+  default = 1
+}
+
 #################################################################
 # telemetry variables
 #################################################################

@@ -126,3 +126,15 @@ variable "cisco_byol" {
   description = "flag to determine if deployment should use the BYOL or PayGo licensing model for the Cisco 8000v's. True = BYOL, false = PAYGO"
   default     = true
 }
+
+variable "zone_1" {
+  type = number
+  description = "zone where the 0 node resource should be located."
+  default = 1
+}
+
+variable "zone_0" {
+  type = number
+  description = "zone where the 1 node resource should be located."
+  default = 2
+}

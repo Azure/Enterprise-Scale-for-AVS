@@ -4,6 +4,7 @@ resource "azurerm_public_ip" "bastionpip" {
   resource_group_name = azurerm_resource_group.jumpbox.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  zones               = ["1","2","3"]
 }
 
 resource "azurerm_bastion_host" "bastion" {
