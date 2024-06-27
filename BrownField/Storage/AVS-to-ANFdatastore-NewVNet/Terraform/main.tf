@@ -209,9 +209,7 @@ data "azurerm_vmware_private_cloud" "avs_privatecloud" {
 
 data "azurerm_netapp_volume" "anf_datastorevolume" {
   provider = azurerm.AVS-to-ANFdatastore-NewVnet
-  depends_on = [
-    azapi_resource.avs_anf_volume_avsdatastoreenabled
-  ]
+
   name                = var.netappVolumeName
   account_name        = var.netappAccountName
   pool_name           = var.netappCapacityPoolName
