@@ -3,10 +3,10 @@
 prefix = "AVS"
 
 #Region to deploy the AVS Private Cloud and associated components
-region = "eastasia"
+region = "southafricanorth"
 
 #AVS requires a /22 CIDR range, this must not overlap with other networks to be used with AVS
-avs-networkblock = "10.1.0.0/22"
+avs-networkblock = "10.0.0.0/22"
 avs-sku          = "AV36"
 avs-hostcount    = 3
 hcx_key_names    = ["hcxsite1", "hcxsite2"]

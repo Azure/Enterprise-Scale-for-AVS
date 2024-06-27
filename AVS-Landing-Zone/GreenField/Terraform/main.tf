@@ -21,10 +21,6 @@ provider "azurerm" {
   partner_id = "754599a0-0a6f-424a-b4c5-1b12be198ae8"
 }
 
-provider "azapi" {
-  enable_hcl_output_for_data_source = true
-}
-
 ## Optional settings to setup a terraform backend in Azure storage
 
 # terraform {

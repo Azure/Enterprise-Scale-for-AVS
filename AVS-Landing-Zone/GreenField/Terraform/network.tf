@@ -36,6 +36,7 @@ resource "azurerm_subnet" "jumpboxsubnet" {
 resource "azurerm_subnet_network_security_group_association" "this_jumpbox" {
   subnet_id                 = azurerm_subnet.jumpboxsubnet.id
   network_security_group_id = module.testnsg.nsg_resource.id
+  depends_on = [ azurerm_virtual_network.network, azurerm_subnet.jumpboxsubnet, module.testnsg ]
 }
 
 module "testnsg" {
