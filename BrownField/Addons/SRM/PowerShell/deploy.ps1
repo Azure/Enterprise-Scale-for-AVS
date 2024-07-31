@@ -1,5 +1,5 @@
-$resourceGroup = "ExampleResourceGroup"
-$privateCloudName = "ExamplePrivateCloud"
+$resourceGroup = ""
+$privateCloudName = ""
 
 $srmKey = ""
 $vrInstances = "1"

@@ -31,7 +31,7 @@ if ($telemetry) {
 
 ##Global variables
 $technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
+$resourceGroupLocation = ""
 $jumpboxRgName = "$technology-$resourceGroupLocation-jumpbox_rg"
 $networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
 
@@ -41,7 +41,7 @@ $pipSKU = "Standard"
 $pipAllocationMethod = "Static"
 $bastionName = "$technology-$resourceGroupLocation-bastion1"
 $vnetName = "$technology-$resourceGroupLocation-vnet1"
-$vnetLocation = "germanywestcentral"
+$vnetLocation = ""
 
 $jumpboxRgName = "$technology-$resourceGroupLocation-jumpbox_rg"
 $networkingRgName = "$technology-$resourceGroupLocation-networking_rg"
@@ -79,12 +79,12 @@ if ($deployJumpbox) {
     $userPassword = ""
     $vmSize = "Standard_D2s_v3"
     #$vmName = "jumpbox-vm1"
-    $computerName = "jumpbox-vm2"
-    $vmUsername = "avsjump"
+    $computerName = ""
+    $vmUsername = ""
     $vmPassword = ConvertTo-SecureString $userPassword -AsPlainText -Force
 
     $vmCreds = New-Object System.Management.Automation.PSCredential($vmUsername, $vmPassword)
-    $vmLocation = "germanywestcentral"
+    $vmLocation = ""
     $vmResourceGroupName = "$technology-$resourceGroupLocation-jumpbox_rg"
     $vmPublisherName = "MicrosoftWindowsServer"
     $vmOfferName = "WindowsServer"

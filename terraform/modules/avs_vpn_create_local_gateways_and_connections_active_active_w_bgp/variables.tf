@@ -8,7 +8,7 @@ variable "rg_name" {
 
 variable "rg_location" {
   description = "Resource Group region location"
-  default     = "westus2"
+  default     = "<location>"
 }
 
 variable "virtual_network_gateway_id" {

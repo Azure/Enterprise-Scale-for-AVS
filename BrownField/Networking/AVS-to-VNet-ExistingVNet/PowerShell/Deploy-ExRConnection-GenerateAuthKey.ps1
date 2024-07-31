@@ -1,9 +1,9 @@
 # Parameters for deployment
-$privateCloudName = "ExamplePrivateCloud"
-$PrivateCloudResourceGroup = "ExampleResourceGroup"
-$GatewayName = "ExampleGatewayName"
-$GatewayResourceGroup = "ExampleGatewayResourceGroup"
-$location = "ExampleLocation"
+$privateCloudName = "<Existing Private Cloud name>"
+$PrivateCloudResourceGroup = "<Resource Group name of the existing Private Cloud>"
+$GatewayName = "<Name for the existing VNet Gateway>"
+$GatewayResourceGroup = "<Resource Group name of the existing VNet Gateway>"
+$location = ""
 $ConnectionName = "$privateCloudNameer-ExR-Connection"
 
 # Get Private Cloud and create ExR authorisation key, must be a circuit owner

@@ -7,7 +7,7 @@ pool:
 variables:
   environment: 'AVS-Production'
   paramFile: 'ESLZDeploy.parameters.json'
-  location: 'SoutheastAsia'
+  location: ''
   azureServiceConnectionName: 'Service Name(0000-0000-0000-0000-0000)'
   artifactName: 'ESLZDeploy'
 

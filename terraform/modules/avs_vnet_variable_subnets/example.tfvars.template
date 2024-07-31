@@ -1,29 +1,29 @@
   #This is a template file for the module
   #Items that are bracketed are typically resource links to other module output
   rg_name            = "SAMPLE_RG_NAME"
-  rg_location        = "Southeast Asia"
+  rg_location        = "LOCATION"
   vnet_name          = "SAMPLE_VNET_NAME"
-  vnet_address_space = ["10.0.0.0/16"]
+  vnet_address_space = ["w.x.y.z/aa"]
   subnets            = [
     {
       name           = "GatewaySubnet",
-      address_prefix = ["10.1.0.0/24"]
+      address_prefix = ["w.x.y.z/aa </27 minimum recommended CIDR block>"]
     },
     {
       name           = "RouteServerSubnet",
-      address_prefix = ["10.1.1.0/24"]
+      address_prefix = ["w.x.y.z/aa </27 minimum recommended CIDR block>"]
     },
     {
       name           = "AzureFirewallSubnet"
-      address_prefix = ["10.1.2.0/24"]
+      address_prefix = ["w.x.y.z/aa </26 is the recommended CIDR block>"]
     },
     {
       name           = "AzureBastionSubnet"
-      address_prefix = ["10.1.3.0/24"]
+      address_prefix = ["w.x.y.z/aa </26 minimum recommended CIDR block>"]
     },
     {
       name           = "JumpBoxSubnet"
-      address_prefix = ["10.1.4.0/24"]
+      address_prefix = ["w.x.y.z/aa"]
     }
   ]
   tags               = {Sample_key = "Sample_value"}

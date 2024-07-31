@@ -85,7 +85,7 @@ data "azapi_resource_action" "sddc_creds" {
 #create a resource group for the vmware state resource group
 resource "azurerm_resource_group" "vmware_test" {
   name     = local.vmware_state_storage.resource_group_name
-  location = "Canada Central"
+  location = "<Location>"
 }
 
 #create a storage account for vmware state files

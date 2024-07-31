@@ -4,38 +4,38 @@
         "id": "NetworkingResourceGroup",
 
         "prefix": "avs",
-        "location":"germanywestcentral",
-        "name": "avs-contoso-networking-rg"
+        "location":"",
+        "name": ""
     },
     {
         "id": "PrivateCloudResourceGroup",
         "prefix": "avs",
-        "location":"germanywestcentral",
-        "name": "avs-contoso-private-cloud-rg"
+        "location":"",
+        "name": ""
     },
     {
         "id": "OperationalResourceGroup",
         "prefix": "avs",
-        "location":"germanywestcentral",
-        "name": "avs-contoso-operational-rg"
+        "location":"",
+        "name": ""
     },
     {
         "id": "JumpboxResourceGroup",
         "prefix": "avs",
-        "location":"germanywestcentral",
-        "name": "avs-contoso-jumpbox-rg"
+        "location":"",
+        "name": ""
     }
     ],
     "PrivateCloud": 
     {
         "id": "PrivateCloud",
         "prefix": "avs",
-        "location":"germanywestcentral",
-        "resourcegroupname": "avs-contoso-private-cloud-rg",
+        "location":"",
+        "resourcegroupname": "",
         "sku": "av36",
-        "privatecloudnetworkcidr": "192.168.48.0/22",
+        "privatecloudnetworkcidr": "x.y.z.0/22",
         "clusternodecount": "3",
-        "privatecloudname": "avs-contoso",
+        "privatecloudname": "",
         "addons" : 
         {
             "addon":
@@ -65,35 +65,35 @@
             "id": "hubAndSpoke",
             "deploy": "true",
             "prefix": "avs",
-            "location":"germanywestcentral",
-            "resourcegroupname": "avs-contoso-networking-rg",
-            "hubvnetname": "avs-hub-vnet",
-            "hubvnetcidr": "10.0.0.0/16",
+            "location":"",
+            "resourcegroupname": "",
+            "hubvnetname": "",
+            "hubvnetcidr": "w.x.y.z/16",
             "subnets": {
                 "frontend":
                     {
                         "id": "frontend-subnet",
-                        "name": "frontend",
-                        "cidr": "10.0.1.0/26"
+                        "name": "",
+                        "cidr": "w.x.y.z/26"
                     },
                 "azurebastion":
                     {
                         "id": "azurebastion-subnet",
                         "name": "AzureBastionSubnet",
-                        "cidr": "10.0.1.64/26"
+                        "cidr": "w.x.y.z+64/26"
                     },
                 "gateway":
                     {
                         "id": "gateway-subnet",
                         "name": "GatewaySubnet",
-                        "cidr": "10.0.1.128/26"
+                        "cidr": "w.x.y.z+128/26"
                     }
             },
             "vpndeploy": {
                 "deploy": "true",
                 "vpngateway": {
                     "id": "vpngateway",
-                    "name": "avs-contoso-vpn-gateway",
+                    "name": "",
                     "gatewaytype": "Vpn",
                     "vpnType": "RouteBased",
                     "sku": "VpnGw1Az",
@@ -103,17 +103,16 @@
                     "publicips": {
                         "pip1": {
                             "id": "pip1",
-                            "name": "avs-contoso-vpn-pip1",
-                            "configname": "avs-contoso-vpn-pip1-config",
+                            "name": "",
+                            "configname": "",
                             "sku": "Standard",
                             "pipallocationmethod": "Static",
                             "Ipaddressversion": "IPv4"
                         },
                         "pip2": {
                             "id": "pip2",
-
-                            "name": "avs-contoso-vpn-pip12",
-                            "configname": "avs-contoso-vpn-pip2-config",
+                            "name": "",
+                            "configname": "",
                             "sku": "Standard",
                             "pipallocationmethod": "Static",
                             "Ipaddressversion": "IPv4"
@@ -128,10 +127,10 @@
                         }
                     },
                     "azurerouteserver": {
-                        "name" : "avs-contoso-azurerouteserver",
+                        "name" : "",
                         "pip" : {
                             "id": "arspip",
-                            "name": "avs-contoso-vpn-ars-pip1",
+                            "name": "",
                             "sku": "Standard",
                             "pipallocationmethod": "Static",
                             "ipaddressversion": "IPv4"
@@ -142,7 +141,7 @@
             "virtualnetworkgateway": 
             {
                 "id": "virtualnetworkgateway",
-                "name": "avs-hub-exr-gateway",
+                "name": "",
                 "gatewaytype": "ExpressRoute",
                 "vpnType": "PolicyBased",
                 "sku": "ErGw1AZ",
@@ -162,19 +161,19 @@
         "virtualwan": {
             "id": "virtualwan",
             "deploy": "false",
-            "name": "avs-contoso-virtualwan",
-            "resourcegroupname": "avs-contoso-networking-rg",
-            "location": "contoso",
+            "name": "",
+            "resourcegroupname": "",
+            "location": "",
             "hub": {
                 "id": "hub",
-                "name": "avs-contoso-virtualwan-hub",
-                "cidr": "172.16.24.0/24",
+                "name": "",
+                "cidr": "w.x.y.z/24",
                 "exrgateway" :{
-                    "name": "avs-contoso-virtualwan-hub-exrgateway"
+                    "name": ""
                 },
                 "vnet": {
                     "id": "vnet",
-                    "name": "avs-northeurope-virtualwan-hub-vnet"
+                    "name": ""
                     }
             },
             "expressrouteauthorization":{
@@ -185,26 +184,26 @@
     },
     "jumpbox": {
         "deploy": "true",
-        "location":"germanywestcentral",
+        "location":"",
         "id": "jumpbox",
         "prefix": "avs",
-        "resourcegroupname": "avs-contoso-jumpbox-rg",
-        "name": "jumpbox1",
-        "vnetname": "avs-contoso-jumpbox-vnet",
+        "resourcegroupname": "",
+        "name": "",
+        "vnetname": "",
         "vnetcidr": "",
         "vmsize" :"Standard_D2s_v3",
-        "username": "avsjump",
+        "username": "",
         "vmpublishername": "MicrosoftWindowsServer",
         "vmoffername": "WindowsServer",
         "vmosedition": "2019-Datacenter-smalldisk",
         "vmosversion": "latest",
         "bastion": {
-            "name": "avs-contoso-bastion1",
+            "name": "",
             "vnetname": "avs-hub-vnet",
-            "location": "eastus",
+            "location": "",
             "pip":{
                 "id": "pip",
-                "name": "avs-contoso-bastion-pip",
+                "name": "",
                 "sku": "Standard",
                 "pipallocationmethod": "Static",
                 "ipaddressversion": "IPv4"

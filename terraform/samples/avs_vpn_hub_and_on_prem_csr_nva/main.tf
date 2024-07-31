@@ -3,36 +3,36 @@ module "deploy_greenfield_new_vpn_hub_no_firewall" {
   source = "../../scenarios/avs_greenfield_new_vpn_hub"
 
   prefix = "sample"
-  region = "Southeast Asia"
+  region = "<Location>"
 
-  vnet_address_space = ["10.40.0.0/16"]
+  vnet_address_space = ["w.x.y.z/aa"]
   subnets = [
     {
       name           = "GatewaySubnet",
-      address_prefix = ["10.40.1.0/24"]
+      address_prefix = ["w.x.y.z/aa </27 minimum recommended CIDR block>"]
     },
     {
       name           = "RouteServerSubnet",
-      address_prefix = ["10.40.2.0/24"]
+      address_prefix = ["w.x.y.z/aa </27 minimum recommended CIDR block>"]
     }
   ]
 
   expressroute_gateway_sku = "Standard"
   sddc_sku                 = "av36P"
   management_cluster_size  = 3
-  avs_network_cidr         = "10.2.0.0/20"
+  avs_network_cidr         = "x.y.z.0/20"
   hcx_enabled              = true
   hcx_key_names            = ["DallasDC", "SeattleDC"]
   vpn_gateway_sku          = "VpnGw2"
   asn                      = 65515
   firewall_sku_tier        = "Standard"
-  email_addresses          = ["donotreply@microsoft.com"]
+  email_addresses          = ["email@contoso.com"]
 
   jumpbox_sku                      = "Standard_D2as_v4"
-  jumpbox_admin_username           = "azureuser"
-  jumpbox_spoke_vnet_address_space = ["10.41.0.0/16"]
-  bastion_subnet_prefix            = "10.41.1.0/16"
-  jumpbox_subnet_prefix            = "10.41.2.0/16"
+  jumpbox_admin_username           = "<UserName>"
+  jumpbox_spoke_vnet_address_space = ["w.x.y.z/aa"]
+  bastion_subnet_prefix            = "w.x.y.z/aa"
+  jumpbox_subnet_prefix            = "w.x.y.z/aa"
 
   tags = {
     environment = "Dev"
@@ -63,21 +63,21 @@ module "deploy_on_prem_nva_vpn" {
   source = "../../modules/avs_test_vpn_nva_one_node"
 
   prefix = "sample-on-prem"
-  region = "Southeast Asia"
+  region = "<Location>"
 
-  vnet_address_space = ["10.50.0.0/16"]
+  vnet_address_space = ["w.x.y.z/aa"]
   subnets = [
     {
       name           = "AzureBastionSubnet",
-      address_prefix = ["10.50.1.0/24"]
+      address_prefix = ["w.x.y.z/aa </26 minimum recommended CIDR block>"]
     },
     {
       name           = "JumpBoxSubnet"
-      address_prefix = ["10.50.2.0/24"]
+      address_prefix = ["w.x.y.z/aa"]
     },
     {
       name           = "CSRSubnet"
-      address_prefix = ["10.50.0.0/24"]
+      address_prefix = ["w.x.y.z/aa"]
     }
   ]
 
@@ -88,7 +88,7 @@ module "deploy_on_prem_nva_vpn" {
   pre_shared_key      = random_password.shared_key.result
   asn                 = 64100
   jumpbox_sku         = "Standard_D2as_v4"
-  admin_username      = "azureuser"
+  admin_username      = "<UserName>"
   remote_gw_pubip0    = module.deploy_greenfield_new_vpn_hub_no_firewall.vpn_gateway_pip_1
   remote_gw_pubip1    = module.deploy_greenfield_new_vpn_hub_no_firewall.vpn_gateway_pip_2
   tags = {

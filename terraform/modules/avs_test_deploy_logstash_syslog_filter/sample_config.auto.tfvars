@@ -1,5 +1,5 @@
 rg_name                                     = "AvsLogFilterExample"
-rg_location                                 = "Canada Central"
+rg_location                                 = "Location"
 avs_log_processing_service_principal_name   = "AvsLogFilterSP"
 eventhub_namespace_name                     = "avslogfilterehnamespace"
 eventhub_capacity                           = 4

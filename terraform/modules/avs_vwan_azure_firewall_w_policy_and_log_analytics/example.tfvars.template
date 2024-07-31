@@ -1,7 +1,7 @@
   #This is a template file for the module
   #Items that are bracketed are typically resource links to other module output
   rg_name                   = "AVS_Sample_RG_Name"
-  rg_location               = "Southeast Asia"
+  rg_location               = "<Location>"
   firewall_sku_tier         = "Standard"
   firewall_name             = "AVS_VWAN_Firewall"
   log_analytics_name        = "AVS_VWAN_Log_Analytics"

@@ -3,38 +3,38 @@
 
 
 prefix                = "SDDC1"
-region                = "Southeast Asia"
+region                = "<Location>"
 
 vwan_name                  = "avs_vwan"
 vwan_already_exists        = false
-vwan_hub_address_prefix    = "10.100.0.0/16"
+vwan_hub_address_prefix    = "w.x.y.z/aa"
 express_route_scale_units  = 1
 all_branch_traffic_through_firewall = true
 vpn_scale_units            = 1
 sddc_sku                   = "av36P"
 management_cluster_size    = 3
-avs_network_cidr           = "192.168.0.0/22"
+avs_network_cidr           = "w.x.y.z/aa"
 hcx_enabled                = true
 hcx_key_names              = ["keyname1", "keyname2"]
 
-jumpbox_spoke_vnet_address_space = ["10.110.0.0/16"]
+jumpbox_spoke_vnet_address_space = ["w.x.y.z/aa"]
 jumpbox_spoke_vnet_subnets = [
     {
     name           = "AzureBastionSubnet",
-    address_prefix = ["10.110.0.0/24"]
+    address_prefix = ["w.x.y.z/aa </26 minimum recommended CIDR block>"]
     },
     {
     name           = "JumpBoxSubnet"
-    address_prefix = ["10.110.1.0/24"]
+    address_prefix = ["w.x.y.z/aa"]
     }
 ]
 
 
 firewall_sku_tier            = "Standard"
 hub_firewall_public_ip_count = 1
-email_addresses          = ["test1@test.com","test2@test.com"]
+email_addresses          = ["email@contoso.com","email2@contoso.com"]
 jumpbox_sku         = "Standard_D2as_v4"
-admin_username      = "azureuser"
+admin_username      = "<UserName>"
 
 
 tags = {

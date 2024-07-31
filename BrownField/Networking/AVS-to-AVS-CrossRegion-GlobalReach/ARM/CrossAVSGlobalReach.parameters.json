@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrimaryPrivateCloudName": {
-            "value": "ExamplePrivateCloud1"
+            "value": "<Name of the existing primary private cloud that will contain the inter-private cloud link resource, must exist within this resource group>"
         },
         "PrimaryPrivateCloudResourceGroup": {
-            "value": "ResourceGroup1"
+            "value": "<Resource group name of the existing primary private cloud>"
         },
         "SecondaryPrivateCloudName": {
-            "value": "ExamplePrivateCloud2"
+            "value": "<Name of the existing secondary private cloud that global reach will connect to>"
         },
         "SecondaryPrivateCloudResourceGroup": {
-            "value": "ResourceGroup2"
+            "value": "<Resource group name of the existing secondary private cloud>"
         }
     }
 }

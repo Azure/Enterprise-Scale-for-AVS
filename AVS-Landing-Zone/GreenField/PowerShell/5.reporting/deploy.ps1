@@ -35,7 +35,7 @@ if ($telemetry) {
 ## resource group variables
 ## Define location for resource groups
 $technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
+$resourceGroupLocation = ""
 
 $actionGroupRgName = "$technology-$resourceGroupLocation-operational_rg"
 
@@ -44,7 +44,7 @@ $guid = New-Guid
 $actionGroupSuffix = $guid.ToString().Split("-")[0]
 $actionGroupName = "avs_" + $actionGroupSuffix
 
-$receivers = "flkelly@microsoft.com" #,"robin.heringa@microsoft.com"
+$receivers = "email@contoso.com"
 
 foreach ($receiver in $receivers) {
     $name = $receiver.Split("@")[0].replace(".","")
@@ -59,7 +59,7 @@ $actionGroupId = New-AzActionGroup -ActionGroupId $actionGroup.Id
 
 ## Reporting variables
 $technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
+$resourceGroupLocation = ""
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 $privateCloud = Get-AzVMwarePrivateCloud -ResourceGroupName $privateCloudRgName
 

@@ -3,6 +3,6 @@
   bastion_pip_name  = "AVS_Sample_Bastion_PIP"
   bastion_name      = "AVS_Sample_Bastion"
   rg_name           = "AVS_Sample_RG_Name"
-  rg_location       = "Southeast Asia"
+  rg_location       = "Location"
   bastion_subnet_id = "<Resource_ID_of_the_Bastion_Subnet>"
   tags              = {Sample_key = "Sample_value"}

@@ -3,7 +3,7 @@ targetScope = 'subscription'
 @description('The prefix to use on resources inside this template')
 @minLength(1)
 @maxLength(20)
-param Prefix string = ''
+param Prefix string = 'ALZ'
 
 @description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
 param Location string = deployment().location

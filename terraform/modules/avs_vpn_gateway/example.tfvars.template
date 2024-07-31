@@ -6,5 +6,5 @@
   vpn_gateway_sku   = "VpnGw2"
   asn               = 65515 
   rg_name           = "AVS_Sample_RG_Name"
-  rg_location       = "Southeast Asia"
+  rg_location       = "Location"
   gateway_subnet_id = "<Resource_ID_of_the_Gateway_Subnet>"

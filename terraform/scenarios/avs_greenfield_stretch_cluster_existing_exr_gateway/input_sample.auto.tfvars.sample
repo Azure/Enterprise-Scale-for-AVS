@@ -3,14 +3,14 @@
 
 
 prefix                  = "SDDC1"
-region                  = "Southeast Asia"
+region                  = "<Location>"
 sddc_sku                = "av36P"
 #the cluster size should be a minimum of 6 for the two 3 node clusters to build
 management_cluster_size = 6
-avs_network_cidr        = "192.168.0.0/22"
+avs_network_cidr        = "x.y.z.0/22"
 hcx_enabled             = true
 hcx_key_names           = ["keyname1", "keyname2"]
-email_addresses         = ["test1@test.com","test2@test.com"]
+email_addresses         = ["email@contoso.com","email2@contoso.com"]
 expressroute_gateway_id = "<full resource id of the expressroute gateway the private clouds will be connected to>"
 internet_enabled        = false
 tags = {

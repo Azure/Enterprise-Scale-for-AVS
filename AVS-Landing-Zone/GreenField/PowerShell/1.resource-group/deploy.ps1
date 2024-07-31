@@ -14,7 +14,7 @@
 ## resource group variables
 ## Define location for resource groups
 $technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
+$resourceGroupLocation = ""
 
 ## Define resource groups
 $resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$technology-$resourceGroupLocation-networking_rg","$technology-$resourceGroupLocation-operational_rg","$technology-$resourceGroupLocation-jumpbox_rg"
@@ -23,7 +23,7 @@ $resourceGroups = "$technology-$resourceGroupLocation-private_cloud_rg","$techno
 ## other examples - to add technology, simply add $owner to the tags
 # $tags = @{"deploymentMethod"="PowerShell"; "Technology"="AVS"; "Onwer"="flkelly"}
 ## tags can be modified to suit your needs, another example below.
-$tags = @{"Environment"="Development";"Owner"="Fletcher Kelly";"CanBeDeleted"="True";"DeploymentMethod"="PowerShell"}
+$tags = @{"Environment"="Development";"Owner"="";"CanBeDeleted"="True";"DeploymentMethod"="PowerShell"}
 
 ## create a loop to create resource groups
 foreach ($resourceGroup in $resourceGroups) {

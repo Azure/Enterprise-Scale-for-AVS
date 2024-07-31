@@ -1,19 +1,19 @@
 #populate this file and remove the .sample extension when running this module standalone
 #if calling this module from another module leave this file commented out
-DeploymentResourceGroupName = "ExampleRG"
-PrivateCloudName = "MyPrivateCloud"
-PrivateCloudResourceGroup = "MyPrivateCloudRG"
-PrivateCloudSubscriptionId = "<private cloud subscription id value (not full resource id)>"
-Location = "example region"
-VNetName = "VNetName"
-VNetAddressSpaceCIDR = ["10.4.0.0/16",]
-VNetGatewaySubnetCIDR = ["10.4.0.0/24",]
-VNetANFDelegatedSubnetCIDR = ["10.4.10.0/24",]
-GatewayName = "GatewayTF"
+DeploymentResourceGroupName = "<Name of the Resource Group>"
+PrivateCloudName = "<Name of the existing Private Cloud>"
+PrivateCloudResourceGroup = "<Resource Group of the existing Private Cloud>"
+PrivateCloudSubscriptionId = "<Private Cloud Subscription ID value (not full Resource ID)>"
+Location = ""
+VNetName = "<VNetName>"
+VNetAddressSpaceCIDR = ["w.x.y.z/aa",]
+VNetGatewaySubnetCIDR = ["w.x.y.z/aa",]
+VNetANFDelegatedSubnetCIDR = ["w.x.y.z/aa",]
+GatewayName = "<GatewayTF>"
 GatewaySku = "ErGw3AZ"
-netappAccountName = "NetAppAccount-AVSdatastore"
-netappCapacityPoolName = "CapacityPool-AVSdatastore"
+netappAccountName = "<NetApp Account Name>"
+netappCapacityPoolName = "<Capacity Pool Name>"
 netappCapacityPoolServiceLevel = "Premium"
 netappCapacityPoolSize = 4
-netappVolumeName = "ANFdatastore001"
+netappVolumeName = "<Data Store Name>"
 netappVolumeSize = 100

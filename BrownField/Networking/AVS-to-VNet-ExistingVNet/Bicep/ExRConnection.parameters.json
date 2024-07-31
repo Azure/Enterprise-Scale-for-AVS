@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrivateCloudName": {
-            "value": "ExamplePrivateCloud"
+            "value": "<Existing Private Cloud name>"
         },
         "GatewayName": {
-            "value": "ExampleGateway"
+            "value": "<Name for the existing VNet Gateway>"
         },
         "ConnectionName": {
             "value": "ExampleAVSConnection"

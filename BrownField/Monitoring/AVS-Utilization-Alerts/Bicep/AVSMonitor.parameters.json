@@ -4,7 +4,7 @@
     "parameters": {
         "ActionGroupEmails": {
             "value": [
-                "example@microsoft.com"
+                "email@contoso.com"
             ]
         },
         "PrivateCloudResourceId": {
