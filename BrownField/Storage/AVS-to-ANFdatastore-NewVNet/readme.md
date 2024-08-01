@@ -48,25 +48,26 @@ terraform apply -var-file="AVS-to-ANFdatastore-NewVNet.tfvars"
 module "AVS-to-ANFdatastore-NewVnet" {
     source = "../AVS-to-ANFdatastore-NewVNet/Terraform/"
     
-    DeploymentResourceGroupName    = "<resource group name where new vnet and gateway will be deployed>"
-    PrivateCloudName               = "<existing private cloud name>"
-    PrivateCloudResourceGroup      = "<resource group where existing private cloud is deployed"
-    PrivateCloudSubscriptionId     = "<private cloud subscription id value (not full resource id)>"
-    Location                       = "<vnet deployment region>"
-    VNetName                       = "<new vnet name>"
+    DeploymentResourceGroupName    = "<Resource Group name where new VNet and Gateway will be deployed>"
+    PrivateCloudName               = "<Existing Private Cloud name>"
+    PrivateCloudResourceGroup      = "<Resource Group where existing Private Cloud is deployed>"
+    PrivateCloudSubscriptionId     = "<Private Cloud Subscription ID value (not full Resource ID)>"
+    Location                       = "<VNet deployment region>"
+    VNetName                       = "<New VNet name>"
     VNetAddressSpaceCIDR           = ["<CIDR for new vnet>",]
     VNetGatewaySubnetCIDR          = ["<CIDR for gateway subnet>",]
     VNetANFDelegatedSubnetCIDR     = ["<CIDR for gateway subnet>",]
-    GatewayName                    = "<name for new vnet gateway>"
+    GatewayName                    = "<Name for new VNet Gateway>"
     GatewaySku                     = "UltraPerformance"
-    netappAccountName              = "NetAppAccount-AVSdatastore"
-    netappCapacityPoolName         = "CapacityPool-AVSdatastore"
+    netappAccountName              = "<NetApp Account Name>"
+    netappCapacityPoolName         = "<Capacity Pool Name>"
     netappCapacityPoolServiceLevel = "Premium"
     netappCapacityPoolSize         = 4
-    netappVolumeName               = "ANFdatastore001"
+    netappVolumeName               = "<Data Store Name>"
     netappVolumeSize               = 4398046511104
 }
 ```
+
 ## Post-deployment Steps
 
 * Navigate to "Azure Monitor", click "Networks" and select "Network health" tab. Apply filter with `Type=ER and VPN Connections`. ER Connection with Azure VMware Solution should show "Available" under "Health" column.

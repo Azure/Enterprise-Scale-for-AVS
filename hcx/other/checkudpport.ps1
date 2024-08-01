@@ -1,5 +1,5 @@
-$sourceIP = "127.0.0.1" # Replace with source IP address
-$destinationIP = "127.0.0.2" # Replace with destination IP address
+$sourceIP = "w.x.y.z" # Replace with source IP address
+$destinationIP = "w.x.y.z" # Replace with destination IP address
 $PORT = 8080  # Replace with target port
 $MESSAGE = "test message"
 

@@ -1,12 +1,12 @@
 # Use this script when to connect AVS Virtual Network Gateway to ExpressRoute using an existing ExpressRoute Id and Authorization Key
 
 # Parameters for deployment
-$GatewayName = "ExampleGatewayName"
-$GatewayResourceGroup = "ExampleGatewayResourceGroup"
-$location = "ExampleLocation"
-$ConnectionName = "ExampleName-ExR-Connection"
-$ExpressRouteAuthorizationKey = "Example-Key"
-$ExpressRouteId = "ExampleExRId"
+$GatewayName = "<Name of existing VNet Gateway>"
+$GatewayResourceGroup = "<Resource Group name of existing VNet Gateway>"
+$location = ""
+$ConnectionName = "<Name for the new connection being created>"
+$ExpressRouteAuthorizationKey = "<Existing ExpressRoute Authorization Key>"
+$ExpressRouteId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/RGName/providers/Microsoft.Network/expressRouteCircuits/ERName/authorizations/ExampleAVSConnection"
 
 # Get existing virtual network gateway
 $exrgwtouse = Get-AzVirtualNetworkGateway -Name $GatewayName -ResourceGroupName $GatewayResourceGroup

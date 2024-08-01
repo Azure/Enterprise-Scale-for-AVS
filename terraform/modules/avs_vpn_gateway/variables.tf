@@ -34,7 +34,7 @@ variable "rg_name" {
 variable "rg_location" {
   type        = string
   description = "Resource Group location"
-  default     = "westus2"
+  default     = "<location>"
 }
 variable "gateway_subnet_id" {
   type        = string

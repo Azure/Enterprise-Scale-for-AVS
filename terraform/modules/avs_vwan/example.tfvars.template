@@ -1,7 +1,7 @@
   #This is a template file for the module
   #Items that are bracketed are typically resource links to other module output
   rg_name             = "AVS_Sample_RG_Name"
-  rg_location         = "Southeast Asia"
+  rg_location         = "Location"
   vwan_name           = "AVS_VWAN"
   vwan_already_exists = true
   tags                = {Sample_key = "Sample_value"}

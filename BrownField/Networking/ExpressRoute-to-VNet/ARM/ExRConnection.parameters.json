@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "GatewayName": {
-            "value": "ExampleGateway"
+            "value": "<Name of existing VNet Gateway>"
         },
         "ConnectionName": {
-            "value": "ExampleAVSConnection"
+            "value": "<Name for the new connection being created>"
         },
         "ExpressRouteAuthorizationKey": {
-            "value": "00000000-0000-0000-0000-000000000000"
+            "value": "<Existing ExpressRoute Authorization Key>"
         },
         "ExpressRouteId": {
-            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/tntXX-cust-p01-centralus/providers/Microsoft.Network/expressRouteCircuits/tntXX-cust-p01-centralus-er/authorizations/ExampleAVSConnection"
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/RGName/providers/Microsoft.Network/expressRouteCircuits/ERName/authorizations/ExampleAVSConnection"
         }
     }
 }

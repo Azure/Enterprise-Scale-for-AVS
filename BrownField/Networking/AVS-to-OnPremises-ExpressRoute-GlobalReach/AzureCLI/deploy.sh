@@ -1,11 +1,11 @@
-RESOURCE_GROUP="ExampleResourceGroup"
+RESOURCE_GROUP="<Resource Group where the new globalReach resource will be created>"
 
-PRIVATECLOUD_NAME="ExamplePrivateCloud"
-PRIVATECLOUD_ADDRESSBLOCK="10.0.0.0/22"
+PRIVATECLOUD_NAME="<The name of the existing Private Cloud that should be used for the connection>"
+PRIVATECLOUD_ADDRESSBLOCK="x.y.z.0/22"
 
-GLOBALREACH_NAME="ExampleGlobalReach"
-EXR_RESOURCEID="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/tntXX-cust-p01-centralus/providers/Microsoft.Network/expressRouteCircuits/tntXX-cust-p01-centralus-er"
-EXR_AUTHKEY="00000000-0000-0000-0000-000000000000"
+GLOBALREACH_NAME="<ExampleGlobalReach>"
+EXR_RESOURCEID="<The Express Route ID to create the connection to>"
+EXR_AUTHKEY="<The Express Route Authorization Key to be redeemed by the connection. In the format 00000000-0000-0000-0000-000000000000>"
 
 az vmware global-reach-connection create --name $GLOBALREACH_NAME \
                                             --private-cloud $PRIVATECLOUD_NAME \

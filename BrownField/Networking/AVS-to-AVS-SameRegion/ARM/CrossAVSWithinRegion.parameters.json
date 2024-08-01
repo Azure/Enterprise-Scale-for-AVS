@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrimaryPrivateCloudName": {
-            "value": "ExamplePrivateCloud1"
+            "value": "<Name of the existing primary private cloud, must exist within this resource group>"
         },
         "SecondaryPrivateCloudId": {
-            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ExampleRG/providers/Microsoft.AVS/privateClouds/ExamplePrivateCloud"
+            "value": "<Full resource id of the secondary private cloud, must be in the same region as the primary>"
         }
     }
 }

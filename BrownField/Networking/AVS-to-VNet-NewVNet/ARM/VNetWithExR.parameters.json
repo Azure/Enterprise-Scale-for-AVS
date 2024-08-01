@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrivateCloudName": {
-            "value": "ExamplePrivateCloud"
+            "value": "<Existing Private Cloud name>"
         },
         "VNetName": {
-            "value": "ExampleVNet"
+            "value": "<New VNet name>"
         },
         "VNetAddressSpace": {
-            "value": "10.0.0.0/16"
+            "value": "<CIDR for new VNet>"
         },
         "VNetGatewaySubnet": {
-            "value": "10.0.0.0/24"
+            "value": "<CIDR for Gateway Subnet. Needs to be a size /27 or larger>"
         }
     }
 }

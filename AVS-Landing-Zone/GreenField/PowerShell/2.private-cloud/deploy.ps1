@@ -21,15 +21,15 @@ if (Get-Module -ListAvailable -Name Az.VMware)
 
 ## deploying new private cloud
 $technology = "avs"
-$resourceGroupLocation = "germanywestcentral"
+$resourceGroupLocation = ""
 $privateCloudRgName = "$technology-$resourceGroupLocation-private_cloud_rg"
 
 ## private cloud variables
 $sku = "av36P"
-$networkBlock = "192.168.48.0/22"
+$networkBlock = "x.y.z.0/22"
 $managementClusterSize = "3"
-$cloudName = "azps_test_cloud"
-$privateCloudLocation = "germanywestcentral"
+$cloudName = ""
+$privateCloudLocation = ""
 
 $cluster = @{
     Name = $cloudName

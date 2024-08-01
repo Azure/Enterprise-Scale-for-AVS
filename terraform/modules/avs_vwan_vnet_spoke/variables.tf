@@ -9,7 +9,7 @@ variable "rg_name" {
 variable "rg_location" {
   type        = string
   description = "Resource Group location"
-  default     = "westus2"
+  default     = "<location>"
 }
 
 variable "vwan_spoke_vnet_name" {

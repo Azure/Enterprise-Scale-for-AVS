@@ -3,7 +3,7 @@
 This code can be deployed in 2 different manners. You can use each folder to deploy each component [individually](#individual-deployment) or you can use a [master](#master-script) `deploys.ps1` to deploy all aspects in one session.
 
 1. Clone this repository onto either the Azure Cloud Shell or local machine  ```git clone git clone <repository-url>```
-2. Update the [variables file](variables/variables.json) to meet you need.
+2. Update the [variables file](variables/variables.json) to meet your needs.
 3. Choose your deployment method, please pick one or the other.
    1. [Individual component deployment](#individual-deployment) _**OR**_
    2. [Master Script deployment](#master-script)

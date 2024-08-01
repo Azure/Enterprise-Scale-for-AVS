@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "PrivateCloudName": {
-            "value": "ExamplePrivateCloud"
+            "value": "<Name of the Private Cloud>"
         },
         "NetworkBlock": {
-            "value": "10.0.0.0/22"
+            "value": "x.y.z.0/22"
         }
     }
 }
