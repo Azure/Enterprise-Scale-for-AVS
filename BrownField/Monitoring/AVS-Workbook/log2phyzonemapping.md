@@ -35,7 +35,7 @@ cd CLI
 
 ## Post-deployment Steps
 
-* Use the logical to physical zone mapping information for deployment of other Azure services in same availability zone as Azure VMware SOlution private cloud as appropriate.
+* Use the logical to physical zone mapping information for deployment of other Azure services in same availability zone as Azure VMware Solution private cloud as appropriate.
 
 ## Next Steps
 
