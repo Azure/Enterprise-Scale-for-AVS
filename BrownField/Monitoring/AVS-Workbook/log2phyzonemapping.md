@@ -33,7 +33,7 @@ cd CLI
 
 * When finished, Logical to physical zone mapping is shown for each location associated with subscription.
 
-![Logical to physical mapping for zones in Axure](log2phyimg.png)
+    ![Logical to physical mapping for zones in Axure](log2phyimg.png)
 
 ## Post-deployment Steps
 
