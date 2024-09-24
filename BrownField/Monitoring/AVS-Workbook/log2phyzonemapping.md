@@ -31,7 +31,7 @@ cd CLI
 
 * Script starts to run for each region.
 
-* When finished, Logical to physical zone mapping is shown for each location associated with subscription.
+* When finished, Logical to physical zone mapping is returned for each location associated with subscription as shown in the image below.
 
     ![Logical to physical mapping for zones in Axure](log2phyimg.png)
 
