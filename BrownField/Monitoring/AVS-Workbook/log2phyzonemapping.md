@@ -33,7 +33,7 @@ cd CLI
 
 * When finished, Logical to physical zone mapping is returned for each location associated with subscription as shown in the image below.
 
-    ![Logical to physical mapping for zones in Axure](log2phyimg.png)
+    ![Logical to physical mapping for zones in Azure](log2phyimg.png)
 
 ## Post-deployment Steps
 
