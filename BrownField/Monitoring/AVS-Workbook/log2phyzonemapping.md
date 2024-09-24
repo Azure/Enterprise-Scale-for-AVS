@@ -1,4 +1,4 @@
-# Know logical to pyisical zone mapping for Azure VMware Solution Private Cloud
+# Logical to phyisical zone mapping for Azure VMware Solution Private Cloud
 
 In some scenarios, such as deploying Azure NetApp Files (ANF) or Pure Block Cloud Store for Azure VMware Solution, it is essential that Azure VMware Solution private cloud and those services are deployed in same *physical* availability zone. This script helps to provide a simple output to customers to view logical to physical zone mapping associated with their Azure VMware Solution private cloud subscription. This information can then be used to ensure that Azure services are deployed in same *physical* zone as that of Azure VMware Solution private cloud as appropriate.
 
@@ -32,6 +32,8 @@ cd CLI
 * Script starts to run for each region.
 
 * When finished, Logical to physical zone mapping is shown for each location associated with subscription.
+
+![Logical to physical mapping for zones in Axure](log2phyimg.png)
 
 ## Post-deployment Steps
 
