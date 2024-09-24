@@ -7,7 +7,7 @@ subscriptionId=${1:-$(az account show --query id --output tsv)}
 locations=$(az account list-locations --query "[].{Name:name, Region:metadata.physicalLocation, ZoneMappings:availabilityZoneMappings}" --output json)
 
 # Output the availability zone mappings in a tabular format
-echo "Subscription ID | Region | Location | Logical Zone | Physical Zone"
+echo "Subscription ID | Location | Region | Logical Zone | Physical Zone"
 echo "----------------|--------|----------|--------------|--------------"
 for location in $(echo "$locations" | jq -r '.[] | @base64'); do
     _jq() {
