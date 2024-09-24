@@ -5,3 +5,4 @@
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
 *       @Azure/enterprise-scale-for-avs-maintainers
+/.github/CODEOWNERS @Azure/enterprise-scale-for-avs-maintainers
