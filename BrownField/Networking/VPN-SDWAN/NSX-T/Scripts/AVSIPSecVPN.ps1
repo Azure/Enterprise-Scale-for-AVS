@@ -1,5 +1,6 @@
 
 # Import functions
+. .\Install-RequiredModule.ps1
 . .\Connect-To-Azure.ps1
 . .\Get-Azure-Token.ps1
 . .\Invoke-APIRequest.ps1
@@ -35,6 +36,13 @@ function Main {
         $remoteNetwork = "192.168.0.32/29"
         $ipsForNatRules = @()
 
+        # Check and Install Powershell Modules
+        Install-RequiredModule -moduleName Az
+        Install-RequiredModule -moduleName AzureRM.Profile
+
+        # Add User Agent
+        [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("pid-94c42d97-a986-4d59-a0e6-6cd5aea77442")
+        
         # Authenticate to Azure
         Connect-To-Azure -tenantId $tenantId -subscriptionId $subscriptionId
 

@@ -5,59 +5,47 @@ This guidance covers the automation script that can be used in setting up IPSec 
 ## Prerequisites
 
 * Azure subscription to be used for private cloud depployment or already running private cloud.
-    * `$tenantId` = `<Provide your Azure tenant ID>`
-    * `$subscriptionId` = `<Provide the Azure subscription ID which has AVS SDDC deployed in it>`
-    * `$AVSSDDCresourceGroupName` = `"<Provide the Azure resource group name in which AVS SDDC is deployed">`
-        $privateCloudName = "AVsforArc"
-        $publicIpName = "AVS-VPN-Public-IP"
-        $numberOfPublicIPs = 1
-        $tier1GatewayName = "maksh-T1-gateway-vpn"
-        $dnsServiceName = "maksh-dns-service-vpn"
-        $dhcpProfileName = "maksh-DHCP-2"
-        $segmentName = "maksh-vpn-segment"
-        $ipSecVpnServiceName = "maksh-ipsec-vpn"
-        $ipSecVpnLocalEndpointName = "maksh-ipsec-vpn-lep"
-        $ipSecVpnSessionName = "maksh-ipsec-vpn-session"
-        $remoteGatewayIP = "4.174.250.100"
-        $remoteNetwork = "192.168.0.32/29"
-* Clone of this regpository with `Scripts` folder
+* Clone of this regpository in either a jumbox in Azure or on a on-premises machine which has access to vCenter and NSX-T servers.
 
 ## Deployment Steps
 
+* Navigate to `BrownField\Networking\VPN-SDWAN\NSX-T\Scripts` folder
 * Update the parameter values in `AVSIPSecVPN.ps1` as discussed below.
+    * `$tenantId` = `"<Provide your Azure tenant ID.>"`
+    * `$subscriptionId` = `"<Provide the Azure subscription ID which has AVS SDDC deployed in it.>"`
+    * `$AVSSDDCresourceGroupName` = `"<Provide the Azure resource group name in which AVS SDDC is deployed.>"`
+    * `$privateCloudName` = `"<Provide name of the ACS SDDC.>"`
+    * `$publicIpName` = `"<Provide name of an existing or to be created as a new Public IP at NSX Edge.>"`
+    * `$numberOfPublicIPs` = `<Provide a number of Public IPs to be created. 1 is enough in most cases.>`
+    * `$tier1GatewayName` = `"<Provide name of an existing or to be created T1 gateway in AVS.>"`
+    * `$dnsServiceName` = `"<Provide name of an existing or to be created DNS Service in AVS.>"`
+    * `$dhcpProfileName` = `"<Provide name of an existing or to be created DHCP Service in AVS.>"`
+    * `$segmentName` = `"<Provide name of an existing or to be created segment in AVS. It will be connected with T1 gateway provided earlier.>"`
+    * `$ipSecVpnServiceName` = `"<Provide name of an existing or to be created VPN Service in AVS.>"`
+    * `$ipSecVpnLocalEndpointName` = `"<Provide name of an existing or to be created Local Endpoint in AVS.>"`
+    * `$ipSecVpnSessionName` = `"<Provide name of an existing or to be created VPN Session in AVS.>"`
+    * `$remoteGatewayIP` = `"<Provide Public IP address of remote VPN router/firewall/gateway.>"`
+    * `$remoteNetwork` = `"<Provide private IP address range of the remote network behind VPN router/firewall/gateway.>"`
 
+* Run the script `AVSIPSecVPN.ps1` using any of the following option.
 
-* Run following script.
+>[!NOTE]
+>  Run the deployment script in following section from either a jumbox in Azure or on an on-premises machine which has network connectivity to reach vCenter and NSX-T servers.
+>
 
 ### CLI
+```pwsh
 
-```bash
-az account set -s <YOUR-SUBSCRIPTION-ID>
+cd BrownField\Networking\VPN-SDWAN\NSX-T\Scripts
 
-cd CLI
-
-./log2phy.sh
-
-# to run the script for a specific subscription, use following commands
-./log2phy.sh [subscription-id]
+./AVSIPSecVPN.ps1
 ```
-
-### Azure Cloud Shell
-
-* Login to shell.azure.com. Start a bash shell.
-
-* Copy the contents from log2phy.sh file and paste it into shell window. Hit enter.
-
-* Script starts to run for each region.
-
-* When finished, Logical to physical zone mapping is returned for each location associated with subscription as shown in the image below.
-
-    ![Logical to physical mapping for zones in Azure](log2phyimg.png)
 
 ## Post-deployment Steps
 
-* Use the logical to physical zone mapping information for deployment of other Azure services in same availability zone as Azure VMware Solution private cloud as appropriate.
+* Successful execution of the script above will deploy necessary IPSec VPN components in AVS.
+* You need to configure the other side (on-premises, DC, Azure, etc.) depending upon device, vendor and make. 
 
 ## Next Steps
 
-[Configure Workbook](../AVS-Workbook/readme.md)
+[AVS Networking](../../../../BrownField/readme.md#avs-networking)
