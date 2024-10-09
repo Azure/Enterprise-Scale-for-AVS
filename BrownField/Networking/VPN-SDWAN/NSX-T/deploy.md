@@ -1,11 +1,11 @@
 # Deploy IPSec VPN in AVS NSX-T
 
-This guidance covers the automation script that can be used in setting up IPSec VPN in AVS NSX-T.
+Use the guidance below to configure and run the automation script to set up IPSec VPN in AVS NSX-T. Refer to [Site to Site IPsec VPN to AVS using NSX-T Public IP](IPSec-VPN.md) for understanding of architecture and step by step instructions. 
 
 ## Prerequisites
 
-* Azure subscription to be used for private cloud depployment or already running private cloud.
-* Clone of this regpository in either a jumbox in Azure or on a on-premises machine which has access to vCenter and NSX-T servers.
+* Azure subscription to be used for Azure VMware Solution private cloud depployment or already running private cloud.
+* Clone of this regpository in either a jumpbox in Azure or on an on-premises machine which has network connectivity with vCenter and NSX-T servers.
 
 ## Deployment Steps
 
@@ -30,7 +30,7 @@ This guidance covers the automation script that can be used in setting up IPSec 
 * Run the script `AVSIPSecVPN.ps1` using any of the following option.
 
 >[!NOTE]
->  Run the deployment script in following section from either a jumbox in Azure or on an on-premises machine which has network connectivity to reach vCenter and NSX-T servers.
+>  Run the deployment script in following section from either a jumpbox in Azure or on an on-premises machine which has network connectivity with vCenter and NSX-T servers.
 >
 
 ### CLI
@@ -43,7 +43,8 @@ cd BrownField\Networking\VPN-SDWAN\NSX-T\Scripts
 
 ## Post-deployment Steps
 
-* Successful execution of the script above will deploy necessary IPSec VPN components in AVS.
+* Successful execution of the script will look like below and it will deploy necessary IPSec VPN components in AVS.
+    ![successful IPSec VPN deployment in AVS](image.png)
 * You need to configure the other side (on-premises, DC, Azure, etc.) depending upon device, vendor and make. 
 
 ## Next Steps

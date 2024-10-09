@@ -137,6 +137,8 @@ function Main {
                               -nsxtPassword $credentials.nsxtPassword `
                               -ipsForNatRules $ipsForNatRules
 
+    Write-Host "Script execution completed successfully!"                              
+
     } catch {
         Write-Error "An error occurred: $_"
         return
