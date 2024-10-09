@@ -10,7 +10,11 @@ The purpose of this writing is to explain how to connect to an AVS private cloud
 
 ![Sample architecture](./media/nsx-t-public-ip-vpn.png)
 
-**Note:** In this context, the ExpressRoute connection to the Azure Hub VNet is used to test connectivity.  
+**Note:** In this context, the ExpressRoute connection to the Azure Hub VNet is used to test connectivity.
+
+>[!NOTE]
+>  Automation script to deploy this design is avaialble. [Deploy to AVS](deploy.md)
+>
 
 ## Prerequisites  
 
@@ -83,3 +87,7 @@ The purpose of this writing is to explain how to connect to an AVS private cloud
 1. It is important to note that the SNAT rule will need to be processed after the No NAT rules. You accomplish this by adding a higher priority number to the Nat rule. The lowest value indicates higher weight of processing.
 1. At the end your rules may look something like below.
 ![.](./media/nsx-t-nat-rules.png)
+
+## Next Steps
+
+[Deploy IPSec VPN in NSX](deploy.md)
