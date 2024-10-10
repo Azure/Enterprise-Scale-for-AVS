@@ -19,21 +19,21 @@
 function Main {
     try {
         # Define the Azure VMware Solution SDDC details
-        $tenantId = "27eda52d-06a5-4e9f-bd76-1a062e47aba0"
-        $subscriptionId = "d52f9c4a-5468-47ec-9641-da4ef1916bb5"
-        $AVSSDDCresourceGroupName = "AvsForArcPOC"
-        $privateCloudName = "AVsforArc"
-        $publicIpName = "AVS-VPN-Public-IP"
+        $tenantId = "<CHANGE-ME>"
+        $subscriptionId = "<CHANGE-ME>"
+        $AVSSDDCresourceGroupName = "<CHANGE-ME>"
+        $privateCloudName = "<CHANGE-ME>"
+        $publicIpName = "<CHANGE-ME>"
         $numberOfPublicIPs = 1
-        $tier1GatewayName = "maksh-T1-gateway-vpn"
-        $dnsServiceName = "maksh-dns-service-vpn"
-        $dhcpProfileName = "maksh-DHCP-2"
-        $segmentName = "maksh-vpn-segment"
-        $ipSecVpnServiceName = "maksh-ipsec-vpn"
-        $ipSecVpnLocalEndpointName = "maksh-ipsec-vpn-lep"
-        $ipSecVpnSessionName = "maksh-ipsec-vpn-session"
-        $remoteGatewayIP = "4.174.250.100"
-        $remoteNetwork = "192.168.0.32/29"
+        $tier1GatewayName = "<CHANGE-ME>"
+        $dnsServiceName = "<CHANGE-ME>"
+        $dhcpProfileName = "<CHANGE-ME>"
+        $segmentName = "<CHANGE-ME>"
+        $ipSecVpnServiceName = "<CHANGE-ME>"
+        $ipSecVpnLocalEndpointName = "<CHANGE-ME>"
+        $ipSecVpnSessionName = "<CHANGE-ME>"
+        $remoteGatewayIP = "<CHANGE-ME>"
+        $remoteNetwork = "<CHANGE-ME>"
         $ipsForNatRules = @()
 
         # Check and Install Powershell Modules
