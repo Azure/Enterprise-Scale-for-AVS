@@ -89,6 +89,7 @@ function Invoke-APIRequest {
         # Add Bearer Token to the headers if available for Azure API calls
         if ($token) {
             $headers["Authorization"] = "Bearer $token"
+            $headers["User-Agent"] = "pid-94c42d97-a986-4d59-a0e6-6cd5aea77442"
         }
 
         # Add VMware API session ID to the headers if available for vCenter API calls

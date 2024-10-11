@@ -22,14 +22,6 @@ function Install-RequiredModule {
 }
 
 function Install-IfNotExist-RequiredModules {
-    # Check if the required type is already loaded
-    if (-not ([type]::GetType("Microsoft.Azure.Commands.Common.Authentication.AzureSession", $false, $false))) {
-        # Check and install required modules
-        Install-RequiredModule -moduleName Az
-    } else {
-        Write-Output "Type Microsoft.Azure.Commands.Common.Authentication.AzureSession is already loaded."
-    }
-
-    # Add User Agent
-    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("pid-94c42d97-a986-4d59-a0e6-6cd5aea77442")
+    # Check and install required modules
+    Install-RequiredModule -moduleName Az.Accounts
 }
