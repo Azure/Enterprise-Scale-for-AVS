@@ -45,3 +45,4 @@ The following are the unique ID's (also known as PIDs) used in each of the modul
 | Greenfield-ARM                             | `754599a0-0a6f-424a-b4c5-1b12be198ae8` |
 | Greenfield-PortalUI                        | `1cf4a3e3-529c-4fb2-ba6a-63dff7d71586` |
 | Greenfield-Lite                            | `8a85fe17-c0c9-439c-9d98-1ae024815163` |
+| AVS-Networking                            | `94c42d97-a986-4d59-a0e6-6cd5aea77442` |
