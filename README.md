@@ -6,6 +6,7 @@
   * [Greenfield Lite Deployment](AVS-Landing-Zone/GreenField%20Lite/readme.md)
   * [Brownfield Deployment](BrownField/readme.md)
   * [Terraform modules for additional deployment scenarios and samples](terraform/readme.md)
+* [Automated Architecture Assessment](BrownField/Auto-assessment/readme.md)
 
 ---
 
@@ -71,6 +72,12 @@ This deployment is a lite version of the full AVS Greenfield Deployment and will
 
 We've created a number of additional Terraform modules for AVS related deployment activities. Details on these modules can be found in the [Terraform readme.](./terraform/readme.md) 
 
+## Automated Architecture Assessment
+
+If an AVS SDDC was deployed using assests provided in this repository or it pre-existed, in both scenarios, it is possible to assess the architectural quality of the deployment. Refer to following links for additional guidance.
+
+* [What is Automated Architecture Assessment](./BrownField/Auto-assessment/readme.md)
+* [Run Automated Architecture Assessment](./BrownField/Auto-assessment/run.md)
 
 ## Converting Bicep templates to ARM templates
 

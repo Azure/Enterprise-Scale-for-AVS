@@ -40,18 +40,36 @@ B --> E[NSX-T
 API]
 ```
 
-Automated Architecture Assessment uses specific APIs to evaluate complaince against a design area. APIs are used across following key buidling blocks on an AVS SDDC.
+Automated Architecture Assessment uses specific APIs to evaluate complaince against a design area. APIs are used across following key buidling blocks of an AVS SDDC.
 
 * Azure
 * AVS vSphere
 * AVS NSX-T
 
+Each builidng block is queried through API calls for evaluating key design areas. Some of important validations perofrmed are as discussed below.
+
+* Azure
+    * ExpressRoute Global Reach connectivity
+    * AVS SDDC Metric and related alerts
+    * ExpressRoute connections and their utilization
+
+* AVS vSphere
+    * vSAN encryption status
+    * Storage Policies
+    * Guest VM Domain Join
+
+* AVS NSX-T
+    * Distributed/Gatway Firewall policies
+    * DHCP
+
+There are muliple other evaluations across each building block.
+
 ### Benefits
 Below are key benefits of using Automated Architecture Assessment.
 
-* Reduced time in gathering quality of an AVS deployment. Because it takes script-based approach, assessment can be completed in few minutes.
-* Avoid dependence on manual processes. In an enterprise environment, multiple teams manage different design areas. Script-based approach ensures that all design areas regardless of teams managing them are evaluated.
-* Remove cross-organizational boundaries. A typical assessment review needs people/resources from multiple organizations (e.g. Networking, Security, etc.). It may not be possible to have all of them available at the same time which may lead to incomplete assessment. Automated Architecture Assessment removes this barrier.
+* **Time:** Because of script-based approach, assessment can be completed in few minutes. If needed, it can be used to target only a specific SDDC (e.g. Prod vs. Dev-Test) or a specific design area (e.g. Only Security). 
+* **Cost:** Automated Architecture Assessment is a free service. It is offered as a Open-source software. Access to source code for further inspection as well as further enhancement is provided be default.
+* **Quality:** The assessment relies on output returned by API calls. This takes out guesswork from a typical dialogue-based interaction. Precise and accurate information can be then discussed with multiple stakeholders - inproving the quality further.
 
 ## Next Steps
 
