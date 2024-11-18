@@ -30,15 +30,15 @@ Automated Architecture Assessment is an evolution of the process to ascertain ar
 ```mermaid
 flowchart LR
 
-A[User] --> B[Automated
+A[User] <--> B[Automated
 Architecture
 Assessment]
-B --> C[Azure
+B <--> C[Azure
 API]
-B --> D[AVS 
+B <--> D[AVS 
 vSphere
 API]
-B --> E[AVS
+B <--> E[AVS
 NSX-T
 API]
 ```
