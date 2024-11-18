@@ -12,7 +12,7 @@ mermaid: true
 * [Business Conitnuity and Disaster recovery](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-business-continuity-and-disaster-recovery)
 * [Automation and DevOps](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-platform-automation-and-devops)
 
-Actionable design considerations and recommendation help in deploying AVS SDDC with high quality architecture.
+Actionable design considerations and recommendation help in deploying AVS Software Defined Data Center (SDDC) with high quality architecture.
 
 ## Assessing AVS Architecture
 
