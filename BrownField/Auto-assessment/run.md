@@ -43,7 +43,7 @@ cd BrownField\Auto-assessment\scripts
 
     ![AVS guest VM Credential Prompt](./media/guestVMcreds.png)
 
-* Assessent will run displaying the progess on console
+* Assessment will run displaying the progess on console
 
     ![Execution Progress](./media/progress.png)
 
