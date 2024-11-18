@@ -40,13 +40,30 @@ B --> E[NSX-T
 API]
 ```
 
-Automated Architecture Assessment uses specific APIs to evaluate complaince against a design area. APIs are used across following key buidling blocks of an AVS SDDC.
+Each of the component is discussed at a high-level below.
 
-* Azure
-* AVS vSphere
-* AVS NSX-T
+* User
+    * User clones this repository to get access to documentation as well as scripts.
+    * Parameter values are changed to reflect the AVS SDDC to be assessed.
+    * User runs the assessment. Assessment produces an output based on API call results.
 
-Each builidng block is queried through API calls for evaluating key design areas. Some of important validations perofrmed are as discussed below.
+* Azure API
+    * Each AVS SDDC is deployed in an Azure subscription and tenant.
+    * A specific Azure `Resource Provider (RP)` is registred in the subscription.
+    * This `RP` is queried through [documented APIs](https://learn.microsoft.com/en-us/rest/api/avs/operation-groups)
+
+* AVS vSphere API
+    * An AVS SDDC provisioning creates an instance of vSphere Automation API endpoint.
+    * Automated Architecture Assessment queries this API endpoint.
+    * Depending upon the the vSphere version, API documentation is avaialble [here](
+    https://developer.broadcom.com/xapis/vsphere-automation-api/latest/)
+
+* NSX-T API
+    * Similar to vSphere API endpoint, NSX-T API endpoint is also auto-provisioned as part of AVS SDDC deployment.
+    * Automated Architecture Assesment queries these APIs which are documented [here](https://developer.broadcom.com/xapis/nsx-t-data-center-rest-api/latest/).
+
+
+Querying APIs enable evaluating status of some of the important design areas as discussed below.
 
 * Azure
     * ExpressRoute Global Reach connectivity
@@ -62,14 +79,14 @@ Each builidng block is queried through API calls for evaluating key design areas
     * Distributed/Gatway Firewall policies
     * DHCP
 
-There are muliple other evaluations across each building block.
+There are muliple such design area evaluations implemented in Automated Architecture Assessment.
 
 ### Benefits
 Below are key benefits of using Automated Architecture Assessment.
 
 * **Time:** Because of script-based approach, assessment can be completed in few minutes. If needed, it can be used to target only a specific SDDC (e.g. Prod vs. Dev-Test) or a specific design area (e.g. Only Security). 
-* **Cost:** Automated Architecture Assessment is a free service. It is offered as a Open-source software. Access to source code for further inspection as well as further enhancement is provided be default.
-* **Quality:** The assessment relies on output returned by API calls. This takes out guesswork from a typical dialogue-based interaction. Precise and accurate information can be then discussed with multiple stakeholders - inproving the quality further.
+* **Cost:** Automated Architecture Assessment is a free service. It is offered as a Open-source software. Access to source code for further inspection as well as enhancements is provided by default.
+* **Quality:** The assessment relies on output returned by API calls. This takes out guesswork from a verbal architectual discussion. Precise and accurate outcomes can be then discussed with multiple stakeholders - improving the quality further.
 
 ## Next Steps
 
