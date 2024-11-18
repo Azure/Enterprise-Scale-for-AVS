@@ -8,17 +8,15 @@
 function Main {
     try {
         
-        $tenantId = "27eda52d-06a5-4e9f-bd76-1a062e47aba0"
-        #$tenantId = "dccf9c20-b9cd-4649-8c9c-a86003235ea3"
-        $subscriptionId = "d52f9c4a-5468-47ec-9641-da4ef1916bb5"
-        #$subscriptionId = "4c149f17-1515-46c4-a226-f5d0025c3b71"
+        $tenantId = "<CHANGE-ME>"
+        $subscriptionId = "<CHANGE-ME>"
         
         # Provide the names of the SDDCs to test
         # If the array is empty, all SDDCs in the subscriptio will be tested
         # Example: $namesofSddcsToTest = @()
         # If you want to test specific SDDCs, provide the names in comma-separated format
         # Example: $namesofSddcsToTest = @("prod-sddc", "uat-sddc")
-        $namesofSddcsToTest = @("sreeni-sddc")
+        $namesofSddcsToTest = @()
 
         # Provide the design areas to test
         # If the array is empty, all design areas will be tested
