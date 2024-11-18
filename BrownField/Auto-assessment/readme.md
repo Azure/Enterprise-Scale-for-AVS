@@ -92,7 +92,7 @@ There are multiple such design area evaluations implemented in Automated Archite
 ### Benefits
 Below are key benefits of using Automated Architecture Assessment.
 
-* **Time:** Because of script-based approach, assessment can be completed in few minutes. If needed, it can be used to target only a specific SDDC (e.g. Prod vs. Dev-Test) or a specific design area (e.g. Only Security). 
+* **Time:** Because of script-based approach, assessment can be completed in few seconds. If needed, it can be used to target only a specific SDDC (e.g. Prod vs. Dev-Test) or a specific design area (e.g. Only Security). 
 
 * **Cost:** Automated Architecture Assessment is a free service. It is offered as a Open-source software. Access to source code for further inspection as well as enhancements is provided by default.
 
