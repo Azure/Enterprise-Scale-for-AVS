@@ -12,7 +12,7 @@ Use the guidance below to run the Automated Architecture Assessment. Refer to [A
 
 ## Deployment Steps
 
-* Navigate to `AVS-Landing-Zone\Auto-assessment\scripts` folder
+* Navigate to `BrownField\Auto-assessment\scripts` folder
 * Update the parameter values in `Main.ps1` as discussed below.
     * `$tenantId` = `"<Provide your Azure tenant ID.>"`
     * `$subscriptionId` = `"<Provide the Azure subscription ID which has AVS SDDC deployed in it.>"`

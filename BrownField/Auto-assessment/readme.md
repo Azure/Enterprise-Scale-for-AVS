@@ -56,13 +56,13 @@ Each of the component is discussed at a high-level below.
 * Azure API
     * Each AVS SDDC is deployed in an Azure subscription and tenant.
     * A specific Azure `Resource Provider (RP)` is registred in the subscription.
-    * This `RP` is queried through [documented APIs](https://learn.microsoft.com/en-us/rest/api/avs/operation-groups)
+    * This `RP` is queried through [documented APIs](https://learn.microsoft.com/en-us/rest/api/avs/operation-groups).
 
 * AVS vSphere API
     * An AVS SDDC provisioning creates an instance of vSphere Automation API endpoint.
     * Automated Architecture Assessment queries this API endpoint.
     * Depending upon the the vSphere version, API documentation is avaialble [here](
-    https://developer.broadcom.com/xapis/vsphere-automation-api/latest/)
+    https://developer.broadcom.com/xapis/vsphere-automation-api/latest/).
 
 * NSX-T API
     * Similar to vSphere API endpoint, NSX-T API endpoint is also auto-provisioned as part of AVS SDDC deployment.
