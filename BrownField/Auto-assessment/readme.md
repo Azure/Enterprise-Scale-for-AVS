@@ -3,7 +3,7 @@ mermaid: true
 ---
 # Automated Architecture Assessment for Azure VMware Solution (AVS)
 
-[Azure VMware Solution (AVS) Landing Zone Accelerator](https://github.com/Azure/Enterprise-Scale-for-AVS) provides comprehensive guidance on deploying an AVS SDDC in an enterprise environment. It offers deployment scripts for automated deployment for both - [Greenfield](../GreenField/readme.md) and [Brownfield](../../BrownField/readme.md) - scenarios. It also provides design considerations and recommendations across following key design areas.
+[Azure VMware Solution (AVS) Landing Zone Accelerator](https://github.com/Azure/Enterprise-Scale-for-AVS) provides comprehensive guidance on deploying an AVS Software Defined Data Center (SDDC) in an enterprise environment. It offers deployment scripts for automated deployment for both - [Greenfield](../GreenField/readme.md) and [Brownfield](../../BrownField/readme.md) - scenarios. It also provides design considerations and recommendations across following key design areas.
 
 * [Identity](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-identity-and-access-management)
 * [Networking](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/network-get-started)
@@ -12,16 +12,16 @@ mermaid: true
 * [Business Conitnuity and Disaster recovery](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-business-continuity-and-disaster-recovery)
 * [Automation and DevOps](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-platform-automation-and-devops)
 
-Actionable design considerations and recommendation help in deploying AVS Software Defined Data Center (SDDC) with high quality architecture.
+Actionable design considerations and recommendation help in deploying AVS SDDC with high quality architecture.
 
 ## Assessing AVS Architecture
 
-While design consideration and recommendation help in deploying a new AVS SDDC, for AVS SDDCs which were deplopyed without them, it becomes a problem to assess the architecture quality. To address this problem, there are following interactive questionnaires.
+Determining whether all the design consideration and recommendation were implemented in an AVS SDDC helps in ascertaining it's architectual quality. Following interactive questionnaires helps to review and validate implementations of design considerations and recommendations.
 
 * [AVS Landing Zone Assessment Review](https://learn.microsoft.com/assessments/43a1998e-2cb9-403c-b257-dffa8ceafd63/)
 * [AVS Well-Architected Framework (WAF) Assessment Review](https://learn.microsoft.com/assessments/2d85e883-bdc4-4854-aaf0-df72c4bcee15/)
 
-These questionnaires are useful to validate the quality of a deployed AVS Architecture against Cloud Adoption Framework (CAF) and Well-Architected Framework (WAF) principles. Both questionnaires provide a quantitative score for current architecture, a set of actionable recommendations and references to improve the current score further.
+These questionnaires are useful to validate the quality of a deployed AVS Architecture against [Cloud Adoption Framework (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/) and [Well-Architected Framework (WAF)](https://learn.microsoft.com/azure/well-architected/azure-vmware/) principles. Both questionnaires provide a quantitative score for current architecture, a set of actionable recommendations and references to improve the current score further.
 
 ## Automated Architecture Assessment
 
