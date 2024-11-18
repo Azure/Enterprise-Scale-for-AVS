@@ -55,7 +55,7 @@ Each of the component is discussed at a high-level below.
 
 * Azure API
     * Each AVS SDDC is deployed in an Azure subscription and tenant.
-    * A specific Azure `Resource Provider (RP)` is registred in the subscription.
+    * A specific Azure `Resource Provider (RP)` is registered in the subscription.
     * This `RP` is queried through [documented APIs](https://learn.microsoft.com/en-us/rest/api/avs/operation-groups).
 
 * AVS vSphere API
