@@ -47,6 +47,11 @@ Each of the component is discussed at a high-level below.
     * Parameter values are changed to reflect the AVS SDDC to be assessed.
     * User runs the assessment. Assessment produces an output based on API call results.
 
+* Automated Architecture Assessment
+    * It is a collection of scripts which queries a specific API endpoint.
+    * Outcome of each script is evaluated against a set of recommendation for a given design area.
+    * Based on outcome, a list of observations and recommendations is returned to user. 
+
 * Azure API
     * Each AVS SDDC is deployed in an Azure subscription and tenant.
     * A specific Azure `Resource Provider (RP)` is registred in the subscription.
@@ -79,7 +84,7 @@ Querying APIs enable evaluating status of some of the important design areas as 
     * Distributed/Gatway Firewall policies
     * DHCP
 
-There are muliple such design area evaluations implemented in Automated Architecture Assessment.
+There are multiple such design area evaluations implemented in Automated Architecture Assessment.
 
 ### Benefits
 Below are key benefits of using Automated Architecture Assessment.
