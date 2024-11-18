@@ -36,7 +36,8 @@ API]
 B --> D[AVS 
 vSphere
 API]
-B --> E[AVS NSX-T
+B --> E[AVS
+NSX-T
 API]
 ```
 
