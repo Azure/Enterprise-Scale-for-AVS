@@ -25,7 +25,7 @@ Use the guidance below to run the Automated Architecture Assessment. Refer to [A
 ### PowerShell
 
 >[!NOTE]
->  Run the assessment script from either a jumpbox in Azure or on an on-premises machine which has network connectivity with Azure, vSphere and NSX-T APIs.
+>  Run the assessment script from either a jumpbox in Azure or on-premises machine which has network connectivity with Azure, vSphere and NSX-T APIs.
 >
 
 ```pwsh
