@@ -2,6 +2,7 @@
 . ./Test-AVS-DiagSetting.ps1
 . ./Test-vSAN-StoragePolicy.ps1
 . ./Test-SRM.ps1
+. ./Test-ServiceHealthAlert.ps1
 function Test-Management-DesignArea {
     param (
         [SecureString]$token,
@@ -10,6 +11,10 @@ function Test-Management-DesignArea {
         [PSCustomObject]$sddc
     )
     try {
+        # Test Service Health Alert
+        Write-Host "Testing Service Health Alert"
+        Test-ServiceHealth-Alert -token $token -sddc $sddc
+
         # Test Content Library
         Write-Host "Testing Content Library Storage"
         Test-ContentLibrary -token $token -sddc $sddc

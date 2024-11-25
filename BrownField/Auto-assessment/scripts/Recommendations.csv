@@ -1,0 +1,2 @@
+"Category","Priority","Observation","Recommendation","LinkText","LinkUrl"
+"Management","High","AVS Syslog Diagnostic setting is not configured for SDDC 'sreeni-sddc'.","Configure AVS Syslog Diagnostic setting for SDDC for monitoring and troubleshooting.","","https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring"
