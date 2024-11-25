@@ -9,6 +9,10 @@ function Test-ServiceHealth-Alert {
         # Get AVS SDDC details
         $sddcDetails = Get-AVS-SDDC-Details -sddc $sddc
 
+        # Define scope
+        $scope = "/subscriptions/$($sddcDetails.subscriptionId)/resourceGroups/$($sddcDetails.resourceGroupName)/providers/Microsoft.AVS/privateClouds/$($sddcDetails.sddcName)"
+
+
         # Define API Endpoint
         $apiUrl = [string]::Format(
             "https://management.azure.com/subscriptions/{0}/resourceGroups/{1}/" +
@@ -26,9 +30,9 @@ function Test-ServiceHealth-Alert {
 
         # Process the response
         if ($response -and $response.value -and $response.value.Count -gt 0) {
-            $alerts = $response.value | Where-Object { $_.properties.scopes -contains $scope }
-            if ($alerts) {
-                foreach ($alert in $alerts) {
+            $conditions = $response.value | Where-Object { $_.properties.condition.allOf.anyOf.field -contains $scope }
+            if ($conditions) {
+                foreach ($condition in $conditions) {
                     if (-not $alert.properties.enabled) {
                         $metricRecommendations += "DisabledAlert"
                     }
