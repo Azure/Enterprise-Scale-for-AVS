@@ -8,15 +8,15 @@
 function Main {
     try {
         
-        $tenantId = "27eda52d-06a5-4e9f-bd76-1a062e47aba0"
-        $subscriptionId = "d52f9c4a-5468-47ec-9641-da4ef1916bb5"
+        $tenantId = ""
+        $subscriptionId = ""
         
         # Provide the names of the SDDCs to test
         # If the array is empty, all SDDCs in the subscriptio will be tested
         # Example: $namesofSddcsToTest = @()
         # If you want to test specific SDDCs, provide the names in comma-separated format
         # Example: $namesofSddcsToTest = @("prod-sddc", "uat-sddc")
-        $namesofSddcsToTest = @("sreeni-sddc")
+        $namesofSddcsToTest = @()
 
         # Provide the design areas to test
         # If the array is empty, all design areas will be tested
@@ -24,7 +24,7 @@ function Main {
         # If you want to test specific design areas, provide the names in comma-separated format
         # Example: $designAreasToTest = @("Security", "Networking")
         # Possible values: "Identity", "Networking", "Security", "Management", "BCDR", "Automation"
-        $designAreasToTest = @("Management")
+        $designAreasToTest = @()
 
         # Initialize the recommendations array. Leave this as is.
         $Global:recommendations = @()
