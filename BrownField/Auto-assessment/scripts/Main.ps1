@@ -8,8 +8,8 @@
 function Main {
     try {
         
-        $tenantId = "<CHANGE-ME>"
-        $subscriptionId = "<CHANGE-ME>"
+        $tenantId = ""
+        $subscriptionId = ""
         
         # Provide the names of the SDDCs to test
         # If the array is empty, all SDDCs in the subscriptio will be tested
