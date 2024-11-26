@@ -26,6 +26,7 @@
 . ./Test-SRM.ps1
 . ./Test-Resource-Lock.ps1
 . ./Test-Deployment.ps1
+. ./Test-ClusterNode-Size.ps1
 function Test-All-DesignAreas {
     param (
         [SecureString]$token,
@@ -113,9 +114,17 @@ function Test-All-DesignAreas {
         Write-Host "Testing Azure Role Based Access Control"
         Test-AccessControl -token $token -sddc $sddc
 
-        # Test Alerts
-        Write-Host "Testing Alerts"
+        # Test Metric Alerts
+        Write-Host "Testing Metric Alerts"
         Test-Alerts -token $token -sddc $sddc
+
+        # Test Service Health Alert
+        Write-Host "Testing Service Health Alert"
+        Test-ServiceHealth-Alert -token $token -sddc $sddc
+
+        # Test Cluster and Node Counts
+        Write-Host "Testing Cluster and Node Counts"
+        Test-ClusterNode-Size -token $token -sddc $sddc
 
         # Test Arc
         Write-Host "Testing Arc"

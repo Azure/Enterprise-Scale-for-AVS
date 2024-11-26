@@ -640,3 +640,27 @@ function New-NoRecipientForServiveHealthAlert-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
         -Priority "High"
 }
+
+function New-ClusterCountNearLimit-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "Management" `
+        -Observation "SDDC '$sddcName' has cluster count near the limit of 16." `
+        -Recommendation "Ensure that cluster count is within the limit of 16 for SDDC." `
+        -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
+        -Priority "Medium"
+}
+
+function New-NodeCountNearLimit-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "Management" `
+        -Observation "SDDC '$sddcName' has node count nearing the limit of 96." `
+        -Recommendation "Ensure that node count is within the limit of 96 for SDDC." `
+        -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
+        -Priority "Medium"
+}

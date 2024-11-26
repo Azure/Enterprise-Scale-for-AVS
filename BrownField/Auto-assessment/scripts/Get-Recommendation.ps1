@@ -63,6 +63,8 @@ function Get-Recommendation {
         "NoServiveHealthAlert" { return New-NoServiveHealthAlert-Recommendation -sddcName $sddcName }
         "DisabledServiveHealthAlert" { return New-DisabledServiveHealthAlert-Recommendation -sddcName $sddcName }
         "NoRecipientForServiveHealthAlert" { return New-NoRecipientForServiveHealthAlert-Recommendation -sddcName $sddcName }
+        "ClusterCountNearLimit" { return New-ClusterCountNearLimit-Recommendation -sddcName $sddcName }
+        "NodeCountNearLimit" { return New-NodeCountNearLimit-Recommendation -sddcName $sddcName }
         default { throw "Unknown recommendation type: $type" }
     }
 }

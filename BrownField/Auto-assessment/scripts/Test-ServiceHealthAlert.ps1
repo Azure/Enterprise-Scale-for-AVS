@@ -32,10 +32,10 @@ function Test-ServiceHealth-Alert {
         if ($response -and $response.value -and $response.value.Count -gt 0) {
             foreach ($alert in $response.value) {
                 if ($alert.properties.enabled -eq $false) {
-                    $metricRecommendations += "DisabledServiveHealthAlert"
+                    $alertRecommendations += "DisabledServiveHealthAlert"
                 }
                 if ($alert.properties.actions.actionGroups.Count -eq 0) {
-                    $metricRecommendations += "NoRecipientForServiveHealthAlert"
+                    $alertRecommendations += "NoRecipientForServiveHealthAlert"
                 }
                 $conditions = $alert.properties.condition.allOf
                 if ($conditions) {
@@ -50,17 +50,17 @@ function Test-ServiceHealth-Alert {
                         }
                     }
                 }else {
-                    $metricRecommendations += "NoServiveHealthAlert"
+                    $alertRecommendations += "NoServiveHealthAlert"
                 }
             }
             
         }
         else {
-            $metricRecommendations += "NoServiveHealthAlert"
+            $alertRecommendations += "NoServiveHealthAlert"
         }
 
         # Add the recommendation
-        foreach ($recommendationType in $metricRecommendations | Select-Object -Unique) {
+        foreach ($recommendationType in $alertRecommendations | Select-Object -Unique) {
             if (![string]::IsNullOrEmpty($recommendationType)) {
                 $Global:recommendations += Get-Recommendation -type $recommendationType `
                     -sddcName $sddc.name
