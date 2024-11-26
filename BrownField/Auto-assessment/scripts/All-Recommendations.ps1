@@ -604,3 +604,39 @@ function New-NoAutomatedDeployment-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-platform-automation-and-devops" `
         -Priority "Medium"
 }
+
+function New-NoServiveHealthAlert-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "Management" `
+        -Observation "SDDC '$sddcName' has no Service Health Alert configured." `
+        -Recommendation "Ensure that Service Health Alert is configured for SDDC for monitoring." `
+        -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
+        -Priority "High"
+}
+
+function New-DisabledServiveHealthAlert-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "Management" `
+        -Observation "SDDC '$sddcName' has at least one disabled Service Health Alert." `
+        -Recommendation "Ensure that Service Health Alert is enabled for SDDC for monitoring." `
+        -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
+        -Priority "High"
+}
+
+function New-NoRecipientForServiveHealthAlert-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "Management" `
+        -Observation "SDDC '$sddcName' has at least one Service Health Alert with no recipient." `
+        -Recommendation "Ensure that Service Health Alert has recipient for notification on SDDC for monitoring." `
+        -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
+        -Priority "High"
+}

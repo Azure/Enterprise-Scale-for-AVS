@@ -30,30 +30,33 @@ function Test-ServiceHealth-Alert {
 
         # Process the response
         if ($response -and $response.value -and $response.value.Count -gt 0) {
-            $conditions = $response.value | Where-Object { $_.properties.condition.allOf.anyOf.field -contains $scope }
-            if ($conditions) {
-                foreach ($condition in $conditions) {
-                    if (-not $alert.properties.enabled) {
-                        $metricRecommendations += "DisabledAlert"
-                    }
-                    if (-not $alert.properties.actions) {
-                        $metricRecommendations += "NoRecipientForAlert"
-                    }
-                    foreach ($criteria in $alert.properties.criteria?.allOf) {
-                        if ($criteria.metricName -in $metricsToTrack) {
-                        $metricsBeingTracked += $criteria.metricName
+            foreach ($alert in $response.value) {
+                if ($alert.properties.enabled -eq $false) {
+                    $metricRecommendations += "DisabledServiveHealthAlert"
+                }
+                if ($alert.properties.actions.actionGroups.Count -eq 0) {
+                    $metricRecommendations += "NoRecipientForServiveHealthAlert"
+                }
+                $conditions = $alert.properties.condition.allOf
+                if ($conditions) {
+                    foreach ($condition in $conditions) {
+                        if ($condition.anyOf) {
+                            foreach ($conditionField in $condition.anyOf) {
+                                if ($conditionField.field -eq "resourceId" -and $conditionField.equals -eq $scope) {
+                                    # Break the loop if the condition is met
+                                    break
+                                }
+                            }
                         }
                     }
+                }else {
+                    $metricRecommendations += "NoServiveHealthAlert"
                 }
-                if ($metricsBeingTracked.Count -ne $metricsToTrack.Count) {
-                    $metricRecommendations += "MissingAlerts"
-                }
-            }else {
-                $metricRecommendations += "NoAlerts"
             }
+            
         }
         else {
-            $metricRecommendations += "NoAlerts"
+            $metricRecommendations += "NoServiveHealthAlert"
         }
 
         # Add the recommendation
@@ -65,6 +68,6 @@ function Test-ServiceHealth-Alert {
         }
     }
     catch {
-        Write-Error "Alerts Test failed: $_"
+        Write-Error "Service Health Alerts Test failed: $_"
     }
 }

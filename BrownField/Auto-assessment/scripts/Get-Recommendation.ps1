@@ -60,6 +60,9 @@ function Get-Recommendation {
         "LowUtilizationforvWANERGateway" { return New-LowUtilizationforvWANERGateway-Recommendation -sddcName $sddcName }
         "NoResourceLock" { return New-NoResourceLock-Recommendation -sddcName $sddcName }
         "NoAutomatedDeployment" { return New-NoAutomatedDeployment-Recommendation -sddcName $sddcName }
+        "NoServiveHealthAlert" { return New-NoServiveHealthAlert-Recommendation -sddcName $sddcName }
+        "DisabledServiveHealthAlert" { return New-DisabledServiveHealthAlert-Recommendation -sddcName $sddcName }
+        "NoRecipientForServiveHealthAlert" { return New-NoRecipientForServiveHealthAlert-Recommendation -sddcName $sddcName }
         default { throw "Unknown recommendation type: $type" }
     }
 }
