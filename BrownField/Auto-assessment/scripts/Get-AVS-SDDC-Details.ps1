@@ -11,6 +11,7 @@ function Get-AVS-SDDC-Details {
             sddcId = $sddc.id
             vCenterUrl = $sddc.properties.endpoints.vcsa
             nsxtUrl = $sddc.properties.endpoints.nsxtManager
+            hcxUrl = $sddc.properties.endpoints.hcxCloudManager
         }
     }
     catch {
