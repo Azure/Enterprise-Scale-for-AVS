@@ -1,5 +1,6 @@
 . ./Test-HCX-Addon.ps1
 . ./Test-HCX-NE-HA.ps1
+. ./Test-HCX-StretchedVLANs.ps1
 function Test-HCX-DesignArea {
     param (
         [SecureString]$token,
@@ -14,6 +15,10 @@ function Test-HCX-DesignArea {
             # Test HCX Network Extension HA
             Write-Host "Testing HCX Network Extension HA"
             Test-HCX-NE-HA -token $token -sddc $sddc
+
+            # Test HCX Stretched VLANs
+            Write-Host "Testing HCX Stretched VLANs"
+            Test-HCX-StretchedVLANs -token $token -sddc $sddc
         }
         
     }

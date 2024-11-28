@@ -688,3 +688,15 @@ function New-NoHCXNEHA-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-hcx-network-extension-high-availability" `
         -Priority "High"
 }
+
+function New-VLANStretchedForMoreThan30Days-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "SDDC '$sddcName' has at least one VLAN stretched for more than 30 days." `
+        -Recommendation "Keep VLANs stretched only until migration is complete." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/vmware-hcx-mon-guidance" `
+        -Priority "High"
+}
