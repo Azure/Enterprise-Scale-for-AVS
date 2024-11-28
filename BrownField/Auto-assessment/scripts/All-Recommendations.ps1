@@ -676,3 +676,15 @@ function New-HCXNotProvisioned-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-vmware-hcx" `
         -Priority "Medium"
 }
+
+function New-NoHCXNEHA-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "SDDC '$sddcName' has no HCX Network Extension High Availability configured for at least one HCX Service Mesh." `
+        -Recommendation "Ensure that HCX Network Extension High Availability is cofnigured on all HCX Service Meshes." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-hcx-network-extension-high-availability" `
+        -Priority "High"
+}

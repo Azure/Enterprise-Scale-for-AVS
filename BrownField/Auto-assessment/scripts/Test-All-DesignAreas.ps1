@@ -2,7 +2,7 @@
 . ./Test-Identity-DesignArea.ps1
 . ./Test-Networking-DesignArea.ps1
 . ./Test-Security-DesignArea.ps1
-. ./Test-Managment-DesignArea.ps1
+. ./Test-Management-DesignArea.ps1
 . ./Test-BCDR-DesignArea.ps1
 . ./Test-Automation-DesignArea.ps1
 . ./Test-HCX-DesignArea.ps1

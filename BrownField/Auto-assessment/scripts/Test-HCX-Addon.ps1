@@ -29,6 +29,9 @@ function Test-HCX-Addon {
             if ($response.properties.provisioningState -ne "Succeeded") {
                 $recommendationType = "HCXNotProvisioned"
             }
+            else {
+                return "HCXProvisioned"
+            }
         } else {
             $recommendationType = "HCXNotProvisioned"
         }
@@ -38,6 +41,8 @@ function Test-HCX-Addon {
             $Global:recommendations += Get-Recommendation -type $recommendationType `
                 -sddcName $sddc.name
         }
+
+        return $recommendationType
     }
     catch {
         Write-Error "HCX Addon Test failed: $_"

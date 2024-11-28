@@ -108,7 +108,7 @@ function Invoke-APIRequest {
 
         # Make the API request
         if ($method -ieq "GET") {
-            $response = Invoke-RestMethod -Method $method -Uri $url -Headers $headers
+            $response = Invoke-RestMethod -Method $method -Uri $url -Headers $headers -SkipCertificateCheck
         }
         elseif ($method -ieq "PATCH") {
             $response = Invoke-WebRequest -Method $method -Uri $url -Headers $headers -Body $body

@@ -8,11 +8,14 @@ function Test-HCX-DesignArea {
     try {
         # Test HCX Addon
         Write-Host "Testing HCX Addon"
-        Test-HCX-Addon -token $token -sddc $sddc
+        $hcxStatus = Test-HCX-Addon -token $token -sddc $sddc
 
-        # Test HCX Network Extension HA
-        Write-Host "Testing HCX Network Extension HA"
-        Test-HCX-NE-HA -token $token -sddc $sddc
+        if ($hcxStatus -and $hcxStatus -eq "HCXProvisioned") {
+            # Test HCX Network Extension HA
+            Write-Host "Testing HCX Network Extension HA"
+            Test-HCX-NE-HA -token $token -sddc $sddc
+        }
+        
     }
     catch {
         Write-Error "Test HCX Design Area Failed: $_"
