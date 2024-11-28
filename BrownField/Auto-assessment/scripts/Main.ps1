@@ -23,7 +23,7 @@ function Main {
         # Example: $designAreasToTest = @()
         # If you want to test specific design areas, provide the names in comma-separated format
         # Example: $designAreasToTest = @("Security", "Networking")
-        # Possible values: "Identity", "Networking", "Security", "Management", "BCDR", "Automation"
+        # Possible values: "Identity", "Networking", "Security", "Management", "BCDR", "Automation", "HCX"
         $designAreasToTest = @()
 
         # Initialize the recommendations array. Leave this as is.

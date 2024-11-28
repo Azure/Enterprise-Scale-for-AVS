@@ -41,6 +41,9 @@ API]
 B <--> E[AVS
 NSX-T
 API]
+B <--> F[AVS
+HCX
+API]
 ```
 
 Each of the component is discussed at a high-level below.
@@ -70,6 +73,11 @@ Each of the component is discussed at a high-level below.
     * Similar to vSphere API endpoint, NSX-T API endpoint is also auto-provisioned as part of AVS SDDC deployment.
     * Automated Architecture Assesment queries these APIs which are documented [here](https://developer.broadcom.com/xapis/nsx-t-data-center-rest-api/latest/).
 
+* HCX API
+    * HCX API endpoint is also auto-provisioned as part of AVS SDDC deployment.
+    * Automated Architecture Assessment queries these APIs which are documented at [`https://<REPLACE-WITH-YOUR-vCENTER-SERVER-URL>/hybridity/docs/index.html`](https://<REPLACE-WITH-YOUR-vCENTER-SERVER-URL>/hybridity/docs/index.html)
+
+
 
 Querying APIs enable evaluating status of some of the important design areas as discussed below.
 
@@ -86,6 +94,9 @@ Querying APIs enable evaluating status of some of the important design areas as 
 * AVS NSX-T
     * Distributed/Gatway Firewall policies
     * DHCP
+
+* HCX
+    * HCX Network Extension High Availability
 
 There are multiple such design area evaluations implemented in Automated Architecture Assessment.
 
