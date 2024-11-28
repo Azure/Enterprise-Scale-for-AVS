@@ -664,3 +664,15 @@ function New-NodeCountNearLimit-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
         -Priority "Medium"
 }
+
+function New-HCXNotProvisioned-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "HCX is not provisioned for SDDC '$sddcName'." `
+        -Recommendation "Provision HCX on SDDC for workload mobility." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-vmware-hcx" `
+        -Priority "Medium"
+}

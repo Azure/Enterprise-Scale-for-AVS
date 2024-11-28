@@ -65,6 +65,7 @@ function Get-Recommendation {
         "NoRecipientForServiveHealthAlert" { return New-NoRecipientForServiveHealthAlert-Recommendation -sddcName $sddcName }
         "ClusterCountNearLimit" { return New-ClusterCountNearLimit-Recommendation -sddcName $sddcName }
         "NodeCountNearLimit" { return New-NodeCountNearLimit-Recommendation -sddcName $sddcName }
+        "HCXNotProvisioned" { return New-HCXNotProvisioned-Recommendation -sddcName $sddcName }
         default { throw "Unknown recommendation type: $type" }
     }
 }

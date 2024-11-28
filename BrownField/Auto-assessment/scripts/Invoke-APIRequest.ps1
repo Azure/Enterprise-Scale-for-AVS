@@ -97,6 +97,7 @@ function Invoke-APIRequest {
 
         # Add HCX Auth Token to the headers if available for HCX API calls
         if ($hcxAuthToken) {
+            $headers["Accept"] = "application/json"
             $headers["x-hm-authorization"] = $hcxAuthToken
         }
 

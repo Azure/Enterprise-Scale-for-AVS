@@ -1,3 +1,4 @@
+. ./Test-HCX-Addon.ps1
 . ./Test-HCX-NE-HA.ps1
 function Test-HCX-DesignArea {
     param (
@@ -5,7 +6,11 @@ function Test-HCX-DesignArea {
         [PSCustomObject]$sddc
     )
     try {
-        # Test vSAN Storage Policy
+        # Test HCX Addon
+        Write-Host "Testing HCX Addon"
+        Test-HCX-Addon -token $token -sddc $sddc
+
+        # Test HCX Network Extension HA
         Write-Host "Testing HCX Network Extension HA"
         Test-HCX-NE-HA -token $token -sddc $sddc
     }

@@ -13,7 +13,7 @@ function Test-HCX-NE-HA {
         # Define API URL 
         $apiUrl = [string]::Format(
             "{0}" +
-            "hybridity/api/interconnect",
+            "hybridity/api/interconnect/serviceMesh",
             $sddcDetails.hcxUrl
         )
 
@@ -23,6 +23,19 @@ function Test-HCX-NE-HA {
             -avsHcxUrl $sddcDetails.hcxUrl `
             -avsvCenteruserName $credentials.vCenterUsername `
             -avsvCenterpassword $credentials.vCenterPassword
+
+        # Process the response
+        if ($response) {
+            
+        }else {
+            $recommendationType = "NoHCXServiceMesh"
+        }
+
+        # Add the recommendation
+        if (![string]::IsNullOrEmpty($recommendationType)) {
+            $Global:recommendations += Get-Recommendation -type $recommendationType `
+                -sddcName $sddc.name
+        }
     }
     catch {
         Write-Error "Test HCX Network Extension HA Failed: $_"
