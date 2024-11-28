@@ -33,14 +33,10 @@ flowchart LR
 A[User] <--> B[Automated
 Architecture
 Assessment]
-B <--> C[Azure
-API]
-B <--> D[AVS vSphere
-API]
-B <--> E[AVS NSX-T
-API]
-B <--> F[AVS HCX
-API]
+B <--> C[Azure API]
+B <--> D[AVS vSphere API]
+B <--> E[AVS NSX-T API]
+B <--> F[AVS HCX API]
 ```
 
 Each of the component is discussed at a high-level below.
