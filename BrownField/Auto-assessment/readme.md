@@ -35,14 +35,11 @@ Architecture
 Assessment]
 B <--> C[Azure
 API]
-B <--> D[AVS 
-vSphere
+B <--> D[AVS vSphere
 API]
-B <--> E[AVS
-NSX-T
+B <--> E[AVS NSX-T
 API]
-B <--> F[AVS
-HCX
+B <--> F[AVS HCX
 API]
 ```
 
