@@ -49,27 +49,26 @@ function Invoke-APIRequest {
         [string]$vmwareApiSessionId = $null,
         [string]$avsnsxtUrl = $null,
         [string]$avsnsxtUserName = $null,
-        [SecureString]$avsnsxtPassword = $null
+        [SecureString]$avsnsxtPassword = $null,
+        [string]$avsHcxUrl = $null
     )
 
     try {
-        # Get VMware API session ID if vCenter credentials are provided
+        # Check if the vCenter credentials are provided
         if ($avsvCenteruserName -and $avsvCenterpassword) {
-            $base64AuthInfo = Get-Base64AuthInfo -userName $avsvCenteruserName -password $avsvCenterpassword
-            if ($null -eq $base64AuthInfo) {
-                return
+            # Check if the URL is not for HCX API
+            if ($url -notmatch "hybridity/api") {
+                # Get vSphere API session ID
+                $vmwareApiSessionId = Get-vSphere-API-Auth-Token -avsvCenteruserName $avsvCenteruserName `
+                                        -avsvCenterpassword $avsvCenterpassword `
+                                        -avsVcenter $avsVcenter
             }
-
-            # Define the vmware-api-session-id API endpoint
-            $sessionUrl = "${avsVcenter}api/session"
-            
-            # Make the API request
-            $sessionResponse = Invoke-RestMethod -Uri $sessionUrl -Method "Post" -Headers @{ 
-                Authorization = ("Basic {0}" -f $base64AuthInfo)
-                'Content-Type' = 'application/json'
-            } -SkipCertificateCheck
-
-            $vmwareApiSessionId = $sessionResponse.Trim()
+            else {
+                # Get HCX Auth Token
+                $hcxAuthToken = Get-HCX-Auth-Token -avsHcxUrl $avsHcxUrl `
+                                    -avsvCenteruserName $avsvCenteruserName `
+                                    -avsvCenterpassword $avsvCenterpassword
+            }
         }
 
         # Get NSX-T base64 auth info if NSX-T credentials are provided
@@ -96,6 +95,12 @@ function Invoke-APIRequest {
             $headers["vmware-api-session-id"] = $vmwareApiSessionId
         }
 
+        # Add HCX Auth Token to the headers if available for HCX API calls
+        if ($hcxAuthToken) {
+            $headers["Accept"] = "application/json"
+            $headers["x-hm-authorization"] = $hcxAuthToken
+        }
+
         # Add NSX-T basic auth header if NSX-T URL is provided for NSX-T API calls
         if ($avsnsxtUserName -and $avsnsxtPassword) {
             $headers["Authorization"] = ("Basic {0}" -f $nsxtbase64AuthInfo)
@@ -103,7 +108,7 @@ function Invoke-APIRequest {
 
         # Make the API request
         if ($method -ieq "GET") {
-            $response = Invoke-RestMethod -Method $method -Uri $url -Headers $headers
+            $response = Invoke-RestMethod -Method $method -Uri $url -Headers $headers -SkipCertificateCheck
         }
         elseif ($method -ieq "PATCH") {
             $response = Invoke-WebRequest -Method $method -Uri $url -Headers $headers -Body $body
@@ -125,4 +130,61 @@ function Invoke-APIRequest {
         }
         
     }
+}
+
+function Get-HCX-Auth-Token {
+    param (
+        [string]$avsHcxUrl,
+        [string]$avsvCenteruserName,
+        [SecureString]$avsvCenterpassword
+    )
+
+    $sessionUrl = "${avsHcxUrl}hybridity/api/sessions"
+
+    $plainavsvCenterpassword = Convert-SecureStringToPlainText -secureString $avsvCenterpassword
+
+    # Form the body for the HCX API session request
+    $hcxBody = @{
+        username = $avsvCenteruserName
+        password = $plainavsvCenterpassword
+    }
+    
+    $hcxjsonBody = $hcxBody | ConvertTo-Json -Depth 10
+
+    # Make the API request
+    $sessionResponse = Invoke-WebRequest -Uri $sessionUrl -Method "Post" -Headers @{
+    'Content-Type' = 'application/json'
+    'Accept' = 'application/json'
+    } -Body $hcxjsonBody -SkipCertificateCheck
+
+    # Check for x-hm-authorization header
+    if ($sessionResponse.Headers["x-hm-authorization"]) {
+        $hcxAuthToken = $sessionResponse.Headers["x-hm-authorization"][0]
+    }
+
+    return $hcxAuthToken
+}
+
+function Get-vSphere-API-Auth-Token {
+    param (
+        [string]$avsvCenteruserName,
+        [SecureString]$avsvCenterpassword,
+        [string]$avsVcenter
+    )
+
+    $base64AuthInfo = Get-Base64AuthInfo -userName $avsvCenteruserName -password $avsvCenterpassword
+    if ($null -eq $base64AuthInfo) {
+        return
+    }
+    $sessionUrl = "${avsVcenter}api/session"
+
+    # Make the API request
+    $sessionResponse = Invoke-RestMethod -Uri $sessionUrl -Method "Post" -Headers @{ 
+    Authorization = ("Basic {0}" -f $base64AuthInfo)
+    'Content-Type' = 'application/json'
+    } -SkipCertificateCheck
+
+    $vmwareApiSessionId = $sessionResponse.Trim()
+
+    return $vmwareApiSessionId
 }

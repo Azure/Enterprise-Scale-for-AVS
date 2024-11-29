@@ -7,6 +7,7 @@
 . ./Test-Management-DesignArea.ps1
 . ./Test-BCDR-DesignArea.ps1
 . ./Test-Automation-DesignArea.ps1
+. ./Test-HCX-DesignArea.ps1
 function Test-AVS-SDDC {
     param (
         [SecureString]$token,
@@ -87,6 +88,11 @@ function Test-AVS-SDDC {
                     "Automation" {
                         # Test Automation Design Area
                         Test-Automation-DesignArea -token $token -sddc $sddc
+                        break
+                    }
+                    "HCX" {
+                        # Test HCX Design Area
+                        Test-HCX-DesignArea -token $token -sddc $sddc
                         break
                     }
                     default {

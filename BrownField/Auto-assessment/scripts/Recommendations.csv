@@ -1,2 +1,3 @@
 "Category","Priority","Observation","Recommendation","LinkText","LinkUrl"
-"Management","High","AVS Syslog Diagnostic setting is not configured for SDDC 'sreeni-sddc'.","Configure AVS Syslog Diagnostic setting for SDDC for monitoring and troubleshooting.","","https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring"
+"HCX","High","SDDC 'CHA-POC-AVS' has no HCX Network Extension High Availability configured for at least one HCX Service Mesh.","Ensure that HCX Network Extension High Availability is cofnigured on all HCX Service Meshes.","","https://learn.microsoft.com/azure/azure-vmware/configure-hcx-network-extension-high-availability"
+"HCX","High","SDDC 'CHA-POC-AVS' has at least one VLAN stretched for more than 30 days.","Keep VLANs stretched only until migration is complete.","","https://learn.microsoft.com/azure/azure-vmware/vmware-hcx-mon-guidance"

@@ -664,3 +664,39 @@ function New-NodeCountNearLimit-Recommendation {
         -LinkUrl "https://learn.microsoft.com/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring" `
         -Priority "Medium"
 }
+
+function New-HCXNotProvisioned-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "HCX is not provisioned for SDDC '$sddcName'." `
+        -Recommendation "Provision HCX on SDDC for workload mobility." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-vmware-hcx" `
+        -Priority "Medium"
+}
+
+function New-NoHCXNEHA-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "SDDC '$sddcName' has no HCX Network Extension High Availability configured for at least one HCX Service Mesh." `
+        -Recommendation "Ensure that HCX Network Extension High Availability is cofnigured on all HCX Service Meshes." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/configure-hcx-network-extension-high-availability" `
+        -Priority "High"
+}
+
+function New-VLANStretchedForMoreThan30Days-Recommendation {
+    param(
+        [string]$sddcName
+    )
+    
+    return New-Recommendation -Category "HCX" `
+        -Observation "SDDC '$sddcName' has at least one VLAN stretched for more than 30 days." `
+        -Recommendation "Keep VLANs stretched only until migration is complete." `
+        -LinkUrl "https://learn.microsoft.com/azure/azure-vmware/vmware-hcx-mon-guidance" `
+        -Priority "High"
+}

@@ -12,7 +12,7 @@ function Main {
         $subscriptionId = ""
         
         # Provide the names of the SDDCs to test
-        # If the array is empty, all SDDCs in the subscriptio will be tested
+        # If the array is empty, all SDDCs in the subscription will be tested
         # Example: $namesofSddcsToTest = @()
         # If you want to test specific SDDCs, provide the names in comma-separated format
         # Example: $namesofSddcsToTest = @("prod-sddc", "uat-sddc")
@@ -23,7 +23,7 @@ function Main {
         # Example: $designAreasToTest = @()
         # If you want to test specific design areas, provide the names in comma-separated format
         # Example: $designAreasToTest = @("Security", "Networking")
-        # Possible values: "Identity", "Networking", "Security", "Management", "BCDR", "Automation"
+        # Possible values: "Identity", "Networking", "Security", "Management", "BCDR", "Automation", "HCX"
         $designAreasToTest = @()
 
         # Initialize the recommendations array. Leave this as is.

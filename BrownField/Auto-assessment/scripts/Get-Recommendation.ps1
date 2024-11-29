@@ -65,6 +65,9 @@ function Get-Recommendation {
         "NoRecipientForServiveHealthAlert" { return New-NoRecipientForServiveHealthAlert-Recommendation -sddcName $sddcName }
         "ClusterCountNearLimit" { return New-ClusterCountNearLimit-Recommendation -sddcName $sddcName }
         "NodeCountNearLimit" { return New-NodeCountNearLimit-Recommendation -sddcName $sddcName }
+        "HCXNotProvisioned" { return New-HCXNotProvisioned-Recommendation -sddcName $sddcName }
+        "NoHCXNEHA" { return New-NoHCXNEHA-Recommendation -sddcName $sddcName }
+        "VLANStretchedForMoreThan30Days" { return New-VLANStretchedForMoreThan30Days-Recommendation -sddcName $sddcName }
         default { throw "Unknown recommendation type: $type" }
     }
 }

@@ -6,7 +6,7 @@ Use the guidance below to run the Automated Architecture Assessment. Refer to [A
 
 * Already deployed/running Azure VMware Solution (AVS) Software Defined Data Center (SDDC).
 * `Contributor` or higher level access to Azure subscription hosing AVS SDDC.
-* Access to a jumpbox which has access to Azure, vSphere and NSX-T APIs. This can run either in Azure or on-premises environment.
+* Access to a jumpbox which has access to Azure, vSphere, NSX-T and HCX APIs. This can run either in Azure or on-premises environment.
 * PowerShell 7 installed on the jumpbox.
 * Clone of this repository on the jumpbox.
 
@@ -25,7 +25,7 @@ Use the guidance below to run the Automated Architecture Assessment. Refer to [A
 ### PowerShell
 
 >[!NOTE]
->  Run the assessment script from either a jumpbox in Azure or on-premises machine which has network connectivity with Azure, vSphere and NSX-T APIs.
+>  Run the assessment script from either a jumpbox in Azure or on-premises machine which has network connectivity with Azure, vSphere, NSX-T and HCX APIs.
 >
 
 ```pwsh
