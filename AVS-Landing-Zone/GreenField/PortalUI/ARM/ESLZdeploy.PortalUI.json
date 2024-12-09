@@ -25,7 +25,7 @@
                             "name": "avsSharedServices",
                             "type": "Microsoft.Common.InfoBox",
                             "options": {
-                                "text": "The subscription and location (Region) selected in this step will be used to deploy the AVS Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.)",
+                                "text": "The selected subscription and region in this step will be used to deploy the AVS Landing Zone resources, including the AVS Private Cloud, Virtual Networks, and Virtual Machines.",
                                 "style": "Info"
                             }
                         },
