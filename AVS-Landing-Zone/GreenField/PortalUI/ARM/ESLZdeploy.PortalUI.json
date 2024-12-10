@@ -102,7 +102,7 @@
                                 {
                                     "name": "avsPrerequisites6",
                                     "type": "Microsoft.Common.InfoBox",
-                                    "visible": false,
+                                    "visible": true,
                                     "options": {
                                         "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are a CSP customer, use Microsoft Partner Center to make this available for your customers.",
                                         "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
@@ -218,7 +218,7 @@
                                     "type": "Microsoft.Common.InfoBox",
                                     "visible": true,
                                     "options": {
-                                        "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail. <br/> Note: AVS now support VCF subscriptions. Please ensure you have made the correct quota allocation according as per this link <br/>",
+                                        "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail. <br/>Note: AVS now support VCF subscription portability. Please ensure you have made the correct quota allocation according as per this link <br/>",
                                         "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
                                         "style": "Warning"
                                     }
