@@ -34,7 +34,7 @@
                             "type": "Microsoft.Common.InfoBox",
                             "visible": true,
                             "options": {
-                                "text": "Azure VMware Solution (AVS) AVS Landing Zone deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "text": "Deploying the Azure VMware Solution (AVS) Landing Zone requires contributor-level access at the subscription scope. For more detailed information on Role-Based Access Control (RBAC) permissions and scopes, please visit this link.",
                                 "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
                                 "style": "Warning"
                             }
@@ -56,7 +56,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "visible": false,
                                     "options": {
-                                        "text": "Before you start, you must request AVS quota allocation for your subscription",
+                                        "text": "Prior to initiating the deployment, ensure that you have requested and obtained the necessary AVS quota allocation for your subscription.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -80,7 +80,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "visible": false,
                                     "options": {
-                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "text": "- If you are a CSP partner, use Microsoft Partner Center to make this available for your customers",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
@@ -92,7 +92,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "visible": false,
                                     "options": {
-                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "text": "- Obtain a valid, non-overlapping CIDR address block. Azure VMware Solution will utilize a /22 network that you provide, subdividing it into smaller segments for use by vCenter, VMware HCX, NSX-T, and vMotion.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
@@ -102,18 +102,10 @@
                                 {
                                     "name": "avsPrerequisites6",
                                     "type": "Microsoft.Common.InfoBox",
+                                    "visible": false,
                                     "options": {
                                         "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are a CSP customer, use Microsoft Partner Center to make this available for your customers.",
                                         "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
-                                        "style": "Info"
-                                    }
-                                },
-                                {
-                                    "name": "avsPrerequisites7",
-                                    "type": "Microsoft.Common.InfoBox",
-                                    "options": {
-                                        "text": "Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion..",
-                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist",
                                         "style": "Info"
                                     }
                                 }        
@@ -213,11 +205,20 @@
                                     }
                                 },
                                 {
+                                    "name": "avsPrerequisites7",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "options": {
+                                        "text": "Obtain a valid, non-overlapping CIDR address block. Azure VMware Solution will utilize a /22 network that you provide, subdividing it into smaller segments for use by vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist",
+                                        "style": "Info"
+                                    }
+                                },
+                                {
                                     "name": "avsQuotaInfo",
                                     "type": "Microsoft.Common.InfoBox",
                                     "visible": true,
                                     "options": {
-                                        "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail.",
+                                        "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail. <br/> Note: AVS now support VCF subscriptions. Please ensure you have made the correct quota allocation according as per this link <br/>",
                                         "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
                                         "style": "Warning"
                                     }
@@ -274,7 +275,7 @@
                                     "name": "networkinfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "AVS is deployed by design in an isolated manner and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
+                                        "text": "AVS is deployed in an isolated state by default, with no connectivity to Azure or any other network. To enable communication between AVS and Azure, you must establish a connection through an ExpressRoute Gateway. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -285,7 +286,7 @@
                                     "name": "networkinfo2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "This deployment will allow you to select a new or existing Virtual Network, input the subnets required and deploy the ExpressRoute Gateway if one does not already exist. If you select Yes to connect AVS to Azure, then at the end of this deployment, a connection will automatically be created from the gateway to your AVS Private Cloud, allowing Azure Resources in the selected vNet to communicate with AVS. See link below for more information.",
+                                        "text": "This deployment will allow you to select a new or existing Virtual Network, input the subnets required and deploy the ExpressRoute Gateway if one does not already exist. This deployment enables you to choose either a new or existing Virtual Network, specify the necessary subnets, and deploy an ExpressRoute Gateway if one is not already available. If you already have a Virtual Network and a Gateway, a connection will automatically be established from the gateway to your AVS Private Cloud upon completion. This will allow Azure resources within the selected Virtual Network to communicate with AVS. For more information, refer to the link below.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking"
@@ -625,7 +626,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "label": "AVS Monitoring and Alerts",
                                     "options": {
-                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted for any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
+                                        "text": "Monitoring is a vital component of any service, as it ensures timely awareness of critical events such as failures, scheduled maintenance, or performance degradation. As part of this deployment, you can deploy an Azure Dashboard to visualize metrics from your Private Cloud, configure Azure Monitor Metric alerts to track critical thresholds, and set up Azure Service Health Alerts to stay informed about events affecting AVS.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -892,7 +893,7 @@
                                     "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Diagnostic settings in Azure allow for the collection of resource and activity logs to either be stored to a storage account, to a Log Analytics Workspace or streamed to an Event Hub. This provides the ability to store and retrieve logs for future diagnosis or troubleshooting. In this deployment, you will select the Private Cloud you would like to enable Diagnostic Settings, and send these to a New or Existing Log Analytics Workspace or Storage Account",
+                                        "text": "Azure Diagnostic Settings allow you to collect resource and activity logs and send them to a storage account, Log Analytics Workspace, or Event Hub. This enables efficient storage and retrieval of logs for troubleshooting or analysis. As part of this deployment, you will configure the logs to be sent to either a new or existing Log Analytics Workspace or Storage Account.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs"
@@ -1083,7 +1084,7 @@
                                     "name": "AddonsInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "In addition to the Private Cloud deployment, you may choose to install optional addons such as HCX and SRM. Please select the ones you need from the options below",
+                                        "text": "As part of your Private Cloud deployment, you also have the option to include additional services such as HCX (Hybrid Cloud Extension) and SRM (Site Recovery Manager). These addons provide enhanced capabilities, with HCX enabling seamless workload migration and mobility, and SRM offering robust disaster recovery solutions.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -1096,7 +1097,7 @@
                             "name": "deployHCX",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Deploy HCX",
+                            "label": "Deploy HCX Enterprise",
                             "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
@@ -1192,7 +1193,7 @@
                                     "type": "Microsoft.Common.TextBlock",
                                     "visible": true,
                                     "options": {
-                                        "text": "The AVS accelerator uses the Prefix below to provide automated resource naming based on Microsoft best practices. To set specific names for certain resources as per your own naming standards, select Yes to Custom Naming below. Note, custom naming fields will appear below based on selections in other tabs",
+                                        "text": "The AVS accelerator utilizes the prefix below to automatically assign resource names following Microsoft best practices. If you wish to apply your own naming conventions for certain resources, select 'Yes' to enable Custom Naming. Please note that custom naming fields will become available based on your selections in other tabs.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -1207,7 +1208,7 @@
                             "label": "Naming prefix",
                             "visible": true,
                             "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
-                            "defaultValue": "",
+                            "defaultValue": "AVS",
                             "placeholder": "Example: AVS",
                             "constraints": {
                                 "required": true,
