@@ -624,7 +624,7 @@
                                 {
                                     "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
-                                    "label": "AVS Monitoring and Alerts",
+                                    "label": "",
                                     "options": {
                                         "text": "Monitoring is a vital component of any service, as it ensures timely awareness of critical events such as failures, scheduled maintenance, or performance degradation. As part of this deployment, you can deploy an Azure Dashboard to visualize metrics from your Private Cloud, configure Azure Monitor Metric alerts to track critical thresholds, and set up Azure Service Health Alerts to stay informed about events affecting AVS.",
                                         "link": {
@@ -660,7 +660,7 @@
                             "name": "AVSWorkbook",
                             "type": "Microsoft.Common.Section",
                             "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
-                            "label": "AVS Workbook",
+                            "label": "",
                             "elements": [
                                 {
                                     "name": "WorkbookInfo1",
@@ -716,7 +716,7 @@
                                 {
                                     "name": "DashboardInfo1",
                                     "type": "Microsoft.Common.TextBlock",
-                                    "label": "AVS Dashboard",
+                                    "label": "",
                                     "options": {
                                         "text": "In addition to the workbook above, we have provided the ability to also deploy a dedicated Azure dashboard for your Private Cloud. Also, optionally select to enable AVS Service Health alerts and Metric alerts to be sent to an email address",
                                         "link": {
