@@ -660,12 +660,12 @@
                             "name": "AVSWorkbook",
                             "type": "Microsoft.Common.Section",
                             "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
-                            "label": "",
+                            "label": "AVS Workbook",
                             "elements": [
                                 {
                                     "name": "WorkbookInfo1",
                                     "type": "Microsoft.Common.TextBlock",
-                                    "label": "AVS Workbook",
+                                    "label": "",
                                     "options": {
                                         "text": "Workbooks provide a flexible canvas for data analysis and the creation of rich visual reports within the Azure portal. We have created an AVS specific Workbook which will show you all the information you need to monitor and view all your AVS Private Clouds. This Workbook includes a Dasbboard, Alerts, Syslog, Virtual Machines, Usage and Quota information. For more details of this workbook, click the link below",
                                         "link": {
