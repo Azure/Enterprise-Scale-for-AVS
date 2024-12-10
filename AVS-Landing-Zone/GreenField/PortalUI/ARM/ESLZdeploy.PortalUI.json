@@ -768,6 +768,27 @@
                                     }
                                 },
                                 {
+                                    "name": "DeployResourceHealth",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "[equals(steps('Monitoring').DeployMonitoring, true)]",
+                                    "label": "Enable Resource Health alerts for AVS (Preview)",
+                                    "defaultValue": "No",
+                                    "toolTip": "Enable Resource Health alerts for AVS on this subscription",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
                                     "name": "DeployAVSAlerts",
                                     "type": "Microsoft.Common.OptionsGroup",
                                     "visible": "",
