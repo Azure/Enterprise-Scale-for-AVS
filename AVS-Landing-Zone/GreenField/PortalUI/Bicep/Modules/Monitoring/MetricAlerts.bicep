@@ -20,8 +20,8 @@ var Alerts = [
     Severity: 2
   }
   {
-    Name: 'CPU'
-    Description: 'CPU Usage per Cluster (Critical)'
+    Name: 'CPUVeryCritical'
+    Description: 'CPU Usage per Cluster (Very Critical)'
     Metric: 'EffectiveCpuAverage'
     SplitDimension: 'clustername'
     Threshold: CPUVeryCriticalThreshold
