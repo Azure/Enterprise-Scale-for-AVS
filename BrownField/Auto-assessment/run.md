@@ -39,7 +39,7 @@ cd BrownField\Auto-assessment\scripts
 
     ![Select Account](./media/account.png)
 
-* If assessment is run for `Security` or `all` desgin areas then another prompt asking for AVS guest VM credentials is displayed. These credentials are used for tests like validating if a VM is domain joined or not.
+* If assessment is run for `Security` or `all` desgin areas then another prompt asking for AVS guest VM credentials is displayed. These credentials are used for tests like validating if a VM is domain joined or not. If fake/dummy credentials are provided, these tests will be skipped.
 
     ![AVS guest VM Credential Prompt](./media/guestVMcreds.png)
 
