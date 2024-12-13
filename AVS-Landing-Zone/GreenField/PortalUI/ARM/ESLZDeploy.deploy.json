@@ -1918,15 +1918,11 @@
                     },
                     "CPUCriticalThreshold": {
                       "type": "int",
-                      "defaultValue": 80
-                    },
-                    "CPUVeryCriticalThreshold": {
-                      "type": "int",
                       "defaultValue": 95
                     },
                     "MemoryCriticalThreshold": {
                       "type": "int",
-                      "defaultValue": 80
+                      "defaultValue": 95
                     },
                     "StorageCriticalThreshold": {
                       "type": "int",
@@ -1945,14 +1941,6 @@
                         "SplitDimension": "clustername",
                         "Threshold": "[parameters('CPUUsageThreshold')]",
                         "Severity": 2
-                      },
-                      {
-                        "Name": "CPU",
-                        "Description": "CPU Usage per Cluster (Critical)",
-                        "Metric": "EffectiveCpuAverage",
-                        "SplitDimension": "clustername",
-                        "Threshold": "[parameters('CPUVeryCriticalThreshold')]",
-                        "Severity": 0
                       },
                       {
                         "Name": "Memory",
