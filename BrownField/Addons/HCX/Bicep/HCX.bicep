@@ -2,7 +2,7 @@
 param PrivateCloudName string
 
 // Get a reference to the existing private cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
@@ -10,13 +10,13 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
 var varCuaid = 'ccdff80c-722d-42b7-8bd2-66aba33cba02'
 
 // Set up HCX
-resource HCX 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource HCX 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'hcx'
   parent: PrivateCloud
   properties: {
     addonType: 'HCX'
     // At the moment only HCX Advanced can be programatically deployed
-    offer: 'VMware MaaS Cloud Provider'
+    offer: 'VMware MaaS Cloud Provider (Enterprise)'
   }
 }
 

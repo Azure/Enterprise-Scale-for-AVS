@@ -12,12 +12,12 @@ param ReplicationServerCount int = 1
 var varCuaid = 'c542e61c-1907-483f-9e18-76f5b85eee0a'
 
 // Get a reference to the existing private cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
 // Set up SRM
-resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource SRM 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'srm'
   parent: PrivateCloud
   properties: {
@@ -28,7 +28,7 @@ resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
 
 
 // Set up the vSphere Replication servers
-resource VR 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource VR 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'vr'
   parent: PrivateCloud
   properties: {

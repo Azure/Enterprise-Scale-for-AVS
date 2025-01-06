@@ -13,12 +13,12 @@ param ExpressRouteId string
 var varCuaid = '8fb78b9c-973d-45d1-bd35-fcad3c00e09e'
 
 // Get a reference to the existing private cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
 // Create the global reach link
-resource GlobalReach 'Microsoft.AVS/privateClouds/globalReachConnections@2021-06-01' = {
+resource GlobalReach 'Microsoft.AVS/privateClouds/globalReachConnections@2023-03-01' = {
   name: guid(ExpressRouteId, ExpressRouteAuthorizationKey)
   parent: PrivateCloud
   properties: {

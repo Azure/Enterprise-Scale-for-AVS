@@ -7,7 +7,7 @@ param DeployAVSLogsWorkspace bool
 param DeployAVSLogsStorage bool
 
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 

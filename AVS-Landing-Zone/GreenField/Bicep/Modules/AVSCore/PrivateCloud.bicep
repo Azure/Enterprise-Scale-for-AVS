@@ -6,7 +6,7 @@ param Location string
 param Internet string
 param AddResourceLock bool
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' = {
   name: '${Prefix}-SDDC'
   sku: {
     name: SKUName

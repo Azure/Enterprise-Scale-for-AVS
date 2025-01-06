@@ -20,7 +20,7 @@ param AddResourceLock bool = true
 var varCuaid = '99f18c8b-1767-4302-9cee-ecc0d135dd52'
 
 // Create the Private Cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' = {
   name: PrivateCloudName
   sku: {
     name: 'AV36P'
@@ -35,12 +35,12 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
 }
 
 // Setup HCX
-resource HCX 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource HCX 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'hcx'
   parent: PrivateCloud
   properties: {
     addonType: 'HCX'
-    offer: 'VMware MaaS Cloud Provider'
+    offer: 'VMware MaaS Cloud Provider (Enterprise)'
   }
 }
 

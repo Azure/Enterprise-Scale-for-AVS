@@ -8,12 +8,12 @@ param SecondaryPrivateCloudId string
 var varCuaid = '08d3edb1-3d70-4c0f-ab9f-f491b4a8d737'
 
 // Get a reference to the existing private cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrimaryPrivateCloudName
 }
 
 // Create the link between the 2 private clouds
-resource PrivateCloudLink 'Microsoft.AVS/privateClouds/cloudLinks@2021-06-01' = {
+resource PrivateCloudLink 'Microsoft.AVS/privateClouds/cloudLinks@2023-03-01' = {
   name: guid(SecondaryPrivateCloudId)
   parent: PrivateCloud
   properties: {

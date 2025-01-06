@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.26.170.59819",
-      "templateHash": "2373578096417959942"
+      "version": "0.32.4.45862",
+      "templateHash": "9134748648691222492"
     }
   },
   "parameters": {
@@ -28,7 +28,7 @@
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds/cloudLinks",
-      "apiVersion": "2021-06-01",
+      "apiVersion": "2023-03-01",
       "name": "[format('{0}/{1}', parameters('PrimaryPrivateCloudName'), guid(parameters('SecondaryPrivateCloudId')))]",
       "properties": {
         "linkedCloud": "[parameters('SecondaryPrivateCloudId')]"
@@ -50,8 +50,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.170.59819",
-              "templateHash": "9728838765300640554"
+              "version": "0.32.4.45862",
+              "templateHash": "16208364426447542075"
             }
           },
           "resources": []

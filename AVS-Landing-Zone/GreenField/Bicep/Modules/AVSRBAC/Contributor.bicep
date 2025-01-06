@@ -1,7 +1,7 @@
 param PrivateCloudName string
 param JumpboxSAMIPrincipalId string 
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
