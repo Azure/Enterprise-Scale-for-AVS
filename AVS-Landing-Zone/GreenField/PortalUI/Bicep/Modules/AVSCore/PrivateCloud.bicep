@@ -7,7 +7,7 @@ param SKUName string
 param Location string
 param tags object
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' = {
   name: PrivateCloudName
   sku: {
     name: SKUName

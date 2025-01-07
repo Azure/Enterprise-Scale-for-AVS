@@ -8,14 +8,17 @@ param AuthKeyName string
 var varCuaid = '1593acc2-6932-462b-af58-28f7fa9df52d'
 
 // Get a reference to the existing private cloud
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
 // Generate a new ExR Auth Key within the existing private cloud
-resource ExpressRouteAuthKey 'Microsoft.AVS/privateClouds/authorizations@2021-06-01' = {
+resource ExpressRouteAuthKey 'Microsoft.AVS/privateClouds/authorizations@2023-09-01' = {
   name: AuthKeyName
   parent: PrivateCloud
+  properties: {
+    expressRouteId: PrivateCloud.properties.circuit.expressRouteID
+  }
 }
 
 // Return the Express Route ID and the new Authorization Key

@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.27.1.19265",
-      "templateHash": "3337286259037860623"
+      "version": "0.32.4.45862",
+      "templateHash": "496171895266512931"
     }
   },
   "parameters": {
@@ -56,7 +56,7 @@
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds",
-      "apiVersion": "2021-06-01",
+      "apiVersion": "2023-03-01",
       "name": "[parameters('PrivateCloudName')]",
       "sku": {
         "name": "AV36P"
@@ -71,11 +71,11 @@
     },
     {
       "type": "Microsoft.AVS/privateClouds/addons",
-      "apiVersion": "2021-06-01",
+      "apiVersion": "2023-03-01",
       "name": "[format('{0}/{1}', parameters('PrivateCloudName'), 'hcx')]",
       "properties": {
         "addonType": "HCX",
-        "offer": "VMware MaaS Cloud Provider"
+        "offer": "VMware MaaS Cloud Provider (Enterprise)"
       },
       "dependsOn": [
         "[resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName'))]"
@@ -125,8 +125,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.27.1.19265",
-              "templateHash": "1329502019101845773"
+              "version": "0.32.4.45862",
+              "templateHash": "16208364426447542075"
             }
           },
           "resources": []

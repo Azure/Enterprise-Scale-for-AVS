@@ -4,12 +4,12 @@ param SRMLicenseKey string
 @maxValue(10)
 param VRServerCount int
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' existing = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
 // Set up SRM
-resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource SRM 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'srm'
   parent: PrivateCloud
   properties: {
@@ -19,7 +19,7 @@ resource SRM 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
 }
 
 // Set up the vSphere Replication servers
-resource VR 'Microsoft.AVS/privateClouds/addons@2021-06-01' = {
+resource VR 'Microsoft.AVS/privateClouds/addons@2023-03-01' = {
   name: 'vr'
   parent: PrivateCloud
   properties: {

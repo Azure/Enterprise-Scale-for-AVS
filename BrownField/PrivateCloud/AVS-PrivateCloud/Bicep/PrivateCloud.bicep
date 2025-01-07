@@ -20,7 +20,7 @@ param AddResourceLock bool = true
 var varCuaid = 'fe003615-ca8e-412f-8091-43e1e42ebfd8'
 
 // AVS Private Cloud Resource
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' = {
   name: PrivateCloudName
   sku: {
     name: 'AV36P'

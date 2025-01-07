@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.27.1.19265",
-      "templateHash": "14023551912494198051"
+      "version": "0.32.4.45862",
+      "templateHash": "10597500767875300285"
     }
   },
   "parameters": {
@@ -56,7 +56,7 @@
   "resources": [
     {
       "type": "Microsoft.AVS/privateClouds",
-      "apiVersion": "2021-06-01",
+      "apiVersion": "2023-03-01",
       "name": "[parameters('PrivateCloudName')]",
       "sku": {
         "name": "AV36P"
@@ -113,8 +113,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.27.1.19265",
-              "templateHash": "1329502019101845773"
+              "version": "0.32.4.45862",
+              "templateHash": "16208364426447542075"
             }
           },
           "resources": []

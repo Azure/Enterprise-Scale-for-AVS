@@ -4,7 +4,7 @@ param ManagementClusterSize int
 param SKUName string
 param Location string
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' = {
   name: PrivateCloudName
   sku: {
     name: SKUName

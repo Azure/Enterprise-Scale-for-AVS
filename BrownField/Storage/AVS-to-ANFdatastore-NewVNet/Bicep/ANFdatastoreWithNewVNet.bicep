@@ -66,12 +66,12 @@ param GatewaySku string = 'ErGw3AZ'
 var varCuaid = '20f60d5e-587f-4145-aa6d-4901171eb752'
 
 @description('import the existing AVS private cloud')
-resource avsPrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' existing = {
+resource avsPrivateCloud 'Microsoft.AVS/privateClouds@2023-03-01' existing = {
   name: PrivateCloudName
 }
 
 @description('import the existing AVS private cloud cluster')
-resource avsPrivateCloudCluster 'Microsoft.AVS/privateClouds/clusters@2021-12-01' existing = {
+resource avsPrivateCloudCluster 'Microsoft.AVS/privateClouds/clusters@2023-03-01' existing = {
   parent: avsPrivateCloud
   name: PrivateCloudClusterName
 }
