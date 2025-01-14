@@ -14,15 +14,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Trivy vulnerability scanner with rootfs command
+      - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          scan-type: 'rootfs'
-          scan-ref: '/'
-          ignore-unfixed: true
+          scan-type: 'config'
+          hide-progress: false
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
