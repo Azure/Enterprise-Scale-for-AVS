@@ -5,6 +5,7 @@
       push:
         branches:
           - main
+          - vivalada_add-CITests
 #      pull_request:
 #        branches:
 #          - main
