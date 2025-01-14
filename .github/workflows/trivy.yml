@@ -6,24 +6,44 @@ on:
       - vivalada_add-CITests
   pull_request:
 
+#jobs:
+#  build:
+#    name: Build
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Run Trivy vulnerability scanner in repo mode
+#        uses: aquasecurity/trivy-action@0.28.0
+#        with:
+#          scan-type: 'fs'
+#          ignore-unfixed: true
+#          format: 'sarif'
+#          output: 'trivy-results.sarif'
+#          severity: 'CRITICAL'
+#
+#      - name: Upload Trivy scan results to GitHub Security tab
+#        uses: github/codeql-action/upload-sarif@v3
+#        with:
+#          sarif_file: 'trivy-results.sarif'
+
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-20.04
+  trivy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: 'fs'
-          ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build Docker image
+      run: docker build -t my-app .
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: my-app
+    - name: Upload Trivy report
+      uses: actions/upload-artifact@v2
+      with:
+        name: trivy-report
+        path: ./trivy-reports
