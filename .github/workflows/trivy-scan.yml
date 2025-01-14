@@ -1,4 +1,4 @@
-name: build
+name: Trivy Scan Action
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: 'rootfs'
-          scan-ref: 'rootfs-example-binary'
+          scan-ref: '/'
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
