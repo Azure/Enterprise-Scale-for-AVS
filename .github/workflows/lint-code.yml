@@ -52,6 +52,7 @@
               # Additional settings:
               # Disable errors to only generate a report
               DISABLE_ERRORS: true
+              ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
     
           - name: Lint Brownfield directory
             uses: docker://github/super-linter:v4.9.5
@@ -77,3 +78,4 @@
               # If a shell script is not executable, the bash-exec
               # linter will report an error when set to true
               DISABLE_ERRORS: true
+              ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
