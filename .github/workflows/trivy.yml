@@ -1,11 +1,11 @@
-name: build
+name: Trivy Scan Action
 on:
   push:
     branches:
       - main
       - vivalada_add-CITests
   pull_request:
-    
+
 jobs:
   build:
     name: Build
