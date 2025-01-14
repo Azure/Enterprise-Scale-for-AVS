@@ -7,10 +7,13 @@
     
     # yamllint disable-line rule:truthy
     on:
-      pull_request:
+      push:
         branches:
           - main
           - vivalada_add-CITests
+      #pull_request:
+      #  branches:
+      #    - main
       workflow_dispatch: {}
     
     ###############
