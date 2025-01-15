@@ -2,13 +2,9 @@
     name: Code Review
     
     on:
-      push:
+      pull_request:
         branches:
           - main
-          - vivalada_add-CITests
-#      pull_request:
-#        branches:
-#          - main
       workflow_dispatch: {}
     
     jobs:
