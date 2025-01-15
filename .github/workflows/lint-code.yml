@@ -22,7 +22,7 @@
             uses: docker://github/super-linter:v4.9.5
             env:
               # Only lint changed files
-              VALIDATE_ALL_CODEBASE: true
+              VALIDATE_ALL_CODEBASE: false
               # Need to define main branch as default
               # is set to master in super-linter
               DEFAULT_BRANCH: main
@@ -46,7 +46,7 @@
             uses: docker://github/super-linter:v4.9.5
             env:
               # Only lint changed files
-              VALIDATE_ALL_CODEBASE: true
+              VALIDATE_ALL_CODEBASE: false
               # Need to define main branch as default
               # is set to master in super-linter
               DEFAULT_BRANCH: main
@@ -71,7 +71,7 @@
             uses: docker://github/super-linter:v4.9.5
             env:
               # Only lint changed files
-              VALIDATE_ALL_CODEBASE: true
+              VALIDATE_ALL_CODEBASE: false
               # Need to define main branch as default
               # is set to master in super-linter
               DEFAULT_BRANCH: main
@@ -96,7 +96,7 @@
             uses: docker://github/super-linter:v4.9.5
             env:
               # Only lint changed files
-              VALIDATE_ALL_CODEBASE: true
+              VALIDATE_ALL_CODEBASE: false
               # Need to define main branch as default
               # is set to master in super-linter
               DEFAULT_BRANCH: main
@@ -121,7 +121,7 @@
             uses: docker://github/super-linter:v4.9.5
             env:
               # Only lint changed files
-              VALIDATE_ALL_CODEBASE: true
+              VALIDATE_ALL_CODEBASE: false
               # Need to define main branch as default
               # is set to master in super-linter
               DEFAULT_BRANCH: main
