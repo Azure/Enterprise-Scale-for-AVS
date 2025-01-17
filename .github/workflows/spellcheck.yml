@@ -1,6 +1,9 @@
 name: Spellcheck Action
 on: push
 
+# Declare default permissions as read only.
+permissions: read-all
+
 jobs:
   build:
     name: Spellcheck

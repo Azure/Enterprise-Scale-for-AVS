@@ -1,6 +1,9 @@
 name: ARM Build Action
 on: push
 
+# Declare default permissions as read only.
+permissions: read-all
+
 jobs:
   build:
     name: ARM

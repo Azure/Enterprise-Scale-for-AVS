@@ -5,6 +5,9 @@ on:
       - main
   pull_request:
 
+# Declare default permissions as read only.
+permissions: read-all
+
 jobs:
   trivy-scanning-job:
     name: trivy-sec-scan
