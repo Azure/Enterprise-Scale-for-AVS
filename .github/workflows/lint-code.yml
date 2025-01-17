@@ -14,12 +14,12 @@
     
         steps:
           - name: Checkout code
-            uses: actions/checkout@v4
+            uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
             with:
               fetch-depth: 0
     
           - name: Lint AVS-Landing-Zone directory
-            uses: docker://github/super-linter:v4.9.5
+            uses: docker://github/super-linter:v4.9.5@sha256:f8464fa5488596e8c996cbef5b80f1c6ff069b2eb7bc13befcdcf9bd1251ad5e
             env:
               # Only lint changed files
               VALIDATE_ALL_CODEBASE: false
@@ -43,7 +43,7 @@
               ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
     
           - name: Lint Brownfield directory
-            uses: docker://github/super-linter:v4.9.5
+            uses: docker://github/super-linter:v4.9.5@sha256:f8464fa5488596e8c996cbef5b80f1c6ff069b2eb7bc13befcdcf9bd1251ad5e
             env:
               # Only lint changed files
               VALIDATE_ALL_CODEBASE: false
@@ -68,7 +68,7 @@
               ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
           - name: Lint hcx directory
-            uses: docker://github/super-linter:v4.9.5
+            uses: docker://github/super-linter:v4.9.5@sha256:f8464fa5488596e8c996cbef5b80f1c6ff069b2eb7bc13befcdcf9bd1251ad5e
             env:
               # Only lint changed files
               VALIDATE_ALL_CODEBASE: false
@@ -93,7 +93,7 @@
               ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
           - name: Lint Network Design Guide directory
-            uses: docker://github/super-linter:v4.9.5
+            uses: docker://github/super-linter:v4.9.5@sha256:f8464fa5488596e8c996cbef5b80f1c6ff069b2eb7bc13befcdcf9bd1251ad5e
             env:
               # Only lint changed files
               VALIDATE_ALL_CODEBASE: false
@@ -118,7 +118,7 @@
               ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
           - name: Lint terraform directory
-            uses: docker://github/super-linter:v4.9.5
+            uses: docker://github/super-linter:v4.9.5@sha256:f8464fa5488596e8c996cbef5b80f1c6ff069b2eb7bc13befcdcf9bd1251ad5e
             env:
               # Only lint changed files
               VALIDATE_ALL_CODEBASE: false
