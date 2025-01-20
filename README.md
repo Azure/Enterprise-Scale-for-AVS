@@ -1,4 +1,12 @@
-# Navigation Menu
+# Enterprise-Scale for AVS
+
+Welcome to the Enterprise Scale for Azure VMware Solution (AVS) repository
+
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Percentage of issues still open")
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Azure/Enterprise-Scale-for-AVS/badge)](https://scorecard.dev/viewer/?uri=github.com/Azure/Enterprise-Scale-for-AVS "OpenSSF Scorecard")
+
+## Navigation Menu
 
 * [Getting Started](GettingStarted.md)
 * Deployment Scenarios
@@ -10,14 +18,6 @@
 
 ---
 
-# Enterprise-Scale for AVS
-
-Welcome to the Enterprise Scale for Azure VMware Solution (AVS) repository
-
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Average time to resolve an issue")
-
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Azure/Enterprise-Scale-for-AVS.svg)](http://isitmaintained.com/project/Azure/Enterprise-Scale-for-AVS "Percentage of issues still open")
-
 ## User Guide
 
 To find out more about the Azure landing zones reference implementation, please refer to the [documentation on our Wiki](https://github.com/Azure/Enterprise-Scale-for-AVS/wiki)
@@ -28,7 +28,6 @@ Enterprise-scale for AVS represents the strategic design path and target technic
 
 ![Golden state platform foundation with AVS Landing Zone highlighted in red](./docs/images/azure-vmware-eslz-architecture.png)
 
-
 The enterprise-scale for AVS only talks about with what gets deployed in the specific AVS landing zone subscription highlighted by the red box in the picture above. It is assumed that an appropriate platform foundation is already setup which may or may not be the official ESLZ platform foundation. This means that policies and governance should already be in place or should be setup after this implementation and are not a part of the scope this program. The policies applied to management groups in the hierarchy above the subscription will trickle down to the Enterprise-scale for AVS landing zone subscription.
 
 This repository contains reference implementation scenarios based on a number of different scenarios. For each scenario, we have included both ARM and Bicep as the deployment languages
@@ -37,16 +36,15 @@ This repository contains reference implementation scenarios based on a number of
 
 In this repository, you get access to various customer scenarios that can help accelerate the development and deployment of AVS clusters that conform with Enterprise-Scale for AVS best practices and guidelines. Each scenario aims to represent common customer experiences with the goal of accelerating the process of developing and deploying conforming AVS clusters using IaC as well as providing a step-by-step learning experience.
 
-
 ## AVS Greenfield Deployment
 
 This deployment is best suited to those looking to provision a new AVS Private Cloud, the automation will let you choose and deploy the following:
-- AVS Private Cloud: Choose New or Existing
-- [Optional]: Choose New or Existing virtual network (VNet)
-- [Optional]: Deploy Dashboards and Monitoring
-- [Optional]: Enable Diagnostics and Logging for AVS
-- [Optional]: Enable HCX and SRM
 
+* AVS Private Cloud: Choose New or Existing
+* [Optional]: Choose New or Existing virtual network (VNet)
+* [Optional]: Deploy Dashboards and Monitoring
+* [Optional]: Enable Diagnostics and Logging for AVS
+* [Optional]: Enable HCX and SRM
 
 |Greenfield deployment options:          |                           |
 |:-------------------------------------|:------------------------: |
@@ -57,16 +55,15 @@ This deployment is best suited to those looking to provision a new AVS Private C
 ## AVS Greenfield Lite Deployment
 
 This deployment is a lite version of the full AVS Greenfield Deployment and will deploy the following:
-- New AVS Private Cloud - Allows for a custom resource group name and Private Cloud Name
-- or Choose an existing AVS Private Cloud
-- [Optional]: Deploy AVS Monitoring 
-- [Optional]: Deploy HCX and SRM
 
+* New AVS Private Cloud - Allows for a custom resource group name and Private Cloud Name
+* or Choose an existing AVS Private Cloud
+* [Optional]: Deploy AVS Monitoring
+* [Optional]: Deploy HCX and SRM
 
 |Greenfield Lite deployment:          |                           |
 |:-------------------------------------|:------------------------: |
 |Azure portal UI          |[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2520Lite%2FPortalUI%2FARM%2FGreenFieldLiteDeploy.deploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FAVS-Landing-Zone%2FGreenField%2520Lite%2FPortalUI%2FARM%2FGreenFieldLiteDeploy.PortalUI.json)      |
-
 
 ## Terraform modules for additional deployment scenarios and samples
 

@@ -10,6 +10,9 @@ on:
       - "docs/wiki/**"
   workflow_dispatch: {}
 
+# Declare default permissions as read only.
+permissions: read-all
+
 env:
   wiki_source_repo: "${{ github.repository }}"
   wiki_source_repo_dir: "${{ github.repository }}/docs/wiki"
