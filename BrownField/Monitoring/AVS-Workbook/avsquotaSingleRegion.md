@@ -1,6 +1,6 @@
 # Know your Azure VMware Solution Private Cloud quota for any region
 
-Very often, it is needed to know Azure VMware Solution SDDC quota. This is typically needed for capacity planning or DR planning activities. This workbook shows Azure VMware Solution SDDC quota for selected subscription and selected region. Quota is shown for multiple SKU types (e.g. AV36P, AV52, AV64, etc.).
+Very often, it is needed to know Azure VMware Solution SDDC quota. This is typically needed for capacity planning or DR planning activities. This workbook shows Azure VMware Solution SDDC quota for selected subscription and selected region. Quota is shown for multiple SKU types (e.g. AV36P, AV48, AV52, AV64, etc.).
 
 ## Prerequisites
 
