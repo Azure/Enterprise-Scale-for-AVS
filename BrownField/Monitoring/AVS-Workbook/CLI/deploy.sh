@@ -24,9 +24,9 @@ for region in $regions; do
 
     # Parse response
     av64=$(echo $response | jq -r '.hostsRemaining.av64')
-    gp=$(echo $response | jq -r '.hostsRemaining.gp')
     he=$(echo $response | jq -r '.hostsRemaining.he')
     he2=$(echo $response | jq -r '.hostsRemaining.he2')
+    hf=$(echo $response | jq -r '.hostsRemaining.hf')
     hv=$(echo $response | jq -r '.hostsRemaining.hv')
     quotaEnabled=$(echo $response | jq -r '.quotaEnabled')
 
@@ -36,14 +36,14 @@ for region in $regions; do
     fi
 
     # Calculate total
-    total=$((av64 + gp + he + he2 + hv))
+    total=$((av64 + he + he2 + hf + hv))
 
     # Append to output
-    output+="$region,$quotaEnabled,$av64,$gp,$he,$he2,$hv,$total\n"
+    output+="$region,$quotaEnabled,$av64,$he,$he2,$hf,$hv,$total\n"
 done
 
 # Print CSV header
-echo "Region,QuotaEnabled,AV64,AV36T,AV36,AV36P,AV52,Total"
+echo "Region,QuotaEnabled,AV64,AV36,AV36P,AV48,AV52,Total"
 
 # Sort and print output
 echo -e "$output" | sort -t ',' -k2,2r -k8,8nr | sed '/^$/d'
