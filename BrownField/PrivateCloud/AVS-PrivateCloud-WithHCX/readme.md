@@ -43,4 +43,6 @@ az deployment group create -g AVS-Step-By-Step-RG -n AVS-HCX-Deployment -c -f "P
 
 ## Next Steps
 
-[Connect two Azure VMware Solution Private Clouds across different Azure regions](../../Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md)
+[Connect two Azure VMware Solution Private Clouds across different Azure regions](../../Networking/AVS-to-AVS-CrossRegion-GlobalReach/readme.md) OR
+
+[Create a jumpbox to access AVS SDDC](../../Addons/Jumpbox/README.md)

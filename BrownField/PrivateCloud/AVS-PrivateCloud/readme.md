@@ -72,4 +72,6 @@ Ensure that status of deployment is "Succeeded" by navigating to the "Deployment
 
 [Connect Azure VMware Solution with an existing Azure Virtual Network by creating and redeeming Authorization Key](../../Networking/AVS-to-VNet-ExistingVNet/readme.md) OR
 
-[Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md)
+[Create a Private Cloud with HCX Preconfigured](../AVS-PrivateCloud-WithHCX/readme.md) OR
+
+[Create a jumpbox to access AVS SDDC](../../Addons/Jumpbox/README.md)
