@@ -2,7 +2,7 @@
 
 After an Azure VMware Solution SDDC is deployed, very often a secure workstation is needed to access it. Guidance provided below helps to set up such a secure workstation or jumpbox.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmaksh%2FAVSJumpBox%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale-for-AVS%2Fmain%2FBrownField%2FAddons%2FJumpbox%2Fazuredeploy.json)
 
 ## Introduction
 
