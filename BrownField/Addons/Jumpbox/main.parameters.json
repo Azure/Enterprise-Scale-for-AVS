@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetName": {
+      "value": "jumpbox-vnet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.0.0.0/24"
+    },
+    "vmSubnetName": {
+      "value": "VMSubnet"
+    },
+    "vmSubnetPrefix": {
+      "value": "10.0.0.0/27"
+    },
+    "bastionSubnetPrefix": {
+      "value": "10.0.0.32/27"
+    },
+    "gatewaySubnetPrefix": {
+      "value": "10.0.0.64/27"
+    },
+    "vmName": {
+      "value": "jumpboxvm"
+    },
+    "vmSize": {
+      "value": "Standard_B4ms"
+    },    "dataDiskSizeGB": {
+      "value": 100
+    },
+    "adminUsername": {
+      "value": "jumpboxadmin"
+    },
+    "jumpboxAdminPassword": {
+      "value": ""
+    },"tags": {
+      "value": {
+        "Environment": "Jumpbox",
+        "Purpose": "AVS Management"
+      }
+    },
+    "expressRouteCircuitId": {
+      "value": "/subscriptions/b51f2739-04ef-477f-a005-96198fd504d5/resourceGroups/tnt32-cust-p07-uksouth/providers/Microsoft.Network/expressRouteCircuits/tnt32-cust-p07-uksouth-er"
+    },
+    "expressRouteAuthKey": {
+      "value": "9e056855-393c-409c-b464-bf3b6adfa066"
+    }
+  }
+}
