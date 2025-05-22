@@ -9,6 +9,7 @@ After an Azure VMware Solution SDDC is deployed, very often a secure workstation
 The AVS JumpBox deployment creates a secure Windows virtual machine with the necessary networking components to connect to and manage your Azure VMware Solution (AVS) Private Cloud. This deployment includes:
 
 * A Windows Server VM with 4 vCPUs and 8GB memory (B-series burstable VM)
+* System-assigned Managed Identity for secure access to Azure resources
 * Auto-shutdown at 7PM UTC daily to save costs
 * Virtual network with VM, Bastion, and Gateway subnets
 * Azure Bastion for secure access to the VM (no public IP on the VM)
@@ -82,6 +83,21 @@ The deployment may take approximately 20-30 minutes to complete.
    - Open the browser on jumpbox
    - Copy the vCenter Web Client URL from AVS --> VMware Credentials
    - Hit enter
+
+5. Using the System-assigned Managed Identity:
+   - The jumpbox VM is deployed with a System-assigned Managed Identity
+   - You can assign roles to this identity in Azure RBAC to allow the VM to access Azure resources
+   - Find the principal ID in the deployment outputs or by running:
+     ```powershell
+     $vm = Get-AzVM -ResourceGroupName "YourResourceGroup" -Name "jumpboxvm"
+     $vm.Identity.PrincipalId
+     ```
+   - Assign roles to the managed identity using Azure Portal or PowerShell:
+     ```powershell
+     $roleDefinitionId = (Get-AzRoleDefinition "Reader").Id
+     New-AzRoleAssignment -ObjectId $vm.Identity.PrincipalId -RoleDefinitionId $roleDefinitionId -Scope "/subscriptions/YourSubscriptionId"
+     ```
+   - From within the VM, use Azure PowerShell, Azure CLI, or REST APIs with managed identity authentication
 
 ## Next Steps
 

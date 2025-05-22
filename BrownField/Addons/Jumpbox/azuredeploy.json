@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "13963749402866510263"
+      "templateHash": "6666506490701585675"
     }
   },
   "parameters": {
@@ -900,7 +900,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "2604688065987043124"
+              "templateHash": "12857821540724150379"
             }
           },
           "parameters": {
@@ -1082,6 +1082,9 @@
               "name": "[parameters('vmName')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
+              "identity": {
+                "type": "SystemAssigned"
+              },
               "properties": {
                 "hardwareProfile": {
                   "vmSize": "[parameters('vmSize')]"
@@ -1150,6 +1153,13 @@
                 "description": "The VM resource ID"
               },
               "value": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            },
+            "systemAssignedIdentityPrincipalId": {
+              "type": "string",
+              "metadata": {
+                "description": "The principal ID of the VM system-assigned managed identity"
+              },
+              "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('vmName')), '2022-11-01', 'full').identity.principalId]"
             }
           }
         }
@@ -1617,6 +1627,10 @@
     "vmPrivateIP": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.privateIPAddress.value]"
+    },
+    "vmManagedIdentityPrincipalId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.systemAssignedIdentityPrincipalId.value]"
     },
     "bastionSubnetId": {
       "type": "string",

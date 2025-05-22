@@ -236,6 +236,7 @@ output vnetId string = vnet.outputs.vnetId
 output vmSubnetId string = vmSubnet.outputs.subnetId
 output vmName string = jumpboxVm.outputs.vmName
 output vmPrivateIP string = jumpboxVm.outputs.privateIPAddress
+output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIdentityPrincipalId
 output bastionSubnetId string = bastionSubnet.outputs.subnetId
 output bastionId string = bastionHost.outputs.bastionId
 output gatewaySubnetId string = gatewaySubnet.outputs.subnetId

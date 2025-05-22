@@ -126,6 +126,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
   name: vmName
   location: location
   tags: tags
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     hardwareProfile: {
       vmSize: vmSize
@@ -182,3 +185,6 @@ output privateIPAddress string = useProvidedNic ? '' : nic.properties.ipConfigur
 
 @description('The VM resource ID')
 output vmId string = vm.id
+
+@description('The principal ID of the VM system-assigned managed identity')
+output systemAssignedIdentityPrincipalId string = vm.identity.principalId
