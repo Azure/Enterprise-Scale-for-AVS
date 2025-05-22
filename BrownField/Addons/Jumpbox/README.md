@@ -18,8 +18,9 @@ The AVS JumpBox deployment creates a secure Windows virtual machine with the nec
 
 Before you begin, you need:
 
-* An Azure subscription with Contributor or Owner permissions on the resource group that hosts AVS SDDC
-* Azure VMware Solution Private Cloud
+* An Azure subscription with `Contributor` or `Owner` permissions on the resource group that hosts AVS SDDC
+* Azure VMware Solution (AVS) Private Cloud
+* AVS ExpressRoute circuit ID and Authorization/Redemption key
 * For Bicep deployment: Azure CLI with Bicep extension installed or Azure PowerShell module (Az) version 5.6.0 or higher
 
 ## Deployment Steps

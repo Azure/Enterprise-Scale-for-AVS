@@ -25,7 +25,8 @@
     },
     "vmSize": {
       "value": "Standard_B4ms"
-    },    "dataDiskSizeGB": {
+    },
+    "dataDiskSizeGB": {
       "value": 100
     },
     "adminUsername": {
@@ -40,10 +41,10 @@
       }
     },
     "expressRouteCircuitId": {
-      "value": "/subscriptions/b51f2739-04ef-477f-a005-96198fd504d5/resourceGroups/tnt32-cust-p07-uksouth/providers/Microsoft.Network/expressRouteCircuits/tnt32-cust-p07-uksouth-er"
+      "value": "<REPLACE_WITH_CIRCUIT_ID_OF_YOUR_SDDC>"
     },
     "expressRouteAuthKey": {
-      "value": "9e056855-393c-409c-b464-bf3b6adfa066"
+      "value": "<REPLACE_WITH_AUTH_KEY_OF_YOUR_SDDC>"
     }
   }
 }
