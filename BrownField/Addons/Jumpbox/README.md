@@ -10,6 +10,7 @@ The AVS JumpBox deployment creates a secure Windows virtual machine with the nec
 
 * A Windows Server VM with 4 vCPUs and 8GB memory (B-series burstable VM)
 * System-assigned Managed Identity for secure access to Azure resources
+* Automatic assignment of Contributor role to the VM's Managed Identity for any AVS Private Cloud in the resource group
 * Auto-shutdown at 7PM UTC daily to save costs
 * Virtual network with VM, Bastion, and Gateway subnets
 * Azure Bastion for secure access to the VM (no public IP on the VM)
@@ -86,18 +87,24 @@ The deployment may take approximately 20-30 minutes to complete.
 
 5. Using the System-assigned Managed Identity:
    - The jumpbox VM is deployed with a System-assigned Managed Identity
-   - You can assign roles to this identity in Azure RBAC to allow the VM to access Azure resources
-   - Find the principal ID in the deployment outputs or by running:
+   - The deployment automatically assigns Contributor role to the VM's identity for any AVS Private Clouds in the resource group
+   - This allows the VM to manage AVS Private Cloud resources without needing to store credentials
+   - To use the managed identity from within the VM, use Azure PowerShell, Azure CLI, or REST APIs with managed identity authentication:
      ```powershell
+     # From inside the VM, connect using the managed identity
+     Connect-AzAccount -Identity
+     
+     # List AVS Private Clouds in the resource group
+     Get-AzVMwarePrivateCloud -ResourceGroupName (Get-AzContext).DefaultContext.ResourceGroupName
+     
+     # Run other Azure PowerShell commands against AVS resources
+     ```
+   - The principal ID of the managed identity is available in the deployment outputs if you need it for additional role assignments:
+     ```powershell
+     # From an admin workstation (not the VM itself)
      $vm = Get-AzVM -ResourceGroupName "YourResourceGroup" -Name "jumpboxvm"
      $vm.Identity.PrincipalId
      ```
-   - Assign roles to the managed identity using Azure Portal or PowerShell:
-     ```powershell
-     $roleDefinitionId = (Get-AzRoleDefinition "Reader").Id
-     New-AzRoleAssignment -ObjectId $vm.Identity.PrincipalId -RoleDefinitionId $roleDefinitionId -Scope "/subscriptions/YourSubscriptionId"
-     ```
-   - From within the VM, use Azure PowerShell, Azure CLI, or REST APIs with managed identity authentication
 
 ## Next Steps
 

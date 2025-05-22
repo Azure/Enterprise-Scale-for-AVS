@@ -215,6 +215,107 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   ]
 }
 
+// Create deployment script directly in main.bicep to avoid module parameter issues
+resource vmRoleAssignmentIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+  name: '${vmName}-role-script-identity'
+  location: location
+  tags: tags
+}
+
+resource vmRoleAssignmentRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, vmRoleAssignmentIdentity.id, 'UserAccessAdmin')
+  scope: resourceGroup()
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9') // User Access Administrator role
+    principalId: vmRoleAssignmentIdentity.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource vmRoleAssignmentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+  name: '${vmName}-avs-role-assignment'
+  location: location
+  tags: tags
+  kind: 'AzurePowerShell'
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${vmRoleAssignmentIdentity.id}': {}
+    }
+  }
+  properties: {
+    azPowerShellVersion: '7.0'
+    retentionInterval: 'P1D'
+    timeout: 'PT30M'
+    arguments: '-PrincipalId ${jumpboxVm.outputs.systemAssignedIdentityPrincipalId} -ResourceGroupName "${resourceGroup().name}" -ContributorRoleDefinitionId "b24988ac-6180-42a0-ab88-20f7382dd24c"'
+    scriptContent: '''
+      param(
+        [string] $PrincipalId,
+        [string] $ResourceGroupName,
+        [string] $ContributorRoleDefinitionId
+      )
+
+      # Sleep to allow role assignment to propagate
+      Write-Output "Waiting for role assignment propagation..."
+      Start-Sleep -Seconds 60
+
+      # Find all AVS Private Clouds in the resource group
+      Write-Output "Finding AVS Private Clouds in resource group $ResourceGroupName..."
+      $avsPrivateClouds = Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.AVS/privateClouds"
+      
+      if ($avsPrivateClouds.Count -eq 0) {
+          Write-Output "No AVS Private Clouds found in resource group $ResourceGroupName"
+          $DeploymentScriptOutputs = @{
+              RoleAssignmentCreated = $false
+              Message = "No AVS Private Clouds found in resource group $ResourceGroupName"
+          }
+          exit 0
+      }
+      
+      $roleDefinitionId = "/subscriptions/$((Get-AzContext).Subscription.Id)/providers/Microsoft.Authorization/roleDefinitions/$ContributorRoleDefinitionId"
+      
+      foreach ($avsPrivateCloud in $avsPrivateClouds) {
+          Write-Output "Found AVS Private Cloud: $($avsPrivateCloud.Name)"
+          try {
+              # Check if the role assignment already exists
+              $existingAssignment = Get-AzRoleAssignment -ObjectId $PrincipalId -RoleDefinitionId $roleDefinitionId -Scope $avsPrivateCloud.ResourceId -ErrorAction SilentlyContinue
+              
+              if ($null -eq $existingAssignment) {
+                  Write-Output "Assigning Contributor role to Principal ID $PrincipalId on AVS Private Cloud $($avsPrivateCloud.Name)..."
+                  New-AzRoleAssignment -ObjectId $PrincipalId -RoleDefinitionId $ContributorRoleDefinitionId -Scope $avsPrivateCloud.ResourceId
+                  Write-Output "Role assignment created successfully"
+                  $DeploymentScriptOutputs = @{
+                      RoleAssignmentCreated = $true
+                      AVSPrivateCloudName = $avsPrivateCloud.Name
+                      AVSPrivateCloudId = $avsPrivateCloud.ResourceId
+                  }
+              }
+              else {
+                  Write-Output "Role assignment already exists for Principal ID $PrincipalId on AVS Private Cloud $($avsPrivateCloud.Name)"
+                  $DeploymentScriptOutputs = @{
+                      RoleAssignmentCreated = $true
+                      AVSPrivateCloudName = $avsPrivateCloud.Name
+                      AVSPrivateCloudId = $avsPrivateCloud.ResourceId
+                      Message = "Role assignment already exists"
+                  }
+              }
+          }
+          catch {
+              Write-Error "Error assigning role: $_"
+              $DeploymentScriptOutputs = @{
+                  RoleAssignmentCreated = $false
+                  Error = $_.ToString()
+              }
+          }
+      }
+    '''
+  }
+  dependsOn: [
+    vmRoleAssignmentRoleAssignment
+    jumpboxVm
+  ]
+}
+
 // ExpressRoute Connection depends only on the gateway
 module erConnection 'er-connection.bicep' = if (!empty(expressRouteCircuitId) && !empty(expressRouteAuthKey)) {
   name: 'erConnectionDeployment'

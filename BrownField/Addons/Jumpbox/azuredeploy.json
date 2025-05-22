@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "6666506490701585675"
+      "templateHash": "6726370878035780843"
     }
   },
   "parameters": {
@@ -139,6 +139,52 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "[format('{0}-role-script-identity', parameters('vmName'))]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]"
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName'))), 'UserAccessAdmin')]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9')]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName'))), '2018-11-30').principalId]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-avs-role-assignment', parameters('vmName'))]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "kind": "AzurePowerShell",
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[format('{0}', resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName'))))]": {}
+        }
+      },
+      "properties": {
+        "azPowerShellVersion": "7.0",
+        "retentionInterval": "P1D",
+        "timeout": "PT30M",
+        "arguments": "[format('-PrincipalId {0} -ResourceGroupName \"{1}\" -ContributorRoleDefinitionId \"b24988ac-6180-42a0-ab88-20f7382dd24c\"', reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.systemAssignedIdentityPrincipalId.value, resourceGroup().name)]",
+        "scriptContent": "      param(\r\n        [string] $PrincipalId,\r\n        [string] $ResourceGroupName,\r\n        [string] $ContributorRoleDefinitionId\r\n      )\r\n\r\n      # Sleep to allow role assignment to propagate\r\n      Write-Output \"Waiting for role assignment propagation...\"\r\n      Start-Sleep -Seconds 60\r\n\r\n      # Find all AVS Private Clouds in the resource group\r\n      Write-Output \"Finding AVS Private Clouds in resource group $ResourceGroupName...\"\r\n      $avsPrivateClouds = Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType \"Microsoft.AVS/privateClouds\"\r\n      \r\n      if ($avsPrivateClouds.Count -eq 0) {\r\n          Write-Output \"No AVS Private Clouds found in resource group $ResourceGroupName\"\r\n          $DeploymentScriptOutputs = @{\r\n              RoleAssignmentCreated = $false\r\n              Message = \"No AVS Private Clouds found in resource group $ResourceGroupName\"\r\n          }\r\n          exit 0\r\n      }\r\n      \r\n      $roleDefinitionId = \"/subscriptions/$((Get-AzContext).Subscription.Id)/providers/Microsoft.Authorization/roleDefinitions/$ContributorRoleDefinitionId\"\r\n      \r\n      foreach ($avsPrivateCloud in $avsPrivateClouds) {\r\n          Write-Output \"Found AVS Private Cloud: $($avsPrivateCloud.Name)\"\r\n          try {\r\n              # Check if the role assignment already exists\r\n              $existingAssignment = Get-AzRoleAssignment -ObjectId $PrincipalId -RoleDefinitionId $roleDefinitionId -Scope $avsPrivateCloud.ResourceId -ErrorAction SilentlyContinue\r\n              \r\n              if ($null -eq $existingAssignment) {\r\n                  Write-Output \"Assigning Contributor role to Principal ID $PrincipalId on AVS Private Cloud $($avsPrivateCloud.Name)...\"\r\n                  New-AzRoleAssignment -ObjectId $PrincipalId -RoleDefinitionId $ContributorRoleDefinitionId -Scope $avsPrivateCloud.ResourceId\r\n                  Write-Output \"Role assignment created successfully\"\r\n                  $DeploymentScriptOutputs = @{\r\n                      RoleAssignmentCreated = $true\r\n                      AVSPrivateCloudName = $avsPrivateCloud.Name\r\n                      AVSPrivateCloudId = $avsPrivateCloud.ResourceId\r\n                  }\r\n              }\r\n              else {\r\n                  Write-Output \"Role assignment already exists for Principal ID $PrincipalId on AVS Private Cloud $($avsPrivateCloud.Name)\"\r\n                  $DeploymentScriptOutputs = @{\r\n                      RoleAssignmentCreated = $true\r\n                      AVSPrivateCloudName = $avsPrivateCloud.Name\r\n                      AVSPrivateCloudId = $avsPrivateCloud.ResourceId\r\n                      Message = \"Role assignment already exists\"\r\n                  }\r\n              }\r\n          }\r\n          catch {\r\n              Write-Error \"Error assigning role: $_\"\r\n              $DeploymentScriptOutputs = @{\r\n                  RoleAssignmentCreated = $false\r\n                  Error = $_.ToString()\r\n              }\r\n          }\r\n      }\r\n    "
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName')))]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', guid(resourceGroup().id, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', format('{0}-role-script-identity', parameters('vmName'))), 'UserAccessAdmin'))]"
       ]
     },
     {
