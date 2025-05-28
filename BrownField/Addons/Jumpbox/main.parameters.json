@@ -6,19 +6,19 @@
       "value": "jumpbox-vnet"
     },
     "vnetAddressPrefix": {
-      "value": "x.y.z.0/24"
+      "value": "192.168.0.0/24"
     },
     "vmSubnetName": {
       "value": "VMSubnet"
     },
     "vmSubnetPrefix": {
-      "value": "x.y.z.0/27"
+      "value": "192.168.0.0/27"
     },
     "bastionSubnetPrefix": {
-      "value": "x.y.z.32/27"
+      "value": "192.168.0.32/27"
     },
     "gatewaySubnetPrefix": {
-      "value": "x.y.z.64/27"
+      "value": "192.168.0.64/27"
     },
     "vmName": {
       "value": "jumpboxvm"
@@ -29,7 +29,7 @@
     "dataDiskSizeGB": {
       "value": 100
     },    "adminUsername": {
-      "value": "<CHANGE-ME>"
+      "value": "jumpboxadmin"
     },
     "jumpboxAdminPassword": {
       "value": ""
@@ -40,10 +40,10 @@
       }
     },
     "expressRouteCircuitId": {
-      "value": "<REPLACE_WITH_CIRCUIT_ID_OF_YOUR_SDDC>"
+      "value": "/subscriptions/b51f2739-04ef-477f-a005-96198fd504d5/resourceGroups/tnt32-cust-p07-uksouth/providers/Microsoft.Network/expressRouteCircuits/tnt32-cust-p07-uksouth-er"
     },
     "expressRouteAuthKey": {
-      "value": "<REPLACE_WITH_AUTH_KEY_OF_YOUR_SDDC>"
+      "value": "3ab9e0e0-e9e6-41da-af83-5f0784b6bf47"
     }
   }
 }
