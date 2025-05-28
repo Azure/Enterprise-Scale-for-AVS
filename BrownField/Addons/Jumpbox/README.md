@@ -28,6 +28,12 @@ Before you begin, you need:
 ## Deployment Steps
 
 1. Update the key parameter values in `main.parameters.json` file:
+   * **Network addresses**: Replace all `x.y.z.` placeholders with your actual network ranges:
+     - `vnetAddressPrefix`: Replace `x.y.z.0/24` with your VNet address space (e.g., `10.1.0.0/24`)
+     - `vmSubnetPrefix`: Replace `x.y.z.0/27` with your VM subnet (e.g., `10.1.0.0/27`)
+     - `bastionSubnetPrefix`: Replace `x.y.z.32/27` with your Bastion subnet (e.g., `10.1.0.32/27`)
+     - `gatewaySubnetPrefix`: Replace `x.y.z.64/27` with your Gateway subnet (e.g., `10.1.0.64/27`)
+   * **Admin username**: Replace `<CHANGE-ME>` with your desired admin username
    * `jumpboxAdminPassword` (will be prompted during deployment if not provided)
    * `expressRouteCircuitId` and `expressRouteAuthKey` for AVS SDDC (needed for AVS connectivity)
 
@@ -47,10 +53,10 @@ az login --tenant "YourTenantId.onmicrosoft.com"
 az account set --subscription "YourSubscriptionNameOrId"
 
 # Deploy using Bicep to your existing resource group that hosts AVS SDDC
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" -c
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" -p jumpboxAdminPassword="YourComplexPassword123!" -c
 
 # Or deploy using ARM template
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./azuredeploy.json -p "@main.parameters.json" -c
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./azuredeploy.json -p "@main.parameters.json" -p jumpboxAdminPassword="YourComplexPassword123!" -c
 ```
 
 **Using PowerShell:**
