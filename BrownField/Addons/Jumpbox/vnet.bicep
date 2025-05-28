@@ -5,7 +5,7 @@ param vnetName string
 param location string = resourceGroup().location
 
 @description('Address space for the virtual network')
-param vnetAddressPrefix string = '10.0.0.0/24'
+param vnetAddressPrefix string = 'x.y.z.0/24'
 
 @description('Tags for the resources')
 param tags object = {}

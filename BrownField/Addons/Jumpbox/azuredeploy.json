@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "3564580520362072336"
+      "templateHash": "9613251543109046447"
     }
   },
   "parameters": {
@@ -468,7 +468,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "1459170726277378215"
+              "templateHash": "11240624340817891160"
             }
           },
           "parameters": {
@@ -487,7 +487,7 @@
             },
             "vnetAddressPrefix": {
               "type": "string",
-              "defaultValue": "10.0.0.0/24",
+              "defaultValue": "x.y.z.0/24",
               "metadata": {
                 "description": "Address space for the virtual network"
               }
@@ -571,7 +571,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "15307185451509533345"
+              "templateHash": "14858545761495239442"
             }
           },
           "parameters": {
@@ -590,7 +590,7 @@
             },
             "subnetPrefix": {
               "type": "string",
-              "defaultValue": "10.0.0.0/27",
+              "defaultValue": "x.y.z.0/27",
               "metadata": {
                 "description": "Address prefix for the VM subnet"
               }
@@ -654,7 +654,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "16831666187505884847"
+              "templateHash": "12711141324758400349"
             }
           },
           "parameters": {
@@ -666,7 +666,7 @@
             },
             "subnetPrefix": {
               "type": "string",
-              "defaultValue": "10.0.0.32/27",
+              "defaultValue": "x.y.z.32/27",
               "metadata": {
                 "description": "Address prefix for the Azure Bastion subnet"
               }
@@ -734,7 +734,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "4795579377208792120"
+              "templateHash": "12150583151504526307"
             }
           },
           "parameters": {
@@ -746,7 +746,7 @@
             },
             "subnetPrefix": {
               "type": "string",
-              "defaultValue": "10.0.0.64/27",
+              "defaultValue": "x.y.z.64/27",
               "metadata": {
                 "description": "Address prefix for the ExpressRoute Gateway subnet"
               }

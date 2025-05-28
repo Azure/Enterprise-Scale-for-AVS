@@ -5,7 +5,7 @@ param vnetName string
 var subnetName = 'AzureBastionSubnet'
 
 @description('Address prefix for the Azure Bastion subnet')
-param subnetPrefix string = '10.0.0.32/27'
+param subnetPrefix string = 'x.y.z.32/27'
 
 // Reference to existing VNet
 resource existingVnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {

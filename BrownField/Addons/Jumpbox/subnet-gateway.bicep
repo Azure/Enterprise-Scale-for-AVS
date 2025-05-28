@@ -5,7 +5,7 @@ param vnetName string
 var subnetName = 'GatewaySubnet'
 
 @description('Address prefix for the ExpressRoute Gateway subnet')
-param subnetPrefix string = '10.0.0.64/27'
+param subnetPrefix string = 'x.y.z.64/27'
 
 // Reference to existing VNet
 resource existingVnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {

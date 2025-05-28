@@ -5,7 +5,7 @@ param vnetName string
 param subnetName string = 'VMSubnet'
 
 @description('Address prefix for the VM subnet')
-param subnetPrefix string = '10.0.0.0/27'
+param subnetPrefix string = 'x.y.z.0/27'
 
 // Reference to existing VNet
 resource existingVnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {
