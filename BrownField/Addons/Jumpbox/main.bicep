@@ -6,19 +6,19 @@ param location string = resourceGroup().location
 param vnetName string = 'jumpbox-vnet'
 
 @description('Address space for the virtual network')
-param vnetAddressPrefix string = '10.0.0.0/24'
+param vnetAddressPrefix string = 'x.y.z.0/24'
 
 @description('Name for the VM subnet')
 param vmSubnetName string = 'VMSubnet'
 
 @description('Address prefix for the VM subnet')
-param vmSubnetPrefix string = '10.0.0.0/27'
+param vmSubnetPrefix string = 'x.y.z.0/27'
 
 @description('Address prefix for the Bastion subnet')
-param bastionSubnetPrefix string = '10.0.0.32/27'
+param bastionSubnetPrefix string = 'x.y.z.32/27'
 
 @description('Address prefix for the Gateway subnet')
-param gatewaySubnetPrefix string = '10.0.0.64/27'
+param gatewaySubnetPrefix string = 'x.y.z.64/27'
 
 @description('Name for the Jump Box VM')
 param vmName string = 'jumpboxvm'
