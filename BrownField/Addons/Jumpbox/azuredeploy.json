@@ -1,0 +1,1660 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.28.1.47646",
+      "templateHash": "8756536860980311421"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "jumpbox-vnet",
+      "metadata": {
+        "description": "Virtual network name"
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "x.y.z.0/24",
+      "metadata": {
+        "description": "Address space for the virtual network"
+      }
+    },
+    "vmSubnetName": {
+      "type": "string",
+      "defaultValue": "VMSubnet",
+      "metadata": {
+        "description": "Name for the VM subnet"
+      }
+    },
+    "vmSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "x.y.z.0/27",
+      "metadata": {
+        "description": "Address prefix for the VM subnet"
+      }
+    },
+    "bastionSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "x.y.z.32/27",
+      "metadata": {
+        "description": "Address prefix for the Bastion subnet"
+      }
+    },
+    "gatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "x.y.z.64/27",
+      "metadata": {
+        "description": "Address prefix for the Gateway subnet"
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "defaultValue": "jumpboxvm",
+      "metadata": {
+        "description": "Name for the Jump Box VM"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_B4ms",
+      "metadata": {
+        "description": "VM Size"
+      }
+    },
+    "dataDiskSizeGB": {
+      "type": "int",
+      "defaultValue": 100,
+      "metadata": {
+        "description": "Size of the data disk in GB"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "<CHANGE-ME>",
+      "metadata": {
+        "description": "Admin username for the VM"
+      }
+    },
+    "jumpboxAdminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password for the VM"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {
+        "Environment": "Jumpbox",
+        "Purpose": "AVS Management"
+      },
+      "metadata": {
+        "description": "Tags for all resources"
+      }
+    },
+    "expressRouteCircuitId": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "ExpressRoute circuit ID for AVS SDDC"
+      }
+    },
+    "expressRouteAuthKey": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Authorization key for the ExpressRoute circuit"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DevTestLab/schedules",
+      "apiVersion": "2018-09-15",
+      "name": "[format('shutdown-computevm-{0}', parameters('vmName'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "status": "Enabled",
+        "taskType": "ComputeVmShutdownTask",
+        "dailyRecurrence": {
+          "time": "18:00"
+        },
+        "timeZoneId": "UTC",
+        "notificationSettings": {
+          "status": "Disabled",
+          "emailRecipient": "",
+          "notificationLocale": "en"
+        },
+        "targetResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.vmId.value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "bastionPublicIpDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "name": {
+            "value": "[format('{0}-bastion-pip', parameters('vnetName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "1360304804874636969"
+            }
+          },
+          "parameters": {
+            "name": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the public IP"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the resource"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('name')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Standard"
+              },
+              "properties": {
+                "publicIPAllocationMethod": "Static"
+              }
+            }
+          ],
+          "outputs": {
+            "publicIpId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('name'))]"
+            },
+            "publicIpAddress": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('name')), '2023-04-01').ipAddress]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "gatewayPublicIpDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "name": {
+            "value": "[format('{0}-ergw-pip', parameters('vnetName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "1360304804874636969"
+            }
+          },
+          "parameters": {
+            "name": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the public IP"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the resource"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('name')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Standard"
+              },
+              "properties": {
+                "publicIPAllocationMethod": "Static"
+              }
+            }
+          ],
+          "outputs": {
+            "publicIpId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('name'))]"
+            },
+            "publicIpAddress": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('name')), '2023-04-01').ipAddress]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "vmNsgDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "name": {
+            "value": "[format('{0}-nsg', parameters('vmName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "6153097092173500207"
+            }
+          },
+          "parameters": {
+            "name": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the network security group"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the resource"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkSecurityGroups",
+              "apiVersion": "2022-07-01",
+              "name": "[parameters('name')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "securityRules": [
+                  {
+                    "name": "AllowRDPFromVNet",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "3389"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "outputs": {
+            "nsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('name'))]"
+            },
+            "nsgName": {
+              "type": "string",
+              "value": "[parameters('name')]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "vnetDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('vnetAddressPrefix')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "11240624340817891160"
+            }
+          },
+          "parameters": {
+            "vnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the virtual network"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources"
+              }
+            },
+            "vnetAddressPrefix": {
+              "type": "string",
+              "defaultValue": "x.y.z.0/24",
+              "metadata": {
+                "description": "Address space for the virtual network"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resources"
+              }
+            },
+            "dnsServers": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "DNS servers to use for the virtual network, empty array means use Azure-provided DNS"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('vnetName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "addressSpace": {
+                  "addressPrefixes": [
+                    "[parameters('vnetAddressPrefix')]"
+                  ]
+                },
+                "dhcpOptions": "[if(not(empty(parameters('dnsServers'))), createObject('dnsServers', parameters('dnsServers')), null())]",
+                "subnets": []
+              }
+            }
+          ],
+          "outputs": {
+            "vnetId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID of the virtual network"
+              },
+              "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+            },
+            "vnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the virtual network"
+              },
+              "value": "[parameters('vnetName')]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "vmSubnetDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "subnetName": {
+            "value": "[parameters('vmSubnetName')]"
+          },
+          "subnetPrefix": {
+            "value": "[parameters('vmSubnetPrefix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "14858545761495239442"
+            }
+          },
+          "parameters": {
+            "vnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the virtual network"
+              }
+            },
+            "subnetName": {
+              "type": "string",
+              "defaultValue": "VMSubnet",
+              "metadata": {
+                "description": "Name for the VM subnet"
+              }
+            },
+            "subnetPrefix": {
+              "type": "string",
+              "defaultValue": "x.y.z.0/27",
+              "metadata": {
+                "description": "Address prefix for the VM subnet"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}/{1}', parameters('vnetName'), parameters('subnetName'))]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]",
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              }
+            }
+          ],
+          "outputs": {
+            "subnetId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID of the VM subnet"
+              },
+              "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+            },
+            "subnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the VM subnet"
+              },
+              "value": "[parameters('subnetName')]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'vnetDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "bastionSubnetDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "subnetPrefix": {
+            "value": "[parameters('bastionSubnetPrefix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "12711141324758400349"
+            }
+          },
+          "parameters": {
+            "vnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the virtual network"
+              }
+            },
+            "subnetPrefix": {
+              "type": "string",
+              "defaultValue": "x.y.z.32/27",
+              "metadata": {
+                "description": "Address prefix for the Azure Bastion subnet"
+              }
+            }
+          },
+          "variables": {
+            "subnetName": "AzureBastionSubnet"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}/{1}', parameters('vnetName'), variables('subnetName'))]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]",
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Disabled"
+              }
+            }
+          ],
+          "outputs": {
+            "subnetId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID of the Bastion subnet"
+              },
+              "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('subnetName'))]"
+            },
+            "subnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the Bastion subnet"
+              },
+              "value": "[variables('subnetName')]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'vmSubnetDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments', 'vnetDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "gatewaySubnetDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "subnetPrefix": {
+            "value": "[parameters('gatewaySubnetPrefix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "12150583151504526307"
+            }
+          },
+          "parameters": {
+            "vnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the virtual network"
+              }
+            },
+            "subnetPrefix": {
+              "type": "string",
+              "defaultValue": "x.y.z.64/27",
+              "metadata": {
+                "description": "Address prefix for the ExpressRoute Gateway subnet"
+              }
+            }
+          },
+          "variables": {
+            "subnetName": "GatewaySubnet"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}/{1}', parameters('vnetName'), variables('subnetName'))]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]"
+              }
+            }
+          ],
+          "outputs": {
+            "subnetId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID of the Gateway subnet"
+              },
+              "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('subnetName'))]"
+            },
+            "subnetName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the Gateway subnet"
+              },
+              "value": "[variables('subnetName')]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'bastionSubnetDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments', 'vnetDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "vmNicDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "name": {
+            "value": "[format('{0}-nic', parameters('vmName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subnetId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmSubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+          },
+          "nsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNsgDeployment'), '2022-09-01').outputs.nsgId.value]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "1344483229292679519"
+            }
+          },
+          "parameters": {
+            "name": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the network interface"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the resource"
+              }
+            },
+            "subnetId": {
+              "type": "string",
+              "metadata": {
+                "description": "Subnet resource ID"
+              }
+            },
+            "nsgId": {
+              "type": "string",
+              "metadata": {
+                "description": "Network security group resource ID"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resource"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "apiVersion": "2022-07-01",
+              "name": "[parameters('name')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                        "id": "[parameters('subnetId')]"
+                      }
+                    }
+                  }
+                ],
+                "networkSecurityGroup": {
+                  "id": "[parameters('nsgId')]"
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "nicId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/networkInterfaces', parameters('name'))]"
+            },
+            "nicName": {
+              "type": "string",
+              "value": "[parameters('name')]"
+            },
+            "privateIPAddress": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', parameters('name')), '2022-07-01').ipConfigurations[0].properties.privateIPAddress]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'vmNsgDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments', 'vmSubnetDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "jumpboxVmDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "vmName": {
+            "value": "[parameters('vmName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('jumpboxAdminPassword')]"
+          },
+          "nicId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNicDeployment'), '2022-09-01').outputs.nicId.value]"
+          },
+          "dataDiskSizeGB": {
+            "value": "[parameters('dataDiskSizeGB')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "10403177027788689330"
+            }
+          },
+          "parameters": {
+            "vmName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the virtual machine"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources"
+              }
+            },
+            "vmSize": {
+              "type": "string",
+              "defaultValue": "Standard_B4ms",
+              "metadata": {
+                "description": "Size of the virtual machine"
+              }
+            },
+            "adminUsername": {
+              "type": "string",
+              "defaultValue": "<CHANGE-ME>",
+              "metadata": {
+                "description": "Admin username for the virtual machine"
+              }
+            },
+            "adminPassword": {
+              "type": "securestring",
+              "metadata": {
+                "description": "Admin password for the virtual machine"
+              }
+            },
+            "OSVersion": {
+              "type": "string",
+              "defaultValue": "2019-Datacenter",
+              "allowedValues": [
+                "2019-Datacenter",
+                "2019-Datacenter-Core",
+                "2019-datacenter-gensecond",
+                "2022-datacenter",
+                "2022-datacenter-azure-edition",
+                "2022-datacenter-azure-edition-core",
+                "2022-datacenter-core",
+                "2022-datacenter-g2"
+              ],
+              "metadata": {
+                "description": "The Windows version for the VM"
+              }
+            },
+            "virtualNetworkName": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Virtual network name"
+              }
+            },
+            "subnetName": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Subnet name"
+              }
+            },
+            "nicId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Network interface ID - if provided, will use this NIC instead of creating one"
+              }
+            },
+            "nsgName": {
+              "type": "string",
+              "defaultValue": "[format('{0}-nsg', parameters('vmName'))]",
+              "metadata": {
+                "description": "Network security group name"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resources"
+              }
+            },
+            "enableBootDiagnostics": {
+              "type": "bool",
+              "defaultValue": true,
+              "metadata": {
+                "description": "Enable boot diagnostics"
+              }
+            },
+            "storageAccountType": {
+              "type": "string",
+              "defaultValue": "Standard_LRS",
+              "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Premium_LRS",
+                "StandardSSD_LRS",
+                "Premium_ZRS",
+                "StandardSSD_ZRS"
+              ],
+              "metadata": {
+                "description": "Storage account type for OS and data disks"
+              }
+            },
+            "dataDiskSizeGB": {
+              "type": "int",
+              "defaultValue": 100,
+              "metadata": {
+                "description": "Size of the data disk in GB"
+              }
+            }
+          },
+          "variables": {
+            "networkInterfaceName": "[format('{0}-nic', parameters('vmName'))]",
+            "useProvidedNic": "[not(empty(parameters('nicId')))]"
+          },
+          "resources": [
+            {
+              "condition": "[not(variables('useProvidedNic'))]",
+              "type": "Microsoft.Network/networkSecurityGroups",
+              "apiVersion": "2022-07-01",
+              "name": "[parameters('nsgName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "securityRules": [
+                  {
+                    "name": "AllowRDPFromVNet",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "3389"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "condition": "[not(variables('useProvidedNic'))]",
+              "type": "Microsoft.Network/networkInterfaces",
+              "apiVersion": "2022-07-01",
+              "name": "[variables('networkInterfaceName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                      }
+                    }
+                  }
+                ],
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nsgName'))]"
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nsgName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Compute/virtualMachines",
+              "apiVersion": "2022-11-01",
+              "name": "[parameters('vmName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "identity": {
+                "type": "SystemAssigned"
+              },
+              "properties": {
+                "hardwareProfile": {
+                  "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                  "computerName": "[parameters('vmName')]",
+                  "adminUsername": "[parameters('adminUsername')]",
+                  "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                  "imageReference": {
+                    "publisher": "MicrosoftWindowsServer",
+                    "offer": "WindowsServer",
+                    "sku": "[parameters('OSVersion')]",
+                    "version": "latest"
+                  },
+                  "osDisk": {
+                    "createOption": "FromImage",
+                    "managedDisk": {
+                      "storageAccountType": "[parameters('storageAccountType')]"
+                    }
+                  },
+                  "dataDisks": [
+                    {
+                      "diskSizeGB": "[parameters('dataDiskSizeGB')]",
+                      "lun": 0,
+                      "createOption": "Empty",
+                      "managedDisk": {
+                        "storageAccountType": "[parameters('storageAccountType')]"
+                      }
+                    }
+                  ]
+                },
+                "networkProfile": {
+                  "networkInterfaces": [
+                    {
+                      "id": "[if(variables('useProvidedNic'), parameters('nicId'), resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName')))]"
+                    }
+                  ]
+                },
+                "diagnosticsProfile": "[if(parameters('enableBootDiagnostics'), createObject('bootDiagnostics', createObject('enabled', true())), null())]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "vmName": {
+              "type": "string",
+              "metadata": {
+                "description": "The name of the VM"
+              },
+              "value": "[parameters('vmName')]"
+            },
+            "privateIPAddress": {
+              "type": "string",
+              "metadata": {
+                "description": "The private IP address of the VM"
+              },
+              "value": "[if(variables('useProvidedNic'), '', reference(resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName')), '2022-07-01').ipConfigurations[0].properties.privateIPAddress)]"
+            },
+            "vmId": {
+              "type": "string",
+              "metadata": {
+                "description": "The VM resource ID"
+              },
+              "value": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            },
+            "systemAssignedIdentityPrincipalId": {
+              "type": "string",
+              "metadata": {
+                "description": "The principal ID of the VM system-assigned managed identity"
+              },
+              "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('vmName')), '2022-11-01', 'full').identity.principalId]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'vmNicDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "bastionDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "bastionName": {
+            "value": "[format('{0}-bastion', parameters('vnetName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subnetId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'bastionSubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+          },
+          "publicIpId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'bastionPublicIpDeployment'), '2022-09-01').outputs.publicIpId.value]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "9480119921078685008"
+            }
+          },
+          "parameters": {
+            "bastionName": {
+              "type": "string",
+              "defaultValue": "jumpbox-bastion",
+              "metadata": {
+                "description": "Name for the Azure Bastion resource"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the Bastion resource"
+              }
+            },
+            "vnetName": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Virtual network name where the Bastion subnet exists"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the Bastion resource"
+              }
+            },
+            "subnetId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Subnet resource ID"
+              }
+            },
+            "publicIpId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Public IP resource ID"
+              }
+            }
+          },
+          "variables": {
+            "useDirectIds": "[and(not(empty(parameters('subnetId'))), not(empty(parameters('publicIpId'))))]"
+          },
+          "resources": [
+            {
+              "condition": "[not(variables('useDirectIds'))]",
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}-pip', parameters('bastionName'))]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Standard"
+              },
+              "properties": {
+                "publicIPAllocationMethod": "Static"
+              }
+            },
+            {
+              "type": "Microsoft.Network/bastionHosts",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('bastionName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "IpConf",
+                    "properties": {
+                      "subnet": {
+                        "id": "[if(variables('useDirectIds'), parameters('subnetId'), resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/AzureBastionSubnet', parameters('vnetName')), '/')[0], split(format('{0}/AzureBastionSubnet', parameters('vnetName')), '/')[1]))]"
+                      },
+                      "publicIPAddress": {
+                        "id": "[if(variables('useDirectIds'), parameters('publicIpId'), resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('bastionName'))))]"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('bastionName')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "bastionId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/bastionHosts', parameters('bastionName'))]"
+            },
+            "bastionName": {
+              "type": "string",
+              "value": "[parameters('bastionName')]"
+            },
+            "publicIpId": {
+              "type": "string",
+              "value": "[if(variables('useDirectIds'), parameters('publicIpId'), resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('bastionName'))))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'bastionPublicIpDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments', 'bastionSubnetDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "erGatewayDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "gatewayName": {
+            "value": "[format('{0}-ergw', parameters('vnetName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "subnetId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'gatewaySubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+          },
+          "publicIpId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'gatewayPublicIpDeployment'), '2022-09-01').outputs.publicIpId.value]"
+          },
+          "gatewaySku": {
+            "value": "Standard"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "6786711140245393349"
+            }
+          },
+          "parameters": {
+            "gatewayName": {
+              "type": "string",
+              "defaultValue": "jumpbox-ergw",
+              "metadata": {
+                "description": "Name for the ExpressRoute Gateway"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for the gateway resource"
+              }
+            },
+            "vnetName": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Virtual network name where the gateway subnet exists"
+              }
+            },
+            "gatewaySku": {
+              "type": "string",
+              "defaultValue": "Standard",
+              "allowedValues": [
+                "Standard",
+                "HighPerformance",
+                "UltraPerformance",
+                "ErGw1AZ",
+                "ErGw2AZ",
+                "ErGw3AZ"
+              ],
+              "metadata": {
+                "description": "SKU for the ExpressRoute Gateway"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the gateway resource"
+              }
+            },
+            "subnetId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Subnet resource ID"
+              }
+            },
+            "publicIpId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Public IP resource ID"
+              }
+            }
+          },
+          "variables": {
+            "useDirectIds": "[and(not(empty(parameters('subnetId'))), not(empty(parameters('publicIpId'))))]"
+          },
+          "resources": [
+            {
+              "condition": "[not(variables('useDirectIds'))]",
+              "type": "Microsoft.Network/publicIPAddresses",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}-pip', parameters('gatewayName'))]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Standard"
+              },
+              "properties": {
+                "publicIPAllocationMethod": "Static"
+              }
+            },
+            {
+              "type": "Microsoft.Network/virtualNetworkGateways",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('gatewayName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "gatewayType": "ExpressRoute",
+                "vpnType": "RouteBased",
+                "sku": {
+                  "name": "[parameters('gatewaySku')]",
+                  "tier": "[parameters('gatewaySku')]"
+                },
+                "ipConfigurations": [
+                  {
+                    "name": "default",
+                    "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                        "id": "[if(variables('useDirectIds'), parameters('subnetId'), resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('vnetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('vnetName')), '/')[1]))]"
+                      },
+                      "publicIPAddress": {
+                        "id": "[if(variables('useDirectIds'), parameters('publicIpId'), resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('gatewayName'))))]"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('gatewayName')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "gatewayId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('gatewayName'))]"
+            },
+            "gatewayName": {
+              "type": "string",
+              "value": "[parameters('gatewayName')]"
+            },
+            "publicIpId": {
+              "type": "string",
+              "value": "[if(variables('useDirectIds'), parameters('publicIpId'), resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', parameters('gatewayName'))))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'gatewayPublicIpDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments', 'gatewaySubnetDeployment')]"
+      ]
+    },
+    {
+      "condition": "[and(not(empty(parameters('expressRouteCircuitId'))), not(empty(parameters('expressRouteAuthKey'))))]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "erConnectionDeployment",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "connectionName": {
+            "value": "[format('{0}-er-connection', parameters('vnetName'))]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "circuitId": {
+            "value": "[parameters('expressRouteCircuitId')]"
+          },
+          "authorizationKey": {
+            "value": "[parameters('expressRouteAuthKey')]"
+          },
+          "gatewayId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'erGatewayDeployment'), '2022-09-01').outputs.gatewayId.value]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "18320453977030105034"
+            }
+          },
+          "parameters": {
+            "connectionName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name for the ExpressRoute connection"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Location for all resources"
+              }
+            },
+            "circuitId": {
+              "type": "string",
+              "metadata": {
+                "description": "ExpressRoute circuit ID to connect to"
+              }
+            },
+            "authorizationKey": {
+              "type": "securestring",
+              "metadata": {
+                "description": "Authorization key for the ExpressRoute circuit"
+              }
+            },
+            "gatewayName": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Name of the ExpressRoute gateway to connect to"
+              }
+            },
+            "gatewayId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "ExpressRoute gateway ID"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Tags for the resources"
+              }
+            }
+          },
+          "variables": {
+            "useDirectId": "[not(empty(parameters('gatewayId')))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/connections",
+              "apiVersion": "2023-04-01",
+              "name": "[parameters('connectionName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "connectionType": "ExpressRoute",
+                "virtualNetworkGateway1": {
+                  "id": "[if(variables('useDirectId'), parameters('gatewayId'), resourceId('Microsoft.Network/virtualNetworkGateways', parameters('gatewayName')))]"
+                },
+                "peer": {
+                  "id": "[parameters('circuitId')]"
+                },
+                "authorizationKey": "[parameters('authorizationKey')]",
+                "routingWeight": 0
+              }
+            }
+          ],
+          "outputs": {
+            "connectionId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/connections', parameters('connectionName'))]"
+            },
+            "connectionName": {
+              "type": "string",
+              "value": "[parameters('connectionName')]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'erGatewayDeployment')]"
+      ]
+    }
+  ],
+  "outputs": {
+    "vnetId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vnetDeployment'), '2022-09-01').outputs.vnetId.value]"
+    },
+    "vmSubnetId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmSubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+    },
+    "vmName": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.vmName.value]"
+    },
+    "vmPrivateIP": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.privateIPAddress.value]"
+    },
+    "vmManagedIdentityPrincipalId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'jumpboxVmDeployment'), '2022-09-01').outputs.systemAssignedIdentityPrincipalId.value]"
+    },
+    "bastionSubnetId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'bastionSubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+    },
+    "bastionId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'bastionDeployment'), '2022-09-01').outputs.bastionId.value]"
+    },
+    "gatewaySubnetId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'gatewaySubnetDeployment'), '2022-09-01').outputs.subnetId.value]"
+    },
+    "erGatewayId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'erGatewayDeployment'), '2022-09-01').outputs.gatewayId.value]"
+    },
+    "erConnectionId": {
+      "type": "string",
+      "value": "[if(and(not(empty(parameters('expressRouteCircuitId'))), not(empty(parameters('expressRouteAuthKey')))), reference(resourceId('Microsoft.Resources/deployments', 'erConnectionDeployment'), '2022-09-01').outputs.connectionId.value, '')]"
+    },
+    "erConnectionName": {
+      "type": "string",
+      "value": "[if(and(not(empty(parameters('expressRouteCircuitId'))), not(empty(parameters('expressRouteAuthKey')))), reference(resourceId('Microsoft.Resources/deployments', 'erConnectionDeployment'), '2022-09-01').outputs.connectionName.value, '')]"
+    }
+  }
+}
