@@ -30,7 +30,7 @@ param vmSize string = 'Standard_B4ms'
 param dataDiskSizeGB int = 100
 
 @description('Admin username for the VM')
-param adminUsername string = 'jumpboxadmin'
+param adminUsername string = '<CHANGE-ME>'
 
 @description('Admin password for the VM')
 @secure()

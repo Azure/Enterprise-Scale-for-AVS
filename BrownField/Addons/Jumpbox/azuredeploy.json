@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "6726370878035780843"
+      "templateHash": "3564580520362072336"
     }
   },
   "parameters": {
@@ -25,7 +25,7 @@
     },
     "vnetAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/24",
+      "defaultValue": "x.y.z.0/24",
       "metadata": {
         "description": "Address space for the virtual network"
       }
@@ -39,21 +39,21 @@
     },
     "vmSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/27",
+      "defaultValue": "x.y.z.0/27",
       "metadata": {
         "description": "Address prefix for the VM subnet"
       }
     },
     "bastionSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.32/27",
+      "defaultValue": "x.y.z.32/27",
       "metadata": {
         "description": "Address prefix for the Bastion subnet"
       }
     },
     "gatewaySubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.64/27",
+      "defaultValue": "x.y.z.64/27",
       "metadata": {
         "description": "Address prefix for the Gateway subnet"
       }
@@ -81,7 +81,7 @@
     },
     "adminUsername": {
       "type": "string",
-      "defaultValue": "jumpboxadmin",
+      "defaultValue": "<CHANGE-ME>",
       "metadata": {
         "description": "Admin username for the VM"
       }
@@ -946,7 +946,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "12857821540724150379"
+              "templateHash": "10403177027788689330"
             }
           },
           "parameters": {
@@ -972,7 +972,7 @@
             },
             "adminUsername": {
               "type": "string",
-              "defaultValue": "jumpboxadmin",
+              "defaultValue": "<CHANGE-ME>",
               "metadata": {
                 "description": "Admin username for the virtual machine"
               }

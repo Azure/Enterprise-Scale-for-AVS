@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 param vmSize string = 'Standard_B4ms'
 
 @description('Admin username for the virtual machine')
-param adminUsername string = 'jumpboxadmin'
+param adminUsername string = '<CHANGE-ME>'
 
 @description('Admin password for the virtual machine')
 @secure()

@@ -28,9 +28,8 @@
     },
     "dataDiskSizeGB": {
       "value": 100
-    },
-    "adminUsername": {
-      "value": "jumpboxadmin"
+    },    "adminUsername": {
+      "value": "<CHANGE-ME>"
     },
     "jumpboxAdminPassword": {
       "value": ""
