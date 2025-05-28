@@ -6,19 +6,19 @@
       "value": "jumpbox-vnet"
     },
     "vnetAddressPrefix": {
-      "value": "192.168.0.0/24"
+      "value": "x.y.z.0/24"
     },
     "vmSubnetName": {
       "value": "VMSubnet"
     },
     "vmSubnetPrefix": {
-      "value": "192.168.0.0/27"
+      "value": "x.y.z.0/27"
     },
     "bastionSubnetPrefix": {
-      "value": "192.168.0.32/27"
+      "value": "x.y.z.32/27"
     },
     "gatewaySubnetPrefix": {
-      "value": "192.168.0.64/27"
+      "value": "x.y.z.64/27"
     },
     "vmName": {
       "value": "jumpboxvm"
@@ -29,7 +29,7 @@
     "dataDiskSizeGB": {
       "value": 100
     },    "adminUsername": {
-      "value": "jumpboxadmin"
+      "value": "<CHANGE-ME>"
     },
     "jumpboxAdminPassword": {
       "value": ""

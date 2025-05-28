@@ -10,7 +10,6 @@ The AVS JumpBox deployment creates a secure Windows virtual machine with the nec
 
 * A Windows Server VM with 4 vCPUs and 8GB memory (B-series burstable VM)
 * System-assigned Managed Identity for secure access to Azure resources
-* Automatic assignment of Contributor role to the VM's Managed Identity for any AVS Private Cloud in the resource group
 * Auto-shutdown at 7PM UTC daily to save costs
 * Virtual network with VM, Bastion, and Gateway subnets
 * Azure Bastion for secure access to the VM (no public IP on the VM)
@@ -53,10 +52,10 @@ az login --tenant "YourTenantId.onmicrosoft.com"
 az account set --subscription "YourSubscriptionNameOrId"
 
 # Deploy using Bicep to your existing resource group that hosts AVS SDDC
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" -p jumpboxAdminPassword="YourComplexPassword123!" -c
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" --parameters jumpboxAdminPassword="YourComplexPassword123!" -c
 
 # Or deploy using ARM template
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./azuredeploy.json -p "@main.parameters.json" -p jumpboxAdminPassword="YourComplexPassword123!" -c
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./azuredeploy.json -p "@main.parameters.json" --parameters jumpboxAdminPassword="YourComplexPassword123!" -c
 ```
 
 **Using PowerShell:**
@@ -92,20 +91,17 @@ The deployment may take approximately 20-30 minutes to complete.
    - Hit enter
 
 5. Using the System-assigned Managed Identity:
-   - The jumpbox VM is deployed with a System-assigned Managed Identity
-   - The deployment automatically assigns Contributor role to the VM's identity for any AVS Private Clouds in the resource group
-   - This allows the VM to manage AVS Private Cloud resources without needing to store credentials
+   - The jumpbox VM is deployed with a System-assigned Managed Identity for secure access to Azure resources
+   - You will need to manually assign appropriate roles to the VM's managed identity as needed for your specific use case
    - To use the managed identity from within the VM, use Azure PowerShell, Azure CLI, or REST APIs with managed identity authentication:
      ```powershell
      # From inside the VM, connect using the managed identity
      Connect-AzAccount -Identity
      
-     # List AVS Private Clouds in the resource group
-     Get-AzVMwarePrivateCloud -ResourceGroupName (Get-AzContext).DefaultContext.ResourceGroupName
-     
-     # Run other Azure PowerShell commands against AVS resources
+     # Example: List resources the managed identity has access to
+     Get-AzResource
      ```
-   - The principal ID of the managed identity is available in the deployment outputs if you need it for additional role assignments:
+   - The principal ID of the managed identity is available in the deployment outputs if you need it for role assignments:
      ```powershell
      # From an admin workstation (not the VM itself)
      $vm = Get-AzVM -ResourceGroupName "YourResourceGroup" -Name "jumpboxvm"
