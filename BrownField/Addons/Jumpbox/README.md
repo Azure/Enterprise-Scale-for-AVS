@@ -13,13 +13,13 @@ The AVS JumpBox deployment creates a secure Windows virtual machine with the nec
 * Auto-shutdown at 7PM UTC daily to save costs
 * Virtual network with VM, Bastion, and Gateway subnets
 * Azure Bastion for secure access to the VM (no public IP on the VM)
-* ExpressRoute Gateway for connecting to AVS Private Cloud
+* ExpressRoute Gateway and ExpressRoute Connection for connecting to AVS Private Cloud
 
 ## Prerequisites
 
 Before you begin, you need:
 
-* An Azure subscription with `Contributor` or `Owner` permissions on the resource group that hosts AVS SDDC
+* An Azure subscription with `Contributor` or higher permissions on the resource group that hosts AVS SDDC
 * Azure VMware Solution (AVS) Private Cloud
 * AVS ExpressRoute circuit ID and Authorization/Redemption key
 * For Bicep deployment: Azure CLI with Bicep extension installed or Azure PowerShell module (Az) version 5.6.0 or higher
@@ -89,24 +89,6 @@ The deployment may take approximately 20-30 minutes to complete.
    - Open the browser on jumpbox
    - Copy the vCenter Web Client URL from AVS --> VMware Credentials
    - Hit enter
-
-5. Using the System-assigned Managed Identity:
-   - The jumpbox VM is deployed with a System-assigned Managed Identity for secure access to Azure resources
-   - You will need to manually assign appropriate roles to the VM's managed identity as needed for your specific use case
-   - To use the managed identity from within the VM, use Azure PowerShell, Azure CLI, or REST APIs with managed identity authentication:
-     ```powershell
-     # From inside the VM, connect using the managed identity
-     Connect-AzAccount -Identity
-     
-     # Example: List resources the managed identity has access to
-     Get-AzResource
-     ```
-   - The principal ID of the managed identity is available in the deployment outputs if you need it for role assignments:
-     ```powershell
-     # From an admin workstation (not the VM itself)
-     $vm = Get-AzVM -ResourceGroupName "YourResourceGroup" -Name "jumpboxvm"
-     $vm.Identity.PrincipalId
-     ```
 
 ## Next Steps
 
