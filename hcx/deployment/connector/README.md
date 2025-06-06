@@ -229,8 +229,6 @@ PS C:\avs\OVF>
 
 ## Next Steps
 
-### Operational Activities
-- **Workload Assessment**: Evaluate workloads for migration to Azure VMware Solution
-- **Migration Planning**: Develop migration waves and schedules
-- **Testing**: Conduct pilot migrations to validate connectivity and performance
-- **Documentation**: Document the deployment for operational teams
+Use the additional guidance below on getting started with HCX.
+
+[VMware HCX For Azure VMware Solution (AVS)](../../README.md)
