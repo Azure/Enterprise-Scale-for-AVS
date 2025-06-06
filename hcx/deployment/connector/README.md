@@ -17,8 +17,9 @@ This automation eliminates manual configuration steps and ensures consistent dep
 - **On-premises vSphere environment** with vCenter Server 6.5 or later
 - **Network connectivity** to Azure VMware Solution
 - **Administrator privileges** on vCenter Server
-- **PowerShell 5.1 or later** with execution policy allowing script execution
-- **Network segment** pre-configured for HCX Connector VM deployment
+- **Deployment or Jumpbox VM** with fast network access to vCenter Server
+- **PowerShell 5.1 or later** with execution policy allowing script execution on Deployment or Jumpbox VM
+- **Network segment** identified for HCX Connector VM deployment
 - **Available IP address** for HCX Connector VM (recommended: use .9 in fourth octet)
 
 ### Software Requirements
@@ -49,7 +50,7 @@ Edit the `Main.parameters.ps1` file with your environment-specific values:
 
 ```powershell
 # vCenter Configuration
-$vCenter = "https://vcenter.example.com/"
+$vCenter = "https://vcenter.example.com/" OR "https://X.Y.Z.2/"
 $vCenterUserName = "administrator@vsphere.local"
 $datastoreName = "YourDatastore"
 
@@ -59,11 +60,11 @@ $contentLibraryitemName = "HCX-Connector"
 $applianceFilePath = "C:\Path\To\VMware-HCX-Connector-4.x.x.x-xxxxxxx.ova"
 
 # HCX VM Configuration
-$hcxUrl = "https://10.1.1.9:9443/"
+$hcxUrl = "https://X.Y.Z.9:9443/"
 $segmentName = "Management-Network"
 $applianceVMName = "HCX-Connector-VM"
-$applianceVMIP = "10.1.1.9"
-$applianceVMGatewayIP = "10.1.1.1"
+$applianceVMIP = "X.Y.Z.9"
+$applianceVMGatewayIP = "X.Y.Z.1"
 
 # HCX Configuration
 $hcxAdminGroup = "domain\HCX-Administrators"
@@ -113,7 +114,7 @@ Content Library 'vsphere-content-library' created successfully.
 Content Library Item 'HCX-Connector' created successfully.
 Uploading HCX Installation file.
 Creating upload session.
-Starting upload to https://10.1.1.2:443/cls/data/53da6d7a-e17d-4c52-a56c-43ad1436b994/VMwar
+Starting upload to https://X.Y.Z.2:443/cls/data/53da6d7a-e17d-4c52-a56c-43ad1436b994/VMwar
 e-HCX-Connector-4.11.0.0-24457397.ova
 File: C:\Users\jumpboxadmin\Downloads\VMware-HCX-Connector-4.11.0.0-24457397.ova
 File size: 5550837760 bytes (5.17 GB)
@@ -138,13 +139,13 @@ Upload session completed successfully!
 Creating HCX Appliance VM from OVA...Done!
 HCX Appliance VM deployment completed successfully.
 
-Starting HCX configuration for URL: https://10.1.1.9:9443/
+Starting HCX configuration for URL: https://X.Y.Z.9:9443/
 HCX service is still booting up, retrying in 1 minute...
 HCX service is still booting up, retrying in 1 minute...
 HCX service is still booting up, retrying in 1 minute...
 HCX service is still booting up, retrying in 1 minute...
 HCX service is still booting up, retrying in 1 minute...
-HCX URL is reachable: https://10.1.1.9:9443/
+HCX URL is reachable: https://X.Y.Z.9:9443/
 HCX Location set successfully: EU West 2 (London).
 vCenter Certificate imported in HCX successfully.
 HCX vCenter configuration completed successfully.
@@ -188,21 +189,16 @@ Stopping Web Componeonent to start... (Attempt 4/15)
 nt...               ning again.
 Web Component stoppeed successfully.
 d successfully.     onfiguration completed successfully.
-Starting Web ComponeCX at: https://10.1.1.9:9443/
+Starting Web ComponeCX at: https://X.Y.Z.9:9443/
 nt again...
-Waiting for Web Comp
-onent to start... (A
-ttempt 1/15)
-Waiting for Web Comp
-onent to start... (A
-ttempt 2/15)
-Waiting for Web Comp
-onent to start... (Attempt 3/15)
+Waiting for Web Component to start... (Attempt 1/15)
+Waiting for Web Component to start... (Attempt 2/15)
+Waiting for Web Component to start... (Attempt 3/15)
 Waiting for Web Component to start... (Attempt 4/15)
 Web Component is running again.
 HCX services restarted successfully.
 HCX deployment and configuration completed successfully.
-You can now access HCX at: https://10.1.1.9:9443/
+You can now access HCX at: https://X.Y.Z.9:9443/
 PS C:\avs\OVF>
 ```
 2. **Access HCX Manager**: Navigate to the HCX URL (e.g., `https://X.Y.Z.9:9443/`)
