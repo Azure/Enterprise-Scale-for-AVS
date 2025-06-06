@@ -7,7 +7,7 @@ This PowerShell solution provides automated deployment and configuration of VMwa
 The HCX Connector Automated Deployment solution streamlines the process of:
 - Deploying VMware HCX Connector OVA to on-premises vCenter
 - Configuring HCX with proper location, vCenter integration, SSO, licensing, and role mappings
-- Establishing connectivity between on-premises infrastructure and Azure VMware Solution
+- Creating foundation for setting up HCX peering and Service Mesh creation
 
 This automation eliminates manual configuration steps and ensures consistent deployments across environments.
 
