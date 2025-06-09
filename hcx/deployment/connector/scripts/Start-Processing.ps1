@@ -14,7 +14,8 @@ function Start-Processing {
         [secureString]$vCenterPassword
     )
 
-    try {
+    try 
+    {
         # Source the parameter file inside the function to get access to all parameters
         . $ParameterFile
         
@@ -67,12 +68,18 @@ function Start-Processing {
         # Check if HCX URL is up and running until it is reachable
         $abshcxUrl = $hcxUrl.TrimEnd('/')
 
+        # Check if$abshcxUrl is well-formed with either IP or FQDN
+        if ($abshcxUrl -match '://.*[A-Z].*\.' -or $abshcxUrl -match '://[a-zA-Z]{1,2}\.[a-zA-Z]{1,2}\.[a-zA-Z]{1,2}\.') {
+            Write-Host "Invalid HCX URL format: $hcxUrl"
+            return
+        }
+
         # Starting HCX configuration
         Write-Host "Starting HCX configuration for URL: $hcxUrl"
 
         $hcxConfigurationInComplete = $true
-        try {
-            while ($hcxConfigurationInComplete) {        
+        while ($hcxConfigurationInComplete) {
+            try {
                 # Check if HCX URL is reachable
                 $response = Invoke-WebRequest -Uri $abshcxUrl -UseBasicParsing -TimeoutSec 10 -SkipCertificateCheck
                 if ($response.StatusCode -eq 200) {
@@ -113,11 +120,11 @@ function Start-Processing {
 
                     break  # Exit the while loop since HCX is configured successfully
                 }
-            }
-        } catch {
+            } catch {
             if ($hcxConfigurationInComplete){
                         Write-Host "HCX service is still booting up, retrying in 1 minute..."
                         Start-Sleep -Seconds 60
+            }
             }
         }
         Write-Host "HCX deployment and configuration completed successfully."

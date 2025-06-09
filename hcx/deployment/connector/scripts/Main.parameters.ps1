@@ -50,7 +50,7 @@ $applianceFilePath = "C:\Users\jumpboxadmin\Downloads\VMware-HCX-Connector-4.11.
 # Make sure to include the port number (9443) and trailing slash.
 # Conventionally, .9 in fourth octet is used for HCX Connector VM.
 # Example: "https://hcx.example.com:9443/" or "https://10.1.1.9:9443/"
-$hcxUrl = "https://X.Y.Z.9:9443/"
+$hcxUrl = "https://10.1.1.9:9443/"
 
 # $segmentName parameter represents the name of the network segment where the HCX Connector will be deployed.
 # It is used to specify the network segment for the HCX Connector VM.
