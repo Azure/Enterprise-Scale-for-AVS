@@ -11,13 +11,20 @@ function Get-DatastoreID {
                 "{0}" +
                 "api/vcenter/datastore",
                 $vCenter
-            )            # Make the request with explicit parameter binding
-            $response = Invoke-APIRequest -method "Get" -url $datastoreUrl -vCenter $vCenter -vCenterUserName $vCenterUserName -vCenterPassword $vCenterPassword
+            )            
             
+            # Make the request with explicit parameter binding
+            $response = Invoke-APIRequest -method "Get" `
+                -url $datastoreUrl `
+                -vCenter $vCenter `
+                -vCenterUserName $vCenterUserName `
+                -vCenterPassword $vCenterPassword
+
+            # Process the response
             if ($response) {
                 return $response.Where({ $_.name -eq $datastoreName }).datastore
             } else {
-                Write-Error "Failed to get Datastore ID. No response from vCenter API."
+                Write-Error "Failed to get Datastore ID. Check the parameter values and/or vCenter Password."
                 return $null
             }
         }

@@ -18,17 +18,23 @@ function Start-Processing {
     . $ParameterFile
     
     # Check and create the Content Library if it does not exist
-    $contentLibraryItemID = New-IfNotExist-ContentLibrary -vCenter $vCenter `
+    $contentLibraryID = New-IfNotExist-ContentLibrary -vCenter $vCenter `
         -vCenterUserName $vCenterUserName `
         -vCenterPassword $vCenterPassword `
         -datastoreName $datastoreName `
         -contentLibraryName $contentLibraryName
 
+    # If the content library creation failed, exit the script
+    if (-not $contentLibraryID) {
+        Write-Host "Failed to create or retrieve Content Library. Check all the parameters. Exiting script." -ForegroundColor Red
+        return
+    }
+
     # Check and create the Content Library Item if it does not exist
     $libraryItemID = New-IfNotExist-ContentLibraryItem -vCenter $vCenter `
         -vCenterUserName $vCenterUserName `
         -vCenterPassword $vCenterPassword `
-        -contentLibraryID $contentLibraryItemID `
+        -contentLibraryID $contentLibraryID `
         -contentLibraryitemName $contentLibraryitemName
 
     # Check and Upload the appliace file to the Content Library Item
@@ -54,7 +60,8 @@ function Start-Processing {
     # Starting HCX configuration
     Write-Host "Starting HCX configuration for URL: $hcxUrl"
 
-    while ($true) {        
+    $hcxConfigurationInComplete = $true
+    while ($hcxConfigurationInComplete) {        
         try {
             # Check if HCX URL is reachable
             $response = Invoke-WebRequest -Uri $abshcxUrl -UseBasicParsing -TimeoutSec 10 -SkipCertificateCheck
@@ -90,13 +97,17 @@ function Start-Processing {
 
                 # Restart HCX Services                
                 Restart-HCX-Services -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl                
+                    -hcxUrl $hcxUrl
+                    
+                $hcxConfigurationInComplete = $false  # Set to false to exit the loop
 
                 break  # Exit the while loop since HCX is configured successfully
             }        
         } catch {
-            Write-Host "HCX service is still booting up, retrying in 1 minute..."
-            Start-Sleep -Seconds 60
+            if ($hcxConfigurationInComplete){
+                Write-Host "HCX service is still booting up, retrying in 1 minute..."
+                Start-Sleep -Seconds 60
+            }     
         }
     }
 

@@ -7,7 +7,7 @@
 # This site generally represents on-premises vCenter server.
 # It can be FQDN or IP address. Remember to include trailing slash.
 # Example: "https://vcenter.example.com/" or "https://10.1.1.2/"
-$vCenter = "https://X.Y.Z.2/"
+$vCenter = "https://10.1.1.2/"
 
 # $vCenterUserName parameter represents the vCenter username.
 # It is used to authenticate against the vCenter server.

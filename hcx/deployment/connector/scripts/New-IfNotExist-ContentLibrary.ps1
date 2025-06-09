@@ -93,7 +93,12 @@ function New-ContentLibrary {
                                     -vCenterUserName $vCenterUserName `
                                     -vCenterPassword $vCenterPassword `
                                     -datastoreName $datastoreName
-    
+
+    if (-not $datastoreID) {
+        Write-Host "Datastore '$datastoreName' not found."
+        return $null
+    }
+
     # Create API Endpoint to create a new Content Library
     $createContentLibraryUrl = [string]::Format(
         "{0}" +
