@@ -9,6 +9,12 @@ function New-IfNotExist-ApplianceFile {
         [string]$applianceFilePath
     )
     try {
+
+        # Check if the appliance file exists
+        if (-not (Test-Path -Path $applianceFilePath)) {
+            throw "Appliance file not found at path: $applianceFilePath"
+        }
+
         # Define Item Name
         $fileName = $applianceFilePath.Split("\")[-1]
 
@@ -57,7 +63,8 @@ function New-IfNotExist-ApplianceFile {
         }
     }
     catch {
-        write-Error "Failed to create Content Library: $_"
+        write-Error "Failed to upload appliance installation file: $_"
+        return $null
     }
 }
 
@@ -127,8 +134,6 @@ function UploadApplianceFile {
     try {
         Write-Host "Starting upload to $uploadUrl"
         Write-Host "File: $filePath"
-
-        # Get file info
         $fileInfo = Get-Item $filePath
         Write-Host "File size: $($fileInfo.Length) bytes ($([math]::Round($fileInfo.Length/1GB, 2)) GB)"
 
@@ -613,7 +618,9 @@ function Get-LibraryItem-File-Upload-Url {
     }
     
     # Convert the body to JSON
-    $jsonBody = $body | ConvertTo-Json -Depth 10    # Make the request to create the Content Library
+    $jsonBody = $body | ConvertTo-Json -Depth 10    
+    
+    # Make the request to create the Content Library
     $response= Invoke-APIRequest -method "Post" `
                       -url $createFileUploadSessionUrl `
                       -body $jsonBody `

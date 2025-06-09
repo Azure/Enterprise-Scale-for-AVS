@@ -13,56 +13,65 @@ function Start-Processing {
         [string]$ParameterFile,
         [secureString]$vCenterPassword
     )
-    
-    # Source the parameter file inside the function to get access to all parameters
-    . $ParameterFile
-    
-    # Check and create the Content Library if it does not exist
-    $contentLibraryID = New-IfNotExist-ContentLibrary -vCenter $vCenter `
-        -vCenterUserName $vCenterUserName `
-        -vCenterPassword $vCenterPassword `
-        -datastoreName $datastoreName `
-        -contentLibraryName $contentLibraryName
 
-    # If the content library creation failed, exit the script
-    if (-not $contentLibraryID) {
-        Write-Host "Failed to create or retrieve Content Library. Check all the parameters. Exiting script." -ForegroundColor Red
-        return
-    }
-
-    # Check and create the Content Library Item if it does not exist
-    $libraryItemID = New-IfNotExist-ContentLibraryItem -vCenter $vCenter `
-        -vCenterUserName $vCenterUserName `
-        -vCenterPassword $vCenterPassword `
-        -contentLibraryID $contentLibraryID `
-        -contentLibraryitemName $contentLibraryitemName
-
-    # Check and Upload the appliace file to the Content Library Item
-    New-IfNotExist-ApplianceFile -vCenter $vCenter `
-        -vCenterUserName $vCenterUserName `
-        -vCenterPassword $vCenterPassword `
-        -contentLibraryItemID $libraryItemID `
-        -applianceFilePath $applianceFilePath
+    try {
+        # Source the parameter file inside the function to get access to all parameters
+        . $ParameterFile
         
-    # New VM from OVA
-    New-IfNotExist-VM-From-OVA -vCenter $vCenter `
-        -vCenterUserName $vCenterUserName `
-        -vCenterPassword $vCenterPassword `
-        -contentLibraryItemID $libraryItemID `
-        -segmentName $segmentName `
-        -applianceVMName $applianceVMName `
-        -applianceVMIP $applianceVMIP `
-        -applianceVMGatewayIP $applianceVMGatewayIP `
+        # Check and create the Content Library if it does not exist
+        $contentLibraryID = New-IfNotExist-ContentLibrary -vCenter $vCenter `
+            -vCenterUserName $vCenterUserName `
+            -vCenterPassword $vCenterPassword `
+            -datastoreName $datastoreName `
+            -contentLibraryName $contentLibraryName
 
-    # Check if HCX URL is up and running until it is reachable
-    $abshcxUrl = $hcxUrl.TrimEnd('/')
+        # If the content library creation failed, exit the script
+        if (-not $contentLibraryID) {
+            return
+        }
 
-    # Starting HCX configuration
-    Write-Host "Starting HCX configuration for URL: $hcxUrl"
+        # Check and create the Content Library Item if it does not exist
+        $libraryItemID = New-IfNotExist-ContentLibraryItem -vCenter $vCenter `
+            -vCenterUserName $vCenterUserName `
+            -vCenterPassword $vCenterPassword `
+            -contentLibraryID $contentLibraryID `
+            -contentLibraryitemName $contentLibraryitemName
 
-    $hcxConfigurationInComplete = $true
-    while ($hcxConfigurationInComplete) {        
-        try {
+        # If the content library item creation failed, exit the script
+        if (-not $libraryItemID) {
+            return
+        }
+
+        # Check and Upload the appliace file to the Content Library Item
+        $applianceStatus = New-IfNotExist-ApplianceFile -vCenter $vCenter `
+            -vCenterUserName $vCenterUserName `
+            -vCenterPassword $vCenterPassword `
+            -contentLibraryItemID $libraryItemID `
+            -applianceFilePath $applianceFilePath
+
+        # If the appliance file upload failed, exit the script
+        if (-not $applianceStatus) {
+            return
+        }
+            
+        # New VM from OVA
+        New-IfNotExist-VM-From-OVA -vCenter $vCenter `
+            -vCenterUserName $vCenterUserName `
+            -vCenterPassword $vCenterPassword `
+            -contentLibraryItemID $libraryItemID `
+            -segmentName $segmentName `
+            -applianceVMName $applianceVMName `
+            -applianceVMIP $applianceVMIP `
+            -applianceVMGatewayIP $applianceVMGatewayIP `
+
+        # Check if HCX URL is up and running until it is reachable
+        $abshcxUrl = $hcxUrl.TrimEnd('/')
+
+        # Starting HCX configuration
+        Write-Host "Starting HCX configuration for URL: $hcxUrl"
+
+        $hcxConfigurationInComplete = $true
+        while ($hcxConfigurationInComplete) {        
             # Check if HCX URL is reachable
             $response = Invoke-WebRequest -Uri $abshcxUrl -UseBasicParsing -TimeoutSec 10 -SkipCertificateCheck
             if ($response.StatusCode -eq 200) {
@@ -102,15 +111,14 @@ function Start-Processing {
                 $hcxConfigurationInComplete = $false  # Set to false to exit the loop
 
                 break  # Exit the while loop since HCX is configured successfully
-            }        
-        } catch {
-            if ($hcxConfigurationInComplete){
-                Write-Host "HCX service is still booting up, retrying in 1 minute..."
-                Start-Sleep -Seconds 60
-            }     
+            }
         }
+        Write-Host "HCX deployment and configuration completed successfully."
+        Write-Host "You can now access HCX at: $hcxUrl"
+    } catch {
+        if ($hcxConfigurationInComplete){
+            Write-Host "HCX service is still booting up, retrying in 1 minute..."
+            Start-Sleep -Seconds 60
+        }     
     }
-
-    Write-Host "HCX deployment and configuration completed successfully."
-    Write-Host "You can now access HCX at: $hcxUrl"
 }

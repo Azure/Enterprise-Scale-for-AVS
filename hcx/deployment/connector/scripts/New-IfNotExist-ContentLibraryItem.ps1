@@ -24,17 +24,17 @@ function New-IfNotExist-ContentLibraryItem {
                                             -vCenterPassword $vCenterPassword `
                                             -contentLibraryID $contentLibraryID `
                                             -contentLibraryitemName $contentLibraryitemName
-            
-            Write-Host "Content Library Item '$contentLibraryitemName' created successfully."
-            } else {
-                Write-Host "Content Library Item '$contentLibraryitemName' already exists. Skipping creation."
+            if ($libraryItemID) {
+                Write-Host "Content Library Item '$contentLibraryitemName' created successfully."
             }
+        } else {
+            Write-Host "Content Library Item '$contentLibraryitemName' already exists. Skipping creation."
         }
-        catch {
-            Write-Host "Error processing library item: $_"
-            $libraryItemID = $null
-        }
-
+    }
+    catch {
+        Write-Host "Error processing library item: $_"
+        $libraryItemID = $null
+    }
     return $libraryItemID
 }
 
@@ -111,8 +111,11 @@ function New-LibraryItem {
                       -vCenterPassword $vCenterPassword
 
     # Process the response
-    if ($response) {
-            return $response
+    if ($null -ne $response) {
+        return $response
+    } else {
+        Write-Error "Failed to create Content Library Item: $contentLibraryitemName."
+        return $null
     }
 }
 

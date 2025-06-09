@@ -95,7 +95,7 @@ function New-ContentLibrary {
                                     -datastoreName $datastoreName
 
     if (-not $datastoreID) {
-        Write-Host "Datastore '$datastoreName' not found."
+        Write-Error "Failed to get Datastore ID. Check the parameter values and/or vCenter Password."
         return $null
     }
 
