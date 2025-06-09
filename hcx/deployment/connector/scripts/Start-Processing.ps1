@@ -55,7 +55,7 @@ function Start-Processing {
         }
             
         # New VM from OVA
-        New-IfNotExist-VM-From-OVA -vCenter $vCenter `
+        $hcxVMStatus = New-IfNotExist-VM-From-OVA -vCenter $vCenter `
             -vCenterUserName $vCenterUserName `
             -vCenterPassword $vCenterPassword `
             -contentLibraryItemID $libraryItemID `
@@ -71,54 +71,58 @@ function Start-Processing {
         Write-Host "Starting HCX configuration for URL: $hcxUrl"
 
         $hcxConfigurationInComplete = $true
-        while ($hcxConfigurationInComplete) {        
-            # Check if HCX URL is reachable
-            $response = Invoke-WebRequest -Uri $abshcxUrl -UseBasicParsing -TimeoutSec 10 -SkipCertificateCheck
-            if ($response.StatusCode -eq 200) {
-                Write-Host "HCX URL is reachable: $hcxUrl"
+        try {
+            while ($hcxConfigurationInComplete) {        
+                # Check if HCX URL is reachable
+                $response = Invoke-WebRequest -Uri $abshcxUrl -UseBasicParsing -TimeoutSec 10 -SkipCertificateCheck
+                if ($response.StatusCode -eq 200) {
+                    Write-Host "HCX URL is reachable: $hcxUrl"
 
-                # Set HCX Location
-                New-IfNotExist-HCX-Location -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl
+                    # Set HCX Location
+                    New-IfNotExist-HCX-Location -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl
 
-                # Check and create HCX vCenter Configuration
-                New-IfNotExist-HCX-vCenterConfig -vCenter $vCenter `
-                    -vCenterUserName $vCenterUserName `
-                    -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl
-                    
-                # Check and create HCX SSO Configuration
-                New-IfNotExist-HCX-SSOConfig -vCenter $vCenter `
-                    -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl
+                    # Check and create HCX vCenter Configuration
+                    New-IfNotExist-HCX-vCenterConfig -vCenter $vCenter `
+                        -vCenterUserName $vCenterUserName `
+                        -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl
+                        
+                    # Check and create HCX SSO Configuration
+                    New-IfNotExist-HCX-SSOConfig -vCenter $vCenter `
+                        -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl
 
-                # Check and create HCX License Key
-                New-IfNotExist-HCX-LicenseKey -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl `
-                    -hcxLicenseKey $hcxLicenseKey
-                    
-                # Check and create HCX Role Mappings
-                New-IfNotExist-HCX-RoleMappings -vCenter $vCenter `
-                    -vCenterUserName $vCenterUserName `
-                    -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl `
-                    -hcxAdminGroup $hcxAdminGroup
+                    # Check and create HCX License Key
+                    New-IfNotExist-HCX-LicenseKey -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl `
+                        -hcxLicenseKey $hcxLicenseKey
+                        
+                    # Check and create HCX Role Mappings
+                    New-IfNotExist-HCX-RoleMappings -vCenter $vCenter `
+                        -vCenterUserName $vCenterUserName `
+                        -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl `
+                        -hcxAdminGroup $hcxAdminGroup
 
-                # Restart HCX Services                
-                Restart-HCX-Services -vCenterPassword $vCenterPassword `
-                    -hcxUrl $hcxUrl
-                    
-                $hcxConfigurationInComplete = $false  # Set to false to exit the loop
+                    # Restart HCX Services                
+                    Restart-HCX-Services -vCenterPassword $vCenterPassword `
+                        -hcxUrl $hcxUrl
+                        
+                    $hcxConfigurationInComplete = $false  # Set to false to exit the loop
 
-                break  # Exit the while loop since HCX is configured successfully
+                    break  # Exit the while loop since HCX is configured successfully
+                }
+            }
+        } catch {
+            if ($hcxConfigurationInComplete){
+                        Write-Host "HCX service is still booting up, retrying in 1 minute..."
+                        Start-Sleep -Seconds 60
             }
         }
         Write-Host "HCX deployment and configuration completed successfully."
         Write-Host "You can now access HCX at: $hcxUrl"
     } catch {
-        if ($hcxConfigurationInComplete){
-            Write-Host "HCX service is still booting up, retrying in 1 minute..."
-            Start-Sleep -Seconds 60
-        }     
+           Write-Host "Error occurred during HCX deployment: $_"
     }
 }

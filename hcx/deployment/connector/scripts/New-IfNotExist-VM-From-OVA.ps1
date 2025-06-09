@@ -39,7 +39,7 @@ function New-IfNotExist-VM-From-OVA {
         
         if ($existingVM) {
             Write-Host "VM '$applianceVMName' already exists. Skipping creation."
-            return
+            return $true
         }
 
         # Create a new VM from the OVA
@@ -51,6 +51,8 @@ function New-IfNotExist-VM-From-OVA {
                         -applianceVMName $applianceVMName `
                         -applianceVMIP $applianceVMIP `
                         -applianceVMGatewayIP $applianceVMGatewayIP
+
+        return $true
     }
     catch {
         Write-Error "Failed to get OVF Properties: $_"

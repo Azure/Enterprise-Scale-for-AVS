@@ -29,6 +29,7 @@ function New-IfNotExist-ApplianceFile {
 
             if ($contentLibraryItemDetails.size -gt 0) {
                 Write-Host "Content Library Item '$contentLibraryitemName' already has installation file. Skipping upload."
+                return $true
             } 
             else {
                 Write-Host "Uploading HCX Installation file."            
@@ -58,7 +59,7 @@ function New-IfNotExist-ApplianceFile {
                     -vCenterUserName $vCenterUserName `
                     -vCenterPassword $vCenterPassword
 
-                #return $contentLibraryItemID
+                return $true
             }
         }
     }

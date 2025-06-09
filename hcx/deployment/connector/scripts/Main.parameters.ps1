@@ -62,7 +62,7 @@ $segmentName = "OnPrem-management-1-1"
 # It is used to identify the HCX Connector VM in the vCenter environment.
 # This name should be unique within the vCenter environment.
 # Example: "HCX-Connector-VM"
-$applianceVMName = "HCX-Connector-VM"
+$applianceVMName = "HCX-Connector-VM2"
 
 # $applianceVMIP parameter represents the IP address of the HCX Connector VM.
 # It is used to assign a static IP address to the HCX Connector VM.
