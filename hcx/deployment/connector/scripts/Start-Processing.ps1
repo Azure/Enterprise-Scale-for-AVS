@@ -91,6 +91,12 @@ function Start-Processing {
             return
         }
 
+        # Check if $hcxKey doesnt have any special characters
+        if ($hcxLicenseKey -match '[^a-zA-Z0-9-]') {
+            Write-Host "Invalid HCX License Key format: $hcxLicenseKey. It should only contain alphanumeric characters and hyphens."
+            return
+        }
+
         # Starting HCX configuration
         Write-Host "Starting HCX configuration for URL: $hcxUrl"
 
