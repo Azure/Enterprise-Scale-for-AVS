@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "3996592169535497588"
+      "templateHash": "6477412625401722057"
     }
   },
   "parameters": {
@@ -2260,8 +2260,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.1.11899",
-              "templateHash": "15474319907304606412"
+              "version": "0.35.1.17967",
+              "templateHash": "16195883788906927531"
             },
             "name": "Virtual Networks",
             "description": "This module deploys a Virtual Network (vNet)."
@@ -2393,6 +2393,41 @@
                   "nullable": true,
                   "metadata": {
                     "description": "Conditional. List of address prefixes for the subnet. Required if `addressPrefix` is empty."
+                  }
+                },
+                "ipamPoolPrefixAllocations": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "pool": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "metadata": {
+                                "description": "Required. The Resource ID of the IPAM pool."
+                              }
+                            }
+                          },
+                          "metadata": {
+                            "description": "Required. The Resource ID of the IPAM pool."
+                          }
+                        },
+                        "numberOfIpAddresses": {
+                          "type": "string",
+                          "metadata": {
+                            "description": "Required. Number of IP addresses allocated from the pool."
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "items": false,
+                  "nullable": true,
+                  "metadata": {
+                    "description": "Conditional. The address space for the subnet, deployed from IPAM Pool. Required if `addressPrefixes` and `addressPrefix` is empty and the VNet address space configured to use IPAM Pool."
                   }
                 },
                 "applicationGatewayIPConfigurations": {
@@ -2752,7 +2787,14 @@
             "addressPrefixes": {
               "type": "array",
               "metadata": {
-                "description": "Required. An Array of 1 or more IP Address Prefixes for the Virtual Network."
+                "description": "Required. An Array of 1 or more IP Address Prefixes OR the resource ID of the IPAM pool to be used for the Virtual Network. When specifying an IPAM pool resource ID you must also set a value for the parameter called `ipamPoolNumberOfIpAddresses`."
+              }
+            },
+            "ipamPoolNumberOfIpAddresses": {
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "description": "Optional. Number of IP addresses allocated from the pool. To be used only when the addressPrefix param is defined with a resource ID of an IPAM pool."
               }
             },
             "virtualNetworkBgpCommunity": {
@@ -2897,7 +2939,7 @@
               "condition": "[parameters('enableTelemetry')]",
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2024-03-01",
-              "name": "[format('46d3xbcp.res.network-virtualnetwork.{0}.{1}', replace('0.6.0', '.', '-'), substring(uniqueString(deployment().name, parameters('location')), 0, 4))]",
+              "name": "[format('46d3xbcp.res.network-virtualnetwork.{0}.{1}', replace('0.7.0', '.', '-'), substring(uniqueString(deployment().name, parameters('location')), 0, 4))]",
               "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -2915,14 +2957,12 @@
             },
             "virtualNetwork": {
               "type": "Microsoft.Network/virtualNetworks",
-              "apiVersion": "2024-01-01",
+              "apiVersion": "2024-05-01",
               "name": "[parameters('name')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
               "properties": {
-                "addressSpace": {
-                  "addressPrefixes": "[parameters('addressPrefixes')]"
-                },
+                "addressSpace": "[if(contains(parameters('addressPrefixes')[0], '/Microsoft.Network/networkManagers/'), createObject('ipamPoolPrefixAllocations', createArray(createObject('pool', createObject('id', parameters('addressPrefixes')[0]), 'numberOfIpAddresses', parameters('ipamPoolNumberOfIpAddresses')))), createObject('addressPrefixes', parameters('addressPrefixes')))]",
                 "bgpCommunities": "[if(not(empty(parameters('virtualNetworkBgpCommunity'))), createObject('virtualNetworkCommunity', parameters('virtualNetworkBgpCommunity')), null())]",
                 "ddosProtectionPlan": "[if(not(empty(parameters('ddosProtectionPlanResourceId'))), createObject('id', parameters('ddosProtectionPlanResourceId')), null())]",
                 "dhcpOptions": "[if(not(empty(parameters('dnsServers'))), createObject('dnsServers', array(parameters('dnsServers'))), null())]",
@@ -3037,6 +3077,9 @@
                   "addressPrefixes": {
                     "value": "[tryGet(coalesce(parameters('subnets'), createArray())[copyIndex()], 'addressPrefixes')]"
                   },
+                  "ipamPoolPrefixAllocations": {
+                    "value": "[tryGet(coalesce(parameters('subnets'), createArray())[copyIndex()], 'ipamPoolPrefixAllocations')]"
+                  },
                   "applicationGatewayIPConfigurations": {
                     "value": "[tryGet(coalesce(parameters('subnets'), createArray())[copyIndex()], 'applicationGatewayIPConfigurations')]"
                   },
@@ -3084,8 +3127,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.34.1.11899",
-                      "templateHash": "4876483932229593002"
+                      "version": "0.35.1.17967",
+                      "templateHash": "9728353654559466189"
                     },
                     "name": "Virtual Network Subnets",
                     "description": "This module deploys a Virtual Network Subnet."
@@ -3187,6 +3230,16 @@
                         "description": "Conditional. The address prefix for the subnet. Required if `addressPrefixes` is empty."
                       }
                     },
+                    "ipamPoolPrefixAllocations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "nullable": true,
+                      "metadata": {
+                        "description": "Conditional. The address space for the subnet, deployed from IPAM Pool. Required if `addressPrefixes` and `addressPrefix` is empty."
+                      }
+                    },
                     "networkSecurityGroupResourceId": {
                       "type": "string",
                       "nullable": true,
@@ -3274,7 +3327,7 @@
                       ],
                       "nullable": true,
                       "metadata": {
-                        "description": "Optional. Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty."
+                        "description": "Optional. Set this property to Tenant to allow sharing the subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if the subnet is empty."
                       }
                     },
                     "applicationGatewayIPConfigurations": {
@@ -3331,7 +3384,7 @@
                       "condition": "[parameters('enableTelemetry')]",
                       "type": "Microsoft.Resources/deployments",
                       "apiVersion": "2024-03-01",
-                      "name": "[format('46d3xbcp.res.network-virtualnetworksubnet.{0}.{1}', replace('0.1.0', '.', '-'), substring(uniqueString(deployment().name), 0, 4))]",
+                      "name": "[format('46d3xbcp.res.network-virtualnetworksubnet.{0}.{1}', replace('0.1.2', '.', '-'), substring(uniqueString(deployment().name), 0, 4))]",
                       "properties": {
                         "mode": "Incremental",
                         "template": {
@@ -3355,7 +3408,7 @@
                     },
                     "subnet": {
                       "type": "Microsoft.Network/virtualNetworks/subnets",
-                      "apiVersion": "2024-01-01",
+                      "apiVersion": "2024-05-01",
                       "name": "[format('{0}/{1}', parameters('virtualNetworkName'), parameters('name'))]",
                       "properties": {
                         "copy": [
@@ -3369,6 +3422,7 @@
                         ],
                         "addressPrefix": "[parameters('addressPrefix')]",
                         "addressPrefixes": "[parameters('addressPrefixes')]",
+                        "ipamPoolPrefixAllocations": "[parameters('ipamPoolPrefixAllocations')]",
                         "networkSecurityGroup": "[if(not(empty(parameters('networkSecurityGroupResourceId'))), createObject('id', parameters('networkSecurityGroupResourceId')), null())]",
                         "routeTable": "[if(not(empty(parameters('routeTableResourceId'))), createObject('id', parameters('routeTableResourceId')), null())]",
                         "natGateway": "[if(not(empty(parameters('natGatewayResourceId'))), createObject('id', parameters('natGatewayResourceId')), null())]",
@@ -3439,6 +3493,13 @@
                         "description": "List of address prefixes for the subnet."
                       },
                       "value": "[coalesce(tryGet(reference('subnet'), 'addressPrefixes'), createArray())]"
+                    },
+                    "ipamPoolPrefixAllocations": {
+                      "type": "array",
+                      "metadata": {
+                        "description": "The IPAM pool prefix allocations for the subnet."
+                      },
+                      "value": "[coalesce(tryGet(reference('subnet'), 'ipamPoolPrefixAllocations'), createArray())]"
                     }
                   }
                 }
@@ -3492,8 +3553,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.34.1.11899",
-                      "templateHash": "7728525434782883754"
+                      "version": "0.35.1.17967",
+                      "templateHash": "11179987886456111827"
                     },
                     "name": "Virtual Network Peerings",
                     "description": "This module deploys a Virtual Network Peering."
@@ -3649,8 +3710,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.34.1.11899",
-                      "templateHash": "7728525434782883754"
+                      "version": "0.35.1.17967",
+                      "templateHash": "11179987886456111827"
                     },
                     "name": "Virtual Network Peerings",
                     "description": "This module deploys a Virtual Network Peering."
@@ -3806,7 +3867,7 @@
               "metadata": {
                 "description": "The location the resource was deployed into."
               },
-              "value": "[reference('virtualNetwork', '2024-01-01', 'full').location]"
+              "value": "[reference('virtualNetwork', '2024-05-01', 'full').location]"
             }
           }
         }
@@ -3828,10 +3889,16 @@
           "location": {
             "value": "[parameters('location')]"
           },
-          "subnetId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vnetDeployment'), '2022-09-01').outputs.subnetResourceIds.value[0]]"
+          "ipConfigurations": {
+            "value": [
+              {
+                "name": "ipconfig1",
+                "subnetResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'vnetDeployment'), '2022-09-01').outputs.subnetResourceIds.value[0]]",
+                "privateIPAllocationMethod": "Dynamic"
+              }
+            ]
           },
-          "nsgId": {
+          "networkSecurityGroupResourceId": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNsgDeployment'), '2022-09-01').outputs.resourceId.value]"
           },
           "tags": {
@@ -3840,85 +3907,530 @@
         },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "languageVersion": "2.0",
           "contentVersion": "1.0.0.0",
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.28.1.47646",
-              "templateHash": "1344483229292679519"
+              "version": "0.29.47.4906",
+              "templateHash": "13137228533819374839"
+            },
+            "name": "Network Interface",
+            "description": "This module deploys a Network Interface.",
+            "owner": "Azure/module-maintainers"
+          },
+          "definitions": {
+            "diagnosticSettingType": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The name of diagnostic setting."
+                    }
+                  },
+                  "logCategoriesAndGroups": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "category": {
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {
+                            "description": "Optional. Name of a Diagnostic Log category for a resource type this setting is applied to. Set the specific logs to collect here."
+                          }
+                        },
+                        "categoryGroup": {
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {
+                            "description": "Optional. Name of a Diagnostic Log category group for a resource type this setting is applied to. Set to `allLogs` to collect all logs."
+                          }
+                        },
+                        "enabled": {
+                          "type": "bool",
+                          "nullable": true,
+                          "metadata": {
+                            "description": "Optional. Enable or disable the category explicitly. Default is `true`."
+                          }
+                        }
+                      }
+                    },
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The name of logs that will be streamed. \"allLogs\" includes all possible logs for the resource. Set to `[]` to disable log collection."
+                    }
+                  },
+                  "metricCategories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "category": {
+                          "type": "string",
+                          "metadata": {
+                            "description": "Required. Name of a Diagnostic Metric category for a resource type this setting is applied to. Set to `AllMetrics` to collect all metrics."
+                          }
+                        },
+                        "enabled": {
+                          "type": "bool",
+                          "nullable": true,
+                          "metadata": {
+                            "description": "Optional. Enable or disable the category explicitly. Default is `true`."
+                          }
+                        }
+                      }
+                    },
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The name of metrics that will be streamed. \"allMetrics\" includes all possible metrics for the resource. Set to `[]` to disable metric collection."
+                    }
+                  },
+                  "logAnalyticsDestinationType": {
+                    "type": "string",
+                    "allowedValues": [
+                      "AzureDiagnostics",
+                      "Dedicated"
+                    ],
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type."
+                    }
+                  },
+                  "workspaceResourceId": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. Resource ID of the diagnostic log analytics workspace. For security reasons, it is recommended to set diagnostic settings to send data to either storage account, log analytics workspace or event hub."
+                    }
+                  },
+                  "storageAccountResourceId": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. Resource ID of the diagnostic storage account. For security reasons, it is recommended to set diagnostic settings to send data to either storage account, log analytics workspace or event hub."
+                    }
+                  },
+                  "eventHubAuthorizationRuleResourceId": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. Resource ID of the diagnostic event hub authorization rule for the Event Hubs namespace in which the event hub should be created or streamed to."
+                    }
+                  },
+                  "eventHubName": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. Name of the diagnostic event hub within the namespace to which logs are streamed. Without this, an event hub is created for each log category. For security reasons, it is recommended to set diagnostic settings to send data to either storage account, log analytics workspace or event hub."
+                    }
+                  },
+                  "marketplacePartnerResourceId": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs."
+                    }
+                  }
+                }
+              },
+              "nullable": true
+            },
+            "roleAssignmentType": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The name (as GUID) of the role assignment. If not provided, a GUID will be generated."
+                    }
+                  },
+                  "roleDefinitionIdOrName": {
+                    "type": "string",
+                    "metadata": {
+                      "description": "Required. The role to assign. You can provide either the display name of the role definition, the role definition GUID, or its fully qualified ID in the following format: '/providers/Microsoft.Authorization/roleDefinitions/c2f4ef07-c644-48eb-af81-4b1b4947fb11'."
+                    }
+                  },
+                  "principalId": {
+                    "type": "string",
+                    "metadata": {
+                      "description": "Required. The principal ID of the principal (user/group/identity) to assign the role to."
+                    }
+                  },
+                  "principalType": {
+                    "type": "string",
+                    "allowedValues": [
+                      "Device",
+                      "ForeignGroup",
+                      "Group",
+                      "ServicePrincipal",
+                      "User"
+                    ],
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The principal type of the assigned principal ID."
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The description of the role assignment."
+                    }
+                  },
+                  "condition": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase \"foo_storage_container\"."
+                    }
+                  },
+                  "conditionVersion": {
+                    "type": "string",
+                    "allowedValues": [
+                      "2.0"
+                    ],
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. Version of the condition."
+                    }
+                  },
+                  "delegatedManagedIdentityResourceId": {
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "description": "Optional. The Resource Id of the delegated managed identity resource."
+                    }
+                  }
+                }
+              },
+              "nullable": true
+            },
+            "lockType": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {
+                    "description": "Optional. Specify the name of lock."
+                  }
+                },
+                "kind": {
+                  "type": "string",
+                  "allowedValues": [
+                    "CanNotDelete",
+                    "None",
+                    "ReadOnly"
+                  ],
+                  "nullable": true,
+                  "metadata": {
+                    "description": "Optional. Specify the type of lock."
+                  }
+                }
+              },
+              "nullable": true
             }
           },
           "parameters": {
             "name": {
               "type": "string",
               "metadata": {
-                "description": "Name of the network interface"
+                "description": "Required. The name of the network interface."
               }
             },
             "location": {
               "type": "string",
               "defaultValue": "[resourceGroup().location]",
               "metadata": {
-                "description": "Location for the resource"
-              }
-            },
-            "subnetId": {
-              "type": "string",
-              "metadata": {
-                "description": "Subnet resource ID"
-              }
-            },
-            "nsgId": {
-              "type": "string",
-              "metadata": {
-                "description": "Network security group resource ID"
+                "description": "Optional. Location for all resources."
               }
             },
             "tags": {
               "type": "object",
-              "defaultValue": {},
+              "nullable": true,
               "metadata": {
-                "description": "Tags for the resource"
+                "description": "Optional. Resource tags."
+              }
+            },
+            "enableTelemetry": {
+              "type": "bool",
+              "defaultValue": true,
+              "metadata": {
+                "description": "Optional. Enable/Disable usage telemetry for module."
+              }
+            },
+            "enableIPForwarding": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Optional. Indicates whether IP forwarding is enabled on this network interface."
+              }
+            },
+            "enableAcceleratedNetworking": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Optional. If the network interface is accelerated networking enabled."
+              }
+            },
+            "dnsServers": {
+              "type": "array",
+              "defaultValue": [],
+              "metadata": {
+                "description": "Optional. List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS' value cannot be combined with other IPs, it must be the only value in dnsServers collection."
+              }
+            },
+            "networkSecurityGroupResourceId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Optional. The network security group (NSG) to attach to the network interface."
+              }
+            },
+            "auxiliaryMode": {
+              "type": "string",
+              "defaultValue": "None",
+              "allowedValues": [
+                "Floating",
+                "MaxConnections",
+                "None"
+              ],
+              "metadata": {
+                "description": "Optional. Auxiliary mode of Network Interface resource. Not all regions are enabled for Auxiliary Mode Nic."
+              }
+            },
+            "auxiliarySku": {
+              "type": "string",
+              "defaultValue": "None",
+              "allowedValues": [
+                "A1",
+                "A2",
+                "A4",
+                "A8",
+                "None"
+              ],
+              "metadata": {
+                "description": "Optional. Auxiliary sku of Network Interface resource. Not all regions are enabled for Auxiliary Mode Nic."
+              }
+            },
+            "disableTcpStateTracking": {
+              "type": "bool",
+              "defaultValue": false,
+              "metadata": {
+                "description": "Optional. Indicates whether to disable tcp state tracking. Subscription must be registered for the Microsoft.Network/AllowDisableTcpStateTracking feature before this property can be set to true."
+              }
+            },
+            "ipConfigurations": {
+              "type": "array",
+              "metadata": {
+                "description": "Required. A list of IPConfigurations of the network interface."
+              }
+            },
+            "lock": {
+              "$ref": "#/definitions/lockType",
+              "metadata": {
+                "description": "Optional. The lock settings of the service."
+              }
+            },
+            "roleAssignments": {
+              "$ref": "#/definitions/roleAssignmentType",
+              "metadata": {
+                "description": "Optional. Array of role assignments to create."
+              }
+            },
+            "diagnosticSettings": {
+              "$ref": "#/definitions/diagnosticSettingType",
+              "metadata": {
+                "description": "Optional. The diagnostic settings of the service."
               }
             }
           },
-          "resources": [
-            {
+          "variables": {
+            "copy": [
+              {
+                "name": "formattedRoleAssignments",
+                "count": "[length(coalesce(parameters('roleAssignments'), createArray()))]",
+                "input": "[union(coalesce(parameters('roleAssignments'), createArray())[copyIndex('formattedRoleAssignments')], createObject('roleDefinitionId', coalesce(tryGet(variables('builtInRoleNames'), coalesce(parameters('roleAssignments'), createArray())[copyIndex('formattedRoleAssignments')].roleDefinitionIdOrName), if(contains(coalesce(parameters('roleAssignments'), createArray())[copyIndex('formattedRoleAssignments')].roleDefinitionIdOrName, '/providers/Microsoft.Authorization/roleDefinitions/'), coalesce(parameters('roleAssignments'), createArray())[copyIndex('formattedRoleAssignments')].roleDefinitionIdOrName, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', coalesce(parameters('roleAssignments'), createArray())[copyIndex('formattedRoleAssignments')].roleDefinitionIdOrName)))))]"
+              }
+            ],
+            "builtInRoleNames": {
+              "Contributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+              "DNS Resolver Contributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0f2ebee7-ffd4-4fc0-b3b7-664099fdad5d')]",
+              "DNS Zone Contributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'befefa01-2a29-4197-83a8-272ff33ce314')]",
+              "Network Contributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4d97b98b-1d4f-4787-a291-c67834d212e7')]",
+              "Owner": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+              "Private DNS Zone Contributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b12aa53e-6015-4669-85d0-8515ebb3ae7f')]",
+              "Reader": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+              "Role Based Access Control Administrator (Preview)": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'f58310d9-a9f6-439a-9e8d-f62e7b41a168')]"
+            }
+          },
+          "resources": {
+            "avmTelemetry": {
+              "condition": "[parameters('enableTelemetry')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2024-03-01",
+              "name": "[format('46d3xbcp.res.network-networkinterface.{0}.{1}', replace('0.3.0', '.', '-'), substring(uniqueString(deployment().name, parameters('location')), 0, 4))]",
+              "properties": {
+                "mode": "Incremental",
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "resources": [],
+                  "outputs": {
+                    "telemetry": {
+                      "type": "String",
+                      "value": "For more information, see https://aka.ms/avm/TelemetryInfo"
+                    }
+                  }
+                }
+              }
+            },
+            "networkInterface": {
               "type": "Microsoft.Network/networkInterfaces",
-              "apiVersion": "2022-07-01",
+              "apiVersion": "2023-04-01",
               "name": "[parameters('name')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
               "properties": {
-                "ipConfigurations": [
+                "copy": [
                   {
-                    "name": "ipconfig1",
-                    "properties": {
-                      "privateIPAllocationMethod": "Dynamic",
-                      "subnet": {
-                        "id": "[parameters('subnetId')]"
+                    "name": "ipConfigurations",
+                    "count": "[length(parameters('ipConfigurations'))]",
+                    "input": {
+                      "name": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'name'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].name, format('ipconfig0{0}', add(copyIndex('ipConfigurations'), 1)))]",
+                      "properties": {
+                        "primary": "[if(equals(copyIndex('ipConfigurations'), 0), true(), false())]",
+                        "privateIPAllocationMethod": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'privateIPAllocationMethod'), if(not(empty(parameters('ipConfigurations')[copyIndex('ipConfigurations')].privateIPAllocationMethod)), parameters('ipConfigurations')[copyIndex('ipConfigurations')].privateIPAllocationMethod, null()), null())]",
+                        "privateIPAddress": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'privateIPAddress'), if(not(empty(parameters('ipConfigurations')[copyIndex('ipConfigurations')].privateIPAddress)), parameters('ipConfigurations')[copyIndex('ipConfigurations')].privateIPAddress, null()), null())]",
+                        "publicIPAddress": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'publicIPAddressResourceId'), if(not(equals(parameters('ipConfigurations')[copyIndex('ipConfigurations')].publicIPAddressResourceId, null())), createObject('id', parameters('ipConfigurations')[copyIndex('ipConfigurations')].publicIPAddressResourceId), null()), null())]",
+                        "subnet": {
+                          "id": "[parameters('ipConfigurations')[copyIndex('ipConfigurations')].subnetResourceId]"
+                        },
+                        "loadBalancerBackendAddressPools": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'loadBalancerBackendAddressPools'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].loadBalancerBackendAddressPools, null())]",
+                        "applicationSecurityGroups": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'applicationSecurityGroups'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].applicationSecurityGroups, null())]",
+                        "applicationGatewayBackendAddressPools": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'applicationGatewayBackendAddressPools'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].applicationGatewayBackendAddressPools, null())]",
+                        "gatewayLoadBalancer": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'gatewayLoadBalancer'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].gatewayLoadBalancer, null())]",
+                        "loadBalancerInboundNatRules": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'loadBalancerInboundNatRules'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].loadBalancerInboundNatRules, null())]",
+                        "privateIPAddressVersion": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'privateIPAddressVersion'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].privateIPAddressVersion, null())]",
+                        "virtualNetworkTaps": "[if(contains(parameters('ipConfigurations')[copyIndex('ipConfigurations')], 'virtualNetworkTaps'), parameters('ipConfigurations')[copyIndex('ipConfigurations')].virtualNetworkTaps, null())]"
                       }
                     }
                   }
                 ],
-                "networkSecurityGroup": {
-                  "id": "[parameters('nsgId')]"
-                }
+                "auxiliaryMode": "[parameters('auxiliaryMode')]",
+                "auxiliarySku": "[parameters('auxiliarySku')]",
+                "disableTcpStateTracking": "[parameters('disableTcpStateTracking')]",
+                "dnsSettings": "[if(not(empty(parameters('dnsServers'))), createObject('dnsServers', parameters('dnsServers')), null())]",
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]",
+                "enableIPForwarding": "[parameters('enableIPForwarding')]",
+                "networkSecurityGroup": "[if(not(empty(parameters('networkSecurityGroupResourceId'))), createObject('id', parameters('networkSecurityGroupResourceId')), null())]"
               }
-            }
-          ],
-          "outputs": {
-            "nicId": {
-              "type": "string",
-              "value": "[resourceId('Microsoft.Network/networkInterfaces', parameters('name'))]"
             },
-            "nicName": {
+            "networkInterface_lock": {
+              "condition": "[and(not(empty(coalesce(parameters('lock'), createObject()))), not(equals(tryGet(parameters('lock'), 'kind'), 'None')))]",
+              "type": "Microsoft.Authorization/locks",
+              "apiVersion": "2020-05-01",
+              "scope": "[format('Microsoft.Network/networkInterfaces/{0}', parameters('name'))]",
+              "name": "[coalesce(tryGet(parameters('lock'), 'name'), format('lock-{0}', parameters('name')))]",
+              "properties": {
+                "level": "[coalesce(tryGet(parameters('lock'), 'kind'), '')]",
+                "notes": "[if(equals(tryGet(parameters('lock'), 'kind'), 'CanNotDelete'), 'Cannot delete resource or child resources.', 'Cannot delete or modify the resource or child resources.')]"
+              },
+              "dependsOn": [
+                "networkInterface"
+              ]
+            },
+            "networkInterface_diagnosticSettings": {
+              "copy": {
+                "name": "networkInterface_diagnosticSettings",
+                "count": "[length(coalesce(parameters('diagnosticSettings'), createArray()))]"
+              },
+              "type": "Microsoft.Insights/diagnosticSettings",
+              "apiVersion": "2021-05-01-preview",
+              "scope": "[format('Microsoft.Network/networkInterfaces/{0}', parameters('name'))]",
+              "name": "[coalesce(tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'name'), format('{0}-diagnosticSettings', parameters('name')))]",
+              "properties": {
+                "copy": [
+                  {
+                    "name": "metrics",
+                    "count": "[length(coalesce(tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'metricCategories'), createArray(createObject('category', 'AllMetrics'))))]",
+                    "input": {
+                      "category": "[coalesce(tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'metricCategories'), createArray(createObject('category', 'AllMetrics')))[copyIndex('metrics')].category]",
+                      "enabled": "[coalesce(tryGet(coalesce(tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'metricCategories'), createArray(createObject('category', 'AllMetrics')))[copyIndex('metrics')], 'enabled'), true())]",
+                      "timeGrain": null
+                    }
+                  }
+                ],
+                "storageAccountId": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'storageAccountResourceId')]",
+                "workspaceId": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'workspaceResourceId')]",
+                "eventHubAuthorizationRuleId": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'eventHubAuthorizationRuleResourceId')]",
+                "eventHubName": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'eventHubName')]",
+                "marketplacePartnerId": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'marketplacePartnerResourceId')]",
+                "logAnalyticsDestinationType": "[tryGet(coalesce(parameters('diagnosticSettings'), createArray())[copyIndex()], 'logAnalyticsDestinationType')]"
+              },
+              "dependsOn": [
+                "networkInterface"
+              ]
+            },
+            "networkInterface_roleAssignments": {
+              "copy": {
+                "name": "networkInterface_roleAssignments",
+                "count": "[length(coalesce(variables('formattedRoleAssignments'), createArray()))]"
+              },
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[format('Microsoft.Network/networkInterfaces/{0}', parameters('name'))]",
+              "name": "[coalesce(tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'name'), guid(resourceId('Microsoft.Network/networkInterfaces', parameters('name')), coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()].principalId, coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()].roleDefinitionId))]",
+              "properties": {
+                "roleDefinitionId": "[coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()].roleDefinitionId]",
+                "principalId": "[coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()].principalId]",
+                "description": "[tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'description')]",
+                "principalType": "[tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'principalType')]",
+                "condition": "[tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'condition')]",
+                "conditionVersion": "[if(not(empty(tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'condition'))), coalesce(tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'conditionVersion'), '2.0'), null())]",
+                "delegatedManagedIdentityResourceId": "[tryGet(coalesce(variables('formattedRoleAssignments'), createArray())[copyIndex()], 'delegatedManagedIdentityResourceId')]"
+              },
+              "dependsOn": [
+                "networkInterface"
+              ]
+            }
+          },
+          "outputs": {
+            "name": {
               "type": "string",
+              "metadata": {
+                "description": "The name of the deployed resource."
+              },
               "value": "[parameters('name')]"
             },
-            "privateIPAddress": {
+            "resourceId": {
               "type": "string",
-              "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', parameters('name')), '2022-07-01').ipConfigurations[0].properties.privateIPAddress]"
+              "metadata": {
+                "description": "The resource ID of the deployed resource."
+              },
+              "value": "[resourceId('Microsoft.Network/networkInterfaces', parameters('name'))]"
+            },
+            "resourceGroupName": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource group of the deployed resource."
+              },
+              "value": "[resourceGroup().name]"
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "The location the resource was deployed into."
+              },
+              "value": "[reference('networkInterface', '2023-04-01', 'full').location]"
             }
           }
         }
@@ -3954,7 +4466,7 @@
             "value": "[parameters('jumpboxAdminPassword')]"
           },
           "nicId": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNicDeployment'), '2022-09-01').outputs.nicId.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNicDeployment'), '2022-09-01').outputs.resourceId.value]"
           },
           "dataDiskSizeGB": {
             "value": "[parameters('dataDiskSizeGB')]"

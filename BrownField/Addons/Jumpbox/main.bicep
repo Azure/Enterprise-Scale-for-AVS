@@ -130,14 +130,20 @@ module vnet 'br/public:avm/res/network/virtual-network:0.7.0' = {
   }
 }
 
-// Create NIC as soon as VM subnet is available
-module vmNic 'nic.bicep' = {
+// Create NIC using AVM Network Interface module
+module vmNic 'br/public:avm/res/network/network-interface:0.3.0' = {
   name: 'vmNicDeployment'
   params: {
     name: '${vmName}-nic'
     location: location
-    subnetId: vnet.outputs.subnetResourceIds[0]  // VMSubnet is first in array
-    nsgId: vmNsg.outputs.resourceId
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet is first in array
+        privateIPAllocationMethod: 'Dynamic'
+      }
+    ]
+    networkSecurityGroupResourceId: vmNsg.outputs.resourceId
     tags: tags
   }
 }
@@ -151,7 +157,7 @@ module jumpboxVm 'jumpbox-vm.bicep' = {
     vmSize: vmSize
     adminUsername: adminUsername
     adminPassword: jumpboxAdminPassword
-    nicId: vmNic.outputs.nicId
+    nicId: vmNic.outputs.resourceId  // Updated to use AVM NIC output
     dataDiskSizeGB: dataDiskSizeGB
     tags: tags
   }
