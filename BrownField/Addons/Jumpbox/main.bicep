@@ -99,52 +99,35 @@ module vmNsg 'br/public:avm/res/network/network-security-group:0.5.1' = {
   }
 }
 
-// Deploy the virtual network
-module vnet 'vnet.bicep' = {
+// Deploy the virtual network with all subnets using AVM
+module vnet 'br/public:avm/res/network/virtual-network:0.7.0' = {
   name: 'vnetDeployment'
   params: {
-    vnetName: vnetName
+    name: vnetName
     location: location
-    vnetAddressPrefix: vnetAddressPrefix
+    addressPrefixes: [
+      vnetAddressPrefix
+    ]
+    subnets: [
+      {
+        name: vmSubnetName
+        addressPrefix: vmSubnetPrefix
+        privateEndpointNetworkPolicies: 'Enabled'
+        privateLinkServiceNetworkPolicies: 'Enabled'
+      }
+      {
+        name: 'AzureBastionSubnet'
+        addressPrefix: bastionSubnetPrefix
+        privateEndpointNetworkPolicies: 'Disabled'
+        privateLinkServiceNetworkPolicies: 'Disabled'
+      }
+      {
+        name: 'GatewaySubnet'
+        addressPrefix: gatewaySubnetPrefix
+      }
+    ]
     tags: tags
   }
-}
-
-// Deploy subnets sequentially to avoid parallel operations on the same VNET
-module vmSubnet 'subnet-vm.bicep' = {
-  name: 'vmSubnetDeployment'
-  params: {    
-    vnetName: vnetName
-    subnetName: vmSubnetName
-    subnetPrefix: vmSubnetPrefix
-  }
-  dependsOn: [
-    vnet
-  ]
-}
-
-module bastionSubnet 'subnet-bastion.bicep' = {
-  name: 'bastionSubnetDeployment'
-  params: {
-    vnetName: vnetName
-    subnetPrefix: bastionSubnetPrefix
-  }
-  dependsOn: [
-    vnet
-    vmSubnet
-  ]
-}
-
-module gatewaySubnet 'subnet-gateway.bicep' = {
-  name: 'gatewaySubnetDeployment'
-  params: {
-    vnetName: vnetName
-    subnetPrefix: gatewaySubnetPrefix
-  }
-  dependsOn: [
-    vnet
-    bastionSubnet
-  ]
 }
 
 // Create NIC as soon as VM subnet is available
@@ -153,14 +136,10 @@ module vmNic 'nic.bicep' = {
   params: {
     name: '${vmName}-nic'
     location: location
-    subnetId: vmSubnet.outputs.subnetId
+    subnetId: vnet.outputs.subnetResourceIds[0]  // VMSubnet is first in array
     nsgId: vmNsg.outputs.resourceId
     tags: tags
   }
-  dependsOn: [
-    vmSubnet
-    vmNsg
-  ]
 }
 
 // Deploy the jumpbox VM using pre-deployed NIC
@@ -176,9 +155,6 @@ module jumpboxVm 'jumpbox-vm.bicep' = {
     dataDiskSizeGB: dataDiskSizeGB
     tags: tags
   }
-  dependsOn: [
-    vmNic
-  ]
 }
 
 // Deploy resources in parallel that depend on specific subnets
@@ -187,14 +163,10 @@ module bastionHost 'bastion.bicep' = {
   params: {
     bastionName: '${vnetName}-bastion'
     location: location
-    subnetId: bastionSubnet.outputs.subnetId
+    subnetId: vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet is second in array
     publicIpId: bastionPublicIp.outputs.resourceId
     tags: tags
   }
-  dependsOn: [
-    bastionSubnet
-    bastionPublicIp
-  ]
 }
 
 module erGateway 'ergw.bicep' = {
@@ -202,15 +174,11 @@ module erGateway 'ergw.bicep' = {
   params: {
     gatewayName: '${vnetName}-ergw'
     location: location
-    subnetId: gatewaySubnet.outputs.subnetId
+    subnetId: vnet.outputs.subnetResourceIds[2]  // GatewaySubnet is third in array
     publicIpId: gatewayPublicIp.outputs.resourceId
     gatewaySku: 'Standard'
     tags: tags
   }
-  dependsOn: [
-    gatewaySubnet
-    gatewayPublicIp
-  ]
 }
 
 // Auto-shutdown configuration depends only on VM
@@ -231,9 +199,6 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
     }
     targetResourceId: jumpboxVm.outputs.vmId
   }
-  dependsOn: [
-    jumpboxVm
-  ]
 }
 
 // ExpressRoute Connection depends only on the gateway
@@ -247,20 +212,17 @@ module erConnection 'er-connection.bicep' = if (!empty(expressRouteCircuitId) &&
     gatewayId: erGateway.outputs.gatewayId
     tags: tags
   }
-  dependsOn: [
-    erGateway
-  ]
 }
 
 // Output section
-output vnetId string = vnet.outputs.vnetId
-output vmSubnetId string = vmSubnet.outputs.subnetId
+output vnetId string = vnet.outputs.resourceId
+output vmSubnetId string = vnet.outputs.subnetResourceIds[0]  // VMSubnet
 output vmName string = jumpboxVm.outputs.vmName
 output vmPrivateIP string = jumpboxVm.outputs.privateIPAddress
 output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIdentityPrincipalId
-output bastionSubnetId string = bastionSubnet.outputs.subnetId
+output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet
 output bastionId string = bastionHost.outputs.bastionId
-output gatewaySubnetId string = gatewaySubnet.outputs.subnetId
+output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
 output erGatewayId string = erGateway.outputs.gatewayId
-output erConnectionId string = !empty(expressRouteCircuitId) && !empty(expressRouteAuthKey) ? erConnection.outputs.connectionId : ''
-output erConnectionName string = !empty(expressRouteCircuitId) && !empty(expressRouteAuthKey) ? erConnection.outputs.connectionName : ''
+output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionId : ''
+output erConnectionName string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionName : ''
