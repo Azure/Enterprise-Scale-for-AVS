@@ -50,31 +50,52 @@ param expressRouteCircuitId string = ''
 param expressRouteAuthKey string = ''
 
 // Pre-deploy Public IPs at the beginning to allow for parallelism
-module bastionPublicIp 'publicip.bicep' = {
+module bastionPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
   name: 'bastionPublicIpDeployment'
   params: {
     name: '${vnetName}-bastion-pip'
     location: location
     tags: tags
+    publicIPAllocationMethod: 'Static'
+    skuName: 'Standard'
+    skuTier: 'Regional'
   }
 }
 
-module gatewayPublicIp 'publicip.bicep' = {
+module gatewayPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
   name: 'gatewayPublicIpDeployment'
   params: {
     name: '${vnetName}-ergw-pip'
     location: location
     tags: tags
+    publicIPAllocationMethod: 'Static'
+    skuName: 'Standard'
+    skuTier: 'Regional'
   }
 }
 
 // Pre-deploy NSG at the beginning to allow for parallelism
-module vmNsg 'nsg.bicep' = {
+module vmNsg 'br/public:avm/res/network/network-security-group:0.5.1' = {
   name: 'vmNsgDeployment'
   params: {
     name: '${vmName}-nsg'
     location: location
     tags: tags
+    securityRules: [
+      {
+        name: 'AllowRDPFromVNet'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 1000
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '3389'
+        }
+      }
+    ]
   }
 }
 
@@ -133,7 +154,7 @@ module vmNic 'nic.bicep' = {
     name: '${vmName}-nic'
     location: location
     subnetId: vmSubnet.outputs.subnetId
-    nsgId: vmNsg.outputs.nsgId
+    nsgId: vmNsg.outputs.resourceId
     tags: tags
   }
   dependsOn: [
@@ -167,7 +188,7 @@ module bastionHost 'bastion.bicep' = {
     bastionName: '${vnetName}-bastion'
     location: location
     subnetId: bastionSubnet.outputs.subnetId
-    publicIpId: bastionPublicIp.outputs.publicIpId
+    publicIpId: bastionPublicIp.outputs.resourceId
     tags: tags
   }
   dependsOn: [
@@ -182,7 +203,7 @@ module erGateway 'ergw.bicep' = {
     gatewayName: '${vnetName}-ergw'
     location: location
     subnetId: gatewaySubnet.outputs.subnetId
-    publicIpId: gatewayPublicIp.outputs.publicIpId
+    publicIpId: gatewayPublicIp.outputs.resourceId
     gatewaySku: 'Standard'
     tags: tags
   }

@@ -6,19 +6,19 @@
       "value": "jumpbox-vnet"
     },
     "vnetAddressPrefix": {
-      "value": "x.y.z.0/24"
+      "value": "192.168.10.0/24"
     },
     "vmSubnetName": {
       "value": "VMSubnet"
     },
     "vmSubnetPrefix": {
-      "value": "x.y.z.0/27"
+      "value": "192.168.10.0/27"
     },
     "bastionSubnetPrefix": {
-      "value": "x.y.z.32/27"
+      "value": "192.168.10.32/27"
     },
     "gatewaySubnetPrefix": {
-      "value": "x.y.z.64/27"
+      "value": "192.168.10.64/27"
     },
     "vmName": {
       "value": "jumpboxvm"
