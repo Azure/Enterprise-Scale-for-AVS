@@ -163,14 +163,15 @@ module jumpboxVm 'jumpbox-vm.bicep' = {
   }
 }
 
-// Deploy resources in parallel that depend on specific subnets
-module bastionHost 'bastion.bicep' = {
+// Deploy Bastion Host using AVM module
+module bastionHost 'br/public:avm/res/network/bastion-host:0.6.1' = {
   name: 'bastionDeployment'
   params: {
-    bastionName: '${vnetName}-bastion'
+    name: '${vnetName}-bastion'
     location: location
-    subnetId: vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet is second in array
-    publicIpId: bastionPublicIp.outputs.resourceId
+    virtualNetworkResourceId: vnet.outputs.resourceId
+    bastionSubnetPublicIpResourceId: bastionPublicIp.outputs.resourceId
+    skuName: 'Standard'
     tags: tags
   }
 }
@@ -227,7 +228,7 @@ output vmName string = jumpboxVm.outputs.vmName
 output vmPrivateIP string = jumpboxVm.outputs.privateIPAddress
 output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIdentityPrincipalId
 output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet
-output bastionId string = bastionHost.outputs.bastionId
+output bastionId string = bastionHost.outputs.resourceId
 output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
 output erGatewayId string = erGateway.outputs.gatewayId
 output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionId : ''
