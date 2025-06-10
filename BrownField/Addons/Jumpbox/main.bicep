@@ -49,7 +49,7 @@ param expressRouteCircuitId string = ''
 @secure()
 param expressRouteAuthKey string = ''
 
-// Pre-deploy Public IPs at the beginning to allow for parallelism
+// Pre-deploy Public IP for Bastion at the beginning to allow for parallelism
 module bastionPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
   name: 'bastionPublicIpDeployment'
   params: {
@@ -62,17 +62,7 @@ module bastionPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
   }
 }
 
-module gatewayPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
-  name: 'gatewayPublicIpDeployment'
-  params: {
-    name: '${vnetName}-ergw-pip'
-    location: location
-    tags: tags
-    publicIPAllocationMethod: 'Static'
-    skuName: 'Standard'
-    skuTier: 'Regional'
-  }
-}
+// Note: Gateway Public IP is now handled by the AVM Virtual Network Gateway module
 
 // Pre-deploy NSG at the beginning to allow for parallelism
 module vmNsg 'br/public:avm/res/network/network-security-group:0.5.1' = {
@@ -176,14 +166,19 @@ module bastionHost 'br/public:avm/res/network/bastion-host:0.6.1' = {
   }
 }
 
-module erGateway 'ergw.bicep' = {
+// Deploy ExpressRoute Gateway using AVM Virtual Network Gateway module
+module erGateway 'br/public:avm/res/network/virtual-network-gateway:0.4.0' = {
   name: 'erGatewayDeployment'
   params: {
-    gatewayName: '${vnetName}-ergw'
+    name: '${vnetName}-ergw'
     location: location
-    subnetId: vnet.outputs.subnetResourceIds[2]  // GatewaySubnet is third in array
-    publicIpId: gatewayPublicIp.outputs.resourceId
-    gatewaySku: 'Standard'
+    gatewayType: 'ExpressRoute'
+    vNetResourceId: vnet.outputs.resourceId
+    clusterSettings: {
+      clusterMode: 'activePassiveNoBgp'
+    }
+    skuName: 'Standard'
+    gatewayPipName: '${vnetName}-ergw-pip' // Use our existing public IP name
     tags: tags
   }
 }
@@ -216,7 +211,7 @@ module erConnection 'er-connection.bicep' = if (!empty(expressRouteCircuitId) &&
     location: location
     circuitId: expressRouteCircuitId
     authorizationKey: expressRouteAuthKey
-    gatewayId: erGateway.outputs.gatewayId
+    gatewayId: erGateway.outputs.resourceId
     tags: tags
   }
 }
@@ -230,6 +225,6 @@ output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIde
 output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet
 output bastionId string = bastionHost.outputs.resourceId
 output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
-output erGatewayId string = erGateway.outputs.gatewayId
+output erGatewayId string = erGateway.outputs.resourceId
 output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionId : ''
 output erConnectionName string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionName : ''
