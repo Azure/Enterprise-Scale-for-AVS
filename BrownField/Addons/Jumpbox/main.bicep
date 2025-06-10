@@ -203,15 +203,21 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   }
 }
 
-// ExpressRoute Connection depends only on the gateway
-module erConnection 'er-connection.bicep' = if (!empty(expressRouteCircuitId) && !empty(expressRouteAuthKey)) {
+// ExpressRoute Connection using AVM Connection module
+module erConnection 'br/public:avm/res/network/connection:0.1.4' = if (!empty(expressRouteCircuitId) && !empty(expressRouteAuthKey)) {
   name: 'erConnectionDeployment'
   params: {
-    connectionName: '${vnetName}-er-connection'
+    name: '${vnetName}-er-connection'
     location: location
-    circuitId: expressRouteCircuitId
+    connectionType: 'ExpressRoute'
+    virtualNetworkGateway1: {
+      id: erGateway.outputs.resourceId
+    }
+    peer: {
+      id: expressRouteCircuitId
+    }
     authorizationKey: expressRouteAuthKey
-    gatewayId: erGateway.outputs.resourceId
+    routingWeight: 0
     tags: tags
   }
 }
@@ -226,5 +232,5 @@ output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBasti
 output bastionId string = bastionHost.outputs.resourceId
 output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
 output erGatewayId string = erGateway.outputs.resourceId
-output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionId : ''
-output erConnectionName string = !empty(expressRouteCircuitId) ? erConnection.outputs.connectionName : ''
+output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.resourceId : ''
+output erConnectionName string = !empty(expressRouteCircuitId) ? erConnection.outputs.name : ''
