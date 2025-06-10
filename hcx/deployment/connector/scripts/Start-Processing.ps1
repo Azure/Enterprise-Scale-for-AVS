@@ -54,6 +54,18 @@ function Start-Processing {
         if (-not $applianceStatus) {
             return
         }
+
+        # Validate HCX Appliance VM IP format
+        if (-not ($applianceVMIP -match '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}9$')) {
+            Write-Host "Invalid appliance VM IP address format $applianceVMIP. Check and correct parameter values."
+            return
+        }
+
+        # Validate HCX Appliance VM Gateway IP format
+        if (-not ($applianceVMGatewayIP -match '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}1$')) {
+            Write-Host "Invalid appliance VM Gateway IP address format $applianceVMGatewayIP. Check and correct parameter values."
+            return
+        }
             
         # New VM from OVA
         $hcxVMStatus = New-IfNotExist-VM-From-OVA -vCenter $vCenter `
@@ -64,6 +76,11 @@ function Start-Processing {
             -applianceVMName $applianceVMName `
             -applianceVMIP $applianceVMIP `
             -applianceVMGatewayIP $applianceVMGatewayIP `
+
+        # If the HCX VM creation failed, exit the script
+        if (-not $hcxVMStatus) {
+            return
+        }
 
         # Check if HCX URL is up and running until it is reachable
         $abshcxUrl = $hcxUrl.TrimEnd('/')

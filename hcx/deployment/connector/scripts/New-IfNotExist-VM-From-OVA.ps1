@@ -43,7 +43,7 @@ function New-IfNotExist-VM-From-OVA {
         }
 
         # Create a new VM from the OVA
-        New-VM-From-OVA -vCenter $vCenter `
+        $newVMCreationStatus = New-VM-From-OVA -vCenter $vCenter `
                         -vCenterUserName $vCenterUserName `
                         -vCenterPassword $vCenterPassword `
                         -contentLibraryItemID $contentLibraryItemID `
@@ -52,7 +52,7 @@ function New-IfNotExist-VM-From-OVA {
                         -applianceVMIP $applianceVMIP `
                         -applianceVMGatewayIP $applianceVMGatewayIP
 
-        return $true
+        return $newVMCreationStatus
     }
     catch {
         Write-Error "Failed to get OVF Properties: $_"
@@ -76,6 +76,11 @@ function New-VM-From-OVA {
                               -vCenterUserName $vCenterUserName `
                               -vCenterPassword $vCenterPassword `
                               -segmentName $segmentName
+
+            if (-not $segmentID) {
+                Write-Error "Segment '$segmentName' not found. Please ensure it exists in the vCenter."
+                return $false
+            }                              
 
             # Get the Resource Pool ID
             $resourcePoolID = Get-ResourcePoolID -vCenter $vCenter `
@@ -320,6 +325,8 @@ function New-VM-From-OVA {
                 Start-VM -vCenter $vCenter -vCenterUserName $vCenterUserName `
                     -vCenterPassword $vCenterPassword `
                     -vmID $response.resource_id.id
+
+                Return $true
             }
         }
         catch {

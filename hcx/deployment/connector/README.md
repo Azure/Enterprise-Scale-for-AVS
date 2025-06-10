@@ -202,7 +202,7 @@ You can now access HCX at: https://X.Y.Z.9:9443/
 PS C:\avs\OVF>
 ```
 2. **Access HCX Manager**: Navigate to the HCX URL (e.g., `https://X.Y.Z.9:9443/`)
-3. **Login Verification**: Use vCenter credentials to log into HCX Manager
+3. **Login Verification**: Use `admin` as username and vCenter password to log into HCX Manager
 4. **License Status**: Verify HCX license is properly applied and active
 5. **Service Status**: Confirm all HCX services are running correctly
 

@@ -56,13 +56,13 @@ $hcxUrl = "https://10.1.1.9:9443/"
 # It is used to specify the network segment for the HCX Connector VM.
 # This segment should be pre-configured in the vCenter environment.
 # Example: "OnPrem-management-1-1"
-$segmentName = "OnPrem-management-1-1"
+$segmentName = "OnPrem-management-1-12"
 
 # $applianceVMName parameter represents the name of the HCX Connector VM.
 # It is used to identify the HCX Connector VM in the vCenter environment.
 # This name should be unique within the vCenter environment.
 # Example: "HCX-Connector-VM"
-$applianceVMName = "HCX-Connector-VM2"
+$applianceVMName = "HCX-Connector-VM"
 
 # $applianceVMIP parameter represents the IP address of the HCX Connector VM.
 # It is used to assign a static IP address to the HCX Connector VM.
@@ -70,13 +70,13 @@ $applianceVMName = "HCX-Connector-VM2"
 # Example: "10.1.1.9"
 # Note: Ensure that this IP address is not already in use in the network segment.
 # It is recommended to use .9 in fourth octet for HCX Connector VM.
-$applianceVMIP = "X.Y.Z.9"
+$applianceVMIP = "10.1.1.9"
 
 # $applianceVMGatewayIP parameter represents the gateway IP address for the HCX Connector VM.
 # It is used to specify the gateway for the HCX Connector VM.
 # This IP address should be the gateway of the network segment specified by $segmentName.
 # Example: "10.1.1.1"
-$applianceVMGatewayIP = "X.Y.Z.1"
+$applianceVMGatewayIP = "10.1.1.1"
 
 # $hcxAdminGroup parameter represents the Active Directory group that will be granted administrative access to HCX.
 # It is used to configure HCX role mappings for the specified group.
