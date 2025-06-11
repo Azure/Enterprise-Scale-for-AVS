@@ -6,14 +6,19 @@ After an Azure VMware Solution SDDC is deployed, very often a secure workstation
 
 ## Introduction
 
-The AVS JumpBox deployment creates a secure Windows virtual machine with the necessary networking components to connect to and manage your Azure VMware Solution (AVS) Private Cloud. This deployment includes:
+The AVS JumpBox deployment creates a secure Windows virtual machine with the necessary networking components to connect to and manage your Azure VMware Solution (AVS) Private Cloud. This deployment has been modernized to use **Azure Verified Modules (AVM)** for improved maintainability and best practices.
 
-* A Windows Server VM with 4 vCPUs and 8GB memory (B-series burstable VM)
-* System-assigned Managed Identity for secure access to Azure resources
-* Auto-shutdown at 7PM UTC daily to save costs
-* Virtual network with VM, Bastion, and Gateway subnets
-* Azure Bastion for secure access to the VM (no public IP on the VM)
-* ExpressRoute Gateway and ExpressRoute Connection for connecting to AVS Private Cloud
+### What's Included:
+
+* **Windows Server 2019 VM** with Standard_B4ms size (4 vCPUs, 16GB memory)
+* **100GB data disk** for additional storage
+* **System-assigned Managed Identity** for secure access to Azure resources
+* **Auto-shutdown at 6PM UTC** daily to save costs
+* **Virtual network** with VM, Bastion, and Gateway subnets
+* **Azure Bastion (Standard SKU)** for secure access to the VM (no public IP on the VM)
+* **ExpressRoute Gateway (Standard SKU)** for high-performance connectivity
+* **ExpressRoute Connection** for connecting to AVS Private Cloud
+* **Network Security Group** with RDP access rules
 
 ## Prerequisites
 
@@ -22,7 +27,21 @@ Before you begin, you need:
 * An Azure subscription with `Contributor` or higher permissions on the resource group that hosts AVS SDDC
 * Azure VMware Solution (AVS) Private Cloud
 * AVS ExpressRoute circuit ID and Authorization/Redemption key
-* For Bicep deployment: Azure CLI with Bicep extension installed or Azure PowerShell module (Az) version 5.6.0 or higher
+* For Bicep deployment: Azure CLI with Bicep extension installed (v0.28.1 or higher) or Azure PowerShell module (Az) version 5.6.0 or higher
+
+## Template Information
+
+This deployment uses **Azure Verified Modules (AVM)** for enhanced reliability:
+
+| Component | AVM Module | Version |
+|-----------|------------|---------|
+| Virtual Network | `avm/res/network/virtual-network` | 0.7.0 |
+| Virtual Machine | `avm/res/compute/virtual-machine` | 0.15.0 |
+| Public IP Address | `avm/res/network/public-ip-address` | 0.8.0 |
+| Network Security Group | `avm/res/network/network-security-group` | 0.5.1 |
+| Bastion Host | `avm/res/network/bastion-host` | 0.6.1 |
+| Virtual Network Gateway | `avm/res/network/virtual-network-gateway` | 0.4.0 |
+| Connection | `avm/res/network/connection` | 0.1.0 |
 
 ## Deployment Steps
 
@@ -51,11 +70,20 @@ az login --tenant "YourTenantId.onmicrosoft.com"
 # Set the subscription context
 az account set --subscription "YourSubscriptionNameOrId"
 
-# Deploy using Bicep to your existing resource group that hosts AVS SDDC
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" --parameters jumpboxAdminPassword="YourComplexPassword123!" -c
+# Preview changes with What-If (recommended)
+az deployment group what-if -g "YourExistingResourceGroup" --template-file main.bicep --parameters "@main.parameters.json"
 
-# Or deploy using ARM template
-az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./azuredeploy.json -p "@main.parameters.json" --parameters jumpboxAdminPassword="YourComplexPassword123!" -c
+# Method 1: Deploy with password prompt (most secure)
+echo "You will be prompted for the jumpbox admin password..."
+read -s -p "Enter jumpbox admin password: " JUMPBOX_PASSWORD
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" --parameters jumpboxAdminPassword="$JUMPBOX_PASSWORD" -c
+
+# Method 2: Deploy using compiled ARM template with prompt
+read -s -p "Enter jumpbox admin password: " JUMPBOX_PASSWORD
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.json -p "@main.parameters.json" --parameters jumpboxAdminPassword="$JUMPBOX_PASSWORD" -c
+
+# Method 3: Deploy with inline password (less secure - for testing only)
+az deployment group create -g "YourExistingResourceGroup" -n JumpboxDeployment -f ./main.bicep -p "@main.parameters.json" --parameters jumpboxAdminPassword="YourComplexPassword123!" -c
 ```
 
 **Using PowerShell:**
@@ -66,14 +94,36 @@ Connect-AzAccount -Tenant "YourTenantId.onmicrosoft.com"
 # Set the subscription context
 Set-AzContext -Subscription "YourSubscriptionNameOrId"
 
-# Deploy using Bicep to your existing resource group that hosts AVS SDDC
+# Preview changes with What-If (recommended)
+New-AzResourceGroupDeployment -ResourceGroupName "YourExistingResourceGroup" -TemplateFile "main.bicep" -TemplateParameterFile "main.parameters.json" -WhatIf
+
+# Method 1: Deploy with secure password prompt (most secure)
+$securePassword = Read-Host -AsSecureString -Prompt "Enter jumpbox admin password"
+New-AzResourceGroupDeployment -ResourceGroupName "YourExistingResourceGroup" -Name "JumpboxDeployment" -TemplateFile "main.bicep" -TemplateParameterFile "main.parameters.json" -jumpboxAdminPassword $securePassword
+
+# Method 2: Deploy with inline secure string conversion (for automation)
 New-AzResourceGroupDeployment -ResourceGroupName "YourExistingResourceGroup" -Name "JumpboxDeployment" -TemplateFile "main.bicep" -TemplateParameterFile "main.parameters.json" -jumpboxAdminPassword (ConvertTo-SecureString -String "YourComplexPassword123!" -AsPlainText -Force)
 
-# Or deploy using ARM template
-New-AzResourceGroupDeployment -ResourceGroupName "YourExistingResourceGroup" -Name "JumpboxDeployment" -TemplateFile "azuredeploy.json" -TemplateParameterFile "main.parameters.json" -jumpboxAdminPassword (ConvertTo-SecureString -String "YourComplexPassword123!" -AsPlainText -Force)
+# Method 3: Deploy using compiled ARM template
+New-AzResourceGroupDeployment -ResourceGroupName "YourExistingResourceGroup" -Name "JumpboxDeployment" -TemplateFile "main.json" -TemplateParameterFile "main.parameters.json" -jumpboxAdminPassword (ConvertTo-SecureString -String "YourComplexPassword123!" -AsPlainText -Force)
 ```
 
 The deployment may take approximately 20-30 minutes to complete.
+
+## What Gets Deployed
+
+The template creates the following resources using Azure Verified Modules:
+
+| Resource Type | Resource Name | Purpose |
+|---------------|---------------|---------|
+| Virtual Network | `{vnetName}` | Network infrastructure with 3 subnets |
+| Virtual Machine | `{vmName}` | Windows Server 2019 jumpbox |
+| Public IP Address | `{vnetName}-bastion-pip` | Static IP for Bastion |
+| Network Security Group | `{vmName}-nsg` | Security rules for VM access |
+| Bastion Host | `{vnetName}-bastion` | Secure remote access |
+| Virtual Network Gateway | `{vnetName}-ergw` | ExpressRoute connectivity |
+| Connection | `{vnetName}-er-connection` | AVS ExpressRoute connection |
+| Auto-shutdown Schedule | `shutdown-computevm-{vmName}` | Cost optimization |
 
 ## Post-deployment Steps
 
@@ -94,5 +144,11 @@ The deployment may take approximately 20-30 minutes to complete.
 
 After successfully deploying and configuring your AVS jumpbox, you can:
 
-[Configure HCX on an existing Azure VMware Solution Private Cloud](../../Addons/HCX/readme.md)
+* **Configure HCX**: [Configure HCX on an existing Azure VMware Solution Private Cloud](../../Addons/HCX/readme.md)
+* **Monitor your deployment**: The VM includes system-assigned managed identity for Azure monitoring integration
+* **Cost optimization**: Auto-shutdown is configured for 6PM UTC daily - adjust the schedule in Azure portal if needed
+* **Network connectivity**: Verify ExpressRoute connection status in the Azure portal under Virtual Network Gateway
+
+**Support:**
+For issues with Azure Verified Modules, check the [AVM GitHub repository](https://github.com/Azure/bicep-registry-modules)
 
