@@ -6,7 +6,7 @@ After an Azure VMware Solution SDDC is deployed, very often a secure workstation
 
 ## Introduction
 
-The AVS JumpBox deployment creates a secure Windows virtual machine with the necessary networking components to connect to and manage your Azure VMware Solution (AVS) Private Cloud. This deployment has been modernized to use **Azure Verified Modules (AVM)** for improved maintainability and best practices.
+The AVS JumpBox deployment creates a secure Windows virtual machine with the necessary networking components to connect to and manage your Azure VMware Solution (AVS) Private Cloud. This deployment uses [**Azure Verified Modules (AVM)**](https://azure.github.io/Azure-Verified-Modules/) for improved maintainability and best practices.
 
 ### What's Included:
 
