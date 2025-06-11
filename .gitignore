@@ -22,3 +22,6 @@ dev.tfvars
 
 # File generated when checking spelling
 dictionary.dic
+
+# Parameter files
+BrownField/Addons/Jumpbox/main.parameters.json
