@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "8418153945666711409"
+      "templateHash": "7721468603749202591"
     }
   },
   "parameters": {
@@ -3238,10 +3238,12 @@
               {
                 "nicSuffix": "-nic",
                 "deleteOption": "Delete",
+                "enableAcceleratedNetworking": false,
                 "ipConfigurations": [
                   {
                     "name": "ipconfig1",
-                    "subnetResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'vnetDeployment'), '2022-09-01').outputs.subnetResourceIds.value[0]]"
+                    "subnetResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'vnetDeployment'), '2022-09-01').outputs.subnetResourceIds.value[0]]",
+                    "privateIPAllocationMethod": "Dynamic"
                   }
                 ],
                 "networkSecurityGroupResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'vmNsgDeployment'), '2022-09-01').outputs.resourceId.value]"

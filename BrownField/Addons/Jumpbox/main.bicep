@@ -146,24 +146,26 @@ module jumpboxVm 'br/public:avm/res/compute/virtual-machine:0.15.0' = {
       }
     }
     dataDisks: [
-      {
+      {        
         diskSizeGB: dataDiskSizeGB
         lun: 0
         caching: 'None'
         createOption: 'Empty'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
-        }
+        }      
       }
     ]
     nicConfigurations: [
       {
         nicSuffix: '-nic'
         deleteOption: 'Delete'
+        enableAcceleratedNetworking: false  // Explicitly disable for Standard_B4ms
         ipConfigurations: [
           {
             name: 'ipconfig1'
-            subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet            privateIPAllocationMethod: 'Dynamic'
+            subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet
+            privateIPAllocationMethod: 'Dynamic'
           }
         ]
         networkSecurityGroupResourceId: vmNsg.outputs.resourceId
