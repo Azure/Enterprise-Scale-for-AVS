@@ -32,7 +32,7 @@ param dataDiskSizeGB int = 100
 @description('Admin username for the VM')
 param adminUsername string = '<CHANGE-ME>'
 
-@description('Admin password for the VM')
+@description('Admin password for the VM - provided at deployment time')
 @secure()
 param jumpboxAdminPassword string
 
@@ -120,35 +120,59 @@ module vnet 'br/public:avm/res/network/virtual-network:0.7.0' = {
   }
 }
 
-// Create NIC using AVM Network Interface module
-module vmNic 'br/public:avm/res/network/network-interface:0.3.0' = {
-  name: 'vmNicDeployment'
-  params: {
-    name: '${vmName}-nic'
-    location: location
-    ipConfigurations: [
-      {
-        name: 'ipconfig1'
-        subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet is first in array
-        privateIPAllocationMethod: 'Dynamic'
-      }
-    ]
-    networkSecurityGroupResourceId: vmNsg.outputs.resourceId
-    tags: tags
-  }
-}
-
-// Deploy the jumpbox VM using pre-deployed NIC
-module jumpboxVm 'jumpbox-vm.bicep' = {
+// Deploy the jumpbox VM using AVM Virtual Machine module
+module jumpboxVm 'br/public:avm/res/compute/virtual-machine:0.15.0' = {
   name: 'jumpboxVmDeployment'
-  params: {    
-    vmName: vmName
+  params: {
+    name: vmName
     location: location
     vmSize: vmSize
     adminUsername: adminUsername
     adminPassword: jumpboxAdminPassword
-    nicId: vmNic.outputs.resourceId  // Updated to use AVM NIC output
-    dataDiskSizeGB: dataDiskSizeGB
+    osType: 'Windows'
+    zone: 0
+    imageReference: {
+      publisher: 'MicrosoftWindowsServer'
+      offer: 'WindowsServer'
+      sku: '2019-Datacenter'
+      version: 'latest'
+    }
+    osDisk: {
+      diskSizeGB: 128
+      caching: 'ReadWrite'
+      createOption: 'FromImage'
+      managedDisk: {
+        storageAccountType: 'Standard_LRS'
+      }
+    }
+    dataDisks: [
+      {
+        diskSizeGB: dataDiskSizeGB
+        lun: 0
+        caching: 'None'
+        createOption: 'Empty'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+      }
+    ]
+    nicConfigurations: [
+      {
+        nicSuffix: '-nic'
+        deleteOption: 'Delete'
+        ipConfigurations: [
+          {
+            name: 'ipconfig1'
+            subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet            privateIPAllocationMethod: 'Dynamic'
+          }
+        ]
+        networkSecurityGroupResourceId: vmNsg.outputs.resourceId
+      }
+    ]
+    managedIdentities: {
+      systemAssigned: true
+    }
+    bootDiagnostics: true
     tags: tags
   }
 }
@@ -178,7 +202,7 @@ module erGateway 'br/public:avm/res/network/virtual-network-gateway:0.4.0' = {
       clusterMode: 'activePassiveNoBgp'
     }
     skuName: 'Standard'
-    gatewayPipName: '${vnetName}-ergw-pip' // Use our existing public IP name
+    gatewayPipName: '${vnetName}-ergw-pip' // Use existing if not create new public IP
     tags: tags
   }
 }
@@ -199,7 +223,7 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
       emailRecipient: ''
       notificationLocale: 'en'
     }
-    targetResourceId: jumpboxVm.outputs.vmId
+    targetResourceId: jumpboxVm.outputs.resourceId
   }
 }
 
@@ -225,9 +249,9 @@ module erConnection 'br/public:avm/res/network/connection:0.1.4' = if (!empty(ex
 // Output section
 output vnetId string = vnet.outputs.resourceId
 output vmSubnetId string = vnet.outputs.subnetResourceIds[0]  // VMSubnet
-output vmName string = jumpboxVm.outputs.vmName
-output vmPrivateIP string = jumpboxVm.outputs.privateIPAddress
-output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIdentityPrincipalId
+output vmName string = jumpboxVm.outputs.name
+output vmPrivateIP string = '' // Private IP not available from AVM VM module outputs
+output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedMIPrincipalId!
 output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet
 output bastionId string = bastionHost.outputs.resourceId
 output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
