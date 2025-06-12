@@ -32,7 +32,7 @@ param dataDiskSizeGB int = 100
 @description('Admin username for the VM')
 param adminUsername string = '<CHANGE-ME>'
 
-@description('Admin password for the VM')
+@description('Admin password for the VM - provided at deployment time')
 @secure()
 param jumpboxAdminPassword string
 
@@ -49,147 +49,164 @@ param expressRouteCircuitId string = ''
 @secure()
 param expressRouteAuthKey string = ''
 
-// Pre-deploy Public IPs at the beginning to allow for parallelism
-module bastionPublicIp 'publicip.bicep' = {
+// Pre-deploy Public IP for Bastion at the beginning to allow for parallelism
+module bastionPublicIp 'br/public:avm/res/network/public-ip-address:0.8.0' = {
   name: 'bastionPublicIpDeployment'
   params: {
     name: '${vnetName}-bastion-pip'
     location: location
     tags: tags
+    publicIPAllocationMethod: 'Static'
+    skuName: 'Standard'
+    skuTier: 'Regional'
   }
 }
 
-module gatewayPublicIp 'publicip.bicep' = {
-  name: 'gatewayPublicIpDeployment'
-  params: {
-    name: '${vnetName}-ergw-pip'
-    location: location
-    tags: tags
-  }
-}
+// Note: Gateway Public IP is now handled by the AVM Virtual Network Gateway module
 
 // Pre-deploy NSG at the beginning to allow for parallelism
-module vmNsg 'nsg.bicep' = {
+module vmNsg 'br/public:avm/res/network/network-security-group:0.5.1' = {
   name: 'vmNsgDeployment'
   params: {
     name: '${vmName}-nsg'
     location: location
     tags: tags
+    securityRules: [
+      {
+        name: 'AllowRDPFromVNet'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 1000
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '3389'
+        }
+      }
+    ]
   }
 }
 
-// Deploy the virtual network
-module vnet 'vnet.bicep' = {
+// Deploy the virtual network with all subnets using AVM
+module vnet 'br/public:avm/res/network/virtual-network:0.7.0' = {
   name: 'vnetDeployment'
   params: {
-    vnetName: vnetName
+    name: vnetName
     location: location
-    vnetAddressPrefix: vnetAddressPrefix
+    addressPrefixes: [
+      vnetAddressPrefix
+    ]
+    subnets: [
+      {
+        name: vmSubnetName
+        addressPrefix: vmSubnetPrefix
+        privateEndpointNetworkPolicies: 'Enabled'
+        privateLinkServiceNetworkPolicies: 'Enabled'
+      }
+      {
+        name: 'AzureBastionSubnet'
+        addressPrefix: bastionSubnetPrefix
+        privateEndpointNetworkPolicies: 'Disabled'
+        privateLinkServiceNetworkPolicies: 'Disabled'
+      }
+      {
+        name: 'GatewaySubnet'
+        addressPrefix: gatewaySubnetPrefix
+      }
+    ]
     tags: tags
   }
 }
 
-// Deploy subnets sequentially to avoid parallel operations on the same VNET
-module vmSubnet 'subnet-vm.bicep' = {
-  name: 'vmSubnetDeployment'
-  params: {    
-    vnetName: vnetName
-    subnetName: vmSubnetName
-    subnetPrefix: vmSubnetPrefix
-  }
-  dependsOn: [
-    vnet
-  ]
-}
-
-module bastionSubnet 'subnet-bastion.bicep' = {
-  name: 'bastionSubnetDeployment'
-  params: {
-    vnetName: vnetName
-    subnetPrefix: bastionSubnetPrefix
-  }
-  dependsOn: [
-    vnet
-    vmSubnet
-  ]
-}
-
-module gatewaySubnet 'subnet-gateway.bicep' = {
-  name: 'gatewaySubnetDeployment'
-  params: {
-    vnetName: vnetName
-    subnetPrefix: gatewaySubnetPrefix
-  }
-  dependsOn: [
-    vnet
-    bastionSubnet
-  ]
-}
-
-// Create NIC as soon as VM subnet is available
-module vmNic 'nic.bicep' = {
-  name: 'vmNicDeployment'
-  params: {
-    name: '${vmName}-nic'
-    location: location
-    subnetId: vmSubnet.outputs.subnetId
-    nsgId: vmNsg.outputs.nsgId
-    tags: tags
-  }
-  dependsOn: [
-    vmSubnet
-    vmNsg
-  ]
-}
-
-// Deploy the jumpbox VM using pre-deployed NIC
-module jumpboxVm 'jumpbox-vm.bicep' = {
+// Deploy the jumpbox VM using AVM Virtual Machine module
+module jumpboxVm 'br/public:avm/res/compute/virtual-machine:0.15.0' = {
   name: 'jumpboxVmDeployment'
-  params: {    
-    vmName: vmName
+  params: {
+    name: vmName
     location: location
     vmSize: vmSize
     adminUsername: adminUsername
     adminPassword: jumpboxAdminPassword
-    nicId: vmNic.outputs.nicId
-    dataDiskSizeGB: dataDiskSizeGB
+    osType: 'Windows'
+    zone: 0
+    imageReference: {
+      publisher: 'MicrosoftWindowsServer'
+      offer: 'WindowsServer'
+      sku: '2019-Datacenter'
+      version: 'latest'
+    }
+    osDisk: {
+      diskSizeGB: 128
+      caching: 'ReadWrite'
+      createOption: 'FromImage'
+      managedDisk: {
+        storageAccountType: 'Standard_LRS'
+      }
+    }
+    dataDisks: [
+      {        
+        diskSizeGB: dataDiskSizeGB
+        lun: 0
+        caching: 'None'
+        createOption: 'Empty'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }      
+      }
+    ]
+    nicConfigurations: [
+      {
+        nicSuffix: '-nic'
+        deleteOption: 'Delete'
+        enableAcceleratedNetworking: false  // Explicitly disable for Standard_B4ms
+        ipConfigurations: [
+          {
+            name: 'ipconfig1'
+            subnetResourceId: vnet.outputs.subnetResourceIds[0]  // VMSubnet
+            privateIPAllocationMethod: 'Dynamic'
+          }
+        ]
+        networkSecurityGroupResourceId: vmNsg.outputs.resourceId
+      }
+    ]
+    managedIdentities: {
+      systemAssigned: true
+    }
+    bootDiagnostics: true
     tags: tags
   }
-  dependsOn: [
-    vmNic
-  ]
 }
 
-// Deploy resources in parallel that depend on specific subnets
-module bastionHost 'bastion.bicep' = {
+// Deploy Bastion Host using AVM module
+module bastionHost 'br/public:avm/res/network/bastion-host:0.6.1' = {
   name: 'bastionDeployment'
   params: {
-    bastionName: '${vnetName}-bastion'
+    name: '${vnetName}-bastion'
     location: location
-    subnetId: bastionSubnet.outputs.subnetId
-    publicIpId: bastionPublicIp.outputs.publicIpId
+    virtualNetworkResourceId: vnet.outputs.resourceId
+    bastionSubnetPublicIpResourceId: bastionPublicIp.outputs.resourceId
+    skuName: 'Standard'
     tags: tags
   }
-  dependsOn: [
-    bastionSubnet
-    bastionPublicIp
-  ]
 }
 
-module erGateway 'ergw.bicep' = {
+// Deploy ExpressRoute Gateway using AVM Virtual Network Gateway module
+module erGateway 'br/public:avm/res/network/virtual-network-gateway:0.4.0' = {
   name: 'erGatewayDeployment'
   params: {
-    gatewayName: '${vnetName}-ergw'
+    name: '${vnetName}-ergw'
     location: location
-    subnetId: gatewaySubnet.outputs.subnetId
-    publicIpId: gatewayPublicIp.outputs.publicIpId
-    gatewaySku: 'Standard'
+    gatewayType: 'ExpressRoute'
+    vNetResourceId: vnet.outputs.resourceId
+    clusterSettings: {
+      clusterMode: 'activePassiveNoBgp'
+    }
+    skuName: 'Standard'
+    gatewayPipName: '${vnetName}-ergw-pip' // Use existing if not create new public IP
     tags: tags
   }
-  dependsOn: [
-    gatewaySubnet
-    gatewayPublicIp
-  ]
 }
 
 // Auto-shutdown configuration depends only on VM
@@ -208,38 +225,38 @@ resource autoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
       emailRecipient: ''
       notificationLocale: 'en'
     }
-    targetResourceId: jumpboxVm.outputs.vmId
+    targetResourceId: jumpboxVm.outputs.resourceId
   }
-  dependsOn: [
-    jumpboxVm
-  ]
 }
 
-// ExpressRoute Connection depends only on the gateway
-module erConnection 'er-connection.bicep' = if (!empty(expressRouteCircuitId) && !empty(expressRouteAuthKey)) {
+// ExpressRoute Connection using AVM Connection module
+module erConnection 'br/public:avm/res/network/connection:0.1.4' = if (!empty(expressRouteCircuitId) && !empty(expressRouteAuthKey)) {
   name: 'erConnectionDeployment'
   params: {
-    connectionName: '${vnetName}-er-connection'
+    name: '${vnetName}-er-connection'
     location: location
-    circuitId: expressRouteCircuitId
+    connectionType: 'ExpressRoute'
+    virtualNetworkGateway1: {
+      id: erGateway.outputs.resourceId
+    }
+    peer: {
+      id: expressRouteCircuitId
+    }
     authorizationKey: expressRouteAuthKey
-    gatewayId: erGateway.outputs.gatewayId
+    routingWeight: 0
     tags: tags
   }
-  dependsOn: [
-    erGateway
-  ]
 }
 
 // Output section
-output vnetId string = vnet.outputs.vnetId
-output vmSubnetId string = vmSubnet.outputs.subnetId
-output vmName string = jumpboxVm.outputs.vmName
-output vmPrivateIP string = jumpboxVm.outputs.privateIPAddress
-output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedIdentityPrincipalId
-output bastionSubnetId string = bastionSubnet.outputs.subnetId
-output bastionId string = bastionHost.outputs.bastionId
-output gatewaySubnetId string = gatewaySubnet.outputs.subnetId
-output erGatewayId string = erGateway.outputs.gatewayId
-output erConnectionId string = !empty(expressRouteCircuitId) && !empty(expressRouteAuthKey) ? erConnection.outputs.connectionId : ''
-output erConnectionName string = !empty(expressRouteCircuitId) && !empty(expressRouteAuthKey) ? erConnection.outputs.connectionName : ''
+output vnetId string = vnet.outputs.resourceId
+output vmSubnetId string = vnet.outputs.subnetResourceIds[0]  // VMSubnet
+output vmName string = jumpboxVm.outputs.name
+output vmPrivateIP string = '' // Private IP not available from AVM VM module outputs
+output vmManagedIdentityPrincipalId string = jumpboxVm.outputs.systemAssignedMIPrincipalId!
+output bastionSubnetId string = vnet.outputs.subnetResourceIds[1]  // AzureBastionSubnet
+output bastionId string = bastionHost.outputs.resourceId
+output gatewaySubnetId string = vnet.outputs.subnetResourceIds[2]  // GatewaySubnet
+output erGatewayId string = erGateway.outputs.resourceId
+output erConnectionId string = !empty(expressRouteCircuitId) ? erConnection.outputs.resourceId : ''
+output erConnectionName string = !empty(expressRouteCircuitId) ? erConnection.outputs.name : ''
