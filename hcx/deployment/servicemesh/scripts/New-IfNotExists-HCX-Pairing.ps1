@@ -9,7 +9,7 @@ function New-IfNotExists-HCX-Pairing {
         [string]$hcxManagerUserName,
         [SecureString]$hcxManagerPassword
     )
-    Write-Host "Checking for existing HCX pairing and creating new if does not exists..."
+    Write-Host "Checking for existing HCX pairing and creating new if it does not exists..."
     $pairing = $null
     # Check if HCX pairing already exists
     $pairing = Get-HCXPairing -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
