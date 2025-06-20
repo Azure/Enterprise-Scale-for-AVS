@@ -39,7 +39,7 @@ function New-IfNotExists-HCX-ComputeProfile {
             while ($taskDetails.status -eq "RUNNING" -or $taskDetails.status -eq "QUEUED") {
                 Write-Host "Waiting for Compute Profile creation to complete..."
                 Start-Sleep -Seconds 10
-                $taskDetails = Get-Interconnect-Task-Details -taskID $response.data.interconnectTaskId `
+                $taskDetails = Get-Interconnect-Task-Details -taskID $computeProfile.data.interconnectTaskId `
                     -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
                     -hcxConnectorUserName $hcxConnectorUserName `
                     -hcxConnectorPassword $hcxConnectorPassword

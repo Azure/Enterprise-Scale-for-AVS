@@ -22,7 +22,7 @@ function New-IfNotExists-HCX-Pairing {
     if ($pairing) {
         Write-Host "HCX pairing already exists for HCX Manager: $hcxManager."
     } else {
-        Write-Host "No matching HCX pairing found for: $hcxManager"
+        Write-Host "No matching HCX pairing found for AVS HCX Manager: $hcxManager"
     }
 
     if ($null -eq $pairing) {
