@@ -15,9 +15,9 @@ function New-IfNotExists-HCX-ComputeProfile {
             -hcxConnectorPassword $hcxConnectorPassword
 
         # Get first Compute Profile matching name
-        $response = $computeProfile.items | Where-Object { $_.name -eq $computeProfileName } | Select-Object -First 1
-        if ($response -and $response.computeProfileId) {
-            Write-Host "HCX Compute Profile: '$($response.name)' already exists."
+        $computeProfile = $computeProfile.items | Where-Object { $_.name -eq $computeProfileName } | Select-Object -First 1
+        if ($computeProfile -and $computeProfile.computeProfileId) {
+            Write-Host "HCX Compute Profile: '$($computeProfile.name)' already exists."
         }
 
         if ($null -eq $computeProfile) {
@@ -27,6 +27,35 @@ function New-IfNotExists-HCX-ComputeProfile {
                 -hcxConnectorPassword $hcxConnectorPassword `
                 -hcxNetworkProfiles $hcxNetworkProfiles `
                 -useMgmtForUplinkInComputeProfile $useMgmtForUplinkInComputeProfile
+
+            # Get Task details
+            $taskDetails = Get-Interconnect-Task-Details -taskID $computeProfile.data.interconnectTaskId `
+                -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                -hcxConnectorUserName $hcxConnectorUserName `
+                -hcxConnectorPassword $hcxConnectorPassword
+
+            # Check while status is "RUNNING" or "QUEUED". Break if it is "SUCCESS" or "FAILED"
+            while ($taskDetails.status -eq "RUNNING" -or $taskDetails.status -eq "QUEUED") {
+                Write-Host "Waiting for Compute Profile creation to complete..."
+                Start-Sleep -Seconds 10
+                $taskDetails = Get-Interconnect-Task-Details -taskID $response.data.interconnectTaskId `
+                    -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                    -hcxConnectorUserName $hcxConnectorUserName `
+                    -hcxConnectorPassword $hcxConnectorPassword
+            }
+            
+            if ($taskDetails.status -eq "SUCCESS") {
+                $computeProfile = Get-HCX-ComputeProfile -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                -hcxConnectorUserName $hcxConnectorUserName `
+                -hcxConnectorPassword $hcxConnectorPassword
+
+                Write-Host "New HCX Compute Profile '$computeProfileName' created successfully."
+                return $computeProfile
+
+            } elseif ($taskDetails.status -eq "FAILED") {
+                Write-Host "Compute Profile creation failed: $($taskDetails.errorMessage)"
+                return $null
+            }
         }
 
         return $computeProfile
@@ -215,36 +244,8 @@ function New-HCX-ComputeProfile {
             -AuthType "HCX"
 
         if ($response -and $response.data.interconnectTaskId) {
-            # Get Task details
-            $taskDetails = Get-Interconnect-Task-Details -taskID $response.data.interconnectTaskId `
-                -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
-                -hcxConnectorUserName $hcxConnectorUserName `
-                -hcxConnectorPassword $hcxConnectorPassword
-
-            # Check while status is "RUNNING" or "QUEUED". Break if it is "SUCCESS" or "FAILED"
-            while ($taskDetails.status -eq "RUNNING" -or $taskDetails.status -eq "QUEUED") {
-                Write-Host "Waiting for Compute Profile creation to complete..."
-                Start-Sleep -Seconds 10
-                $taskDetails = Get-Interconnect-Task-Details -taskID $response.data.interconnectTaskId `
-                    -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
-                    -hcxConnectorUserName $hcxConnectorUserName `
-                    -hcxConnectorPassword $hcxConnectorPassword
-            }
-            
-            if ($taskDetails.status -eq "SUCCESS") {
-                $computeProfile = Get-HCX-ComputeProfile -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
-                -hcxConnectorUserName $hcxConnectorUserName `
-                -hcxConnectorPassword $hcxConnectorPassword
-
-                Write-Host "New HCX Compute Profile '$computeProfileName' created successfully."
-                return $computeProfile
-
-            } elseif ($taskDetails.status -eq "FAILED") {
-                Write-Host "Compute Profile creation failed: $($taskDetails.errorMessage)"
-                return $null
-            }
+            return $response
         } else {
-            Write-Host "Failed to create HCX Compute Profile '$computeProfileName'."
             return $null
         }
     }
