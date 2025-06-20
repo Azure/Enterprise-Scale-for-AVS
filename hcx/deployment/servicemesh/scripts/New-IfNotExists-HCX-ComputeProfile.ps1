@@ -14,6 +14,12 @@ function New-IfNotExists-HCX-ComputeProfile {
             -hcxConnectorUserName $hcxConnectorUserName `
             -hcxConnectorPassword $hcxConnectorPassword
 
+        # Get first Compute Profile matching name
+        $response = $computeProfile.items | Where-Object { $_.name -eq $computeProfileName } | Select-Object -First 1
+        if ($response -and $response.computeProfileId) {
+            Write-Host "HCX Compute Profile: '$($response.name)' already exists."
+        }
+
         if ($null -eq $computeProfile) {
             # Create new Compute Profile
             $computeProfile = New-HCX-ComputeProfile -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
@@ -55,16 +61,6 @@ function Get-HCX-ComputeProfile {
 
         # Process the response
         if ($response -and $response.items.Count -gt 0) {
-            # Get first Compute Profile matching name
-            $response = $response.items | Where-Object { $_.name -eq $computeProfileName } | Select-Object -First 1
-            if ($response -and $response.computeProfileId) {
-                Write-Host "HCX Compute Profile: '$($response.name)' already exists."
-                return $response
-            } else {
-                Write-Host "HCX Compute Profile: '$($response.name)' is not available."
-                return $null
-            }
-            
             return $response
         } else {
             return $null
@@ -111,7 +107,6 @@ function Get-HCX-ComputeProfile-By-Endpoint {
         Write-Error "Error retrieving Compute Profiles: $_"
     }
 }
-
 function New-HCX-ComputeProfile {
     param (
         [string]$hcxConnectorServiceUrl,
@@ -257,7 +252,6 @@ function New-HCX-ComputeProfile {
         Write-Host "Error creating HCX Compute Profile: $_"
     }
 }
-
 function Get-NetworkProfileIDs {
     param (
         [array]$hcxNetworkProfiles
