@@ -14,7 +14,7 @@ function Start-Processing {
     
     try {
         
-        Write-Host "Starting Automated ServiceMesh creation..."
+        Write-Host "Started Automated ServiceMesh creation..."
         # Source the parameter file inside the function to get access to all parameters
         . $ParameterFile
 
