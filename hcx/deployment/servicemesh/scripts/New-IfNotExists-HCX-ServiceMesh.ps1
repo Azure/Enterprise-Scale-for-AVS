@@ -36,9 +36,16 @@ function New-IfNotExists-HCX-ServiceMesh {
                 -hcxConnectorUserName $hcxConnectorUserName `
                 -hcxConnectorPassword $hcxConnectorPassword
 
+            if ($taskDetails) {
+                Write-Host "Service Mesh creation task started..."
+            } else {
+                Write-Host "Failed to retrieve task details for Service Mesh creation."
+                return $null
+            }
+
             # Check while status is "RUNNING" or "QUEUED". Break if it is "SUCCESS" or "FAILED"
-            while ($taskDetails.status -eq "RUNNING" -or $taskDetails.status -eq "QUEUED") {
-                Write-Host "$($taskDetails.message) , checking status in 1 minute..."
+            while ($taskDetails -and $taskDetails.status -eq "RUNNING" -or $taskDetails.status -eq "QUEUED") {
+                Write-Host "Current Status: $($taskDetails.message), next check in 1 minute..."
                 Start-Sleep -Seconds 60
                 $taskDetails = Get-Interconnect-Task-Details -taskID $newServiceMesh.data.interconnectTaskId `
                     -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
@@ -46,7 +53,7 @@ function New-IfNotExists-HCX-ServiceMesh {
                     -hcxConnectorPassword $hcxConnectorPassword
             }
             
-            if ($taskDetails.status -eq "SUCCESS") {
+            if ($taskDetails -and $taskDetails.status -eq "SUCCESS") {
                 $newServiceMesh = Get-HCX-ServiceMesh -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
                 -hcxConnectorUserName $hcxConnectorUserName `
                 -hcxConnectorPassword $hcxConnectorPassword
@@ -54,7 +61,7 @@ function New-IfNotExists-HCX-ServiceMesh {
                 Write-Host "New HCX Service Mesh '$($newServiceMesh.items[0].name)' created successfully."
                 return $newServiceMesh
 
-            } elseif ($taskDetails.status -eq "FAILED") {
+            } elseif ($taskDetails -and $taskDetails.status -eq "FAILED") {
                 Write-Host "Service Mesh creation failed: $($taskDetails.errorMessage)"
                 return $null
             }
