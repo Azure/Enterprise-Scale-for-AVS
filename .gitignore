@@ -28,3 +28,4 @@ BrownField/Addons/Jumpbox/main.parameters.json
 
 # Local configuration files
 hcx/deployment/connector/scripts/Main.parameters.ps1
+hcx/deployment/servicemesh/scripts/Main.parameters.ps1
