@@ -8,6 +8,7 @@ function New-IfNotExists-HCX-NetworkProfiles {
         [SecureString]$hcxConnectorPassword
     )    
     try {
+        Write-Host "Checking for existing HCX Network Profiles and creating new if they do not exist..."
         # Define a hashtable to hold network profile IDs
         $networkProfiles = @{}
 

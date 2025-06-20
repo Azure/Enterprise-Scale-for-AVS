@@ -9,6 +9,7 @@ function New-IfNotExists-HCX-ComputeProfile {
     )
 
     try {
+        Write-Host "Checking for existing HCX Compute Profile and creating new if does not exist..."
         # Get existing Compute Profiles
         $computeProfile = Get-HCX-ComputeProfile -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
             -hcxConnectorUserName $hcxConnectorUserName `

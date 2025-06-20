@@ -9,6 +9,7 @@ function New-IfNotExists-HCX-ServiceMesh {
     )
 
     try {
+        Write-Host "Checking for existing HCX Service Mesh and creating new if it does not exist..."
         # Check if the Service Mesh already exists
         $existingServiceMesh = Get-HCX-ServiceMesh `
             -hcxConnectorServiceUrl $hcxConnectorServiceUrl `

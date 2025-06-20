@@ -7,6 +7,7 @@ function Get-AVS-SDDC-Details {
         [string]$avsSddcName
     )
     try {
+        Write-Host "Retrieving AVS SDDC Details for Subscription: $subscriptionId"
         # Define the API endpoint for getting AVS SDDCs
         $apiUrl = [string]::Format(
             "https://management.azure.com/subscriptions/{0}/" +
