@@ -28,7 +28,6 @@ function Get-Job-Details {
         if ($response) {
             return $response
         } else {
-            Write-Error "No job details found or failed to retrieve."
             return $null
         }
     }

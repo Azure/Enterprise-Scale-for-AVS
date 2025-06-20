@@ -1,5 +1,5 @@
 . .\Invoke-API.ps1
-
+. .\Get-Job-Details.ps1
 function New-IfNotExists-HCX-Pairing {
     param (
         [string]$hcxConnectorServiceUrl,
@@ -20,9 +20,9 @@ function New-IfNotExists-HCX-Pairing {
     # Get the first pairing matching name of the HCX Manager
     $pairing = $pairing.data.items | Where-Object { $_.url -eq $hcxManager.TrimEnd('/') } | Select-Object -First 1
     if ($pairing) {
-        Write-Host "HCX pairing already exists for HCX Manager: $hcxManager."
+        Write-Host "HCX pairing already exists with HCX Manager '$hcxManager'."
     } else {
-        Write-Host "No matching HCX pairing found for AVS HCX Manager: $hcxManager"
+        Write-Host "No matching HCX pairing found with AVS HCX Manager '$hcxManager'"
     }
 
     if ($null -eq $pairing) {
@@ -35,7 +35,36 @@ function New-IfNotExists-HCX-Pairing {
             -hcxManagerPassword $hcxManagerPassword
 
         if ($newPairing) {
-            $pairing = $newPairing.data.items | Where-Object { $_.url -eq $hcxManager.TrimEnd('/') } | Select-Object -First 1
+
+            # Get Job details
+            $jobDetails = Get-Job-Details -jobId $newPairing.jobId `
+                -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                -hcxConnectorUserName $hcxConnectorUserName `
+                -hcxConnectorPassword $hcxConnectorPassword
+
+            # Check the status
+            while ($null -eq $jobDetails.jobData.endpoint) {
+                Write-Host "Waiting for HCX Pairing to complete..."
+                Start-Sleep -Seconds 10
+                $jobDetails = Get-Job-Details -jobId $newPairing.jobId `
+                    -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                    -hcxConnectorUserName $hcxConnectorUserName `
+                    -hcxConnectorPassword $hcxConnectorPassword
+            }
+
+            if ($jobDetails.jobData.endpoint) {
+                $pairing = Get-HCXPairing -hcxConnectorServiceUrl $hcxConnectorServiceUrl `
+                            -hcxManager $hcxManager `
+                            -hcxConnectorUserName $hcxConnectorUserName `
+                            -hcxConnectorPassword $hcxConnectorPassword
+                $pairing = $pairing.data.items | Where-Object { $_.url -eq $hcxManager.TrimEnd('/') } | Select-Object -First 1
+                Write-Host "New Site Pairing created successfully."
+                return $pairing
+
+            } else {
+                Write-Error "HCX pairing creation Job failed."
+                return $null
+            }
         }
     }
 
@@ -119,10 +148,8 @@ function New-HCXPairing {
 
         # Process the response
         if ($response.success -eq $true) {
-            Write-Host "Created new HCX pairing."
             return $response.data
         } else {
-            Write-Host "Failed to create HCX pairing."
             return $null
         }
     }
