@@ -35,7 +35,7 @@ function New-IfNotExists-HCX-Pairing {
             -hcxManagerPassword $hcxManagerPassword
 
         if ($newPairing) {
-            $pairing = $newPairing
+            $pairing = $newPairing.data.items | Where-Object { $_.url -eq $hcxManager.TrimEnd('/') } | Select-Object -First 1
         }
     }
 
