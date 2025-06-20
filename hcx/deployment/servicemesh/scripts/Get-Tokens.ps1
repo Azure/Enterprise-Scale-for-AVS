@@ -6,7 +6,7 @@ function Get-Tokens {
     )
 
     try {
-        Write-Host "Retrieving Azure tokens for Tenant: $TenantID, Subscription: $SubscriptionID"
+        Write-Host "Retrieving Azure tokens..."
         # Check if we already have a valid token (unless ForceRefresh is specified)
         if (-not $ForceRefresh) {
             try {

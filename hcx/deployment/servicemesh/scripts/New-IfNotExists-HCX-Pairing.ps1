@@ -119,7 +119,7 @@ function New-HCXPairing {
 
         # Process the response
         if ($response.success -eq $true) {
-            Write-Host "Created HCX pairing."
+            Write-Host "Created new HCX pairing."
             return $response.data
         } else {
             Write-Host "Failed to create HCX pairing."
