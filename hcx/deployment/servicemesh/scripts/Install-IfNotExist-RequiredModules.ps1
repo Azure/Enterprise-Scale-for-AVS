@@ -15,7 +15,7 @@ function Install-RequiredModule {
     # Import the module if not already imported
     if (-not (Get-Module -Name $moduleName -ErrorAction SilentlyContinue)) {
         Write-Host "Importing module $moduleName..."
-        Import-Module -Name $moduleName -ErrorAction Stop -Verbose
+        Import-Module -Name $moduleName -ErrorAction Stop
     } else {
         #Write-Host "Module $moduleName is already imported."
     }

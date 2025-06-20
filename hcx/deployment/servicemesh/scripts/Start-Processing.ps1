@@ -78,5 +78,10 @@ function Start-Processing {
         -hcxPairing $pairing `
         -hcxComputeProfile $computeProfile
 
+    if (-not $serviceMesh) {
+        Write-Error "Failed to create or retrieve HCX Service Mesh."
+        return $false
+    }
+    
     return $true
 }

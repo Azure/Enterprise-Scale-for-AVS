@@ -32,9 +32,9 @@ try {
     $result = Start-Processing -ParameterFile $ParameterFile -hcxConnectorPassword $hcxConnectorPassword
 
     if ($result) {
-        Write-Host "Processing completed successfully."
+        Write-Host "Automated ServiceMesh creation completed successfully."
     } else {
-        Write-Host "Processing failed."
+        Write-Host "Automated ServiceMesh creation failed."
     }
 }
 catch {
