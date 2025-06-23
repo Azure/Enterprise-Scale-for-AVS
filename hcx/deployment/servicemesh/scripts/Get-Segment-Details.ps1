@@ -29,7 +29,6 @@ function Get-Segment-Details {
                 # Return the Segment ID
                 return $segment
             } else {
-                Write-Error "Failed to get Segment ID."
                 return $null
             }
         }

@@ -29,7 +29,6 @@ function Get-HCX-vCenterConfig {
                 }
             }
         } else {
-            Write-Error "Failed to retrieve HCX vCenter configuration."
             return $null
         }
     }

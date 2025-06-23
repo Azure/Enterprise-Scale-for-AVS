@@ -49,7 +49,7 @@ function Start-Processing {
 
 
         if (-not $pairing) {
-            Write-Error "Failed to create or retrieve HCX pairing."
+            Write-Error "Failed to create or retrieve HCX pairing. Check your HCX Connector parameter values."
             return $false
         }
 

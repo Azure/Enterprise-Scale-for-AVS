@@ -97,6 +97,11 @@ function New-IfNotExists-HCX-NetworkProfiles {
                         "vmotion"    { $networkProfiles.vmotionProfileId = $networkProfileObjectId }
                         "replication"{ $networkProfiles.replicationProfileId = $networkProfileObjectId }
                     }
+
+                    Write-Host "Created '$networkProfileType' HCX Network Profile successfully."
+                } else {
+                    Write-Host "Failed to create '$networkProfileType' HCX Network Profile. Check your HCX Network Profile parameter values."
+
                 }
             } else {
                     # Add the existing network profile to the hashtable
@@ -181,7 +186,7 @@ function New-HCX-NetworkProfile {
             -hcxConnectorPassword $hcxConnectorPassword
 
         if (-not $hcxvCenterConfig) {
-            Write-Error "Failed to retrieve HCX vCenter Config."
+            Write-Error "Failed to retrieve HCX vCenter Config while configuring '$networkProfileType' network profile. Check your HCX Connector Management URL parameter value."
             return $null
         }
 
@@ -246,11 +251,8 @@ function New-HCX-NetworkProfile {
 
         # Process the response
         if ($response -and $response.error -eq $false) {
-            Write-Host "Created '$networkProfileType' HCX Network Profile successfully."
             return $response.data.objectId
-            
         } else {
-            Write-Host "Failed to create '$networkProfileType' HCX Network Profile."
             return $null
         }
     }

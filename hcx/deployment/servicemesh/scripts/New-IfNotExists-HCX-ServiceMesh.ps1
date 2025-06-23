@@ -16,9 +16,13 @@ function New-IfNotExists-HCX-ServiceMesh {
             -hcxConnectorUserName $hcxConnectorUserName `
             -hcxConnectorPassword $hcxConnectorPassword
 
-        if ($existingServiceMesh) {
-            Write-Host "HCX Service Mesh '$($existingServiceMesh.name)' already exists."
-            return $existingServiceMesh.items | Select-Object -First 1
+        if ($existingServiceMesh -and $existingServiceMesh.items) {
+            
+            $matchingServiceMesh = $existingServiceMesh.items | Where-Object { $_.name -eq $serviceMeshName } | Select-Object -First 1
+            if ($matchingServiceMesh) {
+                Write-Host "HCX Service Mesh '$($matchingServiceMesh.name)' already exists."
+                return $matchingServiceMesh
+            }
         }
 
         # Create a new Service Mesh
