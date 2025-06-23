@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param (
     [Parameter()]
-    [string]$ParameterFile = ".\dev.Main.parameters.ps1",
+    [string]$ParameterFile = ".\Main.parameters.ps1",
     
     [Parameter(Mandatory=$true)]
     [secureString]$hcxConnectorPassword
