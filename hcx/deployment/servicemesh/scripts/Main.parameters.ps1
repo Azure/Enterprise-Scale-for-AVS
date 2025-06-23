@@ -1,11 +1,11 @@
 # This file contains the parameters required for deploying the HCX Service Mesh in Azure VMware Solution (AVS).
 
 # $tenantID paramemter is used to specify the Azure Active Directory tenant ID.
-# Example: "27eda5xx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+# Example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 # This tenant ID is used to authenticate and authorize access to Azure resources.
 $tenantId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 # $subscriptionID parameter is used to specify the Azure subscription ID.
-# Example: "d52f9xxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+# Example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
 # This subscription ID is used to identify the Azure subscription where the AVS SDDC is
 # deployed and where the HCX Service Mesh will be created.
 # Ensure that you have the necessary permissions to create resources in this subscription.
