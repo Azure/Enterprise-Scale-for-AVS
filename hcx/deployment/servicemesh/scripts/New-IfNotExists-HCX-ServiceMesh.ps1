@@ -328,7 +328,7 @@ function Get-HCX-ServiceMesh-PreReqData {
             }
         }
 
-        return @{
+        $retValue = @{
             remoteEndpointId = $remoteEndpointId
             remoteComputeProfileId = $remoteComputeProfileId
             remoteUplinkNetworkID = $remoteUplinkNetworkID
@@ -342,7 +342,8 @@ function Get-HCX-ServiceMesh-PreReqData {
             sourceSwitchId = $sourceSwitchId
             sourceSwitchType = $sourceSwitchType
         }
-
+        
+        return $retValue
     }
     catch {
         Write-Host "Error retrieving HCX Service Mesh prerequisites: $_"

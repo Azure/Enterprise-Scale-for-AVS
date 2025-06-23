@@ -50,6 +50,8 @@ function New-IfNotExists-HCX-ComputeProfile {
                 -hcxConnectorUserName $hcxConnectorUserName `
                 -hcxConnectorPassword $hcxConnectorPassword
 
+                # Get first Compute Profile matching name
+                $computeProfile = $computeProfile.items | Where-Object { $_.name -eq $computeProfileName } | Select-Object -First 1
                 Write-Host "New HCX Compute Profile '$computeProfileName' created successfully."
                 return $computeProfile
 

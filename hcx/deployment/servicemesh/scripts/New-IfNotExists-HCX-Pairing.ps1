@@ -22,7 +22,7 @@ function New-IfNotExists-HCX-Pairing {
     if ($pairing) {
         Write-Host "HCX pairing already exists with HCX Manager '$hcxManager'."
     } else {
-        Write-Host "No matching HCX pairing found with AVS HCX Manager '$hcxManager'"
+        Write-Host "No HCX pairing found with AVS HCX Manager. Creating a new pairing..."
     }
 
     if ($null -eq $pairing) {
@@ -58,7 +58,7 @@ function New-IfNotExists-HCX-Pairing {
                             -hcxConnectorUserName $hcxConnectorUserName `
                             -hcxConnectorPassword $hcxConnectorPassword
                 $pairing = $pairing.data.items | Where-Object { $_.url -eq $hcxManager.TrimEnd('/') } | Select-Object -First 1
-                Write-Host "New Site Pairing created successfully."
+                Write-Host "New Site Pairing '$($pairing.name)' created successfully."
                 return $pairing
 
             } else {
