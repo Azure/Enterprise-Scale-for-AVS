@@ -19,8 +19,6 @@ This script will update the LDAPs certificates for vcenter using the built-in ru
 ### PowerShell
 
 ```azurepowershell-interactive
-cd PowerShell
-
 .\update-IdentitySourceCertificates.ps1 -SubscriptionID "00000000-000-0000-0000-000000000000" -PrivateCloudResourceGroup AVS-RG -PrivateCloudName MYAVSPRIVATECLOUD  -DomainName "test.local"
 ```
 ## Post-deployment steps
