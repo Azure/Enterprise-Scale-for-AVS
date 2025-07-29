@@ -1,3 +1,4 @@
+Set-Location -Path $PSScriptRoot
 . ./Install-ifNotExist-RequiredModules.ps1
 . ./New-IfNotExist-AzureToken.ps1
 . ./Invoke-APIRequest.ps1
