@@ -6,7 +6,7 @@ function Get-Tokens {
 
     try {
         # Connect to Azure account and set the context to a specific subscription
-        Connect-AzAccount -TenantId $tenantId -ErrorAction Stop
+        Connect-AzAccount -TenantId $tenantId -SubscriptionId $subscriptionId -ErrorAction Stop
         Set-AzContext -Tenant $tenantId -SubscriptionId $subscriptionId -ErrorAction Stop
 
         # Get the Azure session token
