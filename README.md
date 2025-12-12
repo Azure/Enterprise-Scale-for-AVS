@@ -41,9 +41,9 @@ In this repository, you get access to various customer scenarios that can help a
 This deployment is best suited to those looking to provision a new AVS Private Cloud, the automation will let you choose and deploy the following:
 
 * AVS Private Cloud: Choose New or Existing
-* [Optional]: Choose New or Existing virtual network (VNet)
-* [Optional]: Deploy Dashboards and Monitoring
-* [Optional]: Enable Diagnostics and Logging for AVS
+* [Optional]: [Choose New or Existing virtual network (VNet)](https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking#connect-to-the-private-cloud-by-using-the-azure-vnet-connect-feature)
+* [Optional]: [Deploy Dashboards and Monitoring](https://learn.microsoft.com/en-us/azure/well-architected/azure-vmware/monitoring)
+* [Optional]: [Enable Diagnostics and Logging for AVS](https://learn.microsoft.com/en-us/azure/azure-vmware/configure-vmware-syslogs#configure-diagnostic-settings)
 * [Optional]: Enable HCX and SRM
 
 |Greenfield deployment options:          |                           |
