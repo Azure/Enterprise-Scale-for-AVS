@@ -1,5 +1,7 @@
 {
     "$schema": "<relative path to createFormUI.schema.json>",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
     "view": {
         "kind": "Form",
         "properties": {
@@ -196,9 +198,19 @@
                                                 "value": "AV48"
                                             },
                                             {
+                                                "label": "AV48T (Trial SKU)",
+                                                "description": "",
+                                                "value": "AV48T"
+                                            },
+                                            {
                                                 "label": "AV52",
                                                 "description": "",
                                                 "value": "AV52"
+                                            },
+                                            {
+                                                "label": "AV64",
+                                                "description": "",
+                                                "value": "AV64"
                                             }
                                         ]
                                     }

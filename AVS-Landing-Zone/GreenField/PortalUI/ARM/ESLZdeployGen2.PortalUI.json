@@ -1,0 +1,1424 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "PrivateCloud",
+                "label": "Private Cloud",
+                "elements": [
+                    {
+                        "name": "avsInfo",
+                        "type": "Microsoft.Common.Section",
+                        "visible": true,
+                        "label": "Prerequisites",
+                        "elements": [
+                            {
+                                "name": "avsPrerequisites2",
+                                "type": "Microsoft.Common.TextBlock",
+                                "visible": false,
+                                "options": {
+                                    "text": "Before you start, you must request AVS quota allocation for your subscription",
+                                    "link": {
+                                        "label": "",
+                                        "uri": ""
+                                    }
+                                }
+                            },
+                            {
+                                "name": "avsPrerequisites3",
+                                "type": "Microsoft.Common.TextBlock",
+                                "visible": false,
+                                "options": {
+                                    "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                    "link": {
+                                        "label": "Learn more",
+                                        "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "avsPrerequisites4",
+                                "type": "Microsoft.Common.TextBlock",
+                                "visible": false,
+                                "options": {
+                                    "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                    "link": {
+                                        "label": "Learn more",
+                                        "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "avsPrerequisites5",
+                                "type": "Microsoft.Common.TextBlock",
+                                "visible": false,
+                                "options": {
+                                    "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                    "link": {
+                                        "label": "Learn more",
+                                        "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "avsPrerequisites6",
+                                "type": "Microsoft.Common.InfoBox",
+                                "options": {
+                                    "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are a CSP customer, use Microsoft Partner Center to make this available for your customers.",
+                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
+                                    "style": "Info"
+                                }
+                            },
+                            {
+                                "name": "avsPrerequisites7",
+                                "type": "Microsoft.Common.InfoBox",
+                                "options": {
+                                    "text": "Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion..",
+                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist",
+                                    "style": "Info"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "avsPublicCloudGeneration",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "visible": true,
+                        "label": "Private cloud generation",
+                        "defaultValue": "Gen2",
+                        "toolTip": "Choose whether you want to deploy onto Gen1 or Gen2 AVS hosts (based on your quota request).",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "Gen1",
+                                    "value": "Gen1"
+                                },
+                                {
+                                    "label": "Gen2",
+                                    "value": "Gen2"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "DeployPrivateCloud",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "visible": true,
+                        "label": "Deploy a new or choose an existing Private Cloud",
+                        "defaultValue": "Yes",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "New",
+                                    "value": true
+                                },
+                                {
+                                    "label": "Existing",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "configureVcfLicense",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "visible": true,
+                        "label": "Configure VCF license",
+                        "defaultValue": false,
+                        "toolTip": "Choose whether to configure a VCF license.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": true
+                                },
+                                {
+                                    "label": "No",
+                                    "value": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "vcfLicenseKey",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "VCF license key",
+                        "defaultValue": "",
+                        "toolTip": "Enter the VCF license key.",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "vcfSiteId",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "Site Id",
+                        "defaultValue": "",
+                        "toolTip": "Enter the Site Id.",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "vcfCoreCount",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "Number of VCF cores",
+                        "placeholder": "e.g. 128",
+                        "defaultValue": "",
+                        "toolTip": "Enter the number of VCF cores as a positive integer.",
+                        "constraints": {
+                            "required": true,
+                            "validations": [
+                                {
+                                    "regex": "^[1-9]\\d*$",
+                                    "message": "Enter a positive integer (1 or greater)."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "vcfLicenseConfirmation",
+                        "type": "Microsoft.Common.CheckBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "I confirm that I have purchased the above VCF license from Broadcom for use on Azure VMware Solution, and that information provided is accurate.",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "You must confirm VCF license purchase and accuracy to continue."
+                        }
+                    },
+                    {
+                        "name": "vcfFalseInfoAcknowledgement",
+                        "type": "Microsoft.Common.CheckBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "I understand that providing false information may impact the continuity of the private cloud",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "You must acknowledge the impact of providing false information to continue."
+                        }
+                    },
+                    {
+                        "name": "vcfEndDate",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('PrivateCloud').configureVcfLicense, true)]",
+                        "label": "VCF end date",
+                        "placeholder": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "toolTip": "Enter the end date for your VCF license in YYYY-MM-DD format. Date must be in the future.",
+                        "constraints": {
+                            "required": true,
+                            "validations": [
+                                {
+                                    "regex": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+                                    "message": "Enter a date in YYYY-MM-DD format."
+                                },
+                                {
+                                    "isValid": "[greaterOrEquals(steps('PrivateCloud').vcfEndDate, substring(addHours(utcNow(), 24), 0, 10))]",
+                                    "message": "Enter a date that is in the future (tomorrow or later)."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                "name": "avsPrivateCloudSettings",
+                "type": "Microsoft.Common.Section",
+                "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
+                "label": "Private Cloud details",
+                "elements": [
+                    {
+                        "name": "avsAddressSpace",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": true,
+                        "label": "AVS Address Space",
+                        "defaultValue": "",
+                        "toolTip": "This CIDR represents the Private Cloud Management network and will be used for the cluster management services (i.e vCenter Server, NSX-T Manager, etc.). Please use /22 address space. The address should be unique and should not overlap with other Azure Virtual Networks (VNET) as well as with on-premises networks.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(/[2][2])$",
+                            "validationMessage": "Address space must be /22"
+                        }
+                    },
+                    {
+                        "name": "avsSkuType",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": "[equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1')]",
+                        "label": "AVS SKU",
+                        "defaultValue": "AV36P",
+                        "multiLine": true,
+                        "toolTip": "Ensure you select the correct SKU as per your quota request",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "AV36",
+                                    "description": "",
+                                    "value": "AV36"
+                                },
+                                {
+                                    "label": "AV36T (Trial SKU)",
+                                    "description": "",
+                                    "value": "AV36T"
+                                },
+                                {
+                                    "label": "AV36P",
+                                    "description": "",
+                                    "value": "AV36P"
+                                },
+                                {
+                                    "label": "AV36PT (Trial SKU)",
+                                    "description": "",
+                                    "value": "AV36PT"
+                                },
+                                {
+                                    "label": "AV48",
+                                    "description": "",
+                                    "value": "AV48"
+                                },
+                                {
+                                    "label": "AV48T (Trial SKU)",
+                                    "description": "",
+                                    "value": "AV48T"
+                                },
+                                {
+                                    "label": "AV52",
+                                    "description": "",
+                                    "value": "AV52"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "avsSkuTypeGen2",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": "[equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2')]",
+                        "label": "AVS SKU",
+                        "defaultValue": "AV64",
+                        "multiLine": true,
+                        "toolTip": "Gen2 selection is constrained to AV64 / AV64T based on quota.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "AV64",
+                                    "description": "",
+                                    "value": "AV64"
+                                },
+                                {
+                                    "label": "AV64T (Trial SKU)",
+                                    "description": "",
+                                    "value": "AV64T"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "avsHostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "label": "AVS Host Count",
+                        "subLabel": "",
+                        "toolTip": "This is the number of ESXi hosts that will make up the default cluster of your private cloud, minimum is 3",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "avsQuotaInfo",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail.",
+                            "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
+                            "style": "Warning"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "existingAVSPrivateCloudSettings",
+                "type": "Microsoft.Common.Section",
+                "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, false)]",
+                "label": "Existing Private Cloud details",
+                "elements": [
+                    {
+                        "name": "existingAVSSelector",
+                        "type": "Microsoft.Solutions.ResourceSelector",
+                        "visible": "",
+                        "label": "Select the Existing AVS Private Cloud",
+                        "resourceType": "Microsoft.AVS/privateClouds",
+                        "options": {
+                            "filter": {
+                                "subscription": "onBasics",
+                                "location": "onBasics"
+                            }
+                        },
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "existingavsInfo",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": "",
+                        "options": {
+                            "text": "The Private Cloud chosen in this step will be used for all the following modules",
+                            "style": "Info"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "AzureManagementVM",
+        "label": "Azure Management VM",
+        "elements": [
+            {
+                "name": "azureManagementVmInfo",
+                "type": "Microsoft.Common.InfoBox",
+                "visible": true,
+                "options": {
+                    "text": "Azure Management VM settings will be configured in this step.",
+                    "style": "Info"
+                }
+            },
+            {
+                "name": "deployAzureJumpBoxVm",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Deploy Azure JumpBox VM",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy an Azure JumpBox VM.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "vmSkuSelector",
+                "type": "Microsoft.Compute.SizeSelector",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox SKU",
+                "toolTip": "Select a VM SKU for the Jumpbox",
+                "recommendedSizes": [
+                    "Standard_B2ms",
+                    "Standard_D1",
+                    "Standard_D2",
+                    "Standard_D3"
+                ],
+                "constraints": {
+                    "allowedSizes": [],
+                    "excludedSizes": [],
+                    "required": true
+                },
+                "options": {
+                    "hideDiskTypeFilter": true
+                },
+                "osPlatform": "Windows",
+                "imageReference": {
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "offer": "Windows-11",
+                    "sku": "21h2-avd"
+                }
+            },
+            {
+                "name": "operatingSystemSKU",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Jumpbox Operating System",
+                "placeholder": "",
+                "defaultValue": [
+                    "Windows Server 2022"
+                ],
+                "toolTip": "Choose the operating system for the Jumpbox",
+                "multiselect": false,
+                "selectAll": true,
+                "filter": true,
+                "filterPlaceholder": "Filter items ...",
+                "multiLine": true,
+                "defaultDescription": "Jumpbox Operating System",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "Windows Server 2025",
+                            "description": "Windows Server 2025",
+                            "value": "Win2025"
+                        },
+                        {
+                            "label": "Windows Server 2022",
+                            "description": "Windows Server 2022",
+                            "value": "Win2022"
+                        },
+                        {
+                            "label": "Windows 11",
+                            "description": "Windows 11",
+                            "value": "Win11"
+                        },
+                        {
+                            "label": "Windows 11 Multisession",
+                            "description": "Windows 11 Multisession",
+                            "value": "Win11ms"
+                        },
+                        {
+                            "label": "Ubuntu 24.04",
+                            "description": "Ubuntu 24.04",
+                            "value": "ubuntu2404gen2"
+                        }
+                    ],
+                    "required": true
+                },
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]"
+            },
+            {
+                "name": "BootstrapJumpboxVM",
+                "type": "Microsoft.Common.CheckBox",
+                "label": "Bootstrap VM",
+                "toolTip": "Optional: Bootstrap VM and install PowerCLI, VMRC, and Powershell. This will only work for Windows based VMs, not Linux",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]"
+            },
+            {
+                "name": "HighPerformanceVM",
+                "type": "Microsoft.Common.CheckBox",
+                "label": "High-Performance VM",
+                "toolTip": "Optional: Enable high performance attributes for the VM. (Set storage type to Premium and enable Accelerated Networking.",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]"
+            },
+            {
+                "name": "jumpboxCredentials",
+                "type": "Microsoft.Common.Section",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox login credentials",
+                "elements": [
+                    {
+                        "name": "jumpboxLocalUserName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Username",
+                        "toolTip": "Provide username for the Jumpbox local admin account.",
+                        "placeholder": "Example: azureadmin",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "JumpboxPassword",
+                        "type": "Microsoft.Compute.CredentialsCombo",
+                        "visible": true,
+                        "label": {
+                            "password": "Password",
+                            "confirmPassword": "Confirm password"
+                        },
+                        "toolTip": {
+                            "password": "The password must be alphanumeric, contain at least 8 characters, have at least 1 letter, 1 number and 1 special character."
+                        },
+                        "constraints": {
+                            "required": true,
+                            "customPasswordRegex": "^(?=.*[0-9])(?=.*[a-z])(?=.*[@#$%^&+=_!*<>()])(?=\\S+$).{12,123}$",
+                            "customValidationMessage": "Password must include at least 8 characters, have at least 1 letter, 1 number and 1 special character."
+                        },
+                        "options": {
+                            "hideConfirmation": false
+                        },
+                        "osPlatform": "Windows"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "AzureConnectivity",
+        "label": "Azure Connectivity",
+        "elements": [
+            {
+                "name": "createNewHubNetworking",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Create new hub networking",
+                "defaultValue": "No",
+                "toolTip": "Choose whether to create new hub networking resources.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "connectToAzureNetworking",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Connect to Azure Networking",
+                "defaultValue": "No (Skip)",
+                "toolTip": "Choose whether and how to connect to Azure networking.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": "[if(equals(steps('AzureConnectivity').createNewHubNetworking, false), parse('[{\"label\":\"Yes - Hub Virtual Network\",\"value\":\"Yes - Hub Virtual Network\"},{\"label\":\"Yes - VWAN Hub\",\"value\":\"Yes - VWAN Hub\"},{\"label\":\"No (Skip)\",\"value\":\"No (Skip)\"}]'), parse('[{\"label\":\"Yes - Hub Virtual Network\",\"value\":\"Yes - Hub Virtual Network\"},{\"label\":\"No (Skip)\",\"value\":\"No (Skip)\"}]'))]"
+                }
+            },
+            {
+                "name": "VnetSelectorId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), or(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2')))]",
+                "label": "Virtual Network Resource ID",
+                "resourceType": "Microsoft.Network/virtualNetworks",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "ExpressRouteGatewaySelectorId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'), equals(steps('AzureConnectivity').createNewHubNetworking, false))]",
+                "label": "ExpressRoute Gateway Resource Id",
+                "resourceType": "Microsoft.Network/expressRouteGateways",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "virtualNetworkGatewaysApi",
+                "type": "Microsoft.Solutions.ArmApiControl",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                "request": {
+                    "method": "GET",
+                    "path": "[concat('/subscriptions/', substring(steps('AzureConnectivity').VnetSelectorId.id, 15, 36), '/providers/Microsoft.Network/virtualNetworkGateways?api-version=2022-11-01')]"
+                }
+            },
+            {
+                "name": "virtualNetworkGateway",
+                "type": "Microsoft.Common.DropDown",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                "label": "Select Existing ExpressRoute Gateway",
+                "defaultValue": "",
+                "toolTip": "",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": "[map(filter(steps('AzureConnectivity').virtualNetworkGatewaysApi.value, (item) => contains(first(item.properties.ipConfigurations).properties.subnet.id, steps('AzureConnectivity').VnetSelectorId.name)), (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
+                }
+            },
+            {
+                "name": "virtualNetworkResourceGroupName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
+                "label": "Virtual Network Resource Group Name",
+                "defaultValue": "",
+                "toolTip": "Resource group name where the new Hub Virtual Network will be created.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "virtualNetworkName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
+                "label": "Virtual Network Name",
+                "defaultValue": "",
+                "toolTip": "Name for the new Hub Virtual Network.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "virtualNetworkAddressRange",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
+                "label": "Virtual Network Address Range",
+                "defaultValue": "",
+                "toolTip": "Address space for the new Hub Virtual Network in CIDR notation (example: 10.10.0.0/16).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\/(1[0-9]|2[0-4]))$",
+                    "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                }
+            },
+            {
+                "name": "subnets",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
+                "label": "Subnets",
+                "elements": [
+                    {
+                        "name": "jumpboxSubnetPrefix",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true))]",
+                        "label": "Jumpbox Subnet Prefix",
+                        "defaultValue": "",
+                        "toolTip": "Subnet prefix for the Jumpbox subnet in CIDR notation (example: 10.10.1.0/24).",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
+                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.1.0/24)."
+                        }
+                    },
+                    {
+                        "name": "gatewaySubnetPrefix",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                        "label": "Gateway Subnet Prefix",
+                        "defaultValue": "",
+                        "toolTip": "Subnet prefix for the GatewaySubnet in CIDR notation (example: 10.10.254.0/27).",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
+                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.254.0/27)."
+                        }
+                    },
+                    {
+                        "name": "bastionSubnetPrefix",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true))]",
+                        "label": "Bastion Subnet Prefix",
+                        "defaultValue": "",
+                        "toolTip": "Subnet prefix for the Azure Bastion subnet in CIDR notation (example: 10.10.2.0/26).",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
+                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.2.0/26)."
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Monitoring",
+        "label": "Monitoring",
+        "elements": [
+            {
+                "name": "deployMonitoringModule",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Deploy Monitoring Module",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy the monitoring module.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "deployAvsMonitoringDashboard",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
+                "label": "Deploy AVS Monitoring Dashboard",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy the AVS Monitoring Dashboard.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "deployAvsMonitorWorkbook",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
+                "label": "Deploy AVS Monitor Workbook",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy the AVS Monitor Workbook.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "deployServiceHealthAlerts",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
+                "label": "Deploy Service Health Alerts",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy Azure Service Health alerts for the subscription.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "actionGroupResourceId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployServiceHealthAlerts, true))]",
+                "label": "Service Health Action Group",
+                "toolTip": "Select an existing Action Group to receive Service Health alert notifications.",
+                "resourceType": "microsoft.insights/actionGroups",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "actionGroupCreateLink",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployServiceHealthAlerts, true))]",
+                "options": {
+                    "text": "Don't have an Action Group yet? Create one in Azure Monitor, then return here and select it above.",
+                    "link": {
+                        "label": "Open Azure Monitor Action Groups",
+                        "uri": "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/ActionGroupsBlade"
+                    }
+                }
+            },
+            {
+                "name": "deployResourceHealthAlerts",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
+                "label": "Deploy Resource Health Alerts",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy Azure Resource Health alerts for the subscription.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "resourceHealthActionGroupResourceId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployResourceHealthAlerts, true))]",
+                "label": "Resource Health Action Group",
+                "toolTip": "Select an existing Action Group to receive Resource Health alert notifications.",
+                "resourceType": "microsoft.insights/actionGroups",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "resourceHealthActionGroupCreateLink",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployResourceHealthAlerts, true))]",
+                "options": {
+                    "text": "Don't have an Action Group yet? Create one in Azure Monitor, then return here and select it above.",
+                    "link": {
+                        "label": "Open Azure Monitor Action Groups",
+                        "uri": "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/ActionGroupsBlade"
+                    }
+                }
+            },
+            {
+                "name": "deployAzureMonitorDefaultHostAlerts",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
+                "label": "Deploy Azure Monitor Default Host Alerts",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy default Azure Monitor host alerts.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "azureMonitorDefaultHostAlertsActionGroupResourceId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployAzureMonitorDefaultHostAlerts, true))]",
+                "label": "Default Host Alerts Action Group",
+                "toolTip": "Select an existing Action Group to receive default host alert notifications.",
+                "resourceType": "microsoft.insights/actionGroups",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "azureMonitorDefaultHostAlertsActionGroupCreateLink",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": "[and(equals(steps('Monitoring').deployMonitoringModule, true), equals(steps('Monitoring').deployAzureMonitorDefaultHostAlerts, true))]",
+                "options": {
+                    "text": "Don't have an Action Group yet? Create one in Azure Monitor, then return here and select it above.",
+                    "link": {
+                        "label": "Open Azure Monitor Action Groups",
+                        "uri": "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/ActionGroupsBlade"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "DiagnosticSettingsAndSyslog",
+        "label": "Diagnostic Settings and Syslog",
+        "elements": [
+            {
+                "name": "configureDiagnosticSettings",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Configure Diagnostic Settings",
+                "defaultValue": false,
+                "toolTip": "Choose whether to configure diagnostic settings.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "sendAvsSyslogToLogAnalytics",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
+                "label": "Send AVS Syslog to Log Analytics Workspace",
+                "defaultValue": false,
+                "toolTip": "Choose whether to send AVS syslog to a Log Analytics workspace.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "sendAvsSubscriptionActivityLogsToLogAnalytics",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
+                "label": "Send AVS Subscription Activity Logs to Log Analytics Workspace",
+                "defaultValue": false,
+                "toolTip": "Choose whether to send subscription Activity Logs to a Log Analytics workspace.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "logAnalyticsWorkspaceResourceId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
+                "label": "Log Analytics Workspace",
+                "toolTip": "Select an existing Log Analytics workspace to receive AVS syslog and/or subscription activity logs.",
+                "resourceType": "Microsoft.OperationalInsights/workspaces",
+                "options": {
+                    "filter": {
+                        "subscription": "onBasics"
+                    }
+                },
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "logAnalyticsWorkspaceCreateLink",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
+                "options": {
+                    "text": "Don't have a Log Analytics workspace yet? Create one in Azure Monitor, then return here and select it above.",
+                    "link": {
+                        "label": "Open Log Analytics Workspaces",
+                        "uri": "https://portal.azure.com/#browse/Microsoft.OperationalInsights%2Fworkspaces"
+                    }
+                }
+            },
+            {
+                "name": "sendAvsSyslogsToStorageAccount",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
+                "label": "Send AVS Syslogs to a storage account",
+                "defaultValue": false,
+                "toolTip": "Choose whether to send AVS syslogs to a Storage Account.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "syslogsStorageAccountResourceId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
+                "label": "Storage Account",
+                "toolTip": "Select an existing Storage Account to receive AVS syslogs.",
+                "resourceType": "Microsoft.Storage/storageAccounts",
+                "options": {
+                    "filter": {
+                        "subscription": "onBasics"
+                    }
+                },
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "syslogsStorageAccountCreateLink",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
+                "options": {
+                    "text": "Don't have a Storage Account yet? Create one, then return here and select it above.",
+                    "link": {
+                        "label": "Open Storage Accounts",
+                        "uri": "https://portal.azure.com/#view/Microsoft_Azure_StorageHub/StorageHub.MenuView/~/StorageAccountsBrowse"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Addons",
+        "label": "Addons",
+        "elements": [
+            {
+                "name": "deployHcx",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Deploy HCX",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy HCX.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hcxManagementCidrPrefix",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('Addons').deployHcx, true), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'))]",
+                "label": "Management CIDR prefix",
+                "defaultValue": "",
+                "toolTip": "Enter the Management CIDR prefix in IPv4 CIDR notation with a /24 prefix length (example: 10.10.10.0/24).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\/24$",
+                    "validationMessage": "Enter a valid IPv4 CIDR with a /24 prefix length (example: 10.10.10.0/24)."
+                }
+            },
+            {
+                "name": "hcxUplinkCidrPrefix",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('Addons').deployHcx, true), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'))]",
+                "label": "Uplink CIDR prefix",
+                "defaultValue": "",
+                "toolTip": "Enter the Uplink CIDR prefix in IPv4 CIDR notation with a /24 prefix length (example: 10.10.20.0/24).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\/24$",
+                    "validationMessage": "Enter a valid IPv4 CIDR with a /24 prefix length (example: 10.10.20.0/24)."
+                }
+            },
+            {
+                "name": "deploySrm",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Deploy SRM",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy SRM.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "srmLicenseKey",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('Addons').deploySrm, true)]",
+                "label": "SRM License Key",
+                "defaultValue": "",
+                "toolTip": "Enter the SRM license key.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "numberOfReplicationServers",
+                "type": "Microsoft.Common.Slider",
+                "visible": "[equals(steps('Addons').deploySrm, true)]",
+                "label": "Number of replication servers",
+                "subLabel": "",
+                "toolTip": "Select the number of replication servers.",
+                "min": 1,
+                "max": 3,
+                "defaultValue": 1,
+                "showStepMarkers": true,
+                "constraints": {
+                    "required": true
+                }
+            }
+        ]
+    },
+    {
+        "name": "ResourceTagging",
+        "label": "Resource Tagging",
+        "elements": [
+            {
+                "name": "createCustomTags",
+                "type": "Microsoft.Common.OptionsGroup",
+                "visible": true,
+                "label": "Create Custom Tags",
+                "defaultValue": false,
+                "toolTip": "Choose whether to create custom tags.",
+                "constraints": {
+                    "required": true,
+                    "allowedValues": [
+                        {
+                            "label": "Yes",
+                            "value": true
+                        },
+                        {
+                            "label": "No",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "numberOfNewCustomTags",
+                "type": "Microsoft.Common.Slider",
+                "visible": "[equals(steps('ResourceTagging').createCustomTags, true)]",
+                "label": "Number of new custom tags",
+                "subLabel": "",
+                "toolTip": "Select how many new custom tags to create.",
+                "min": 0,
+                "max": 10,
+                "defaultValue": 0,
+                "showStepMarkers": true,
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey1",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 1), equals(steps('ResourceTagging').numberOfNewCustomTags, 2), equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 1 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 1.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue1",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 1), equals(steps('ResourceTagging').numberOfNewCustomTags, 2), equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 1 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 1.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey2",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 2), equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 2 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 2.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue2",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 2), equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 2 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 2.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey3",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 3 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 3.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue3",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 3), equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 3 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 3.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey4",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 4 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 4.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue4",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 4), equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 4 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 4.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey5",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 5 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 5.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue5",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 5), equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 5 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 5.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey6",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 6 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 6.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue6",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 6), equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 6 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 6.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey7",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 7 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 7.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue7",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 7), equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 7 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 7.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey8",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 8 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 8.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue8",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 8), equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 8 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 8.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey9",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 9 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 9.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue9",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), or(equals(steps('ResourceTagging').numberOfNewCustomTags, 9), equals(steps('ResourceTagging').numberOfNewCustomTags, 10)))]",
+                "label": "Tag 9 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 9.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagKey10",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), equals(steps('ResourceTagging').numberOfNewCustomTags, 10))]",
+                "label": "Tag 10 key",
+                "defaultValue": "",
+                "toolTip": "Enter the key for tag 10.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "tagValue10",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('ResourceTagging').createCustomTags, true), equals(steps('ResourceTagging').numberOfNewCustomTags, 10))]",
+                "label": "Tag 10 value",
+                "defaultValue": "",
+                "toolTip": "Enter the value for tag 10.",
+                "constraints": {
+                    "required": true
+                }
+            }
+        ]
+    }
+],
+"outputs": {}
+}
+}
