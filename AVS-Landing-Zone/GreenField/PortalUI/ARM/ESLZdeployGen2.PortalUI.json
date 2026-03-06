@@ -96,13 +96,13 @@
                             "required": true,
                             "allowedValues": [
                                 {
-                                    "label": "Gen1",
-                                    "value": "Gen1"
-                                },
-                                {
                                     "label": "Gen2",
                                     "value": "Gen2"
-                                }
+                                },
+                                {
+                                    "label": "Gen1",
+                                    "value": "Gen1"
+                                }                                
                             ]
                         }
                     },
@@ -111,7 +111,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "visible": true,
                         "label": "Deploy a new or choose an existing Private Cloud",
-                        "defaultValue": "Yes",
+                        "defaultValue": "New",
                         "toolTip": "",
                         "constraints": {
                             "required": true,
@@ -129,24 +129,11 @@
                     },
                     {
                         "name": "configureVcfLicense",
-                        "type": "Microsoft.Common.OptionsGroup",
+                        "type": "Microsoft.Common.CheckBox",
                         "visible": true,
                         "label": "Configure VCF license",
                         "defaultValue": false,
-                        "toolTip": "Choose whether to configure a VCF license.",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "Yes",
-                                    "value": true
-                                },
-                                {
-                                    "label": "No",
-                                    "value": false
-                                }
-                            ]
-                        }
+                        "toolTip": "Choose whether to configure a VCF license."
                     },
                     {
                         "name": "vcfLicenseKey",
@@ -392,31 +379,54 @@
                 "type": "Microsoft.Common.InfoBox",
                 "visible": true,
                 "options": {
-                    "text": "Azure Management VM settings will be configured in this step.",
+                    "text": "Azure Management VM settings will be configured in this step. Selecting the option to Deploy Azure Bastion or Deploy Azure JumpBox VM will trigger the creation of a separate virtual network that will be peered to the hub selected in the Azure Connectivity Step.",
                     "style": "Info"
                 }
             },
             {
+                "name": "deployAzureBastion",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": true,
+                "label": "Deploy Azure Bastion",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy Azure Bastion."
+            },
+            {
+                "name": "bastionName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureBastion, true)]",
+                "label": "Bastion name",
+                "placeholder": "e.g. Bastion01",
+                "defaultValue": "",
+                "toolTip": "Enter a name 1-24 characters long, using only letters, numbers, underscore, or dash (no spaces).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[a-zA-Z0-9_-]{1,24}$",
+                    "validationMessage": "Enter 1-24 characters using only letters, numbers, underscore, or dash, with no spaces."
+                }
+            },
+            {
                 "name": "deployAzureJumpBoxVm",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Deploy Azure JumpBox VM",
                 "defaultValue": false,
-                "toolTip": "Choose whether to deploy an Azure JumpBox VM.",
+                "toolTip": "Choose whether to deploy an Azure JumpBox VM."
+            },
+            {
+                "name": "jumpboxVmName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox VM name",
+                "placeholder": "e.g. Jumpbox01",
+                "defaultValue": "",
+                "toolTip": "Enter a name 1-15 characters long, using only letters and numbers (no spaces).",
                 "constraints": {
                     "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
+                    "regex": "^[a-zA-Z0-9]{1,15}$",
+                    "validationMessage": "Enter 1-15 alphanumeric characters (letters and numbers only), with no spaces."
                 }
-            },
+            },            
             {
                 "name": "vmSkuSelector",
                 "type": "Microsoft.Compute.SizeSelector",
@@ -552,27 +562,6 @@
         "label": "Azure Connectivity",
         "elements": [
             {
-                "name": "createNewHubNetworking",
-                "type": "Microsoft.Common.OptionsGroup",
-                "visible": true,
-                "label": "Create new hub networking",
-                "defaultValue": "No",
-                "toolTip": "Choose whether to create new hub networking resources.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
-            },
-            {
                 "name": "connectToAzureNetworking",
                 "type": "Microsoft.Common.OptionsGroup",
                 "visible": true,
@@ -581,13 +570,91 @@
                 "toolTip": "Choose whether and how to connect to Azure networking.",
                 "constraints": {
                     "required": true,
-                    "allowedValues": "[if(equals(steps('AzureConnectivity').createNewHubNetworking, false), parse('[{\"label\":\"Yes - Hub Virtual Network\",\"value\":\"Yes - Hub Virtual Network\"},{\"label\":\"Yes - VWAN Hub\",\"value\":\"Yes - VWAN Hub\"},{\"label\":\"No (Skip)\",\"value\":\"No (Skip)\"}]'), parse('[{\"label\":\"Yes - Hub Virtual Network\",\"value\":\"Yes - Hub Virtual Network\"},{\"label\":\"No (Skip)\",\"value\":\"No (Skip)\"}]'))]"
+                    "allowedValues": [
+                        {
+                            "label": "Yes - Hub Virtual Network",
+                            "value": "Yes - Hub Virtual Network"
+                        },
+                        {
+                            "label": "Yes - VWAN Hub",
+                            "value": "Yes - VWAN Hub"
+                        },
+                        {
+                            "label": "No (Skip)",
+                            "value": "No (Skip)"
+                        }
+                    ]
                 }
             },
             {
+                "name": "enterResourceIdsManually",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[or(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'))]",
+                "label": "Enter Resource ID's manually",
+                "defaultValue": false,
+                "toolTip": "Choose whether to manually enter Azure resource IDs instead of selecting them."
+            },
+            {
+                "name": "manualVirtualNetworkResourceId",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').enterResourceIdsManually, true))]",
+                "label": "Manual Virtual Network Resource ID",
+                "defaultValue": "",
+                "toolTip": "Enter the Virtual Network resource ID.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "manualVwanHubResourceId",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'), equals(steps('AzureConnectivity').enterResourceIdsManually, true))]",
+                "label": "Manual VWAN Hub Resource ID",
+                "defaultValue": "",
+                "toolTip": "Enter the VWAN Hub resource ID.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "manualExpressRouteGatewayResourceId",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').enterResourceIdsManually, true))]",
+                "label": "Manual ExpressRoute Gateway Resource ID",
+                "defaultValue": "",
+                "toolTip": "Enter the ExpressRoute Gateway resource ID.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
+                "name": "enableInternetSnat",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1')]",
+                "label": "Enable Internet SNAT",
+                "defaultValue": false,
+                "toolTip": "Enable Internet SNAT for Gen1 private clouds."
+            },
+            {
+                "name": "enableFastpath",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), or(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub')))]",
+                "label": "Enable Fastpath",
+                "defaultValue": false,
+                "toolTip": "Enable ExpressRoute FastPath for supported gateways."
+            },
+            {
+                "name": "expressRouteAuthorizationKeyName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), or(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub')))]",
+                "label": "ExpressRoute Authorization Key Name",
+                "defaultValue": "",
+                "toolTip": "Enter the ExpressRoute authorization key name."
+            },            
+            {
                 "name": "VnetSelectorId",
                 "type": "Microsoft.Solutions.ResourceSelector",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), or(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2')))]",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), equals(steps('AzureConnectivity').enterResourceIdsManually, false))]",
                 "label": "Virtual Network Resource ID",
                 "resourceType": "Microsoft.Network/virtualNetworks",
                 "constraints": {
@@ -597,7 +664,7 @@
             {
                 "name": "ExpressRouteGatewaySelectorId",
                 "type": "Microsoft.Solutions.ResourceSelector",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'), equals(steps('AzureConnectivity').createNewHubNetworking, false))]",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'))]",
                 "label": "ExpressRoute Gateway Resource Id",
                 "resourceType": "Microsoft.Network/expressRouteGateways",
                 "constraints": {
@@ -605,9 +672,19 @@
                 }
             },
             {
+                "name": "VwanHubSelectorId",
+                "type": "Microsoft.Solutions.ResourceSelector",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'), equals(steps('AzureConnectivity').enterResourceIdsManually, false))]",
+                "label": "VWAN Hub Resource Id",
+                "resourceType": "Microsoft.Network/virtualHubs",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
                 "name": "virtualNetworkGatewaysApi",
                 "type": "Microsoft.Solutions.ArmApiControl",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
                 "request": {
                     "method": "GET",
                     "path": "[concat('/subscriptions/', substring(steps('AzureConnectivity').VnetSelectorId.id, 15, 36), '/providers/Microsoft.Network/virtualNetworkGateways?api-version=2022-11-01')]"
@@ -616,7 +693,7 @@
             {
                 "name": "virtualNetworkGateway",
                 "type": "Microsoft.Common.DropDown",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, false), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
                 "label": "Select Existing ExpressRoute Gateway",
                 "defaultValue": "",
                 "toolTip": "",
@@ -624,88 +701,6 @@
                     "required": true,
                     "allowedValues": "[map(filter(steps('AzureConnectivity').virtualNetworkGatewaysApi.value, (item) => contains(first(item.properties.ipConfigurations).properties.subnet.id, steps('AzureConnectivity').VnetSelectorId.name)), (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                 }
-            },
-            {
-                "name": "virtualNetworkResourceGroupName",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
-                "label": "Virtual Network Resource Group Name",
-                "defaultValue": "",
-                "toolTip": "Resource group name where the new Hub Virtual Network will be created.",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "virtualNetworkName",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
-                "label": "Virtual Network Name",
-                "defaultValue": "",
-                "toolTip": "Name for the new Hub Virtual Network.",
-                "constraints": {
-                    "required": true
-                }
-            },
-            {
-                "name": "virtualNetworkAddressRange",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
-                "label": "Virtual Network Address Range",
-                "defaultValue": "",
-                "toolTip": "Address space for the new Hub Virtual Network in CIDR notation (example: 10.10.0.0/16).",
-                "constraints": {
-                    "required": true,
-                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\/(1[0-9]|2[0-4]))$",
-                    "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
-                }
-            },
-            {
-                "name": "subnets",
-                "type": "Microsoft.Common.Section",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true))]",
-                "label": "Subnets",
-                "elements": [
-                    {
-                        "name": "jumpboxSubnetPrefix",
-                        "type": "Microsoft.Common.TextBox",
-                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true))]",
-                        "label": "Jumpbox Subnet Prefix",
-                        "defaultValue": "",
-                        "toolTip": "Subnet prefix for the Jumpbox subnet in CIDR notation (example: 10.10.1.0/24).",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
-                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.1.0/24)."
-                        }
-                    },
-                    {
-                        "name": "gatewaySubnetPrefix",
-                        "type": "Microsoft.Common.TextBox",
-                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
-                        "label": "Gateway Subnet Prefix",
-                        "defaultValue": "",
-                        "toolTip": "Subnet prefix for the GatewaySubnet in CIDR notation (example: 10.10.254.0/27).",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
-                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.254.0/27)."
-                        }
-                    },
-                    {
-                        "name": "bastionSubnetPrefix",
-                        "type": "Microsoft.Common.TextBox",
-                        "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').createNewHubNetworking, true), equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true))]",
-                        "label": "Bastion Subnet Prefix",
-                        "defaultValue": "",
-                        "toolTip": "Subnet prefix for the Azure Bastion subnet in CIDR notation (example: 10.10.2.0/26).",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})/([0-9]|[1-2][0-9]|3[0-2])$",
-                            "validationMessage": "Subnet prefix must be a valid CIDR range (example: 10.10.2.0/26)."
-                        }
-                    }
-                ]
             }
         ]
     },
@@ -715,87 +710,19 @@
         "elements": [
             {
                 "name": "deployMonitoringModule",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Deploy Monitoring Module",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy the monitoring module.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
-            },
-            {
-                "name": "deployAvsMonitoringDashboard",
-                "type": "Microsoft.Common.OptionsGroup",
-                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
-                "label": "Deploy AVS Monitoring Dashboard",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy the AVS Monitoring Dashboard.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
-            },
-            {
-                "name": "deployAvsMonitorWorkbook",
-                "type": "Microsoft.Common.OptionsGroup",
-                "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
-                "label": "Deploy AVS Monitor Workbook",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy the AVS Monitor Workbook.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "defaultValue": true,
+                "toolTip": "Choose whether to deploy the monitoring module."
             },
             {
                 "name": "deployServiceHealthAlerts",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
                 "label": "Deploy Service Health Alerts",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy Azure Service Health alerts for the subscription.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "defaultValue": true,
+                "toolTip": "Choose whether to deploy Azure Service Health alerts for the subscription."
             },
             {
                 "name": "actionGroupResourceId",
@@ -822,24 +749,11 @@
             },
             {
                 "name": "deployResourceHealthAlerts",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
                 "label": "Deploy Resource Health Alerts",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy Azure Resource Health alerts for the subscription.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "defaultValue": true,
+                "toolTip": "Choose whether to deploy Azure Resource Health alerts for the subscription."
             },
             {
                 "name": "resourceHealthActionGroupResourceId",
@@ -866,24 +780,11 @@
             },
             {
                 "name": "deployAzureMonitorDefaultHostAlerts",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('Monitoring').deployMonitoringModule, true)]",
                 "label": "Deploy Azure Monitor Default Host Alerts",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy default Azure Monitor host alerts.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "defaultValue": true,
+                "toolTip": "Choose whether to deploy default Azure Monitor host alerts."
             },
             {
                 "name": "azureMonitorDefaultHostAlertsActionGroupResourceId",
@@ -916,66 +817,27 @@
         "elements": [
             {
                 "name": "configureDiagnosticSettings",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Configure Diagnostic Settings",
                 "defaultValue": false,
-                "toolTip": "Choose whether to configure diagnostic settings.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to configure diagnostic settings."
             },
             {
                 "name": "sendAvsSyslogToLogAnalytics",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
                 "label": "Send AVS Syslog to Log Analytics Workspace",
                 "defaultValue": false,
-                "toolTip": "Choose whether to send AVS syslog to a Log Analytics workspace.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to send AVS syslog to a Log Analytics workspace."
             },
             {
                 "name": "sendAvsSubscriptionActivityLogsToLogAnalytics",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
                 "label": "Send AVS Subscription Activity Logs to Log Analytics Workspace",
                 "defaultValue": false,
-                "toolTip": "Choose whether to send subscription Activity Logs to a Log Analytics workspace.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to send subscription Activity Logs to a Log Analytics workspace."
             },
             {
                 "name": "logAnalyticsWorkspaceResourceId",
@@ -1007,24 +869,11 @@
             },
             {
                 "name": "sendAvsSyslogsToStorageAccount",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
                 "label": "Send AVS Syslogs to a storage account",
                 "defaultValue": false,
-                "toolTip": "Choose whether to send AVS syslogs to a Storage Account.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to send AVS syslogs to a Storage Account."
             },
             {
                 "name": "syslogsStorageAccountResourceId",
@@ -1062,24 +911,11 @@
         "elements": [
             {
                 "name": "deployHcx",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Deploy HCX",
                 "defaultValue": false,
-                "toolTip": "Choose whether to deploy HCX.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to deploy HCX."
             },
             {
                 "name": "hcxManagementCidrPrefix",
@@ -1109,24 +945,11 @@
             },
             {
                 "name": "deploySrm",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Deploy SRM",
                 "defaultValue": false,
-                "toolTip": "Choose whether to deploy SRM.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to deploy SRM."
             },
             {
                 "name": "srmLicenseKey",
@@ -1162,24 +985,11 @@
         "elements": [
             {
                 "name": "createCustomTags",
-                "type": "Microsoft.Common.OptionsGroup",
+                "type": "Microsoft.Common.CheckBox",
                 "visible": true,
                 "label": "Create Custom Tags",
                 "defaultValue": false,
-                "toolTip": "Choose whether to create custom tags.",
-                "constraints": {
-                    "required": true,
-                    "allowedValues": [
-                        {
-                            "label": "Yes",
-                            "value": true
-                        },
-                        {
-                            "label": "No",
-                            "value": false
-                        }
-                    ]
-                }
+                "toolTip": "Choose whether to create custom tags."
             },
             {
                 "name": "numberOfNewCustomTags",
