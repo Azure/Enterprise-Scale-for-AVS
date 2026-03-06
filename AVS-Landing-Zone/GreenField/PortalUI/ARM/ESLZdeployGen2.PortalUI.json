@@ -371,6 +371,314 @@
         ]
     },
     {
+        "name": "ClustersAndExternalStorage",
+        "label": "Additional Clusters",
+        "elements": [
+            {
+                "name": "additionalClustersSection",
+                "type": "Microsoft.Common.Section",
+                "visible": true,
+                "label": "Additional Clusters",
+                "elements": [
+                    {
+                        "name": "createAdditionalClusters",
+                        "type": "Microsoft.Common.CheckBox",
+                        "visible": true,
+                        "label": "Create Additional Cluster(s)",
+                        "defaultValue": false,
+                        "toolTip": "Choose whether to create one or more additional clusters."
+                    },
+                    {
+                        "name": "numberOfAdditionalClusters",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": "[equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true)]",
+                        "label": "Number of Additional Clusters",
+                        "toolTip": "Select the number of additional clusters to create.",
+                        "min": 1,
+                        "max": 8,
+                        "defaultValue": 1,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster1",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 1))]",
+                "label": "Additional Cluster 1",
+                "elements": [
+                    {
+                        "name": "additionalCluster1Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 1.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster1HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 1 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster2",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 2))]",
+                "label": "Additional Cluster 2",
+                "elements": [
+                    {
+                        "name": "additionalCluster2Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 2.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster2HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 2 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster3",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 3))]",
+                "label": "Additional Cluster 3",
+                "elements": [
+                    {
+                        "name": "additionalCluster3Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 3.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster3HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 3 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster4",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 4))]",
+                "label": "Additional Cluster 4",
+                "elements": [
+                    {
+                        "name": "additionalCluster4Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 4.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster4HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 4 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster5",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 5))]",
+                "label": "Additional Cluster 5",
+                "elements": [
+                    {
+                        "name": "additionalCluster5Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 5.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster5HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 5 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster6",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 6))]",
+                "label": "Additional Cluster 6",
+                "elements": [
+                    {
+                        "name": "additionalCluster6Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 6.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster6HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 6 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster7",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 7))]",
+                "label": "Additional Cluster 7",
+                "elements": [
+                    {
+                        "name": "additionalCluster7Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 7.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster7HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 7 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "additionalCluster8",
+                "type": "Microsoft.Common.Section",
+                "visible": "[and(equals(steps('ClustersAndExternalStorage').additionalClustersSection.createAdditionalClusters, true), greaterOrEquals(steps('ClustersAndExternalStorage').additionalClustersSection.numberOfAdditionalClusters, 8))]",
+                "label": "Additional Cluster 8",
+                "elements": [
+                    {
+                        "name": "additionalCluster8Sku",
+                        "type": "Microsoft.Common.DropDown",
+                        "visible": true,
+                        "label": "Cluster Sku",
+                        "defaultValue": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), 'AV64', 'AV36P')]",
+                        "toolTip": "Select the SKU for additional cluster 8.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": "[if(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'), parse('[{\"label\":\"AV64\",\"value\":\"AV64\"}]'), parse('[{\"label\":\"AV36\",\"value\":\"AV36\"},{\"label\":\"AV36P\",\"value\":\"AV36P\"},{\"label\":\"AV48\",\"value\":\"AV48\"},{\"label\":\"AV52\",\"value\":\"AV52\"},{\"label\":\"AV64\",\"value\":\"AV64\"}]'))]"
+                        }
+                    },
+                    {
+                        "name": "additionalCluster8HostCount",
+                        "type": "Microsoft.Common.Slider",
+                        "visible": true,
+                        "label": "Cluster Size (Hosts)",
+                        "toolTip": "Select the number of hosts for additional cluster 8 (minimum 3).",
+                        "min": 3,
+                        "max": 16,
+                        "defaultValue": 3,
+                        "showStepMarkers": true,
+                        "constraints": {
+                            "required": true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "name": "AzureManagementVM",
         "label": "Azure Management VM",
         "elements": [
