@@ -1,5 +1,5 @@
 {
-    "$schema": "<relative path to createFormUI.schema.json>",
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
@@ -34,10 +34,10 @@
                                 "type": "Microsoft.Common.TextBlock",
                                 "visible": false,
                                 "options": {
-                                    "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                    "text": "- If you are an Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
                                     "link": {
                                         "label": "Learn more",
-                                        "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-and-mca-customers"
                                     }
                                 }
                             },
@@ -46,10 +46,10 @@
                                 "type": "Microsoft.Common.TextBlock",
                                 "visible": false,
                                 "options": {
-                                    "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                    "text": "- If you are an CSP customer, use Microsoft Partner Center to make this available for your customers",
                                     "link": {
                                         "label": "Learn more",
-                                        "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
                                     }
                                 }
                             },
@@ -58,10 +58,10 @@
                                 "type": "Microsoft.Common.TextBlock",
                                 "visible": false,
                                 "options": {
-                                    "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                    "text": "- Provide a valid non-overlapping CIDR address block. Azure VMware Solution takes the minimum /22 network you provide and divides it into smaller segments used for vCenter, VMware HCX, NSX-T, and vMotion.",
                                     "link": {
                                         "label": "Learn more",
-                                        "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                        "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP#routing-and-subnet-considerations"
                                     }
                                 }
                             },
@@ -69,8 +69,8 @@
                                 "name": "avsPrerequisites6",
                                 "type": "Microsoft.Common.InfoBox",
                                 "options": {
-                                    "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are a CSP customer, use Microsoft Partner Center to make this available for your customers.",
-                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
+                                    "text": "Before you start, you must request AVS quota allocation for your subscription: <br/> - If you are an Enterprise agreement (EA) customer, you need to log a support request to allocate hosts. <br/> - If you are an CSP customer, use Microsoft Partner Center to make this available for your customers.",
+                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers",
                                     "style": "Info"
                                 }
                             },
@@ -78,8 +78,8 @@
                                 "name": "avsPrerequisites7",
                                 "type": "Microsoft.Common.InfoBox",
                                 "options": {
-                                    "text": "Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide and then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion..",
-                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist",
+                                    "text": "Provide a valid non-overlapping CIDR address block. Azure VMware Solution takes the minimum /22 network you provide and divides it into smaller segments used for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                    "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP#routing-and-subnet-considerations",
                                     "style": "Info"
                                 }
                             }
@@ -90,17 +90,17 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "visible": true,
                         "label": "Private cloud generation",
-                        "defaultValue": "Gen2",
-                        "toolTip": "Choose whether you want to deploy onto Gen1 or Gen2 AVS hosts (based on your quota request).",
+                        "defaultValue": "Gen2 - Virtual Network Connected",
+                        "toolTip": "Choose whether you want to deploy onto Gen1 or Gen2 AVS hosts (based on your quota request and desired connectivity pattern).",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
                                 {
-                                    "label": "Gen2",
+                                    "label": "Gen2 - Virtual Network Connected",
                                     "value": "Gen2"
                                 },
                                 {
-                                    "label": "Gen1",
+                                    "label": "Gen1 - ExpressRoute Connected",
                                     "value": "Gen1"
                                 }                                
                             ]
@@ -112,7 +112,7 @@
                         "visible": true,
                         "label": "Deploy a new or choose an existing Private Cloud",
                         "defaultValue": "New",
-                        "toolTip": "",
+                        "toolTip": "Choose whether to deploy a new Private Cloud or use an existing one.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -229,7 +229,7 @@
                         "visible": true,
                         "label": "AVS Address Space",
                         "defaultValue": "",
-                        "toolTip": "This CIDR represents the Private Cloud Management network and will be used for the cluster management services (i.e vCenter Server, NSX-T Manager, etc.). Please use /22 address space. The address should be unique and should not overlap with other Azure Virtual Networks (VNET) as well as with on-premises networks.",
+                        "toolTip": "This CIDR represents the Private Cloud Management network and will be used for the cluster management services (i.e vCenter Server, NSX-T Manager, etc.). Please provide a CIDR prefix of a minimum of /22 address space. The prefix address should be unique and should not overlap with any other Azure or on-premises networks that will communicate with the Private Cloud.",
                         "constraints": {
                             "required": true,
                             "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(/[2][2])$",
@@ -243,7 +243,7 @@
                         "label": "AVS SKU",
                         "defaultValue": "AV36P",
                         "multiLine": true,
-                        "toolTip": "Ensure you select the correct SKU as per your quota request",
+                        "toolTip": "Ensure you select the correct SKU that matches your quota request",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -328,7 +328,7 @@
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
-                            "text": "Ensure that you have already requested quota for your chosen SKU above, and that this has already been allocated to this subscription otherwise the deployment will fail.",
+                            "text": "Ensure that you have already requested and allocated quota to the selected subscription for the chosen SKU above. Failure to do so will result in deployment failure.",
                             "uri": "https://learn.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution",
                             "style": "Warning"
                         }
@@ -379,7 +379,7 @@
                 "type": "Microsoft.Common.InfoBox",
                 "visible": true,
                 "options": {
-                    "text": "Azure Management VM settings will be configured in this step. Selecting the option to Deploy Azure Bastion or Deploy Azure JumpBox VM will trigger the creation of a separate virtual network that will be peered to the hub selected in the Azure Connectivity Step.",
+                    "text": "Azure Management VM settings will be configured in this step. Selecting the option to <b>Deploy Azure Bastion</b> or <b>Deploy Azure JumpBox VM</b> will trigger the creation of a separate virtual network that will be peered to the hub selected in the Azure Connectivity Step.",
                     "style": "Info"
                 }
             },            
@@ -556,46 +556,68 @@
                 }
             },
             {
-                "name": "jumpboxVnetName",
-                "type": "Microsoft.Common.TextBox",
+                "name": "jumpboxVirtualNetwork",
+                "type": "Microsoft.Common.Section",
                 "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
-                "label": "Jumpbox Vnet Name",
-                "placeholder": "e.g. jumpbox_vnet-01",
-                "defaultValue": "",
-                "toolTip": "Enter a name using only letters, numbers, underscore, or dash (no spaces).",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-zA-Z0-9_-]+$",
-                    "validationMessage": "Enter a name using only letters, numbers, underscore, or dash, with no spaces."
+                "label": "Jumpbox Virtual Network",
+                "elements": [
+                {
+                    "name": "jumpboxVnetName",
+                    "type": "Microsoft.Common.TextBox",
+                    "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                    "label": "Jumpbox Vnet Name",
+                    "placeholder": "e.g. jumpbox_vnet-01",
+                    "defaultValue": "",
+                    "toolTip": "Enter a name using only letters, numbers, underscore, or dash (no spaces).",
+                    "constraints": {
+                        "required": true,
+                        "regex": "^[a-zA-Z0-9_-]+$",
+                        "validationMessage": "Enter a name using only letters, numbers, underscore, or dash, with no spaces."
+                    }
+                },
+                {
+                    "name": "jumpboxVirtualNetworkAddressSpace",
+                    "type": "Microsoft.Common.TextBox",
+                    "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                    "label": "Jumpbox VNet Address Space",
+                    "placeholder": "e.g. 10.10.50.0/24",
+                    "defaultValue": "",
+                    "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24).",
+                    "constraints": {
+                        "required": true,
+                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
+                        "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24)."
+                    }
+                },
+                {
+                    "name": "jumpboxSubnetAddressSpace",
+                    "type": "Microsoft.Common.TextBox",
+                    "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                    "label": "Jumpbox Subnet Address Space",
+                    "placeholder": "e.g. 10.10.50.0/26",
+                    "defaultValue": "",
+                    "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26).",
+                    "constraints": {
+                        "required": true,
+                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
+                        "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26)."
+                    }
+                },
+                {
+                    "name": "bastionSubnetAddressSpace",
+                    "type": "Microsoft.Common.TextBox",
+                    "visible": "[and(equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true), equals(steps('AzureManagementVM').deployAzureBastion, true))]",
+                    "label": "Bastion Subnet Address Space",
+                    "placeholder": "e.g. 10.10.50.64/26",
+                    "defaultValue": "",
+                    "toolTip": "Enter a valid IPv4 CIDR range for the Bastion subnet (example: 10.10.50.64/26).",
+                    "constraints": {
+                        "required": true,
+                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
+                        "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.64/26)."
+                    }
                 }
-            },
-            {
-                "name": "jumpboxVirtualNetworkAddressSpace",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
-                "label": "Jumpbox VNet Address Space",
-                "placeholder": "e.g. 10.10.50.0/24",
-                "defaultValue": "",
-                "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24).",
-                "constraints": {
-                    "required": true,
-                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
-                    "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24)."
-                }
-            },
-            {
-                "name": "jumpboxSubnetAddressSpace",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
-                "label": "Jumpbox Subnet Address Space",
-                "placeholder": "e.g. 10.10.50.0/26",
-                "defaultValue": "",
-                "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26).",
-                "constraints": {
-                    "required": true,
-                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
-                    "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26)."
-                }
+                ]
             }
         ]
     },
@@ -866,6 +888,14 @@
                 "toolTip": "Choose whether to configure diagnostic settings."
             },
             {
+                "name": "enterDiagnosticResourceIdsManually",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
+                "label": "Enter Resource ID's Manually",
+                "defaultValue": false,
+                "toolTip": "Choose whether to manually enter Azure resource IDs instead of selecting them. This is required if using a Log Analytics workspace or Storage Account in a different subscription than the AVS private cloud."
+            },
+            {
                 "name": "sendAvsSyslogToLogAnalytics",
                 "type": "Microsoft.Common.CheckBox",
                 "visible": "[equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true)]",
@@ -882,9 +912,20 @@
                 "toolTip": "Choose whether to send subscription Activity Logs to a Log Analytics workspace."
             },
             {
+                "name": "manualLogAnalyticsWorkspaceResourceId",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, true), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
+                "label": "Manual Log Analytics Workspace Resource ID",
+                "defaultValue": "",
+                "toolTip": "Enter the Log Analytics workspace resource ID.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
                 "name": "logAnalyticsWorkspaceResourceId",
                 "type": "Microsoft.Solutions.ResourceSelector",
-                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, false), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
                 "label": "Log Analytics Workspace",
                 "toolTip": "Select an existing Log Analytics workspace to receive AVS syslog and/or subscription activity logs.",
                 "resourceType": "Microsoft.OperationalInsights/workspaces",
@@ -900,7 +941,7 @@
             {
                 "name": "logAnalyticsWorkspaceCreateLink",
                 "type": "Microsoft.Common.TextBlock",
-                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, false), or(equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogToLogAnalytics, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSubscriptionActivityLogsToLogAnalytics, true)))]",
                 "options": {
                     "text": "Don't have a Log Analytics workspace yet? Create one in Azure Monitor, then return here and select it above.",
                     "link": {
@@ -918,9 +959,20 @@
                 "toolTip": "Choose whether to send AVS syslogs to a Storage Account."
             },
             {
+                "name": "manualStorageAccountResourceId",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
+                "label": "Manual Storage Account Resource ID",
+                "defaultValue": "",
+                "toolTip": "Enter the Storage Account resource ID.",
+                "constraints": {
+                    "required": true
+                }
+            },
+            {
                 "name": "syslogsStorageAccountResourceId",
                 "type": "Microsoft.Solutions.ResourceSelector",
-                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, false), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
                 "label": "Storage Account",
                 "toolTip": "Select an existing Storage Account to receive AVS syslogs.",
                 "resourceType": "Microsoft.Storage/storageAccounts",
@@ -936,7 +988,7 @@
             {
                 "name": "syslogsStorageAccountCreateLink",
                 "type": "Microsoft.Common.TextBlock",
-                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
+                "visible": "[and(equals(steps('DiagnosticSettingsAndSyslog').configureDiagnosticSettings, true), equals(steps('DiagnosticSettingsAndSyslog').enterDiagnosticResourceIdsManually, false), equals(steps('DiagnosticSettingsAndSyslog').sendAvsSyslogsToStorageAccount, true))]",
                 "options": {
                     "text": "Don't have a Storage Account yet? Create one, then return here and select it above.",
                     "link": {
