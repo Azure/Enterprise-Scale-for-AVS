@@ -382,29 +382,7 @@
                     "text": "Azure Management VM settings will be configured in this step. Selecting the option to Deploy Azure Bastion or Deploy Azure JumpBox VM will trigger the creation of a separate virtual network that will be peered to the hub selected in the Azure Connectivity Step.",
                     "style": "Info"
                 }
-            },
-            {
-                "name": "deployAzureBastion",
-                "type": "Microsoft.Common.CheckBox",
-                "visible": true,
-                "label": "Deploy Azure Bastion",
-                "defaultValue": false,
-                "toolTip": "Choose whether to deploy Azure Bastion."
-            },
-            {
-                "name": "bastionName",
-                "type": "Microsoft.Common.TextBox",
-                "visible": "[equals(steps('AzureManagementVM').deployAzureBastion, true)]",
-                "label": "Bastion name",
-                "placeholder": "e.g. Bastion01",
-                "defaultValue": "",
-                "toolTip": "Enter a name 1-24 characters long, using only letters, numbers, underscore, or dash (no spaces).",
-                "constraints": {
-                    "required": true,
-                    "regex": "^[a-zA-Z0-9_-]{1,24}$",
-                    "validationMessage": "Enter 1-24 characters using only letters, numbers, underscore, or dash, with no spaces."
-                }
-            },
+            },            
             {
                 "name": "deployAzureJumpBoxVm",
                 "type": "Microsoft.Common.CheckBox",
@@ -554,6 +532,70 @@
                         "osPlatform": "Windows"
                     }
                 ]
+            },
+            {
+                "name": "deployAzureBastion",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Deploy Azure Bastion",
+                "defaultValue": false,
+                "toolTip": "Choose whether to deploy Azure Bastion."
+            },
+            {
+                "name": "bastionName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[and(equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true), equals(steps('AzureManagementVM').deployAzureBastion, true))]",
+                "label": "Bastion name",
+                "placeholder": "e.g. Bastion01",
+                "defaultValue": "",
+                "toolTip": "Enter a name 1-24 characters long, using only letters, numbers, underscore, or dash (no spaces).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[a-zA-Z0-9_-]{1,24}$",
+                    "validationMessage": "Enter 1-24 characters using only letters, numbers, underscore, or dash, with no spaces."
+                }
+            },
+            {
+                "name": "jumpboxVnetName",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox Vnet Name",
+                "placeholder": "e.g. jumpbox_vnet-01",
+                "defaultValue": "",
+                "toolTip": "Enter a name using only letters, numbers, underscore, or dash (no spaces).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[a-zA-Z0-9_-]+$",
+                    "validationMessage": "Enter a name using only letters, numbers, underscore, or dash, with no spaces."
+                }
+            },
+            {
+                "name": "jumpboxVirtualNetworkAddressSpace",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox VNet Address Space",
+                "placeholder": "e.g. 10.10.50.0/24",
+                "defaultValue": "",
+                "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
+                    "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/24)."
+                }
+            },
+            {
+                "name": "jumpboxSubnetAddressSpace",
+                "type": "Microsoft.Common.TextBox",
+                "visible": "[equals(steps('AzureManagementVM').deployAzureJumpBoxVm, true)]",
+                "label": "Jumpbox Subnet Address Space",
+                "placeholder": "e.g. 10.10.50.0/26",
+                "defaultValue": "",
+                "toolTip": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26).",
+                "constraints": {
+                    "required": true,
+                    "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}\\/(3[0-2]|[12]?\\d)$",
+                    "validationMessage": "Enter a valid IPv4 CIDR range (example: 10.10.50.0/26)."
+                }
             }
         ]
     },
@@ -597,7 +639,7 @@
             {
                 "name": "manualVirtualNetworkResourceId",
                 "type": "Microsoft.Common.TextBox",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').enterResourceIdsManually, true))]",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('AzureConnectivity').enterResourceIdsManually, true), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen2'))]",
                 "label": "Manual Virtual Network Resource ID",
                 "defaultValue": "",
                 "toolTip": "Enter the Virtual Network resource ID.",
@@ -626,15 +668,7 @@
                 "constraints": {
                     "required": true
                 }
-            },
-            {
-                "name": "enableInternetSnat",
-                "type": "Microsoft.Common.CheckBox",
-                "visible": "[equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1')]",
-                "label": "Enable Internet SNAT",
-                "defaultValue": false,
-                "toolTip": "Enable Internet SNAT for Gen1 private clouds."
-            },
+            },            
             {
                 "name": "enableFastpath",
                 "type": "Microsoft.Common.CheckBox",
@@ -664,7 +698,7 @@
             {
                 "name": "ExpressRouteGatewaySelectorId",
                 "type": "Microsoft.Solutions.ResourceSelector",
-                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'))]",
+                "visible": "[and(equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - VWAN Hub'), equals(steps('AzureConnectivity').enterResourceIdsManually, false))]",
                 "label": "ExpressRoute Gateway Resource Id",
                 "resourceType": "Microsoft.Network/expressRouteGateways",
                 "constraints": {
@@ -693,7 +727,7 @@
             {
                 "name": "virtualNetworkGateway",
                 "type": "Microsoft.Common.DropDown",
-                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'))]",
+                "visible": "[and(equals(steps('AzureConnectivity').connectToAzureNetworking, 'Yes - Hub Virtual Network'), equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1'), equals(steps('AzureConnectivity').enterResourceIdsManually, false))]",
                 "label": "Select Existing ExpressRoute Gateway",
                 "defaultValue": "",
                 "toolTip": "",
@@ -701,6 +735,14 @@
                     "required": true,
                     "allowedValues": "[map(filter(steps('AzureConnectivity').virtualNetworkGatewaysApi.value, (item) => contains(first(item.properties.ipConfigurations).properties.subnet.id, steps('AzureConnectivity').VnetSelectorId.name)), (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                 }
+            },
+            {
+                "name": "enableInternetSnat",
+                "type": "Microsoft.Common.CheckBox",
+                "visible": "[equals(steps('PrivateCloud').avsPublicCloudGeneration, 'Gen1')]",
+                "label": "Enable Internet SNAT",
+                "defaultValue": false,
+                "toolTip": "Enable Internet SNAT for Gen1 private clouds."
             }
         ]
     },
