@@ -1,0 +1,178 @@
+resource_group_name                       = "native-sky-gen1-test-1"
+location                                  = "westus2"
+virtual_wan_name                          = "native-sky-gen1-westus2"
+virtual_hub_name                          = "native-sky-gen1-westus2"
+virtual_hub_address_prefix                = "10.52.0.0/23"
+key_vault_name                            = "kv-native-sky-gen1-wus2"
+log_analytics_workspace_name              = "log-native-sky-gen1-wus2"
+log_analytics_workspace_retention_in_days = 30
+
+virtual_wan_type                       = "Standard"
+virtual_hub_sku                        = "Standard"
+hub_routing_preference                 = "ExpressRoute"
+virtual_router_auto_scale_min_capacity = 2
+allow_branch_to_branch_traffic         = true
+enable_telemetry                       = true
+
+bastion = {
+  name                          = "bas-native-sky-gen2-wus2"
+  virtual_network_name          = "vnet-bastion-prod-westus2"
+  virtual_network_address_space = ["10.52.10.0/24"]
+  subnet_address_prefix         = "10.52.10.0/26"
+  public_ip_name                = "pip-bas-native-sky-gen2-wus2"
+}
+
+virtual_machine_sku            = "Standard_D2s_v5"
+virtual_machine_admin_username = "azureuser"
+
+natsky_segments = {
+  seg12 = {
+    vni                 = 10100
+    cidr                = "12.12.12.0/24"
+    gateway             = "12.12.12.1"
+    namespace_name      = "ns-12-12-12-0-24"
+    bridge_name         = "br-seg12"
+    veth_root_name      = "veth-seg12-rt"
+    veth_namespace_name = "veth-seg12-ns"
+    bridge_ip           = "169.254.1.2/30"
+    namespace_ip        = "169.254.1.1/30"
+    apipa_address       = "169.254.0.2/16"
+    policy_table        = 200
+  }
+  seg13 = {
+    vni                 = 10101
+    cidr                = "13.13.13.0/24"
+    gateway             = "13.13.13.1"
+    namespace_name      = "ns-13-13-13-0-24"
+    bridge_name         = "br-seg13"
+    veth_root_name      = "veth-seg13-rt"
+    veth_namespace_name = "veth-seg13-ns"
+    bridge_ip           = "169.254.2.2/30"
+    namespace_ip        = "169.254.2.1/30"
+    apipa_address       = "169.254.0.3/16"
+    policy_table        = 201
+  }
+}
+
+load_balancer_health_probe_port             = 22
+load_balancer_health_probe_interval_seconds = 5
+load_balancer_health_probe_threshold        = 2
+
+tags = {
+  environment = "production"
+  managed_by  = "terraform"
+  workload    = "connectivity"
+}
+
+vmware_appliances = {
+  avs_default_t1 = {
+    name        = "avs-default_t1"
+    cidr_prefix = "10.26.0.0/24"
+  }
+}
+
+target_vnets = {
+  application = {
+    name          = "vnet-application-prod-westus2"
+    address_space = ["10.52.20.0/22"]
+
+    subnets = {
+      application = {
+        name             = "snet-application"
+        address_prefixes = ["10.52.20.0/24"]
+        source_vms = {
+          test-app-1 = {
+            vm_name    = "test-app-1"
+            ip_address = "10.52.20.4"
+          }
+          test-app-2 = {
+            vm_name    = "test-app-2"
+            ip_address = "10.52.20.5"
+          }
+          test-app-3 = {
+            vm_name    = "test-app-3"
+            ip_address = "10.52.20.6"
+          }
+        }
+      }
+      l2_appliance = {
+        name              = "snet-l2-appliance"
+        address_prefixes  = ["10.52.21.0/24"]
+        service_endpoints = ["Microsoft.Storage"]
+      }
+    }
+  }
+
+  shared_services = {
+    name          = "vnet-shared-prod-westus2"
+    location      = "westus2"
+    address_space = ["10.52.28.0/22"]
+
+    virtual_hub_connection = {
+      name                      = "vhub-conn-shared-services"
+      internet_security_enabled = false
+    }
+
+    subnets = {
+      services = {
+        name             = "snet-services"
+        address_prefixes = ["10.52.28.0/24"]
+        source_vms = {
+          test-vm-1 = {
+            vm_name    = "test-vm-1"
+            ip_address = "10.52.28.4"
+          }
+          test-vm-2 = {
+            vm_name    = "test-vm-2"
+            ip_address = "10.52.28.5"
+          }
+          test-vm-3 = {
+            vm_name    = "test-vm-3"
+            ip_address = "10.52.28.6"
+          }
+        }
+      }
+      l2_appliance = {
+        name              = "snet-l2-appliance"
+        address_prefixes  = ["10.52.29.0/24"]
+        service_endpoints = ["Microsoft.Storage"]
+      }
+    }
+  }
+}
+
+# Gen2 private clouds connect to the Virtual Hub as a remote VNet.
+# Replace this ID with the VNet resource ID associated with the AVS Gen2 private cloud.
+/*
+avs_private_cloud_connection = {
+  generation = "gen2"
+  name       = "vhub-conn-avs-gen2"
+
+  gen2 = {
+    remote_virtual_network_id = "/subscriptions/cf53b249-887f-43d1-a71c-307860c8a70a/resourceGroups/dndwu2-gen2/providers/Microsoft.Network/virtualNetworks/dndwu2-gen2-vnet-westus2-1"
+  }
+}
+*/
+
+# Gen1 private clouds connect through an ExpressRoute gateway in the Virtual Hub.
+# Comment out the Gen2 block above before enabling this mutually exclusive example.
+# Supply the authorization key separately with:
+# export TF_VAR_avs_expressroute_authorization_key='<authorization-key>'
+
+
+avs_private_cloud_connection = {
+  generation = "gen1"
+  name       = "erc-avs-gen1"
+
+  gen1 = {
+    expressroute_gateway_name        = "ergw-avs-gen1"
+    express_route_circuit_peering_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/tnt00-cust-p01-italynorth/providers/Microsoft.Network/expressRouteCircuits/tnt00-cust-p01-italynorth-er/peerings/AzurePrivatePeering"
+    gateway_scale_units              = 1
+    allow_non_virtual_wan_traffic    = false
+    fast_path_enabled                = true
+    internet_security_enabled        = false
+    routing_weight                   = 0
+  }
+}
+
+avs_expressroute_authorization_key = "00000000-0000-0000-0000-000000000000"

@@ -12,7 +12,7 @@
 *.terraform.lock.hcl
 
 # Dev tfvars files
-dev.tfvars
+*.tfvars
 
 #drawio diagrams
 **/.$computeprofile1.drawio.bkp
