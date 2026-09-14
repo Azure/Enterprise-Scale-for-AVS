@@ -1,0 +1,164 @@
+#!/bin/bash
+
+# Stop on command, unset-variable, or pipeline failures so cloud-init reports
+# the first actionable error instead of continuing with a partial installation.
+set -Eeuo pipefail
+
+# Send all bootstrap output to a root-readable log while retaining cloud-init's
+# normal console output. Report the failing line when strict mode exits.
+NATSKY_CLOUD_INIT_LOG=/var/log/natsky-cloud-init.log
+touch "$NATSKY_CLOUD_INIT_LOG"
+chmod 0600 "$NATSKY_CLOUD_INIT_LOG"
+exec > >(tee -a "$NATSKY_CLOUD_INIT_LOG") 2>&1
+trap 'echo "NatSky cloud-init failed at line $LINENO" >&2' ERR
+
+# Prevent package installation from waiting for interactive input.
+export DEBIAN_FRONTEND=noninteractive
+
+# Load Terraform-rendered Azure Storage settings and local installation paths.
+STORAGE_ACCOUNT_NAME=${jsonencode(storage_account_name)}
+STORAGE_IDENTITY_CLIENT_ID=${jsonencode(storage_identity_client_id)}
+STORAGE_CONTAINER_NAME=natsky
+STAGE_DIR=/var/lib/natsky-bootstrap
+INSTALL_DIR=/opt/natsky
+
+# Install the Linux networking utilities used by the appliance, followed by the
+# Azure CLI used to retrieve the private appliance artifact.
+apt-get update
+apt-get install -y arptables bridge-utils ca-certificates curl iproute2 iputils-ping net-tools networkd-dispatcher
+curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# Create a persistent staging directory for the downloaded and extracted files.
+install -d -m 0755 "$STAGE_DIR"
+cd "$STAGE_DIR"
+
+# Authenticate as the VM's storage-authorized user-assigned managed identity.
+az login --identity --client-id "$STORAGE_IDENTITY_CLIENT_ID" --output none
+
+# Locate the newest blob whose name contains azure-appliance. Retry listing to
+# tolerate transient Storage access failures and managed identity RBAC delay.
+AZURE_ARTIFACT_BLOB=""
+for attempt in 1 2 3 4 5 6; do
+  if AZURE_ARTIFACT_BLOB="$(
+    az storage blob list \
+      --account-name "$STORAGE_ACCOUNT_NAME" \
+      --container-name "$STORAGE_CONTAINER_NAME" \
+      --auth-mode login \
+      --query "sort_by([?contains(name, 'azure-appliance')], &properties.lastModified)[-1].name" \
+      --output tsv
+  )"; then
+    break
+  fi
+
+  if (( attempt == 6 )); then
+    echo "Unable to list blobs after $attempt attempts." >&2
+    exit 1
+  fi
+
+  sleep $((attempt * 10))
+done
+
+# Stop before installation when the container has no matching artifact.
+if [[ -z "$AZURE_ARTIFACT_BLOB" ]]; then
+  echo "No blob containing 'azure-appliance' was found in $STORAGE_CONTAINER_NAME." >&2
+  exit 1
+fi
+
+# Download the selected blob with Microsoft Entra authentication and extract it
+# into the staging directory.
+AZURE_ARTIFACT="$${AZURE_ARTIFACT_BLOB##*/}"
+az storage blob download \
+  --account-name "$STORAGE_ACCOUNT_NAME" \
+  --container-name "$STORAGE_CONTAINER_NAME" \
+  --name "$AZURE_ARTIFACT_BLOB" \
+  --file "$AZURE_ARTIFACT" \
+  --auth-mode login \
+  --overwrite true \
+  --output none
+
+tar xzf "$AZURE_ARTIFACT"
+
+# Normalize line endings from packaged files before installing executables and
+# configuration beneath /opt/natsky.
+SOURCE_DIR="$STAGE_DIR/natsky-appliance"
+sed -i 's/\r$//' "$SOURCE_DIR"/*.sh "$SOURCE_DIR"/*.conf "$SOURCE_DIR"/segments.d/*.conf "$SOURCE_DIR"/50-natsky-policy-rules "$SOURCE_DIR"/*.service
+
+# Install the controller binary and create runtime directories used for logs,
+# generated segment configuration, and appliance state.
+install -d -m 0755 "$INSTALL_DIR/bin" "$INSTALL_DIR/logs" "$INSTALL_DIR/segments.d" "$INSTALL_DIR/state"
+cp -a "$SOURCE_DIR/controller/." "$INSTALL_DIR/bin/"
+chmod +x "$INSTALL_DIR/bin/NatSky.Controller"
+
+# Install the lifecycle and diagnostic scripts with executable permissions.
+for script in setup-vxlan.sh teardown-vxlan.sh natsky-sweep.sh natsky-vtep.sh natsky-status.sh; do
+  install -m 0755 "$SOURCE_DIR/$script" "$INSTALL_DIR/$script"
+done
+
+# Install the shared appliance configuration and set the Terraform-provided
+# VMware appliance address as the remote VXLAN endpoint.
+install -m 0644 "$SOURCE_DIR/natsky.conf" "$INSTALL_DIR/natsky.conf"
+sed -i -E 's|^NATSKY_REMOTE_VTEP=.*$|NATSKY_REMOTE_VTEP="${remote_vtep}"|' "$INSTALL_DIR/natsky.conf"
+
+# Render one configuration file per NatSky segment. Each file defines the VXLAN,
+# namespace, bridge, veth, APIPA, and policy-routing settings for its controller.
+%{ for label, segment in segments ~}
+cat > "$INSTALL_DIR/segments.d/${label}.conf" <<'NATSKY_SEGMENT'
+NATSKY_VXLAN_IF="vx-${segment.vni}"
+NATSKY_VNI=${segment.vni}
+NATSKY_SEGMENT_SUBNET="${segment.cidr}"
+NATSKY_SEGMENT_GATEWAY="${segment.gateway}"
+NATSKY_NS_NAME="${segment.namespace_name}"
+NATSKY_BRIDGE="${segment.bridge_name}"
+NATSKY_VETH_RT="${segment.veth_root_name}"
+NATSKY_VETH_NS="${segment.veth_namespace_name}"
+NATSKY_BRIDGE_IP="${segment.bridge_ip}"
+NATSKY_VETH_NS_IP="${segment.namespace_ip}"
+NATSKY_APIPA_ADDR="${segment.apipa_address}"
+NATSKY_POLICY_TABLE=${segment.policy_table}
+NATSKY_SEGMENT
+%{ endfor ~}
+
+# Normalize generated and installed shell/configuration files, then ensure all
+# appliance scripts remain executable.
+sed -i 's/\r$//' "$INSTALL_DIR"/*.sh "$INSTALL_DIR/natsky.conf" "$INSTALL_DIR"/segments.d/*.conf
+chmod +x "$INSTALL_DIR"/*.sh
+
+# Install kernel networking settings and systemd units. Rewrite packaged paths
+# so every service uses the files installed under /opt/natsky.
+install -m 0644 "$SOURCE_DIR/90-natsky.conf" /etc/sysctl.d/90-natsky.conf
+install -m 0644 "$SOURCE_DIR/natsky-vxlan.service" /etc/systemd/system/natsky-vxlan.service
+install -m 0644 "$SOURCE_DIR/natsky-controller@.service" /etc/systemd/system/natsky-controller@.service
+sed -i "s|ExecStart=.*NatSky.Controller|ExecStart=$INSTALL_DIR/bin/NatSky.Controller $INSTALL_DIR/segments.d/%i.conf|" /etc/systemd/system/natsky-controller@.service
+sed -i "s|ExecStart=.*setup-vxlan.sh|ExecStart=$INSTALL_DIR/setup-vxlan.sh|" /etc/systemd/system/natsky-vxlan.service
+sed -i "s|ExecStop=.*teardown-vxlan.sh|ExecStop=$INSTALL_DIR/teardown-vxlan.sh|" /etc/systemd/system/natsky-vxlan.service
+sed -i "s|EnvironmentFile=.*natsky.conf|EnvironmentFile=-$INSTALL_DIR/natsky.conf|" /etc/systemd/system/natsky-vxlan.service
+
+# Reapply policy-routing rules whenever systemd-networkd marks an interface as
+# routable, including after DHCP renewals or interface state changes.
+install -m 0755 -D "$SOURCE_DIR/50-natsky-policy-rules" /etc/networkd-dispatcher/routable.d/50-natsky-policy-rules
+
+# Apply kernel settings, reload systemd, refresh network-dispatcher hooks, and
+# create the shared VXLAN/network-namespace infrastructure.
+sysctl --system
+systemctl daemon-reload
+systemctl restart networkd-dispatcher
+systemctl enable --now natsky-vxlan.service
+
+# Start one controller instance for each rendered network segment.
+%{ for label, segment in segments ~}
+systemctl enable --now "natsky-controller@${label}.service"
+%{ endfor ~}
+
+# Verify appliance status, namespaces, policy rules, per-segment route tables,
+# and all systemd services before marking bootstrap complete.
+"$INSTALL_DIR/natsky-status.sh"
+ip netns list
+ip rule show | grep -E '${join("|", [for segment in values(segments) : tostring(segment.policy_table)])}'
+%{ for label, segment in segments ~}
+ip route show table ${segment.policy_table}
+systemctl is-active "natsky-controller@${label}.service"
+%{ endfor ~}
+systemctl is-active natsky-vxlan.service
+
+# Record successful completion for operators and subsequent automation.
+touch /var/lib/natsky-bootstrap.complete
