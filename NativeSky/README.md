@@ -96,22 +96,96 @@ address ranges, and number of resources before continuing. Creating the Virtual
 Hub route maps can take about 30 minutes, and the deployed Azure resources incur
 charges.
 
-### 6. Apply the reviewed plan
+### 6. Apply the reviewed plan to create the infrastructure
 
 ```bash
 terraform apply "native-sky.tfplan"
 ```
 
 Terraform prints progress and exits when the deployment succeeds or reports an
-error. Keep the generated state files in this directory, or configure a secure
-[remote backend](https://developer.hashicorp.com/terraform/language/backend) for
-shared or production use. Do not edit the state manually.
+error. During this pre-release, the appliance binaries are not publicly
+available. This first apply creates the private `natsky` blob container, but the
+appliance VMs cannot finish their cloud-init bootstrap until the supplied
+appliance archive is uploaded manually. Terraform may report a successful apply
+even though cloud-init did not find the archive.
+
+Keep the generated state files in this directory, or configure a secure [remote
+backend](https://developer.hashicorp.com/terraform/language/backend) for shared
+or production use. Do not edit the state manually.
+
+### 7. Upload the pre-release appliance archive
+
+Obtain the pre-release appliance archive (tar files) from the project team. Its blob name
+must contain `azure-appliance`, because cloud-init uses that text to locate the
+newest matching artifact in the `natsky` container. The archive must retain the
+format and directory structure supplied by the project team.
+
+Find the generated storage account name in the resource group:
+
+```bash
+STORAGE_ACCOUNT_NAME=$(az storage account list \
+  --resource-group "<resource-group-name>" \
+  --query "[?starts_with(name, 'stnatsky')].name | [0]" \
+  --output tsv)
+
+echo "$STORAGE_ACCOUNT_NAME"
+```
+
+The storage firewall permits the appliance subnets and denies other networks.
+Upload the archive from an allowed network, or temporarily add the public IP of
+your workstation before uploading it:
+
+```bash
+MY_PUBLIC_IP=$(curl --silent https://api.ipify.org)
+
+az storage account network-rule add \
+  --resource-group "<resource-group-name>" \
+  --account-name "$STORAGE_ACCOUNT_NAME" \
+  --ip-address "$MY_PUBLIC_IP"
+
+az storage blob upload \
+  --account-name "$STORAGE_ACCOUNT_NAME" \
+  --container-name "natsky" \
+  --name "<azure-appliance-archive-name>" \
+  --file "/path/to/<azure-appliance-archive-name>" \
+  --auth-mode key \
+  --overwrite
+```
+
+The signed-in identity must be allowed to list the storage account keys when
+using `--auth-mode key`. Wait a few minutes after adding the network rule if the
+upload is initially rejected. The next Terraform apply restores the storage
+firewall to the configuration declared by this module and removes the temporary
+workstation rule.
+
+### 8. Rebuild the appliance VMs
+
+Uploading a blob does not itself change the Terraform configuration, and
+cloud-init normally runs only when a VM is first created. Create a new plan that
+explicitly replaces each appliance VM so its bootstrap runs again and can
+download the uploaded archive. Add one `-replace` argument for every key in
+`target_vnets`. For the `application` and `shared_services` keys in the sample
+configuration, run:
+
+```bash
+terraform plan -var-file="local.tfvars" \
+  -replace='module.target_vnet_virtual_machines["application"]' \
+  -replace='module.target_vnet_virtual_machines["shared_services"]' \
+  -out="native-sky-appliances.tfplan"
+
+terraform apply "native-sky-appliances.tfplan"
+```
+
+Review the replacement plan before applying it. Substitute the keys from your
+own `target_vnets` map and omit any example key that is not present. After the
+apply completes, the replacement VMs download the newest matching archive from
+the `natsky` container and perform the appliance installation.
 
 To make later changes, edit `local.tfvars`, then repeat the `terraform plan` and
 `terraform apply` steps. Terraform will propose only the differences from its
 recorded state.
 
-### 7. Remove the deployment when it is no longer needed
+### 9. Remove the deployment when it is no longer needed
 
 First review everything Terraform will delete:
 
